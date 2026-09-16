@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Word Log — Vocabulary Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B2124;
+    --panel:#232B31;
+    --rule:#3A4650;
+    --card:#EDE8DA;
+    --card-ink:#211F1A;
+    --card-ink-soft:#6B6255;
+    --text:#E9E6DC;
+    --text-soft:#96A0A6;
+    --amber:#E39A3A;
+    --amber-ink:#241804;
+    --amber-deep:#B9741C;
+    --good:#5CAE7C;
+    --good-bg:rgba(78,154,108,.16);
+    --warn:#D57C4E;
+    --warn-bg:rgba(200,106,58,.18);
+    --new:#8B959C;
+    --new-bg:rgba(124,135,144,.14);
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    --cond:'IBM Plex Sans Condensed',var(--sans);
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(900px 500px at 50% -8%, #262F35 0%, var(--bg) 60%);
+    color:var(--text);
+    font-family:var(--sans);
+    min-height:100vh;
+    padding:26px 16px 56px;
+  }
+  #app{ max-width:520px; margin:0 auto; }
+  button{ font-family:inherit; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  ::selection{ background:var(--amber); color:var(--amber-ink); }
+  :focus-visible{ outline:2px solid var(--amber); outline-offset:2px; border-radius:4px; }
+
+  .view{ animation:viewIn .38s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes viewIn{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:translateY(0);} }
+  @media (prefers-reduced-motion:reduce){ .view,.card{ animation:none !important; } }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.09em;
+    color:var(--text-soft); text-transform:uppercase; margin-bottom:6px;
+  }
+  .title{ font-family:var(--cond); font-weight:700; font-size:clamp(1.8rem,7vw,2.4rem); margin:0 0 6px; letter-spacing:-.01em; }
+  .subtitle{ color:var(--text-soft); margin:0 0 22px; font-size:.95rem; line-height:1.5; }
+  .loading{ color:var(--text-soft); font-family:var(--mono); font-size:.85rem; padding:40px 0; text-align:center; }
+  .hint{ color:var(--text-soft); font-size:.82rem; line-height:1.5; margin:8px 2px 0; }
+
+  /* stats readout */
+  .stat-row{ display:flex; gap:10px; margin-bottom:22px; }
+  .stat{
+    flex:1; background:var(--panel); border:1px solid var(--rule); border-radius:10px;
+    padding:12px 10px; text-align:center; font-family:var(--mono); font-size:1.35rem; font-weight:600;
+  }
+  .stat small{ display:block; font-family:var(--sans); font-weight:400; font-size:.72rem; letter-spacing:.02em;
+    color:var(--text-soft); margin-top:4px; text-transform:lowercase; }
+  .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .dot-good{ background:var(--good); } .dot-warn{ background:var(--warn); } .dot-new{ background:var(--new); }
+
+  /* buttons */
+  .btn-primary{
+    display:block; width:100%; background:var(--amber); color:var(--amber-ink); border:none;
+    font-weight:700; font-size:.92rem; letter-spacing:.03em; text-transform:uppercase;
+    padding:15px 18px; border-radius:8px; cursor:pointer; transition:background .15s ease, transform .1s ease;
+  }
+  .btn-primary:hover{ background:var(--amber-deep); }
+  .btn-primary:active{ transform:scale(.99); }
+  .btn-secondary{
+    display:block; width:100%; background:transparent; color:var(--text); border:1px solid var(--rule);
+    font-weight:600; font-size:.88rem; padding:14px 18px; border-radius:8px; cursor:pointer; margin-top:10px;
+  }
+  .btn-secondary:hover{ border-color:var(--text-soft); }
+  .btn-oncard{
+    display:block; width:100%; background:var(--card-ink); color:var(--card); border:none;
+    font-weight:700; font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;
+    padding:13px 16px; border-radius:7px; cursor:pointer; margin-top:22px;
+  }
+  .btn-oncard:hover{ opacity:.88; }
+
+  /* session length toggle */
+  .length-toggle{ display:flex; gap:8px; margin-bottom:14px; }
+  .len-btn{
+    flex:1; background:var(--panel); border:1px solid var(--rule); color:var(--text-soft);
+    border-radius:8px; padding:9px 6px; cursor:pointer; font-size:.82rem; font-weight:600;
+  }
+  .len-btn small{ display:block; font-family:var(--mono); font-weight:400; font-size:.72rem; margin-top:2px; }
+  .len-btn.active{ background:rgba(227,154,58,.14); border-color:var(--amber); color:var(--amber); }
+
+  .divider{ display:flex; align-items:center; gap:10px; margin:26px 0 14px; color:var(--text-soft);
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; }
+  .divider::before,.divider::after{ content:''; flex:1; height:1px; background:var(--rule); }
+
+  /* category list */
+  .cat-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:8px; }
+  .cat-row{
+    text-align:left; background:var(--panel); border:1px solid var(--rule); border-radius:10px;
+    padding:13px 14px; cursor:pointer; color:var(--text); width:100%;
+  }
+  .cat-row:hover{ border-color:var(--text-soft); }
+  .cat-row-top{ display:flex; justify-content:space-between; align-items:center; }
+  .cat-name{ font-weight:600; font-size:.95rem; }
+  .cat-arrow{ color:var(--amber); font-family:var(--mono); }
+  .cat-row-meta{ font-family:var(--mono); font-size:.74rem; color:var(--text-soft); margin:5px 0 8px; }
+  .bar{ height:5px; background:var(--rule); border-radius:3px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--good); border-radius:3px; }
+  .bar-session{ margin:10px 0 22px; }
+  .bar-session .bar-fill{ background:var(--amber); }
+
+  .reset-link{
+    display:block; margin:26px auto 0; background:none; border:none; color:var(--text-soft);
+    font-size:.76rem; text-decoration:underline; cursor:pointer; padding:8px;
+  }
+
+  /* session header */
+  .sess-top{ display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:.76rem; color:var(--text-soft); letter-spacing:.04em; }
+  .sess-back{
+    background:none; border:none; color:var(--text-soft); cursor:pointer; padding:4px 6px 4px 0;
+    display:inline-flex; align-items:center; gap:4px; font-family:var(--mono); font-size:.76rem; letter-spacing:.04em;
+  }
+  .sess-back:hover{ color:var(--text); }
+  .sess-back svg{ width:14px; height:14px; flex-shrink:0; }
+  .cat-tag{ background:var(--panel); border:1px solid var(--rule); padding:3px 8px; border-radius:5px; text-transform:uppercase; }
+
+  /* flashcard */
+  .card{
+    position:relative; background:var(--card); color:var(--card-ink); border-radius:16px;
+    padding:34px 24px 26px; text-align:center; box-shadow:0 22px 44px rgba(0,0,0,.38), 0 2px 0 rgba(0,0,0,.05);
+    transform:rotate(-.4deg); animation:viewIn .4s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .hole{
+    position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:16px; height:16px;
+    border-radius:50%; background:var(--bg); box-shadow:inset 0 2px 4px rgba(0,0,0,.5);
+  }
+  .card-word{ font-family:var(--cond); font-weight:700; font-size:clamp(2.1rem,9vw,2.9rem); letter-spacing:-.01em; line-height:1.05; word-break:break-word; }
+  .card-pron{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px; }
+  .pron-text{ font-family:var(--mono); font-size:.95rem; color:var(--card-ink-soft); }
+  .speak-btn{
+    background:var(--amber); color:var(--amber-ink); border:none; width:30px; height:30px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  }
+  .speak-btn:hover{ background:var(--amber-deep); }
+  .speak-btn svg{ width:14px; height:14px; }
+
+  .meanings{ text-align:left; margin-top:24px; display:flex; flex-direction:column; gap:16px; }
+  .meaning-row{ display:flex; gap:10px; }
+  .meaning-num{ font-family:var(--mono); font-weight:600; color:var(--amber-deep); font-size:.9rem; flex-shrink:0; width:16px; }
+  .meaning-text{ font-weight:500; font-size:1rem; line-height:1.4; }
+  .meaning-example{ color:var(--card-ink-soft); font-style:italic; font-size:.9rem; margin-top:4px; line-height:1.4; display:flex; align-items:center; gap:6px; }
+  .mini-speak{
+    background:none; border:none; color:var(--card-ink-soft); cursor:pointer; padding:2px; flex-shrink:0;
+    display:inline-flex; align-items:center;
+  }
+  .mini-speak:hover{ color:var(--amber-deep); }
+  .mini-speak svg{ width:12px; height:12px; }
+
+  .note-box{
+    text-align:left; margin-top:18px; padding:10px 12px; border-left:3px solid var(--amber);
+    background:rgba(33,31,26,.05); font-size:.85rem; line-height:1.5; font-style:italic; color:var(--card-ink-soft);
+  }
+  .note-label{ font-family:var(--mono); font-style:normal; font-weight:600; font-size:.68rem; color:var(--amber-deep);
+    letter-spacing:.06em; margin-right:6px; }
+
+  .rate-row{ display:flex; gap:10px; margin-top:20px; }
+  .tag-btn{
+    flex:1; border:none; border-radius:9px; padding:14px 8px; font-weight:700; font-size:.85rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; min-height:48px;
+  }
+  .tag-btn svg{ width:15px; height:15px; flex-shrink:0; }
+  .tag-warn{ background:var(--warn-bg); color:var(--warn); border:1px solid rgba(213,124,78,.4); }
+  .tag-warn:hover{ background:rgba(213,124,78,.26); }
+  .tag-good{ background:var(--good-bg); color:var(--good); border:1px solid rgba(92,174,124,.4); }
+  .tag-good:hover{ background:rgba(92,174,124,.26); }
+
+  .ask-link{
+    display:block; margin:14px auto 0; background:none; border:none; color:var(--text-soft);
+    font-size:.82rem; cursor:pointer; padding:6px;
+  }
+  .ask-link:hover{ color:var(--amber); }
+
+  /* summary */
+  .follow-list{ display:flex; flex-direction:column; gap:1px; background:var(--rule); border-radius:10px; overflow:hidden; margin-bottom:8px; }
+  .follow-row{ background:var(--panel); padding:12px 14px; display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+  .follow-word{ font-weight:600; font-size:.92rem; flex-shrink:0; }
+  .follow-gloss{ color:var(--text-soft); font-size:.8rem; text-align:right; }
+
+  .word-list{ display:flex; flex-direction:column; gap:1px; background:var(--rule); border-radius:10px;
+    overflow-y:auto; max-height:56vh; margin-bottom:8px; }
+  .word-row{ background:var(--panel); border:none; padding:12px 14px; display:flex; justify-content:space-between;
+    align-items:center; cursor:pointer; width:100%; text-align:left; color:var(--text); }
+  .word-row-name{ font-weight:600; font-size:.92rem; }
+  .word-row-pct{ font-family:var(--mono); font-weight:600; font-size:.85rem; flex-shrink:0; margin-left:10px; }
+  .history-row-score{ font-family:var(--mono); font-weight:600; flex-shrink:0; }
+
+  /* search + add-word form fields */
+  .field{ margin-bottom:14px; }
+  .field-label{ display:block; font-family:var(--mono); font-size:.72rem; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--text-soft); margin-bottom:6px; }
+  .field-input{ width:100%; padding:11px 12px; border-radius:8px; border:1px solid var(--rule);
+    background:var(--panel); color:var(--text); font-family:var(--sans); font-size:.95rem; }
+  .field-input:focus{ outline:none; border-color:var(--amber); }
+  select.field-input{ appearance:none; -webkit-appearance:none; }
+  .field-error{ color:var(--warn); font-size:.82rem; margin:2px 2px 12px; min-height:1.2em; }
+
+  /* streak */
+  .streak-row{ display:flex; align-items:center; gap:6px; margin-bottom:18px; color:var(--amber); font-size:.85rem; font-weight:600; }
+  .streak-row svg{ width:15px; height:15px; flex-shrink:0; }
+  .streak-row .streak-best{ color:var(--text-soft); font-weight:400; font-family:var(--mono); font-size:.72rem; }
+
+  /* typed-answer mode */
+  .prompt-label{ font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--card-ink-soft); margin-bottom:14px; }
+  .type-input{
+    width:100%; margin-top:20px; padding:13px 14px; border-radius:8px; border:1.5px solid rgba(33,31,26,.25);
+    background:rgba(33,31,26,.04); color:var(--card-ink); font-family:var(--sans); font-size:1.05rem; font-weight:500;
+    text-align:center;
+  }
+  .type-input:focus{ outline:none; border-color:var(--amber-deep); background:#fff; }
+  .result-badge{
+    display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px;
+    font-family:var(--mono); font-size:.72rem; font-weight:600; text-transform:uppercase; margin-bottom:10px;
+  }
+  .result-badge svg{ width:11px; height:11px; }
+  .result-good{ background:var(--good-bg); color:var(--good); }
+  .result-bad{ background:var(--warn-bg); color:var(--warn); }
+
+  /* fast mode */
+  .fast-bar-track{ height:4px; background:rgba(0,0,0,.15); border-radius:2px; overflow:hidden; margin:22px 0 0; }
+  .fast-bar-fill{ height:100%; width:0%; background:var(--amber-deep); border-radius:2px; }
+  .fast-controls{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:16px; }
+  .fast-pause-btn{
+    background:var(--panel); border:1px solid var(--rule); color:var(--text); width:44px; height:44px;
+    border-radius:50%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  }
+  .fast-pause-btn svg{ width:16px; height:16px; }
+  .card.fast-tap{ cursor:pointer; }
+
+  @media (max-width:380px){
+    .rate-row{ flex-direction:column; }
+    .stat{ font-size:1.15rem; }
+  }
+</style>
+</head>
+<body>
+<div id="app"><p class="loading">Loading your progress…</p></div>
+
+<script>
+(function(){
+  const WORDS = [];
+
+  const CATEGORIES = ['School vocabulary','504 Main words','504 Secondary','School books','Series'];
+  const CAT_ABBR = {
+    'School vocabulary':'School vocab',
+    '504 Main words':'504 · Main',
+    '504 Secondary':'504 · Secondary',
+    'School books':'School books',
+    'Series':'Series'
+  };
+
+  const ICON_SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3,9 8,9 13,4 13,20 8,15 3,15" fill="currentColor" stroke="none"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>';
+  const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,13 9,18 20,6"></polyline></svg>';
+  const ICON_WRENCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"></path></svg>';
+  const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>';
+  const ICON_FLAME = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 23c-4 0-7-3-7-7 0-3 2-5 3-7 0 2 1 3 2 3 0-3-1-5 1-8 1 3 4 5 4 9 0-1 1-2 1-3 2 2 3 4 3 6 0 4-3 7-7 7z"></path></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>';
+  const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,4 20,12 6,20"></polygon></svg>';
+  const ICON_SKIP = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,4 15,12 5,20"></polygon><rect x="17" y="4" width="3" height="16" rx="1"></rect></svg>';
+  const ICON_BACK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,5 8,12 15,19"></polyline></svg>';
+
+  const STORAGE_KEY = 'wordlog_progress';
+  const META_KEY = 'wordlog_meta';
+  const CUSTOM_KEY = 'wordlog_custom_words';
+  const MYLIST_KEY = 'wordlog_my_list';
+  const MYLIST_MAX = 10;
+  // Spaced-repetition ladder, in minutes until the next review: just seen,
+  // 10 min, 1 hour, 1 day, 3 days, 7 days. A correct answer promotes a word
+  // one step; a miss drops it back to step 0. "Mastered" means it survived
+  // the full climb to the last step, not just two lucky answers in a row --
+  // and if it resurfaces after that week-long gap and gets missed, it drops
+  // back to learning, since that means it was not actually retained.
+  const SRS_STEP_MINUTES = [0, 10, 60, 1440, 4320, 10080];
+  const SRS_MASTER_STEP = SRS_STEP_MINUTES.length - 1;
+  const canSpeak = ('speechSynthesis' in window);
+  let lastAutoSpokenId = null;
+
+  let customWords = []; // words added in-app, same shape as spreadsheet words; also pushed into WORDS
+  let myList = []; // word ids hand-picked to study as a fixed set, up to MYLIST_MAX
+  let progress = {};
+  let meta = {history:[], streak:{current:0, longest:0, lastDate:null}};
+  let sessionLength = 25;
+  let interactionMode = 'recognize'; // home toggle: 'recognize' | 'typed'
+  let session = [];
+  let sIndex = 0;
+  let sessionKind = 'practice'; // 'practice' | 'test'
+  let sessionLabel = '';
+  let activeMode = 'recognize'; // mode actually running this session
+  let returnTo = null; // {run, label} set when a session was started from the word browser or search, so summary can return there
+  let activePassScope = null; // set to 'Mixed' or a category name during a Complete-length session, for resume tracking
+  let revealed = false;
+  let typedChecked = false;
+  let lastCheckCorrect = false;
+  let results = [];
+  // A miss requeues the word a few cards later in the same session instead
+  // of repeating it back-to-back -- spaced repetition works even within one
+  // sitting, unlike massed drilling which mostly just tests short-term
+  // memory. Tracks how many times each word has already been requeued this
+  // session, so a stubborn word gets extra spaced chances (capped) while an
+  // easy slip only costs one.
+  const MAX_RETRY_REINSERTS = 4;
+  let sessionRetryCounts = {};
+
+  // fast mode
+  const FAST_TIMINGS = {
+    relaxed: {front:2200, back:4200},
+    normal:  {front:1500, back:3000},
+    rapid:   {front:1000, back:2000}
+  };
+  let fastSpeed = 'normal';
+  let fastPhase = 'front'; // 'front' | 'back'
+  let fastPaused = false;
+  let fastTimerHandle = null;
+
+  const root = document.getElementById('app');
+  const el = sel => root.querySelector(sel);
+
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function loadProgress(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){ progress = JSON.parse(raw); }
+    }catch(e){ progress = {}; }
+    migrateProgressToSRS();
+  }
+
+  // One-time upgrade for progress saved before spaced repetition existed.
+  // Old entries have a status but no step/due; credit past mastery without
+  // fully trusting it -- a mastered word starts one step below the top, and
+  // since due is left unset it counts as due right away, so the very next
+  // review re-confirms it under the new system instead of assuming forever.
+  function migrateProgressToSRS(){
+    let changed = false;
+    Object.keys(progress).forEach(id=>{
+      const p = progress[id];
+      if(p && p.step === undefined){
+        if(p.status==='mastered') p.step = SRS_MASTER_STEP - 1;
+        else if(p.status==='learning') p.step = (p.correct>=1) ? 1 : 0;
+        else p.step = 0;
+        changed = true;
+      }
+    });
+    if(changed) saveProgress();
+  }
+  function saveProgress(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+  }
+
+  function loadMeta(){
+    try{
+      const raw = localStorage.getItem(META_KEY);
+      if(raw){ meta = JSON.parse(raw); }
+    }catch(e){}
+    if(!meta.history) meta.history = [];
+    if(!meta.streak) meta.streak = {current:0, longest:0, lastDate:null};
+    if(!meta.passes) meta.passes = {};
+  }
+  function saveMeta(){
+    try{ localStorage.setItem(META_KEY, JSON.stringify(meta)); }catch(e){}
+  }
+
+  // Words added in-app live in their own storage key, kept separate from
+  // the spreadsheet-derived WORDS array at rest, but merged into WORDS in
+  // memory so every existing feature (search, sessions, stats, word lists)
+  // picks them up automatically without special-casing.
+  function loadCustomWords(){
+    try{
+      const raw = localStorage.getItem(CUSTOM_KEY);
+      if(raw){ customWords = JSON.parse(raw); }
+    }catch(e){ customWords = []; }
+    if(customWords.length){ WORDS.push.apply(WORDS, customWords); }
+  }
+  function saveCustomWords(){
+    try{ localStorage.setItem(CUSTOM_KEY, JSON.stringify(customWords)); }catch(e){}
+  }
+
+  // Mirrors the id scheme build_word_log.py uses: category::word, with a
+  // #2/#3 suffix if that exact word already exists in that category, so a
+  // duplicate never collides with -- or scrambles progress on -- an existing id.
+  function makeWordId(cat, word){
+    const base = cat + '::' + word;
+    let count = 0;
+    WORDS.forEach(w=>{ if(w.id===base || w.id.indexOf(base+'#')===0) count++; });
+    return count===0 ? base : base + '#' + (count+1);
+  }
+
+  // My list is a hand-picked, fixed set of up to MYLIST_MAX word ids the user
+  // chose themselves. Unlike the old auto-picked batching, it never rotates
+  // on its own -- the same words come up every time until the user removes
+  // or swaps one, which is the point: study exactly this set until it sticks.
+  function loadMyList(){
+    try{
+      const raw = localStorage.getItem(MYLIST_KEY);
+      if(raw){ myList = JSON.parse(raw); }
+    }catch(e){ myList = []; }
+  }
+  function saveMyList(){
+    try{ localStorage.setItem(MYLIST_KEY, JSON.stringify(myList)); }catch(e){}
+  }
+  function toggleMyListWord(id){
+    const idx = myList.indexOf(id);
+    if(idx !== -1){
+      myList.splice(idx, 1);
+    } else {
+      if(myList.length >= MYLIST_MAX) return;
+      myList.push(id);
+    }
+    saveMyList();
+  }
+
+  function todayStr(d){
+    d = d || new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+day;
+  }
+  function friendlyDate(dateStr){
+    const today = todayStr();
+    const yd = new Date(); yd.setDate(yd.getDate()-1);
+    const yesterday = todayStr(yd);
+    if(dateStr===today) return 'Today';
+    if(dateStr===yesterday) return 'Yesterday';
+    const parts = dateStr.split('-').map(Number);
+    const dt = new Date(parts[0], parts[1]-1, parts[2]);
+    return dt.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  }
+
+  function recordSession(kind, label, total, correct){
+    const today = todayStr();
+    meta.history.unshift({date:today, kind:kind, mode:label, total:total, correct:correct});
+    if(meta.history.length>300) meta.history = meta.history.slice(0,300);
+
+    if(meta.streak.lastDate !== today){
+      const yd = new Date(); yd.setDate(yd.getDate()-1);
+      if(meta.streak.lastDate === todayStr(yd)){
+        meta.streak.current = (meta.streak.current||0)+1;
+      } else {
+        meta.streak.current = 1;
+      }
+      meta.streak.lastDate = today;
+    }
+    meta.streak.longest = Math.max(meta.streak.longest||0, meta.streak.current);
+    saveMeta();
+  }
+
+  function statusOf(id){ const p = progress[id]; return p ? p.status : 'new'; }
+
+  function computeStats(list){
+    let good=0, warn=0, neu=0;
+    list.forEach(w=>{
+      const s = statusOf(w.id);
+      if(s==='mastered') good++; else if(s==='learning') warn++; else neu++;
+    });
+    return {good, warn, neu, total:list.length};
+  }
+
+  function wordPercent(id){
+    const p = progress[id];
+    if(!p || !p.seen) return null; // never attempted -- distinct from a low score
+    return Math.round((p.correct / p.seen) * 100);
+  }
+
+  // Lower score = more urgent to study next. Sessions sort ascending and take
+  // the front of the list, so: never-seen words sort first (always worth
+  // introducing), then whatever has the lowest accuracy so far -- your
+  // weakest words lead, gradually scaling up toward the words you already
+  // know well. A word answered in the last few minutes is pushed to the
+  // very back regardless, so it cannot immediately repeat within the same
+  // short study burst. This governs which words get pulled into a session
+  // and in what order; SRS_STEP_MINUTES/p.due still separately govern when
+  // a word counts as genuinely mastered (see recordResult).
+  function priorityScore(w){
+    const p = progress[w.id];
+    if(!p || !p.seen) return -Infinity;
+    if(p.lastSeen){
+      const minsAgo = (Date.now() - new Date(p.lastSeen).getTime()) / 60000;
+      if(minsAgo >= 0 && minsAgo < 8) return Infinity;
+    }
+    return p.correct / p.seen;
+  }
+
+  function sortByPriority(list){
+    return list.slice().sort((a,b)=> priorityScore(a)-priorityScore(b) || (Math.random()-0.5));
+  }
+
+  // Interleaves already priority-sorted per-category lists round-robin, so a
+  // mixed session still front-loads new/weak words overall (each category
+  // contributes its weakest first) without clumping into category-sized
+  // blocks -- cards from different topics keep mixing together.
+  function interleaveByCategory(words){
+    const byCat = {};
+    const order = [];
+    words.forEach(w=>{
+      if(!byCat[w.cat]){ byCat[w.cat] = []; order.push(w.cat); }
+      byCat[w.cat].push(w);
+    });
+    const result = [];
+    let remaining = true;
+    while(remaining){
+      remaining = false;
+      order.forEach(c=>{
+        if(byCat[c].length){ result.push(byCat[c].shift()); remaining = true; }
+      });
+    }
+    return result;
+  }
+
+  function speak(text){
+    if(!canSpeak) return;
+    try{
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US'; u.rate = 0.92;
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
+  function buildMixedSession(size){
+    if(size === 'all'){
+      return interleaveByCategory(sortByPriority(WORDS));
+    }
+    const byCat = {};
+    CATEGORIES.forEach(c=>byCat[c]=sortByPriority(WORDS.filter(w=>w.cat===c)));
+    const perCat = Math.max(1, Math.floor(size/CATEGORIES.length));
+    let picks = [];
+    CATEGORIES.forEach(c=>{
+      picks = picks.concat(byCat[c].slice(0, perCat));
+    });
+    if(picks.length < size){
+      const rest = sortByPriority(WORDS.filter(w=>!picks.includes(w)));
+      picks = picks.concat(rest.slice(0, size-picks.length));
+    }
+    return interleaveByCategory(picks.slice(0,size));
+  }
+
+  function buildCategorySession(cat, size){
+    const catWords = WORDS.filter(w=>w.cat===cat);
+    if(size === 'all'){
+      return sortByPriority(catWords);
+    }
+    return sortByPriority(catWords).slice(0, Math.min(size, catWords.length));
+  }
+
+  // Tracks progress through a Complete-length session that may span multiple
+  // sittings (exit, come back hours later). Kept separate per scope ('Mixed'
+  // or a category name) in meta.passes, independent of word-mastery progress.
+  function buildCompletePass(scope, allWords){
+    if(!meta.passes) meta.passes = {};
+    const info = meta.passes[scope];
+    const hasIncomplete = info && info.covered && info.covered.length > 0 && info.covered.length < allWords.length;
+    if(hasIncomplete){
+      const coveredSet = {};
+      info.covered.forEach(id => coveredSet[id] = true);
+      const remaining = allWords.filter(w => !coveredSet[w.id]);
+      return { words: interleaveByCategory(sortByPriority(remaining)), continuing: true };
+    }
+    meta.passes[scope] = {covered: []};
+    saveMeta();
+    return { words: interleaveByCategory(sortByPriority(allWords)), continuing: false };
+  }
+
+  function markPassCovered(scope, wordId){
+    if(!scope) return;
+    if(!meta.passes) meta.passes = {};
+    if(!meta.passes[scope]) meta.passes[scope] = {covered: []};
+    if(meta.passes[scope].covered.indexOf(wordId) === -1){
+      meta.passes[scope].covered.push(wordId);
+      saveMeta();
+    }
+  }
+
+  function buildTestSession(size){
+    const arr = WORDS.slice();
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr.slice(0, Math.min(size, arr.length));
+  }
+
+  function startSession(list, label){
+    session = list; sIndex = 0; revealed = false; typedChecked = false; results = [];
+    sessionRetryCounts = {};
+    sessionKind = 'practice';
+    sessionLabel = label;
+    activeMode = interactionMode;
+    fastPhase = 'front'; fastPaused = false; clearFastTimer();
+    returnTo = null;
+    activePassScope = null;
+    renderSession();
+  }
+
+  function startTest(){
+    session = buildTestSession(20); sIndex = 0; revealed = false; typedChecked = false; results = [];
+    sessionRetryCounts = {};
+    sessionKind = 'test';
+    sessionLabel = 'Test';
+    activeMode = 'typed';
+    fastPhase = 'front'; fastPaused = false; clearFastTimer();
+    returnTo = null;
+    activePassScope = null;
+    renderSession();
+  }
+
+  function normalizeAnswer(s){
+    return String(s||'').toLowerCase().trim().replace(/\s+/g,' ');
+  }
+
+  function checkTyped(){
+    const input = el('#type-input');
+    if(!input) return;
+    const w = session[sIndex];
+    const correct = normalizeAnswer(input.value) === normalizeAnswer(w.w);
+    lastCheckCorrect = correct;
+    typedChecked = true;
+    recordResult(correct);
+    renderSession();
+  }
+
+  function recordResult(correct){
+    const w = session[sIndex];
+    const p = progress[w.id] || {status:'new', seen:0, correct:0, step:0, typedOnce:false};
+    p.seen = (p.seen||0)+1;
+    // Recognize mode is self-rated -- "Got it" is honest but not proof you
+    // could actually produce the word. Type it (and Test, which shares the
+    // same typed UI) demands real recall, so a word can only reach the top,
+    // fully-mastered step once it has been typed correctly at least once;
+    // until then, correct Recognize answers can carry it right up to one
+    // step below mastered, but no further. Math.max keeps this from ever
+    // demoting a step reached before this rule existed.
+    if(activeMode==='typed' && correct) p.typedOnce = true;
+    if(correct){
+      p.correct = (p.correct||0)+1;
+      const ceiling = p.typedOnce ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
+      p.step = Math.max(p.step||0, Math.min((p.step||0)+1, ceiling));
+    } else {
+      p.step = 0;
+    }
+    p.status = (p.step>=SRS_MASTER_STEP) ? 'mastered' : 'learning';
+    p.due = new Date(Date.now() + SRS_STEP_MINUTES[p.step]*60000).toISOString();
+    p.lastSeen = new Date().toISOString();
+    progress[w.id]=p;
+    results.push({id:w.id, w:w.w, correct});
+    saveProgress();
+
+    if(!correct && sessionKind!=='test'){
+      const n = sessionRetryCounts[w.id] || 0;
+      if(n < MAX_RETRY_REINSERTS){
+        sessionRetryCounts[w.id] = n+1;
+        const gap = 3 + n; // space it a little further out each repeat miss
+        session.splice(Math.min(sIndex+gap, session.length), 0, w);
+      }
+    }
+  }
+
+  // Summary stats use each word's LATEST result this session, not every
+  // attempt -- a word missed once but nailed on a same-session retry should
+  // read as learned, not linger in the follow-up list from its first slip.
+  function latestResults(){
+    const byId = new Map();
+    results.forEach(r=> byId.set(r.id, r));
+    return Array.from(byId.values());
+  }
+
+  function advance(){
+    if(activePassScope){ markPassCovered(activePassScope, session[sIndex].id); }
+    sIndex++; revealed=false; typedChecked=false; fastPhase='front';
+    if(sIndex>=session.length){
+      clearFastTimer();
+      const correctCount = activeMode==='fast' ? null : latestResults().filter(r=>r.correct).length;
+      recordSession(sessionKind, sessionLabel, session.length, correctCount);
+      renderSummary();
+    } else {
+      renderSession();
+    }
+  }
+
+  function clearFastTimer(){
+    if(fastTimerHandle){ clearTimeout(fastTimerHandle); fastTimerHandle = null; }
+  }
+
+  function scheduleFastStep(){
+    clearFastTimer();
+    if(fastPaused) return;
+    const dur = FAST_TIMINGS[fastSpeed][fastPhase];
+    fastTimerHandle = setTimeout(()=>{
+      fastTimerHandle = null;
+      if(fastPaused) return;
+      if(fastPhase==='front'){
+        fastPhase = 'back';
+        renderSession();
+      } else {
+        advance();
+      }
+    }, dur);
+  }
+
+  function toggleFastPause(){
+    fastPaused = !fastPaused;
+    if(fastPaused){ clearFastTimer(); } else { scheduleFastStep(); }
+    renderSession();
+  }
+
+  function exitSession(){
+    clearFastTimer();
+    renderHome();
+  }
+
+  function skipFastCard(){
+    clearFastTimer();
+    advance();
+  }
+
+  function animateFastBar(){
+    const bar = el('#fast-bar-fill');
+    if(!bar || fastPaused) return;
+    const dur = FAST_TIMINGS[fastSpeed][fastPhase];
+    requestAnimationFrame(()=>{
+      bar.style.transition = 'width '+dur+'ms linear';
+      bar.style.width = '100%';
+    });
+  }
+
+  function askAboutWord(w){
+    const meaningsText = w.me.map(m=>m.m).join(' / ');
+    const msg = 'Can we go over "'+w.w+'" together? I keep struggling with it ('+meaningsText+'). Can you give me a couple more example sentences and quiz me on it?';
+    if(window.sendPrompt) window.sendPrompt(msg);
+  }
+
+  function reviewMissedInChat(){
+    const missed = latestResults().filter(r=>!r.correct);
+    if(missed.length===0){
+      const msg = 'I just finished a vocabulary session and got everything right! Can you give me a few harder practice sentences mixing these words: '+session.map(w=>w.w).join(', ')+'?';
+      if(window.sendPrompt) window.sendPrompt(msg);
+      return;
+    }
+    const list = missed.map(r=>r.w).join(', ');
+    const msg = 'Review these with me in chat, I marked them needs practice in my session: '+list+'. Can you quiz me on them one at a time?';
+    if(window.sendPrompt) window.sendPrompt(msg);
+  }
+
+  function renderHome(){
+    const stats = computeStats(WORDS);
+    const catRows = CATEGORIES.map(c=>{
+      const list = WORDS.filter(w=>w.cat===c);
+      const s = computeStats(list);
+      const pct = Math.round((s.good/list.length)*100);
+      return '<button class="cat-row" data-cat="'+esc(c)+'">'
+        + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
+        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' operational</div>'
+        + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+        + '</button>';
+    }).join('');
+
+    const lens = [[15,'Quick'],[25,'Standard'],[40,'Deep'],['all','Complete']];
+    const lenHtml = lens.map(([val,label])=>
+      '<button class="len-btn '+(sessionLength===val?'active':'')+'" data-len="'+val+'">'+label+'<small>'+(val==='all'?'no cap':val+' cards')+'</small></button>'
+    ).join('');
+
+    const modes = [['recognize','Recognize'],['typed','Type it'],['fast','Fast']];
+    const modeHtml = modes.map(([val,label])=>
+      '<button class="len-btn '+(interactionMode===val?'active':'')+'" data-mode="'+val+'">'+label+'</button>'
+    ).join('');
+
+    const speeds = [['relaxed','Relaxed'],['normal','Normal'],['rapid','Rapid']];
+    const speedHtml = interactionMode==='fast' ? (
+      '<div class="length-toggle">' + speeds.map(([val,label])=>
+        '<button class="len-btn '+(fastSpeed===val?'active':'')+'" data-speed="'+val+'">'+label+'</button>'
+      ).join('') + '</div>'
+    ) : '';
+
+    const streakHtml = meta.streak.current > 0
+      ? '<div class="streak-row">'+ICON_FLAME+' '+meta.streak.current+'-day streak <span class="streak-best">&middot; best '+meta.streak.longest+'</span></div>'
+      : '<div class="streak-row" style="color:var(--text-soft);">'+ICON_FLAME+' Start a streak today</div>';
+
+    const mixedHint = sessionLength==='all'
+      ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
+      : 'Pulled evenly across all 5 lists, new and in-progress words come first.';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
+      + '<h1 class="title">Word Log</h1>'
+      + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
+      + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+      + streakHtml
+      + '<div class="stat-row">'
+        + '<div class="stat"><span class="dot dot-good"></span>'+stats.good+'<small>operational</small></div>'
+        + '<div class="stat"><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></div>'
+        + '<div class="stat"><span class="dot dot-new"></span>'+stats.neu+'<small>not started</small></div>'
+      + '</div>'
+      + '<div class="length-toggle">'+lenHtml+'</div>'
+      + '<div class="length-toggle">'+modeHtml+'</div>'
+      + speedHtml
+      + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
+      + '<p class="hint">'+mixedHint+'</p>'
+      + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
+      + '<div class="divider"><span>or work one list</span></div>'
+      + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a list below, to run every word in just that topic.</p>'
+      + '<div class="cat-list">'+catRows+'</div>'
+      + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
+      + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
+      + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
+      + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
+      + '<button class="reset-link" id="reset-progress">Reset progress</button>'
+      + '</div>';
+
+    const homeSearch = el('#home-search');
+    homeSearch.addEventListener('input', ()=> renderSearch(homeSearch.value) );
+    homeSearch.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); renderSearch(homeSearch.value); } });
+    el('#my-list').addEventListener('click', ()=>renderMyList(''));
+    el('#add-word').addEventListener('click', renderAddWord);
+    el('#start-mixed').addEventListener('click', ()=>{
+      if(sessionLength==='all'){
+        const result = buildCompletePass('Mixed', WORDS);
+        startSession(result.words, result.continuing ? 'Mixed (remaining)' : 'Mixed');
+        activePassScope = 'Mixed';
+      } else {
+        startSession(buildMixedSession(sessionLength), 'Mixed');
+      }
+    });
+    el('#start-test').addEventListener('click', startTest);
+    el('#view-history').addEventListener('click', renderHistory);
+    el('#browse-topics').addEventListener('click', renderTopicPicker);
+    root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
+      b.addEventListener('click', ()=>{ sessionLength = (b.dataset.len==='all') ? 'all' : parseInt(b.dataset.len,10); renderHome(); });
+    });
+    root.querySelectorAll('.len-btn[data-mode]').forEach(b=>{
+      b.addEventListener('click', ()=>{ interactionMode = b.dataset.mode; renderHome(); });
+    });
+    root.querySelectorAll('.len-btn[data-speed]').forEach(b=>{
+      b.addEventListener('click', ()=>{ fastSpeed = b.dataset.speed; renderHome(); });
+    });
+    root.querySelectorAll('.cat-row').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const cat = b.dataset.cat;
+        if(sessionLength==='all'){
+          const catWords = WORDS.filter(w=>w.cat===cat);
+          const result = buildCompletePass(cat, catWords);
+          startSession(result.words, result.continuing ? (cat+' (remaining)') : cat);
+          activePassScope = cat;
+        } else {
+          startSession(buildCategorySession(cat, sessionLength), cat);
+        }
+      });
+    });
+    el('#reset-progress').addEventListener('click', ()=>{
+      if(confirm('Clear all saved progress? This cannot be undone.')){
+        progress = {}; saveProgress(); renderHome();
+      }
+    });
+  }
+
+  function renderMeanings(w){
+    const rows = w.me.map((m,i)=>{
+      const exampleHtml = m.e ? (
+        '<div class="meaning-example">"'+esc(m.e)+'"'
+        + (canSpeak ? '<button class="mini-speak example-speak" data-text="'+esc(m.e)+'" aria-label="Listen to example">'+ICON_SPEAKER+'</button>' : '')
+        + '</div>'
+      ) : '';
+      return '<div class="meaning-row"><span class="meaning-num">'+(i+1)+'</span>'
+        + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div>'+exampleHtml+'</div></div>';
+    }).join('');
+    const notes = w.n ? '<div class="note-box"><span class="note-label">Note</span>'+esc(w.n)+'</div>' : '';
+    return '<div class="meanings">'+rows+'</div>'+notes;
+  }
+
+  function renderTypedPrompt(w){
+    const rows = w.me.map((m,i)=>
+      '<div class="meaning-row"><span class="meaning-num">'+(i+1)+'</span>'
+      + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div></div></div>'
+    ).join('');
+    return '<div class="prompt-label">Type the English word</div>'
+      + '<div class="meanings">'+rows+'</div>'
+      + '<input type="text" class="type-input" id="type-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type here, then Enter">';
+  }
+
+  function renderTypedResult(w){
+    const badge = lastCheckCorrect
+      ? '<div class="result-badge result-good">'+ICON_CHECK+'Correct</div>'
+      : '<div class="result-badge result-bad">'+ICON_X+'Not quite</div>';
+    return badge
+      + '<div class="card-word">'+esc(w.w)+'</div>'
+      + '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
+      + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
+      + '</div>'
+      + renderMeanings(w);
+  }
+
+  function renderSession(){
+    const w = session[sIndex];
+    const pct = Math.round((sIndex/session.length)*100);
+    const isLast = (sIndex+1 >= session.length);
+    let cardBody, belowCard;
+
+    if(activeMode==='typed'){
+      if(!typedChecked){
+        cardBody = renderTypedPrompt(w);
+        belowCard = '<button class="btn-oncard" id="check-btn">Check</button>';
+      } else {
+        cardBody = renderTypedResult(w);
+        belowCard = '<button class="btn-primary" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
+          + '<p class="hint" style="text-align:center;">Press Enter</p>'
+          + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
+      }
+    } else if(activeMode==='fast'){
+      const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
+        + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
+        + '</div>';
+      const timingBar = '<div class="fast-bar-track"><div class="fast-bar-fill" id="fast-bar-fill"></div></div>';
+      cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+timingBar
+        + (fastPhase==='back' ? renderMeanings(w) : '');
+      belowCard = '<div class="fast-controls">'
+          + '<button class="fast-pause-btn" id="fast-pause" aria-label="'+(fastPaused?'Resume':'Pause')+'">'+(fastPaused?ICON_PLAY:ICON_PAUSE)+'</button>'
+          + '<button class="fast-pause-btn" id="fast-skip" aria-label="Next word">'+ICON_SKIP+'</button>'
+        + '</div>'
+        + '<p class="hint" style="text-align:center;">Space to pause &middot; Enter to skip</p>';
+    } else {
+      const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
+        + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
+        + '</div>';
+      if(!revealed){
+        cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+'<button class="btn-oncard" id="reveal-btn">Reveal meaning</button>';
+        belowCard = '<p class="hint" style="text-align:center;">Press Enter</p>';
+      } else {
+        cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+renderMeanings(w);
+        belowCard = '<div class="rate-row">'
+            + '<button class="tag-btn tag-warn" id="rate-warn">'+ICON_WRENCH+'Needs practice</button>'
+            + '<button class="tag-btn tag-good" id="rate-good">'+ICON_CHECK+'Got it</button>'
+          + '</div>'
+          + '<p class="hint" style="text-align:center;">&larr; Needs practice &middot; Got it &rarr;</p>'
+          + '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>';
+      }
+    }
+
+    const retryTag = (sessionRetryCounts[w.id]||0) > 0
+      ? '<div class="hint" style="text-align:center; color:var(--warn);">Missed earlier &middot; one more time</div>' : '';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="sess-top">'
+        + '<button class="sess-back" id="session-back">'+ICON_BACK+'Menu</button>'
+        + '<span>'+(sessionKind==='test'?'Test ':'Card ')+String(sIndex+1).padStart(2,'0')+' / '+session.length+'</span>'
+        + '<span class="cat-tag">'+(sessionKind==='test' ? 'Test' : esc(CAT_ABBR[w.cat]||w.cat))+'</span></div>'
+      + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+      + retryTag
+      + '<div class="card"><div class="hole"></div>'+cardBody+'</div>'
+      + belowCard
+      + '</div>';
+
+    el('#session-back').addEventListener('click', exitSession);
+
+    if(activeMode==='typed'){
+      if(!typedChecked){
+        const inp = el('#type-input');
+        inp.focus();
+        inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.stopPropagation(); checkTyped(); } });
+        el('#check-btn').addEventListener('click', checkTyped);
+      } else {
+        if(canSpeak){
+          el('#speak-word').addEventListener('click', ()=>speak(w.w));
+          if(lastAutoSpokenId !== w.id){ speak(w.w); lastAutoSpokenId = w.id; }
+        }
+        el('#next-btn').addEventListener('click', advance);
+        const ac = el('#ask-claude'); if(ac) ac.addEventListener('click', ()=>askAboutWord(w));
+        root.querySelectorAll('.example-speak').forEach(btn=>{
+          btn.addEventListener('click', ()=> speak(btn.dataset.text) );
+        });
+      }
+    } else if(activeMode==='fast'){
+      if(canSpeak){
+        const sb = el('#speak-word'); if(sb) sb.addEventListener('click', (e)=>{ e.stopPropagation(); speak(w.w); });
+        if(lastAutoSpokenId !== w.id){ speak(w.w); lastAutoSpokenId = w.id; }
+      }
+      el('#fast-pause').addEventListener('click', (e)=>{ e.stopPropagation(); toggleFastPause(); });
+      el('#fast-skip').addEventListener('click', (e)=>{ e.stopPropagation(); skipFastCard(); });
+      const cardEl = root.querySelector('.card');
+      if(cardEl){
+        cardEl.classList.add('fast-tap');
+        cardEl.addEventListener('click', toggleFastPause);
+      }
+      animateFastBar();
+      scheduleFastStep();
+    } else {
+      if(canSpeak){ el('#speak-word').addEventListener('click', ()=>speak(w.w)); }
+      if(!revealed){
+        if(canSpeak && lastAutoSpokenId !== w.id){ speak(w.w); lastAutoSpokenId = w.id; }
+        el('#reveal-btn').addEventListener('click', ()=>{ revealed = true; renderSession(); });
+      } else {
+        el('#rate-warn').addEventListener('click', ()=>{ recordResult(false); advance(); });
+        el('#rate-good').addEventListener('click', ()=>{ recordResult(true); advance(); });
+        el('#ask-claude').addEventListener('click', ()=>askAboutWord(w));
+        root.querySelectorAll('.example-speak').forEach(btn=>{
+          btn.addEventListener('click', ()=> speak(btn.dataset.text) );
+        });
+      }
+    }
+  }
+
+  function renderSummary(){
+    const backAction = returnTo ? returnTo.run : renderHome;
+    const backLabel = returnTo ? returnTo.label : 'Back to home';
+
+    if(activeMode==='fast'){
+      root.innerHTML = '<div class="view">'
+        + '<div class="eyebrow">Fast review complete &middot; '+session.length+' words</div>'
+        + '<h1 class="title">Nice pace.</h1>'
+        + '<p class="subtitle">You cruised through '+session.length+' words in '+esc(sessionLabel)+'. Switch to Recognize or Type it when you want to test yourself on these.</p>'
+        + '<button class="btn-primary" id="new-session" style="margin-top:8px;">'+backLabel+'</button>'
+        + '</div>';
+      el('#new-session').addEventListener('click', backAction);
+      return;
+    }
+
+    const finalResults = latestResults();
+    const good = finalResults.filter(r=>r.correct).length;
+    const warn = finalResults.filter(r=>!r.correct).length;
+    const missed = finalResults.filter(r=>!r.correct);
+    const pct = Math.round((good/finalResults.length)*100);
+
+    const missedHtml = missed.length ? missed.map(r=>{
+      const w = WORDS.find(x=>x.id===r.id);
+      const gloss = (w && w.me[0]) ? w.me[0].m : '';
+      return '<div class="follow-row"><span class="follow-word">'+esc(r.w)+'</span><span class="follow-gloss">'+esc(gloss)+'</span></div>';
+    }).join('') : '<p class="hint">Everything landed. Nice work.</p>';
+
+    let eyebrowText = 'Session closed &middot; '+session.length+' cards';
+    let titleText = 'Nice work.';
+    let scoreHtml = '';
+
+    if(sessionKind==='test'){
+      eyebrowText = 'Test complete &middot; '+session.length+' words';
+      titleText = pct+'%';
+      let label = 'Good baseline, these need more reps.';
+      if(pct>=90) label = 'Excellent, this set is locked in.';
+      else if(pct>=70) label = 'Solid. A few more rounds and these are locked in.';
+      else if(pct>=50) label = 'Good start. Keep at these ones.';
+      scoreHtml = '<p class="subtitle">'+good+' of '+session.length+' correct. '+label+'</p>';
+    }
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">'+eyebrowText+'</div>'
+      + '<h1 class="title">'+titleText+'</h1>'
+      + scoreHtml
+      + '<div class="stat-row">'
+        + '<div class="stat"><span class="dot dot-good"></span>'+good+'<small>got it</small></div>'
+        + '<div class="stat"><span class="dot dot-warn"></span>'+warn+'<small>need practice</small></div>'
+      + '</div>'
+      + '<div class="divider"><span>follow-up list</span></div>'
+      + '<div class="follow-list">'+missedHtml+'</div>'
+      + '<button class="btn-primary" id="review-chat" style="margin-top:18px;">Review in chat &rarr;</button>'
+      + '<button class="btn-secondary" id="new-session">'+backLabel+'</button>'
+      + '</div>';
+
+    el('#review-chat').addEventListener('click', reviewMissedInChat);
+    el('#new-session').addEventListener('click', backAction);
+  }
+
+  function renderHistory(){
+    const rows = meta.history.length ? meta.history.map(h=>{
+      const hasScore = (h.correct!==null && h.correct!==undefined);
+      const scoreText = hasScore ? (h.correct+'/'+h.total) : (h.total+' words');
+      const good = hasScore && h.total>0 && (h.correct/h.total) >= 0.7;
+      return '<div class="follow-row"><span class="follow-word">'+esc(friendlyDate(h.date))+' &middot; '+esc(h.mode)+(h.kind==='test' ? ' (test)' : '')+'</span>'
+        + '<span class="history-row-score" style="color:'+(good?'var(--good)':'var(--text)')+';">'+scoreText+'</span></div>';
+    }).join('') : '<p class="hint">No sessions yet. Finish one and it will show up here.</p>';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Session history</div>'
+      + '<h1 class="title">Your sessions</h1>'
+      + '<div class="follow-list">'+rows+'</div>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back</button>'
+      + '</div>';
+
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
+  function searchWords(query){
+    const q = query.trim().toLowerCase();
+    if(!q) return [];
+    const starts = [], contains = [];
+    WORDS.forEach(w=>{
+      const wl = w.w.toLowerCase();
+      const inMeaning = w.me.some(m=> m.m.toLowerCase().indexOf(q) !== -1);
+      if(wl.indexOf(q)===0) starts.push(w);
+      else if(wl.indexOf(q)!==-1 || inMeaning) contains.push(w);
+    });
+    return starts.concat(contains).slice(0,60);
+  }
+
+  function renderSearch(query){
+    query = query || '';
+    const matches = searchWords(query);
+    const rows = matches.map(w=>{
+      const pct = wordPercent(w.id);
+      const label = pct===null ? 'New' : pct+'%';
+      const color = pct===null ? 'var(--new)' : (pct>=80 ? 'var(--good)' : (pct>=40 ? 'var(--amber)' : 'var(--warn)'));
+      return '<button class="word-row" data-id="'+esc(String(w.id))+'">'
+        + '<span class="word-row-name">'+esc(w.w)+' <span style="color:var(--text-soft); font-weight:400; font-size:.78rem;">'+esc(CAT_ABBR[w.cat]||w.cat)+'</span></span>'
+        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
+        + '</button>';
+    }).join('');
+    const body = query.trim()
+      ? (matches.length ? '<div class="word-list">'+rows+'</div>' : '<p class="hint">Nothing matches yet. Try a shorter word or part of a meaning.</p>')
+      : '<p class="hint">Type a word or part of a meaning to find it.</p>';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Search</div>'
+      + '<h1 class="title">Find a word</h1>'
+      + '<input type="text" class="field-input" id="search-input" placeholder="Search word or meaning..." autocomplete="off">'
+      + '<div style="margin-top:14px;">'+body+'</div>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
+      + '</div>';
+
+    const inp = el('#search-input');
+    inp.value = query;
+    inp.focus();
+    inp.setSelectionRange(inp.value.length, inp.value.length);
+    inp.addEventListener('input', ()=> renderSearch(inp.value) );
+    root.querySelectorAll('.word-row').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const word = matches.find(w=>String(w.id)===b.dataset.id);
+        if(!word) return;
+        const currentQuery = inp.value;
+        startSession([word], word.cat);
+        returnTo = { run: ()=>renderSearch(currentQuery), label:'Back to search' };
+      });
+    });
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
+  function renderAddWord(){
+    const catOptions = CATEGORIES.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
+    const meaningFields = [1,2,3].map(i=>
+      '<div class="field"><label class="field-label">Meaning '+i+(i===1?'':' (optional)')+'</label>'
+      + '<input type="text" class="field-input" id="new-m'+i+'" placeholder="Definition, translation, or synonym">'
+      + '<input type="text" class="field-input" id="new-e'+i+'" placeholder="Example sentence (optional)" style="margin-top:6px;">'
+      + '</div>'
+    ).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">New word</div>'
+      + '<h1 class="title">Add a word</h1>'
+      + '<p class="subtitle">Same columns as your spreadsheet: word, pronunciation, up to three meanings with examples, and an optional note.</p>'
+      + '<div class="field"><label class="field-label">Word</label><input type="text" class="field-input" id="new-word" placeholder="e.g. Leftovers"></div>'
+      + '<div class="field"><label class="field-label">Pronunciation</label><input type="text" class="field-input" id="new-pron" placeholder="e.g. left-OH-vers"></div>'
+      + '<div class="field"><label class="field-label">Category</label><select class="field-input" id="new-cat">'+catOptions+'</select></div>'
+      + meaningFields
+      + '<div class="field"><label class="field-label">Note (optional)</label><input type="text" class="field-input" id="new-note" placeholder="Any extra note"></div>'
+      + '<p class="field-error" id="add-word-error"></p>'
+      + '<button class="btn-primary" id="save-word">Save word</button>'
+      + '<button class="btn-secondary" id="cancel-word">Cancel</button>'
+      + '</div>';
+
+    el('#new-word').focus();
+    el('#save-word').addEventListener('click', saveNewWord);
+    el('#cancel-word').addEventListener('click', renderHome);
+  }
+
+  function saveNewWord(){
+    const wordVal = el('#new-word').value.trim();
+    const pronVal = el('#new-pron').value.trim();
+    const catVal = el('#new-cat').value;
+    const meanings = [1,2,3].map(i=>({
+      m: el('#new-m'+i).value.trim(),
+      e: el('#new-e'+i).value.trim()
+    })).filter(m=>m.m);
+    const noteVal = el('#new-note').value.trim();
+    const errEl = el('#add-word-error');
+
+    if(!wordVal){ errEl.textContent = 'Enter the word itself first.'; return; }
+    if(meanings.length===0){ errEl.textContent = 'Add at least one meaning.'; return; }
+
+    const id = makeWordId(catVal, wordVal);
+    const entry = { id:id, cat:catVal, w:wordVal, p:pronVal, me:meanings, n:noteVal };
+    WORDS.push(entry);
+    customWords.push(entry);
+    saveCustomWords();
+    renderHome();
+  }
+
+  function renderMyList(query){
+    query = query || '';
+    const listWords = myList.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean);
+
+    const listRows = listWords.map(w=>{
+      const pct = wordPercent(w.id);
+      const label = pct===null ? 'New' : pct+'%';
+      const color = pct===null ? 'var(--new)' : (pct>=80 ? 'var(--good)' : (pct>=40 ? 'var(--amber)' : 'var(--warn)'));
+      return '<div class="follow-row"><span class="follow-word">'+esc(w.w)+' <span style="color:var(--text-soft); font-weight:400; font-size:.78rem;">'+esc(CAT_ABBR[w.cat]||w.cat)+'</span></span>'
+        + '<span style="display:flex; align-items:center; gap:12px;">'
+        + '<span style="font-family:var(--mono); font-weight:600; font-size:.85rem; color:'+color+';">'+label+'</span>'
+        + '<button class="mini-speak" data-remove="'+esc(String(w.id))+'" aria-label="Remove from list" style="color:var(--warn);">'+ICON_X+'</button>'
+        + '</span></div>';
+    }).join('');
+
+    const listSection = listWords.length
+      ? '<div class="follow-list">'+listRows+'</div>'
+      : '<p class="hint">No words yet. Search below and tap one to add it, up to '+MYLIST_MAX+'.</p>';
+
+    const matches = query.trim() ? searchWords(query) : [];
+    const searchRows = matches.map(w=>{
+      const already = myList.indexOf(w.id) !== -1;
+      const full = !already && myList.length >= MYLIST_MAX;
+      const label = already ? 'Added' : (full ? 'List full' : '+ Add');
+      const color = already ? 'var(--good)' : (full ? 'var(--text-soft)' : 'var(--amber)');
+      return '<button class="word-row" data-id="'+esc(String(w.id))+'">'
+        + '<span class="word-row-name">'+esc(w.w)+' <span style="color:var(--text-soft); font-weight:400; font-size:.78rem;">'+esc(CAT_ABBR[w.cat]||w.cat)+'</span></span>'
+        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
+        + '</button>';
+    }).join('');
+    const searchBody = query.trim()
+      ? (matches.length ? '<div class="word-list">'+searchRows+'</div>' : '<p class="hint">No words match.</p>')
+      : '';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">My list &middot; '+listWords.length+'/'+MYLIST_MAX+'</div>'
+      + '<h1 class="title">Study my list</h1>'
+      + '<p class="subtitle">Pick your own words below, then study just this set in whichever mode is selected at home, until every one is mastered.</p>'
+      + listSection
+      + (listWords.length ? '<button class="btn-primary" id="start-mylist" style="margin-top:14px;">Start studying</button>' : '')
+      + '<div class="divider"><span>add words</span></div>'
+      + '<input type="text" class="field-input" id="mylist-search" placeholder="Search a word or meaning..." autocomplete="off">'
+      + '<div style="margin-top:14px;">'+searchBody+'</div>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
+      + '</div>';
+
+    const inp = el('#mylist-search');
+    inp.value = query;
+    inp.focus();
+    inp.setSelectionRange(inp.value.length, inp.value.length);
+    inp.addEventListener('input', ()=> renderMyList(inp.value) );
+
+    root.querySelectorAll('[data-remove]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        toggleMyListWord(b.dataset.remove);
+        renderMyList(inp.value);
+      });
+    });
+    root.querySelectorAll('.word-row[data-id]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        toggleMyListWord(b.dataset.id);
+        renderMyList(inp.value);
+      });
+    });
+    const startBtn = el('#start-mylist');
+    if(startBtn){
+      startBtn.addEventListener('click', ()=>{
+        const words = sortByPriority(myList.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean));
+        if(!words.length) return;
+        startSession(words, 'My list');
+        returnTo = { run: ()=>renderMyList(''), label:'Back to my list' };
+      });
+    }
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
+  function renderTopicPicker(){
+    const rows = CATEGORIES.map(c=>{
+      const list = WORDS.filter(w=>w.cat===c);
+      const s = computeStats(list);
+      const pct = Math.round((s.good/list.length)*100);
+      return '<button class="cat-row" data-cat="'+esc(c)+'">'
+        + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
+        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' operational</div>'
+        + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+        + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Browse by topic</div>'
+      + '<h1 class="title">Pick a topic</h1>'
+      + '<p class="subtitle">See every word with its real accuracy, then tap any single one to practice just that word.</p>'
+      + '<div class="cat-list">'+rows+'</div>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back</button>'
+      + '</div>';
+
+    root.querySelectorAll('.cat-row').forEach(b=>{
+      b.addEventListener('click', ()=> renderWordList(b.dataset.cat) );
+    });
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
+  function renderWordList(cat){
+    const words = WORDS.filter(w=>w.cat===cat).slice();
+    words.sort((a,b)=>{
+      const pa = wordPercent(a.id), pb = wordPercent(b.id);
+      if(pa===null && pb===null) return 0;
+      if(pa===null) return -1; // never-attempted words need attention first
+      if(pb===null) return 1;
+      return pa - pb; // weakest first
+    });
+
+    const rows = words.map(w=>{
+      const pct = wordPercent(w.id);
+      const label = pct===null ? 'New' : pct+'%';
+      const color = pct===null ? 'var(--new)' : (pct>=80 ? 'var(--good)' : (pct>=40 ? 'var(--amber)' : 'var(--warn)'));
+      return '<button class="word-row" data-id="'+esc(String(w.id))+'">'
+        + '<span class="word-row-name">'+esc(w.w)+'</span>'
+        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
+        + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">'+esc(cat)+'</div>'
+      + '<h1 class="title">Word list</h1>'
+      + '<p class="subtitle">Weakest first. Tap any word to practice just that one, in whichever mode is selected at home.</p>'
+      + '<div class="word-list">'+rows+'</div>'
+      + '<button class="btn-secondary" id="back-topics" style="margin-top:16px;">&larr; Back to topics</button>'
+      + '</div>';
+
+    root.querySelectorAll('.word-row').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const word = words.find(w=>String(w.id)===b.dataset.id);
+        if(!word) return;
+        startSession([word], cat);
+        returnTo = { run: ()=>renderWordList(cat), label:'Back to word list' };
+      });
+    });
+    el('#back-topics').addEventListener('click', renderTopicPicker);
+  }
+
+  function handleGlobalKeydown(e){
+    const inSession = root.querySelector('.sess-top');
+    if(!inSession) return; // shortcuts only apply during an active card session
+
+    if(activeMode==='fast'){
+      if(e.code==='Space' || e.key===' '){
+        e.preventDefault();
+        toggleFastPause();
+      } else if(e.key==='Enter'){
+        e.preventDefault();
+        skipFastCard();
+      }
+      return;
+    }
+
+    if(activeMode==='typed'){
+      // pre-check Enter is handled by the input's own listener (which stops
+      // propagation); this only covers "Enter again to move on" after checking
+      if(e.key==='Enter' && typedChecked){
+        e.preventDefault();
+        advance();
+      }
+      return;
+    }
+
+    // recognize mode: Enter reveals the meaning; once revealed, arrow keys rate
+    if(e.key==='Enter' && !revealed){
+      e.preventDefault();
+      revealed = true;
+      renderSession();
+    } else if(revealed && (e.key==='ArrowLeft' || e.key==='ArrowRight')){
+      e.preventDefault();
+      recordResult(e.key==='ArrowRight');
+      advance();
+    }
+  }
+  document.addEventListener('keydown', handleGlobalKeydown);
+
+  async function init(){
+    loadProgress();
+    loadMeta();
+    loadCustomWords();
+    loadMyList();
+    renderHome();
+  }
+  init().catch(()=>{ root.innerHTML = '<p class="loading">Something went wrong loading the app. Refreshing might help.</p>'; });
+})();
+</script>
+</body>
+</html>
