@@ -295,93 +295,7 @@
     'Series':'Series'
   };
 
-  // Speech Coach's phrase bank -- separate from WORDS on purpose. These are
-  // full conversational phrases grouped by real-life situation, not tied to
-  // the spreadsheet vocabulary, so they live as their own fixed data here.
-  const PHRASE_BANK = {
-    'Saludos y presentaciones': [
-      'Hi, my name is Eduardo. Nice to meet you.',
-      'How are you doing today?',
-      "I'm doing great, thanks for asking.",
-      'What do you do for a living?',
-      'It was really nice talking to you.',
-      'Where are you from originally?',
-      'Let me introduce myself.',
-      "I've heard so much about you."
-    ],
-    'Small talk': [
-      'The weather has been really nice lately.',
-      'Did you have a good weekend?',
-      "I'm not a big fan of Mondays.",
-      'Have you seen any good movies recently?',
-      'Traffic was terrible this morning.',
-      'I could really use a cup of coffee right now.',
-      'What are your plans for tonight?',
-      "Time really flies, doesn't it?"
-    ],
-    'Restaurante': [
-      'Could I see the menu, please?',
-      "I'd like to make a reservation for two.",
-      'Can I get the check, please?',
-      'Is this dish spicy?',
-      "I'm allergic to peanuts.",
-      'Could we get some more water, please?',
-      'Everything was delicious, thank you.',
-      'Do you have any vegetarian options?'
-    ],
-    'Viajes': [
-      'Where is the nearest train station?',
-      'How much does a ticket to downtown cost?',
-      'Could you recommend a good place to stay?',
-      "I think I'm lost, can you help me?",
-      'What time does the museum open?',
-      'Is it within walking distance from here?',
-      "I'd like to check in, please.",
-      'Could you call a taxi for me?'
-    ],
-    'Entrevista de trabajo': [
-      'Tell me a little bit about yourself.',
-      'What are your greatest strengths?',
-      'Why do you want to work for this company?',
-      'I have three years of experience in this field.',
-      "I'm a fast learner and I work well under pressure.",
-      'Where do you see yourself in five years?',
-      'Do you have any questions for me?',
-      "I'm really excited about this opportunity."
-    ],
-    'Compras': [
-      'How much does this cost?',
-      'Do you have this in a different size?',
-      "I'm just looking, thank you.",
-      'Can I try this on?',
-      'Do you accept credit cards?',
-      'Is there a discount on this item?',
-      "I'd like to return this, please.",
-      'Could you gift wrap this for me?'
-    ],
-    'Emergencias': [
-      'I need help, please.',
-      'Could you call an ambulance?',
-      'I lost my passport.',
-      'Where is the nearest hospital?',
-      "I don't feel well.",
-      'Could you repeat that more slowly?',
-      "I don't understand, could you explain that again?",
-      'Please, I need to speak to someone in charge.'
-    ],
-    'Frases del dia a dia': [
-      'I usually wake up around seven in the morning.',
-      'I need to finish this by the end of the day.',
-      'Can you help me with something?',
-      "I'll be there in about ten minutes.",
-      "Sorry, I'm running a little late.",
-      "Let's meet up sometime this week.",
-      'I really appreciate your help.',
-      'That makes a lot of sense.'
-    ]
-  };
-
-  const ICON_SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3,9 8,9 13,4 13,20 8,15 3,15" fill="currentColor" stroke="none"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>';
+  const ICON_SPEAKER ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3,9 8,9 13,4 13,20 8,15 3,15" fill="currentColor" stroke="none"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>';
   const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,13 9,18 20,6"></polyline></svg>';
   const ICON_WRENCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"></path></svg>';
   const ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>';
@@ -411,9 +325,9 @@
 
   let customWords = []; // words added in-app, same shape as spreadsheet words; also pushed into WORDS
   let myList = []; // word ids hand-picked to study as a fixed set, up to MYLIST_MAX
-  let speechScores = {}; // 'category|||index' -> best score reached for that phrase
+  let speechScores = {}; // word id -> best pronunciation score reached for that word's example sentence
   let speechCategory = null;
-  let speechIndex = 0;
+  let speechIndex = 0; // index into that category's phrase list, weakest-scored first
   let scRecognizing = false; // Speech Coach's own mic state -- kept separate
   let scActiveRecognition = null; // from Speak It's, since they are different features
   let scStatus = null; // transient status text shown under the phrase card
@@ -568,10 +482,12 @@
       if(raw){ speechScores = JSON.parse(raw); }
     }catch(e){ speechScores = {}; }
   }
-  function saveSpeechScore(category, index, score){
-    const key = category+'|||'+index;
-    if(speechScores[key]===undefined || score>speechScores[key]){
-      speechScores[key] = score;
+  // Keyed by the word's own stable id (category::word), same scheme as
+  // everywhere else -- so reordering the spreadsheet never scrambles a
+  // speaking score, just like it never scrambles mastery progress.
+  function saveSpeechScore(wordId, score){
+    if(speechScores[wordId]===undefined || score>speechScores[wordId]){
+      speechScores[wordId] = score;
       try{ localStorage.setItem(SPEECH_KEY, JSON.stringify(speechScores)); }catch(e){}
     }
   }
@@ -827,9 +743,38 @@
     return { matched, matchCount: dp[n][m] };
   }
 
+  // Speech Coach phrases come from your own vocabulary's example sentences
+  // instead of a fixed script, grouped by the app's existing categories --
+  // every word already has a stored example (confirmed clean in an earlier
+  // data check), so no filtering-out is needed beyond "does it have one".
+  function getSpeechPhraseForWord(w){
+    for(let i=0;i<w.me.length;i++){
+      if(w.me[i].e) return w.me[i].e;
+    }
+    return null;
+  }
+
+  function getSpeechPhrases(cat){
+    const list = WORDS.filter(w=>w.cat===cat).map(w=>({
+      id: w.id, word: w.w, phrase: getSpeechPhraseForWord(w)
+    })).filter(p=>p.phrase);
+    // weakest-scored (and never-attempted) phrases first, same philosophy
+    // as every other practice mode in the app
+    list.sort((a,b)=>{
+      const sa = speechScores[a.id], sb = speechScores[b.id];
+      if(sa===undefined && sb===undefined) return 0;
+      if(sa===undefined) return -1;
+      if(sb===undefined) return 1;
+      return sa-sb;
+    });
+    return list;
+  }
+
   function scHandlePhraseResult(transcript){
-    const phrase = PHRASE_BANK[speechCategory][speechIndex];
-    const targetWords = scTokenize(phrase);
+    const phrases = getSpeechPhrases(speechCategory);
+    const current = phrases[speechIndex];
+    if(!current) return;
+    const targetWords = scTokenize(current.phrase);
     const spokenWords = scTokenize(transcript);
     const { matched, matchCount } = scAlignPhrase(targetWords, spokenWords);
     const score = targetWords.length ? Math.round((matchCount/targetWords.length)*100) : 0;
@@ -837,7 +782,7 @@
       '<span class="'+(matched[idx]?'ok':'miss')+'">'+esc(word)+'</span>'
     ).join(' ');
     scResult = { score, diffHtml, transcript };
-    saveSpeechScore(speechCategory, speechIndex, score);
+    saveSpeechScore(current.id, score);
     renderSpeechCoach();
   }
 
@@ -1703,15 +1648,16 @@
   }
 
   function renderSpeechCoach(){
-    if(!speechCategory) speechCategory = Object.keys(PHRASE_BANK)[0];
-    const phrases = PHRASE_BANK[speechCategory];
-    const phrase = phrases[speechIndex];
+    if(!speechCategory) speechCategory = CATEGORIES[0];
+    const phrases = getSpeechPhrases(speechCategory);
+    if(speechIndex >= phrases.length) speechIndex = 0;
+    const current = phrases[speechIndex];
 
     const scoreValues = Object.values(speechScores);
     const practicedCount = scoreValues.length;
     const avgScore = practicedCount ? Math.round(scoreValues.reduce((a,b)=>a+b,0)/practicedCount) : 0;
 
-    const catOptions = Object.keys(PHRASE_BANK).map(c=>
+    const catOptions = CATEGORIES.map(c=>
       '<option value="'+esc(c)+'" '+(c===speechCategory?'selected':'')+'>'+esc(c)+'</option>'
     ).join('');
 
@@ -1727,34 +1673,35 @@
     const statusHtml = scStatus ? '<p class="listen-error">'+esc(scStatus)+'</p>' : '';
 
     const rows = phrases.map((p,i)=>{
-      const key = speechCategory+'|||'+i;
-      const score = speechScores[key];
+      const score = speechScores[p.id];
       const label = score!==undefined ? score+'%' : 'New';
       const color = score===undefined ? 'var(--new)' : (score>=80?'var(--good)':(score>=40?'var(--amber)':'var(--warn)'));
-      const short = p.length>44 ? p.slice(0,42)+'…' : p;
       return '<button class="word-row'+(i===speechIndex?' active':'')+'" data-index="'+i+'">'
-        + '<span class="word-row-name">'+esc(short)+'</span>'
+        + '<span class="word-row-name">'+esc(p.word)+'</span>'
         + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
         + '</button>';
     }).join('');
 
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Speech Coach</div>'
-      + '<h1 class="title">Practice a phrase</h1>'
-      + '<p class="subtitle">Say the phrase out loud. Partial credit counts -- every correct word helps.</p>'
-      + '<div class="stat-row">'
-        + '<div class="stat">'+practicedCount+'<small>phrases practiced</small></div>'
-        + '<div class="stat">'+avgScore+'%<small>average accuracy</small></div>'
-      + '</div>'
-      + '<div class="field"><label class="field-label">Category</label><select class="field-input" id="sc-category">'+catOptions+'</select></div>'
-      + '<div class="card"><div class="hole"></div>'
-        + '<div class="sc-phrase">'+esc(phrase)+'</div>'
+    const cardInner = current
+      ? '<div class="prompt-label">'+esc(current.word)+'</div>'
+        + '<div class="sc-phrase">'+esc(current.phrase)+'</div>'
         + (canSpeak ? '<button class="speak-btn" id="sc-listen-word" aria-label="Listen to phrase" style="margin-top:12px;">'+ICON_SPEAKER+'</button>' : '')
         + (canListen ? '<button class="listen-btn'+(scRecognizing?' is-listening':'')+'" id="sc-mic-btn" style="margin-top:18px;">'+ICON_MIC+micLabel+'</button>' : '<p class="hint">Speech recognition is not available in this browser.</p>')
         + statusHtml
         + resultHtml
+      : '<p class="hint">No example sentences found in this list yet.</p>';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Speech Coach</div>'
+      + '<h1 class="title">Practice a phrase</h1>'
+      + '<p class="subtitle">Say the example sentence out loud, straight from your own word list. Partial credit counts -- every correct word helps. Weakest scores come up first.</p>'
+      + '<div class="stat-row">'
+        + '<div class="stat">'+practicedCount+'<small>phrases practiced</small></div>'
+        + '<div class="stat">'+avgScore+'%<small>average accuracy</small></div>'
       + '</div>'
-      + '<button class="btn-secondary" id="sc-next" style="margin-top:14px;">Next phrase &rarr;</button>'
+      + '<div class="field"><label class="field-label">List</label><select class="field-input" id="sc-category">'+catOptions+'</select></div>'
+      + '<div class="card"><div class="hole"></div>' + cardInner + '</div>'
+      + (current ? '<button class="btn-secondary" id="sc-next" style="margin-top:14px;">Next phrase &rarr;</button>' : '')
       + '<div class="divider"><span>'+esc(speechCategory)+'</span></div>'
       + '<div class="word-list">'+rows+'</div>'
       + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
@@ -1767,18 +1714,20 @@
       scResult = null; scStatus = null;
       renderSpeechCoach();
     });
-    if(canSpeak){
-      el('#sc-listen-word').addEventListener('click', ()=>speak(phrase));
+    if(current){
+      if(canSpeak){
+        el('#sc-listen-word').addEventListener('click', ()=>speak(current.phrase));
+      }
+      if(canListen){
+        el('#sc-mic-btn').addEventListener('click', scStartListening);
+      }
+      el('#sc-next').addEventListener('click', ()=>{
+        scStopListening();
+        speechIndex = (speechIndex+1) % phrases.length;
+        scResult = null; scStatus = null;
+        renderSpeechCoach();
+      });
     }
-    if(canListen){
-      el('#sc-mic-btn').addEventListener('click', scStartListening);
-    }
-    el('#sc-next').addEventListener('click', ()=>{
-      scStopListening();
-      speechIndex = (speechIndex+1) % phrases.length;
-      scResult = null; scStatus = null;
-      renderSpeechCoach();
-    });
     root.querySelectorAll('.word-row[data-index]').forEach(b=>{
       b.addEventListener('click', ()=>{
         scStopListening();
