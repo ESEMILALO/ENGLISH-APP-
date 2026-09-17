@@ -91,9 +91,9 @@
   .btn-oncard:hover{ opacity:.88; }
 
   /* session length toggle */
-  .length-toggle{ display:flex; gap:8px; margin-bottom:14px; }
+  .length-toggle{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
   .len-btn{
-    flex:1; background:var(--panel); border:1px solid var(--rule); color:var(--text-soft);
+    flex:1 1 84px; background:var(--panel); border:1px solid var(--rule); color:var(--text-soft);
     border-radius:8px; padding:9px 6px; cursor:pointer; font-size:.82rem; font-weight:600;
   }
   .len-btn small{ display:block; font-family:var(--mono); font-weight:400; font-size:.72rem; margin-top:2px; }
@@ -235,6 +235,22 @@
   .result-good{ background:var(--good-bg); color:var(--good); }
   .result-bad{ background:var(--warn-bg); color:var(--warn); }
 
+  /* sentence-completion mode */
+  .cloze-sentence{ font-style:italic; font-size:1rem; line-height:1.5; color:var(--card-ink); margin:4px 0; }
+  .cloze-sentence strong{ font-style:normal; color:var(--amber-deep); }
+
+  /* speak-it mode */
+  .listen-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    background:var(--card-ink); color:var(--card); border:none; font-weight:700; font-size:.85rem;
+    letter-spacing:.03em; text-transform:uppercase; padding:15px 16px; border-radius:7px; cursor:pointer; margin-top:22px;
+  }
+  .listen-btn:hover{ opacity:.88; }
+  .listen-btn.is-listening{ background:var(--warn); color:var(--amber-ink); }
+  .listen-btn svg{ width:16px; height:16px; flex-shrink:0; }
+  .listen-heard{ color:var(--card-ink-soft); font-size:.85rem; font-style:italic; margin-top:10px; }
+  .listen-error{ color:var(--warn); font-size:.85rem; margin-top:10px; }
+
   /* fast mode */
   .fast-bar-track{ height:4px; background:rgba(0,0,0,.15); border-radius:2px; overflow:hidden; margin:22px 0 0; }
   .fast-bar-fill{ height:100%; width:0%; background:var(--amber-deep); border-radius:2px; }
@@ -277,6 +293,7 @@
   const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,4 20,12 6,20"></polygon></svg>';
   const ICON_SKIP = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5,4 15,12 5,20"></polygon><rect x="17" y="4" width="3" height="16" rx="1"></rect></svg>';
   const ICON_BACK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,5 8,12 15,19"></polyline></svg>';
+  const ICON_MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>';
 
   const STORAGE_KEY = 'wordlog_progress';
   const META_KEY = 'wordlog_meta';
@@ -330,6 +347,16 @@
   let fastPhase = 'front'; // 'front' | 'back'
   let fastPaused = false;
   let fastTimerHandle = null;
+
+  // speak-it mode -- uses the browser's built-in speech recognition, so it
+  // only shows up as an option where that actually exists (Chrome desktop
+  // and Android both support it; the mode toggle hides itself otherwise).
+  const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const canListen = !!SpeechRecognitionCtor;
+  let recognizing = false;
+  let lastSpeechHeard = null;
+  let speechError = null;
+  let activeRecognition = null;
 
   const root = document.getElementById('app');
   const el = sel => root.querySelector(sel);
@@ -538,6 +565,89 @@
     }catch(e){}
   }
 
+  function escapeRegExp(s){
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  // Finds a meaning whose stored example sentence literally contains the
+  // headword (case-insensitive), and returns that sentence with the word
+  // blanked out. Many examples use an inflected form instead ("wrote" for
+  // "Write down"), which will not match here -- that is intentional: rather
+  // than guess at word forms, those words simply are not offered as a
+  // sentence-completion card, and the session falls back to Type it for them.
+  function findClozeExample(w){
+    for(let i=0;i<w.me.length;i++){
+      const m = w.me[i];
+      if(!m.e) continue;
+      const re = new RegExp('\\b'+escapeRegExp(w.w)+'\\b', 'i');
+      if(re.test(m.e)){
+        return { meaning: m, blanked: m.e.replace(re, '_____') };
+      }
+    }
+    return null;
+  }
+
+  function speechErrorMessage(code){
+    if(code==='not-allowed' || code==='service-not-allowed') return 'Microphone access is blocked. Allow it in your browser settings, or switch to Type it.';
+    if(code==='no-speech') return 'Did not catch that -- tap the mic and try again.';
+    if(code==='audio-capture') return 'No microphone found on this device.';
+    return 'Could not use the microphone right now. Try again, or switch to Type it.';
+  }
+
+  function stopListening(){
+    if(activeRecognition){
+      try{ activeRecognition.abort(); }catch(e){}
+      activeRecognition = null;
+    }
+    recognizing = false;
+  }
+
+  function startListening(){
+    if(!canListen) return;
+    const w = session[sIndex];
+    stopListening();
+    speechError = null;
+    lastSpeechHeard = null;
+    recognizing = true;
+    renderSession();
+
+    const recognition = new SpeechRecognitionCtor();
+    activeRecognition = recognition;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 3;
+
+    recognition.onresult = (e)=>{
+      const alts = Array.from(e.results[0]).map(r=>r.transcript);
+      lastSpeechHeard = alts[0] || '';
+      const correct = alts.some(t=> normalizeAnswer(t)===normalizeAnswer(w.w));
+      activeRecognition = null;
+      recognizing = false;
+      lastCheckCorrect = correct;
+      typedChecked = true;
+      recordResult(correct);
+      renderSession();
+    };
+    recognition.onerror = (e)=>{
+      activeRecognition = null;
+      recognizing = false;
+      speechError = e.error || 'error';
+      renderSession();
+    };
+    recognition.onend = ()=>{
+      // Fires with no prior onresult/onerror when the browser just gives up
+      // hearing anything (e.g. silence) -- without this, the button would
+      // silently reset with no explanation of what happened.
+      if(recognizing){
+        activeRecognition = null;
+        recognizing = false;
+        speechError = 'no-speech';
+        renderSession();
+      }
+    };
+    try{ recognition.start(); }catch(e){ recognizing = false; speechError = 'error'; renderSession(); }
+  }
+
   function buildMixedSession(size){
     if(size === 'all'){
       return interleaveByCategory(sortByPriority(WORDS));
@@ -604,6 +714,7 @@
   function startSession(list, label){
     session = list; sIndex = 0; revealed = false; typedChecked = false; results = [];
     sessionRetryCounts = {};
+    stopListening(); lastSpeechHeard = null; speechError = null;
     sessionKind = 'practice';
     sessionLabel = label;
     activeMode = interactionMode;
@@ -645,13 +756,14 @@
     const p = progress[w.id] || {status:'new', seen:0, correct:0, step:0, typedOnce:false};
     p.seen = (p.seen||0)+1;
     // Recognize mode is self-rated -- "Got it" is honest but not proof you
-    // could actually produce the word. Type it (and Test, which shares the
-    // same typed UI) demands real recall, so a word can only reach the top,
-    // fully-mastered step once it has been typed correctly at least once;
-    // until then, correct Recognize answers can carry it right up to one
-    // step below mastered, but no further. Math.max keeps this from ever
-    // demoting a step reached before this rule existed.
-    if(activeMode==='typed' && correct) p.typedOnce = true;
+    // could actually produce the word. Typing it, completing it in a
+    // sentence, or saying it out loud all demand real recall (and Test
+    // shares the typed UI), so a word can only reach the top, fully-mastered
+    // step once one of those has happened at least once; until then,
+    // correct Recognize answers can carry it right up to one step below
+    // mastered, but no further. Math.max keeps this from ever demoting a
+    // step reached before this rule existed.
+    if((activeMode==='typed' || activeMode==='sentence' || activeMode==='speak') && correct) p.typedOnce = true;
     if(correct){
       p.correct = (p.correct||0)+1;
       const ceiling = p.typedOnce ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
@@ -687,6 +799,7 @@
 
   function advance(){
     if(activePassScope){ markPassCovered(activePassScope, session[sIndex].id); }
+    stopListening(); lastSpeechHeard = null; speechError = null;
     sIndex++; revealed=false; typedChecked=false; fastPhase='front';
     if(sIndex>=session.length){
       clearFastTimer();
@@ -726,6 +839,7 @@
 
   function exitSession(){
     clearFastTimer();
+    stopListening(); lastSpeechHeard = null; speechError = null;
     renderHome();
   }
 
@@ -780,7 +894,9 @@
       '<button class="len-btn '+(sessionLength===val?'active':'')+'" data-len="'+val+'">'+label+'<small>'+(val==='all'?'no cap':val+' cards')+'</small></button>'
     ).join('');
 
-    const modes = [['recognize','Recognize'],['typed','Type it'],['fast','Fast']];
+    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence']];
+    if(canListen) modes.push(['speak','Speak it']);
+    modes.push(['fast','Fast']);
     const modeHtml = modes.map(([val,label])=>
       '<button class="len-btn '+(interactionMode===val?'active':'')+'" data-mode="'+val+'">'+label+'</button>'
     ).join('');
@@ -909,18 +1025,67 @@
       + renderMeanings(w);
   }
 
+  function renderSentencePrompt(w, cloze){
+    return '<div class="prompt-label">Complete the sentence</div>'
+      + '<div class="meaning-text" style="margin-bottom:14px;">'+esc(cloze.meaning.m)+'</div>'
+      + '<div class="cloze-sentence">&ldquo;'+esc(cloze.blanked)+'&rdquo;</div>'
+      + '<input type="text" class="type-input" id="type-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the missing word, then Enter">';
+  }
+
+  function renderSentenceResult(w, cloze){
+    const badge = lastCheckCorrect
+      ? '<div class="result-badge result-good">'+ICON_CHECK+'Correct</div>'
+      : '<div class="result-badge result-bad">'+ICON_X+'Not quite</div>';
+    const filled = esc(cloze.blanked).replace('_____', '<strong>'+esc(w.w)+'</strong>');
+    return badge
+      + '<div class="card-word">'+esc(w.w)+'</div>'
+      + '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
+      + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
+      + '</div>'
+      + '<div class="cloze-sentence" style="margin-top:14px;">&ldquo;'+filled+'&rdquo;</div>'
+      + renderMeanings(w);
+  }
+
   function renderSession(){
     const w = session[sIndex];
     const pct = Math.round((sIndex/session.length)*100);
     const isLast = (sIndex+1 >= session.length);
     let cardBody, belowCard;
 
-    if(activeMode==='typed'){
+    if(activeMode==='typed' || activeMode==='sentence'){
+      const cloze = activeMode==='sentence' ? findClozeExample(w) : null;
       if(!typedChecked){
-        cardBody = renderTypedPrompt(w);
+        cardBody = cloze ? renderSentencePrompt(w, cloze) : renderTypedPrompt(w);
         belowCard = '<button class="btn-oncard" id="check-btn">Check</button>';
       } else {
-        cardBody = renderTypedResult(w);
+        cardBody = cloze ? renderSentenceResult(w, cloze) : renderTypedResult(w);
+        belowCard = '<button class="btn-primary" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
+          + '<p class="hint" style="text-align:center;">Press Enter</p>'
+          + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
+      }
+    } else if(activeMode==='speak'){
+      const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
+        + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
+        + '</div>';
+      if(!typedChecked){
+        const rows = w.me.map((m,i)=>
+          '<div class="meaning-row"><span class="meaning-num">'+(i+1)+'</span>'
+          + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div></div></div>'
+        ).join('');
+        const micLabel = recognizing ? 'Listening&hellip;' : 'Tap to speak';
+        const heardHtml = lastSpeechHeard ? '<p class="listen-heard">Heard: &ldquo;'+esc(lastSpeechHeard)+'&rdquo;</p>' : '';
+        const errorHtml = speechError ? '<p class="listen-error">'+esc(speechErrorMessage(speechError))+'</p>' : '';
+        cardBody = '<div class="prompt-label">Say the English word</div>'
+          + '<div class="meanings">'+rows+'</div>'
+          + '<button class="listen-btn'+(recognizing?' is-listening':'')+'" id="listen-btn">'+ICON_MIC+micLabel+'</button>'
+          + heardHtml + errorHtml;
+        belowCard = '<p class="hint" style="text-align:center;">Press Enter or tap the mic</p>';
+      } else {
+        const badge = lastCheckCorrect
+          ? '<div class="result-badge result-good">'+ICON_CHECK+'Correct</div>'
+          : '<div class="result-badge result-bad">'+ICON_X+'Not quite</div>';
+        const heardHtml = lastSpeechHeard ? '<p class="listen-heard">You said: &ldquo;'+esc(lastSpeechHeard)+'&rdquo;</p>' : '';
+        cardBody = badge + '<div class="card-word">'+esc(w.w)+'</div>' + pronRow + heardHtml + renderMeanings(w);
         belowCard = '<button class="btn-primary" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
           + '<p class="hint" style="text-align:center;">Press Enter</p>'
           + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
@@ -971,7 +1136,7 @@
 
     el('#session-back').addEventListener('click', exitSession);
 
-    if(activeMode==='typed'){
+    if(activeMode==='typed' || activeMode==='sentence'){
       if(!typedChecked){
         const inp = el('#type-input');
         inp.focus();
@@ -987,6 +1152,16 @@
         root.querySelectorAll('.example-speak').forEach(btn=>{
           btn.addEventListener('click', ()=> speak(btn.dataset.text) );
         });
+      }
+    } else if(activeMode==='speak'){
+      if(!typedChecked){
+        const lb = el('#listen-btn'); if(lb) lb.addEventListener('click', startListening);
+      } else {
+        if(canSpeak){
+          const sb = el('#speak-word'); if(sb) sb.addEventListener('click', ()=>speak(w.w));
+        }
+        el('#next-btn').addEventListener('click', advance);
+        const ac = el('#ask-claude'); if(ac) ac.addEventListener('click', ()=>askAboutWord(w));
       }
     } else if(activeMode==='fast'){
       if(canSpeak){
@@ -1356,10 +1531,21 @@
       return;
     }
 
-    if(activeMode==='typed'){
+    if(activeMode==='typed' || activeMode==='sentence'){
       // pre-check Enter is handled by the input's own listener (which stops
       // propagation); this only covers "Enter again to move on" after checking
       if(e.key==='Enter' && typedChecked){
+        e.preventDefault();
+        advance();
+      }
+      return;
+    }
+
+    if(activeMode==='speak'){
+      if(!typedChecked && (e.key==='Enter' || e.code==='Space')){
+        e.preventDefault();
+        startListening();
+      } else if(typedChecked && e.key==='Enter'){
         e.preventDefault();
         advance();
       }
