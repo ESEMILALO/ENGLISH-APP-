@@ -202,7 +202,6 @@
     align-items:center; cursor:pointer; width:100%; text-align:left; color:var(--text); }
   .word-row-name{ font-weight:600; font-size:.92rem; }
   .word-row-pct{ font-family:var(--mono); font-weight:600; font-size:.85rem; flex-shrink:0; margin-left:10px; }
-  .word-row.active{ outline:1px solid var(--amber); outline-offset:-1px; }
   .history-row-score{ font-family:var(--mono); font-weight:600; flex-shrink:0; }
 
   /* search + add-word form fields */
@@ -325,12 +324,11 @@
   let customWords = []; // words added in-app, same shape as spreadsheet words; also pushed into WORDS
   let myList = []; // word ids hand-picked to study as a fixed set, up to MYLIST_MAX
   let speechScores = {}; // word id -> best pronunciation score reached for that word's example sentence
-  let speechCategory = null;
-  let speechIndex = 0; // index into that category's phrase list, weakest-scored first
+  let coachResults = []; // this session's Speech Coach scores: {id, w, phrase, score}
   let scRecognizing = false; // Speech Coach's mic state
   let scActiveRecognition = null;
   let scStatus = null; // transient status text shown under the phrase card
-  let scResult = null; // {score, diffHtml, transcript} for the last attempt, or null
+  let scResult = null; // {score, diffHtml, transcript} for the current card, or null
   let progress = {};
   let meta = {history:[], streak:{current:0, longest:0, lastDate:null}};
   let sessionLength = 25;
@@ -550,6 +548,13 @@
   // and in what order; SRS_STEP_MINUTES/p.due still separately govern when
   // a word counts as genuinely mastered (see recordResult).
   function priorityScore(w){
+    // Speech Coach tracks a different skill (pronunciation of the example
+    // sentence), so its "weakest first" uses its own scores: never-spoken
+    // words lead, then lowest best-score.
+    if(interactionMode==='coach'){
+      const s = speechScores[w.id];
+      return s===undefined ? -Infinity : s;
+    }
     const p = progress[w.id];
     if(!p || !p.seen) return -Infinity;
     if(p.lastSeen){
@@ -672,36 +677,26 @@
     return null;
   }
 
-  function getSpeechPhrases(cat){
-    const list = WORDS.filter(w=>w.cat===cat).map(w=>({
-      id: w.id, word: w.w, phrase: getSpeechPhraseForWord(w)
-    })).filter(p=>p.phrase);
-    // weakest-scored (and never-attempted) phrases first, same philosophy
-    // as every other practice mode in the app
-    list.sort((a,b)=>{
-      const sa = speechScores[a.id], sb = speechScores[b.id];
-      if(sa===undefined && sb===undefined) return 0;
-      if(sa===undefined) return -1;
-      if(sb===undefined) return 1;
-      return sa-sb;
-    });
-    return list;
+  // A word with no stored example still gets a card: you just say the word.
+  function coachPhraseFor(w){
+    return getSpeechPhraseForWord(w) || w.w;
   }
 
-  function scHandlePhraseResult(transcript){
-    const phrases = getSpeechPhrases(speechCategory);
-    const current = phrases[speechIndex];
-    if(!current) return;
-    const targetWords = scTokenize(current.phrase);
+  function scScorePhrase(phrase, transcript){
+    const targetWords = scTokenize(phrase);
     const spokenWords = scTokenize(transcript);
     const { matched, matchCount } = scAlignPhrase(targetWords, spokenWords);
     const score = targetWords.length ? Math.round((matchCount/targetWords.length)*100) : 0;
     const diffHtml = targetWords.map((word,idx)=>
       '<span class="'+(matched[idx]?'ok':'miss')+'">'+esc(word)+'</span>'
     ).join(' ');
-    scResult = { score, diffHtml, transcript };
-    saveSpeechScore(current.id, score);
-    renderSpeechCoach();
+    return { score, diffHtml, transcript };
+  }
+
+  function scResetCard(){
+    scStopListening();
+    scStatus = null;
+    scResult = null;
   }
 
   function scStopListening(){
@@ -712,13 +707,18 @@
     scRecognizing = false;
   }
 
+  // Runs inside a normal practice session: scores the current card's
+  // sentence and records it both as the word's best speech score and in
+  // this session's coachResults for the end-of-session summary.
   function scStartListening(){
     if(!canListen) return;
+    const w = session[sIndex];
+    const phrase = coachPhraseFor(w);
     scStopListening();
     scStatus = null;
     scResult = null;
     scRecognizing = true;
-    renderSpeechCoach();
+    renderSession();
 
     const recognition = new SpeechRecognitionCtor();
     scActiveRecognition = recognition;
@@ -726,19 +726,25 @@
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
+    // Same guard as the earlier single-word mode needed: a late callback
+    // from a previous card's recognition must not clobber this one.
     recognition.onresult = (e)=>{
       if(scActiveRecognition !== recognition) return;
       const transcript = e.results[0][0].transcript;
       scActiveRecognition = null;
       scRecognizing = false;
-      scHandlePhraseResult(transcript);
+      scResult = scScorePhrase(phrase, transcript);
+      saveSpeechScore(w.id, scResult.score);
+      coachResults = coachResults.filter(r=>r.id!==w.id);
+      coachResults.push({ id:w.id, w:w.w, phrase, score:scResult.score });
+      renderSession();
     };
     recognition.onerror = (e)=>{
       if(scActiveRecognition !== recognition) return;
       scActiveRecognition = null;
       scRecognizing = false;
       scStatus = speechErrorMessage(e.error || 'error');
-      renderSpeechCoach();
+      renderSession();
     };
     recognition.onend = ()=>{
       if(scActiveRecognition !== recognition) return;
@@ -746,16 +752,18 @@
         scActiveRecognition = null;
         scRecognizing = false;
         scStatus = speechErrorMessage('no-speech');
-        renderSpeechCoach();
+        renderSession();
       }
     };
+    // Give the mic a moment to release from the previous card (see the
+    // Android note in the earlier fix); the Listening state already shows.
     setTimeout(()=>{
       if(scActiveRecognition !== recognition) return;
       try{ recognition.start(); }catch(e){
         scActiveRecognition = null;
         scRecognizing = false;
         scStatus = speechErrorMessage('error');
-        renderSpeechCoach();
+        renderSession();
       }
     }, 300);
   }
@@ -826,6 +834,7 @@
   function startSession(list, label){
     session = list; sIndex = 0; revealed = false; typedChecked = false; results = [];
     sessionRetryCounts = {};
+    coachResults = []; scResetCard();
     sessionKind = 'practice';
     sessionLabel = label;
     activeMode = interactionMode;
@@ -910,10 +919,14 @@
 
   function advance(){
     if(activePassScope){ markPassCovered(activePassScope, session[sIndex].id); }
+    scResetCard();
     sIndex++; revealed=false; typedChecked=false; fastPhase='front';
     if(sIndex>=session.length){
       clearFastTimer();
-      const correctCount = activeMode==='fast' ? null : latestResults().filter(r=>r.correct).length;
+      let correctCount;
+      if(activeMode==='fast') correctCount = null;
+      else if(activeMode==='coach') correctCount = coachResults.filter(r=>r.score>=60).length;
+      else correctCount = latestResults().filter(r=>r.correct).length;
       recordSession(sessionKind, sessionLabel, session.length, correctCount);
       renderSummary();
     } else {
@@ -949,6 +962,7 @@
 
   function exitSession(){
     clearFastTimer();
+    scResetCard();
     renderHome();
   }
 
@@ -1003,7 +1017,9 @@
       '<button class="len-btn '+(sessionLength===val?'active':'')+'" data-len="'+val+'">'+label+'<small>'+(val==='all'?'no cap':val+' cards')+'</small></button>'
     ).join('');
 
-    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence'],['fast','Fast']];
+    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence']];
+    if(canListen) modes.push(['coach','Speech Coach']);
+    modes.push(['fast','Fast']);
     const modeHtml = modes.map(([val,label])=>
       '<button class="len-btn '+(interactionMode===val?'active':'')+'" data-mode="'+val+'">'+label+'</button>'
     ).join('');
@@ -1046,7 +1062,6 @@
       + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
       + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
       + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
-      + '<button class="reset-link" id="speech-coach">Speech Coach &middot; practice phrases &rarr;</button>'
       + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
       + '<button class="reset-link" id="reset-progress">Reset progress</button>'
       + '</div>';
@@ -1055,7 +1070,6 @@
     homeSearch.addEventListener('input', ()=> renderSearch(homeSearch.value) );
     homeSearch.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); renderSearch(homeSearch.value); } });
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
-    el('#speech-coach').addEventListener('click', renderSpeechCoach);
     el('#add-word').addEventListener('click', renderAddWord);
     el('#start-mixed').addEventListener('click', ()=>{
       if(sessionLength==='all'){
@@ -1172,6 +1186,25 @@
           + '<p class="hint" style="text-align:center;">Press Enter</p>'
           + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
       }
+    } else if(activeMode==='coach'){
+      const phrase = coachPhraseFor(w);
+      const micLabel = scRecognizing ? 'Listening&hellip;' : (scResult ? 'Try again' : 'Tap to speak');
+      let resultHtml = '';
+      if(scResult){
+        const color = scResult.score>=85 ? 'var(--good)' : (scResult.score>=60 ? 'var(--amber-deep)' : 'var(--warn)');
+        const label = scResult.score>=85 ? 'Excellent pronunciation!' : (scResult.score>=60 ? 'Good, keep practicing' : 'Try again, a bit slower');
+        resultHtml = '<div class="sc-score-row"><span class="sc-score-value" style="color:'+color+';">'+scResult.score+'%</span><span class="sc-score-label">'+label+'</span></div>'
+          + '<div class="sc-diff">'+scResult.diffHtml+'</div>'
+          + '<p class="sc-transcript">Heard: &ldquo;'+esc(scResult.transcript)+'&rdquo;</p>';
+      }
+      cardBody = '<div class="prompt-label">'+esc(w.w)+'</div>'
+        + '<div class="sc-phrase">'+esc(phrase)+'</div>'
+        + (canSpeak ? '<button class="speak-btn" id="sc-listen-word" aria-label="Listen to phrase" style="margin-top:12px;">'+ICON_SPEAKER+'</button>' : '')
+        + '<button class="listen-btn'+(scRecognizing?' is-listening':'')+'" id="sc-mic-btn" style="margin-top:18px;">'+ICON_MIC+micLabel+'</button>'
+        + (scStatus ? '<p class="listen-error">'+esc(scStatus)+'</p>' : '')
+        + resultHtml;
+      belowCard = '<button class="'+(scResult?'btn-primary':'btn-secondary')+'" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
+        + '<p class="hint" style="text-align:center;">'+(scResult ? 'Press Enter for the next card' : 'Space to speak &middot; Enter to skip')+'</p>';
     } else if(activeMode==='fast'){
       const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
         + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
@@ -1235,6 +1268,12 @@
           btn.addEventListener('click', ()=> speak(btn.dataset.text) );
         });
       }
+    } else if(activeMode==='coach'){
+      if(canSpeak){
+        const lw = el('#sc-listen-word'); if(lw) lw.addEventListener('click', ()=>speak(coachPhraseFor(w)));
+      }
+      el('#sc-mic-btn').addEventListener('click', scStartListening);
+      el('#next-btn').addEventListener('click', advance);
     } else if(activeMode==='fast'){
       if(canSpeak){
         const sb = el('#speak-word'); if(sb) sb.addEventListener('click', (e)=>{ e.stopPropagation(); speak(w.w); });
@@ -1268,6 +1307,25 @@
   function renderSummary(){
     const backAction = returnTo ? returnTo.run : renderHome;
     const backLabel = returnTo ? returnTo.label : 'Back to home';
+
+    if(activeMode==='coach'){
+      const spoken = coachResults.length;
+      const avg = spoken ? Math.round(coachResults.reduce((a,r)=>a+r.score,0)/spoken) : 0;
+      const weak = coachResults.filter(r=>r.score<60);
+      const weakHtml = weak.length ? weak.map(r=>
+        '<div class="follow-row"><span class="follow-word">'+esc(r.w)+'</span><span class="follow-gloss">'+r.score+'% &middot; '+esc(r.phrase)+'</span></div>'
+      ).join('') : '<p class="hint">'+(spoken ? 'Every phrase landed at 60% or better. Nice work.' : 'No phrases were scored this session.')+'</p>';
+      root.innerHTML = '<div class="view">'
+        + '<div class="eyebrow">Speech Coach &middot; '+session.length+' cards</div>'
+        + '<h1 class="title">'+(spoken ? avg+'%' : 'Session closed')+'</h1>'
+        + (spoken ? '<p class="subtitle">Average pronunciation across '+spoken+' phrase'+(spoken===1?'':'s')+' in '+esc(sessionLabel)+'.</p>' : '')
+        + '<div class="divider"><span>keep working on</span></div>'
+        + '<div class="follow-list">'+weakHtml+'</div>'
+        + '<button class="btn-primary" id="new-session" style="margin-top:18px;">'+backLabel+'</button>'
+        + '</div>';
+      el('#new-session').addEventListener('click', backAction);
+      return;
+    }
 
     if(activeMode==='fast'){
       root.innerHTML = '<div class="view">'
@@ -1523,98 +1581,6 @@
     el('#back-home').addEventListener('click', renderHome);
   }
 
-  function renderSpeechCoach(){
-    if(!speechCategory) speechCategory = CATEGORIES[0];
-    const phrases = getSpeechPhrases(speechCategory);
-    if(speechIndex >= phrases.length) speechIndex = 0;
-    const current = phrases[speechIndex];
-
-    const scoreValues = Object.values(speechScores);
-    const practicedCount = scoreValues.length;
-    const avgScore = practicedCount ? Math.round(scoreValues.reduce((a,b)=>a+b,0)/practicedCount) : 0;
-
-    const catOptions = CATEGORIES.map(c=>
-      '<option value="'+esc(c)+'" '+(c===speechCategory?'selected':'')+'>'+esc(c)+'</option>'
-    ).join('');
-
-    const micLabel = scRecognizing ? 'Listening&hellip;' : 'Tap to speak';
-    let resultHtml = '';
-    if(scResult){
-      const color = scResult.score>=85 ? 'var(--good)' : (scResult.score>=60 ? 'var(--amber-deep)' : 'var(--warn)');
-      const label = scResult.score>=85 ? 'Excellent pronunciation!' : (scResult.score>=60 ? 'Good, keep practicing' : 'Try again, a bit slower');
-      resultHtml = '<div class="sc-score-row"><span class="sc-score-value" style="color:'+color+';">'+scResult.score+'%</span><span class="sc-score-label">'+label+'</span></div>'
-        + '<div class="sc-diff">'+scResult.diffHtml+'</div>'
-        + '<p class="sc-transcript">Heard: &ldquo;'+esc(scResult.transcript)+'&rdquo;</p>';
-    }
-    const statusHtml = scStatus ? '<p class="listen-error">'+esc(scStatus)+'</p>' : '';
-
-    const rows = phrases.map((p,i)=>{
-      const score = speechScores[p.id];
-      const label = score!==undefined ? score+'%' : 'New';
-      const color = score===undefined ? 'var(--new)' : (score>=80?'var(--good)':(score>=40?'var(--amber)':'var(--warn)'));
-      return '<button class="word-row'+(i===speechIndex?' active':'')+'" data-index="'+i+'">'
-        + '<span class="word-row-name">'+esc(p.word)+'</span>'
-        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
-        + '</button>';
-    }).join('');
-
-    const cardInner = current
-      ? '<div class="prompt-label">'+esc(current.word)+'</div>'
-        + '<div class="sc-phrase">'+esc(current.phrase)+'</div>'
-        + (canSpeak ? '<button class="speak-btn" id="sc-listen-word" aria-label="Listen to phrase" style="margin-top:12px;">'+ICON_SPEAKER+'</button>' : '')
-        + (canListen ? '<button class="listen-btn'+(scRecognizing?' is-listening':'')+'" id="sc-mic-btn" style="margin-top:18px;">'+ICON_MIC+micLabel+'</button>' : '<p class="hint">Speech recognition is not available in this browser.</p>')
-        + statusHtml
-        + resultHtml
-      : '<p class="hint">No example sentences found in this list yet.</p>';
-
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Speech Coach</div>'
-      + '<h1 class="title">Practice a phrase</h1>'
-      + '<p class="subtitle">Say the example sentence out loud, straight from your own word list. Partial credit counts -- every correct word helps. Weakest scores come up first.</p>'
-      + '<div class="stat-row">'
-        + '<div class="stat">'+practicedCount+'<small>phrases practiced</small></div>'
-        + '<div class="stat">'+avgScore+'%<small>average accuracy</small></div>'
-      + '</div>'
-      + '<div class="field"><label class="field-label">List</label><select class="field-input" id="sc-category">'+catOptions+'</select></div>'
-      + '<div class="card"><div class="hole"></div>' + cardInner + '</div>'
-      + (current ? '<button class="btn-secondary" id="sc-next" style="margin-top:14px;">Next phrase &rarr;</button>' : '')
-      + '<div class="divider"><span>'+esc(speechCategory)+'</span></div>'
-      + '<div class="word-list">'+rows+'</div>'
-      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
-      + '</div>';
-
-    el('#sc-category').addEventListener('change', (e)=>{
-      scStopListening();
-      speechCategory = e.target.value;
-      speechIndex = 0;
-      scResult = null; scStatus = null;
-      renderSpeechCoach();
-    });
-    if(current){
-      if(canSpeak){
-        el('#sc-listen-word').addEventListener('click', ()=>speak(current.phrase));
-      }
-      if(canListen){
-        el('#sc-mic-btn').addEventListener('click', scStartListening);
-      }
-      el('#sc-next').addEventListener('click', ()=>{
-        scStopListening();
-        speechIndex = (speechIndex+1) % phrases.length;
-        scResult = null; scStatus = null;
-        renderSpeechCoach();
-      });
-    }
-    root.querySelectorAll('.word-row[data-index]').forEach(b=>{
-      b.addEventListener('click', ()=>{
-        scStopListening();
-        speechIndex = parseInt(b.dataset.index,10);
-        scResult = null; scStatus = null;
-        renderSpeechCoach();
-      });
-    });
-    el('#back-home').addEventListener('click', ()=>{ scStopListening(); renderHome(); });
-  }
-
   function renderTopicPicker(){
     const rows = CATEGORIES.map(c=>{
       const list = WORDS.filter(w=>w.cat===c);
@@ -1699,6 +1665,17 @@
       // pre-check Enter is handled by the input's own listener (which stops
       // propagation); this only covers "Enter again to move on" after checking
       if(e.key==='Enter' && typedChecked){
+        e.preventDefault();
+        advance();
+      }
+      return;
+    }
+
+    if(activeMode==='coach'){
+      if(e.code==='Space' || e.key===' '){
+        e.preventDefault();
+        if(!scRecognizing) scStartListening();
+      } else if(e.key==='Enter'){
         e.preventDefault();
         advance();
       }
