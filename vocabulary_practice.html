@@ -617,7 +617,14 @@
     recognition.interimResults = false;
     recognition.maxAlternatives = 3;
 
+    // A stray late callback from a PREVIOUS word's (already-superseded)
+    // recognition object can otherwise fire after this one has started and
+    // clobber its state -- e.g. an old "no speech" timeout landing right as
+    // the next word begins listening, silently killing that attempt. Each
+    // handler checks it is still the current recognition before touching
+    // any shared state.
     recognition.onresult = (e)=>{
+      if(activeRecognition !== recognition) return;
       const alts = Array.from(e.results[0]).map(r=>r.transcript);
       lastSpeechHeard = alts[0] || '';
       const correct = alts.some(t=> normalizeAnswer(t)===normalizeAnswer(w.w));
@@ -629,12 +636,14 @@
       renderSession();
     };
     recognition.onerror = (e)=>{
+      if(activeRecognition !== recognition) return;
       activeRecognition = null;
       recognizing = false;
       speechError = e.error || 'error';
       renderSession();
     };
     recognition.onend = ()=>{
+      if(activeRecognition !== recognition) return;
       // Fires with no prior onresult/onerror when the browser just gives up
       // hearing anything (e.g. silence) -- without this, the button would
       // silently reset with no explanation of what happened.
@@ -645,7 +654,21 @@
         renderSession();
       }
     };
-    try{ recognition.start(); }catch(e){ recognizing = false; speechError = 'error'; renderSession(); }
+
+    // Starting a fresh recognition session immediately after the previous
+    // one just ended can fail silently on some Android Chrome builds --
+    // the microphone needs a brief moment to fully release. This delay is
+    // invisible to the user, since the "Listening..." state is already
+    // showing before it runs.
+    setTimeout(()=>{
+      if(activeRecognition !== recognition) return;
+      try{ recognition.start(); }catch(e){
+        activeRecognition = null;
+        recognizing = false;
+        speechError = 'error';
+        renderSession();
+      }
+    }, 300);
   }
 
   function buildMixedSession(size){
