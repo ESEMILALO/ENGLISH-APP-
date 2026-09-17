@@ -240,7 +240,7 @@
   .cloze-sentence{ font-style:italic; font-size:1rem; line-height:1.5; color:var(--card-ink); margin:4px 0; }
   .cloze-sentence strong{ font-style:normal; color:var(--amber-deep); }
 
-  /* speak-it mode */
+  /* speech coach mic button */
   .listen-btn{
     display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
     background:var(--card-ink); color:var(--card); border:none; font-weight:700; font-size:.85rem;
@@ -249,7 +249,6 @@
   .listen-btn:hover{ opacity:.88; }
   .listen-btn.is-listening{ background:var(--warn); color:var(--amber-ink); }
   .listen-btn svg{ width:16px; height:16px; flex-shrink:0; }
-  .listen-heard{ color:var(--card-ink-soft); font-size:.85rem; font-style:italic; margin-top:10px; }
   .listen-error{ color:var(--warn); font-size:.85rem; margin-top:10px; }
 
   /* speech coach */
@@ -328,8 +327,8 @@
   let speechScores = {}; // word id -> best pronunciation score reached for that word's example sentence
   let speechCategory = null;
   let speechIndex = 0; // index into that category's phrase list, weakest-scored first
-  let scRecognizing = false; // Speech Coach's own mic state -- kept separate
-  let scActiveRecognition = null; // from Speak It's, since they are different features
+  let scRecognizing = false; // Speech Coach's mic state
+  let scActiveRecognition = null;
   let scStatus = null; // transient status text shown under the phrase card
   let scResult = null; // {score, diffHtml, transcript} for the last attempt, or null
   let progress = {};
@@ -367,15 +366,11 @@
   let fastPaused = false;
   let fastTimerHandle = null;
 
-  // speak-it mode -- uses the browser's built-in speech recognition, so it
-  // only shows up as an option where that actually exists (Chrome desktop
-  // and Android both support it; the mode toggle hides itself otherwise).
+  // Shared speech-recognition feature detection, used by Speech Coach --
+  // only exposed where the browser actually supports it (Chrome desktop
+  // and Android both do).
   const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
   const canListen = !!SpeechRecognitionCtor;
-  let recognizing = false;
-  let lastSpeechHeard = null;
-  let speechError = null;
-  let activeRecognition = null;
 
   const root = document.getElementById('app');
   const el = sel => root.querySelector(sel);
@@ -629,84 +624,7 @@
     return 'Could not use the microphone right now. Try again, or switch to Type it.';
   }
 
-  function stopListening(){
-    if(activeRecognition){
-      try{ activeRecognition.abort(); }catch(e){}
-      activeRecognition = null;
-    }
-    recognizing = false;
-  }
-
-  function startListening(){
-    if(!canListen) return;
-    const w = session[sIndex];
-    stopListening();
-    speechError = null;
-    lastSpeechHeard = null;
-    recognizing = true;
-    renderSession();
-
-    const recognition = new SpeechRecognitionCtor();
-    activeRecognition = recognition;
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
-
-    // A stray late callback from a PREVIOUS word's (already-superseded)
-    // recognition object can otherwise fire after this one has started and
-    // clobber its state -- e.g. an old "no speech" timeout landing right as
-    // the next word begins listening, silently killing that attempt. Each
-    // handler checks it is still the current recognition before touching
-    // any shared state.
-    recognition.onresult = (e)=>{
-      if(activeRecognition !== recognition) return;
-      const alts = Array.from(e.results[0]).map(r=>r.transcript);
-      lastSpeechHeard = alts[0] || '';
-      const correct = alts.some(t=> normalizeAnswer(t)===normalizeAnswer(w.w));
-      activeRecognition = null;
-      recognizing = false;
-      lastCheckCorrect = correct;
-      typedChecked = true;
-      recordResult(correct);
-      renderSession();
-    };
-    recognition.onerror = (e)=>{
-      if(activeRecognition !== recognition) return;
-      activeRecognition = null;
-      recognizing = false;
-      speechError = e.error || 'error';
-      renderSession();
-    };
-    recognition.onend = ()=>{
-      if(activeRecognition !== recognition) return;
-      // Fires with no prior onresult/onerror when the browser just gives up
-      // hearing anything (e.g. silence) -- without this, the button would
-      // silently reset with no explanation of what happened.
-      if(recognizing){
-        activeRecognition = null;
-        recognizing = false;
-        speechError = 'no-speech';
-        renderSession();
-      }
-    };
-
-    // Starting a fresh recognition session immediately after the previous
-    // one just ended can fail silently on some Android Chrome builds --
-    // the microphone needs a brief moment to fully release. This delay is
-    // invisible to the user, since the "Listening..." state is already
-    // showing before it runs.
-    setTimeout(()=>{
-      if(activeRecognition !== recognition) return;
-      try{ recognition.start(); }catch(e){
-        activeRecognition = null;
-        recognizing = false;
-        speechError = 'error';
-        renderSession();
-      }
-    }, 300);
-  }
-
-  // --- Speech Coach: full-phrase speaking practice, separate from Speak It ---
+  // --- Speech Coach: full-phrase speaking practice ---
 
   function scNormalizeWord(w){
     // Strips apostrophes too, not just punctuation -- speech recognition is
@@ -908,7 +826,6 @@
   function startSession(list, label){
     session = list; sIndex = 0; revealed = false; typedChecked = false; results = [];
     sessionRetryCounts = {};
-    stopListening(); lastSpeechHeard = null; speechError = null;
     sessionKind = 'practice';
     sessionLabel = label;
     activeMode = interactionMode;
@@ -950,14 +867,14 @@
     const p = progress[w.id] || {status:'new', seen:0, correct:0, step:0, typedOnce:false};
     p.seen = (p.seen||0)+1;
     // Recognize mode is self-rated -- "Got it" is honest but not proof you
-    // could actually produce the word. Typing it, completing it in a
-    // sentence, or saying it out loud all demand real recall (and Test
-    // shares the typed UI), so a word can only reach the top, fully-mastered
-    // step once one of those has happened at least once; until then,
-    // correct Recognize answers can carry it right up to one step below
-    // mastered, but no further. Math.max keeps this from ever demoting a
-    // step reached before this rule existed.
-    if((activeMode==='typed' || activeMode==='sentence' || activeMode==='speak') && correct) p.typedOnce = true;
+    // could actually produce the word. Typing it or completing it in a
+    // sentence demands real recall (and Test shares the typed UI), so a
+    // word can only reach the top, fully-mastered step once one of those
+    // has happened at least once; until then, correct Recognize answers
+    // can carry it right up to one step below mastered, but no further.
+    // Math.max keeps this from ever demoting a step reached before this
+    // rule existed.
+    if((activeMode==='typed' || activeMode==='sentence') && correct) p.typedOnce = true;
     if(correct){
       p.correct = (p.correct||0)+1;
       const ceiling = p.typedOnce ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
@@ -993,7 +910,6 @@
 
   function advance(){
     if(activePassScope){ markPassCovered(activePassScope, session[sIndex].id); }
-    stopListening(); lastSpeechHeard = null; speechError = null;
     sIndex++; revealed=false; typedChecked=false; fastPhase='front';
     if(sIndex>=session.length){
       clearFastTimer();
@@ -1033,7 +949,6 @@
 
   function exitSession(){
     clearFastTimer();
-    stopListening(); lastSpeechHeard = null; speechError = null;
     renderHome();
   }
 
@@ -1088,9 +1003,7 @@
       '<button class="len-btn '+(sessionLength===val?'active':'')+'" data-len="'+val+'">'+label+'<small>'+(val==='all'?'no cap':val+' cards')+'</small></button>'
     ).join('');
 
-    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence']];
-    if(canListen) modes.push(['speak','Speak it']);
-    modes.push(['fast','Fast']);
+    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence'],['fast','Fast']];
     const modeHtml = modes.map(([val,label])=>
       '<button class="len-btn '+(interactionMode===val?'active':'')+'" data-mode="'+val+'">'+label+'</button>'
     ).join('');
@@ -1259,33 +1172,6 @@
           + '<p class="hint" style="text-align:center;">Press Enter</p>'
           + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
       }
-    } else if(activeMode==='speak'){
-      const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
-        + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
-        + '</div>';
-      if(!typedChecked){
-        const rows = w.me.map((m,i)=>
-          '<div class="meaning-row"><span class="meaning-num">'+(i+1)+'</span>'
-          + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div></div></div>'
-        ).join('');
-        const micLabel = recognizing ? 'Listening&hellip;' : 'Tap to speak';
-        const heardHtml = lastSpeechHeard ? '<p class="listen-heard">Heard: &ldquo;'+esc(lastSpeechHeard)+'&rdquo;</p>' : '';
-        const errorHtml = speechError ? '<p class="listen-error">'+esc(speechErrorMessage(speechError))+'</p>' : '';
-        cardBody = '<div class="prompt-label">Say the English word</div>'
-          + '<div class="meanings">'+rows+'</div>'
-          + '<button class="listen-btn'+(recognizing?' is-listening':'')+'" id="listen-btn">'+ICON_MIC+micLabel+'</button>'
-          + heardHtml + errorHtml;
-        belowCard = '<p class="hint" style="text-align:center;">Press Enter or tap the mic</p>';
-      } else {
-        const badge = lastCheckCorrect
-          ? '<div class="result-badge result-good">'+ICON_CHECK+'Correct</div>'
-          : '<div class="result-badge result-bad">'+ICON_X+'Not quite</div>';
-        const heardHtml = lastSpeechHeard ? '<p class="listen-heard">You said: &ldquo;'+esc(lastSpeechHeard)+'&rdquo;</p>' : '';
-        cardBody = badge + '<div class="card-word">'+esc(w.w)+'</div>' + pronRow + heardHtml + renderMeanings(w);
-        belowCard = '<button class="btn-primary" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
-          + '<p class="hint" style="text-align:center;">Press Enter</p>'
-          + (sessionKind!=='test' ? '<button class="ask-link" id="ask-claude">Stuck on this word? Ask Claude &rarr;</button>' : '');
-      }
     } else if(activeMode==='fast'){
       const pronRow = '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'
         + (canSpeak ? '<button class="speak-btn" id="speak-word" aria-label="Listen to pronunciation">'+ICON_SPEAKER+'</button>' : '')
@@ -1348,16 +1234,6 @@
         root.querySelectorAll('.example-speak').forEach(btn=>{
           btn.addEventListener('click', ()=> speak(btn.dataset.text) );
         });
-      }
-    } else if(activeMode==='speak'){
-      if(!typedChecked){
-        const lb = el('#listen-btn'); if(lb) lb.addEventListener('click', startListening);
-      } else {
-        if(canSpeak){
-          const sb = el('#speak-word'); if(sb) sb.addEventListener('click', ()=>speak(w.w));
-        }
-        el('#next-btn').addEventListener('click', advance);
-        const ac = el('#ask-claude'); if(ac) ac.addEventListener('click', ()=>askAboutWord(w));
       }
     } else if(activeMode==='fast'){
       if(canSpeak){
@@ -1829,16 +1705,6 @@
       return;
     }
 
-    if(activeMode==='speak'){
-      if(!typedChecked && (e.key==='Enter' || e.code==='Space')){
-        e.preventDefault();
-        startListening();
-      } else if(typedChecked && e.key==='Enter'){
-        e.preventDefault();
-        advance();
-      }
-      return;
-    }
 
     // recognize mode: Enter reveals the meaning; once revealed, arrow keys rate
     if(e.key==='Enter' && !revealed){
