@@ -310,6 +310,8 @@
   const MYLIST_KEY = 'wordlog_my_list';
   const MYLIST_MAX = 10;
   const SPEECH_KEY = 'wordlog_speech_scores';
+  const LEARNSET_KEY = 'wordlog_learn_sets';
+  const LEARNSET_SIZE = 15;
   // Spaced-repetition ladder, in minutes until the next review: just seen,
   // 10 min, 1 hour, 1 day, 3 days, 7 days. A correct answer promotes a word
   // one step; a miss drops it back to step 0. "Mastered" means it survived
@@ -325,6 +327,7 @@
   let myList = []; // word ids hand-picked to study as a fixed set, up to MYLIST_MAX
   let speechScores = {}; // word id -> best pronunciation score reached for that word's example sentence
   let coachResults = []; // this session's Speech Coach scores: {id, w, phrase, score}
+  let learnSets = {}; // category -> {wordIds:[...], startedAt} -- a locked set worked until all are mastered
   let scRecognizing = false; // Speech Coach's mic state
   let scActiveRecognition = null;
   let scStatus = null; // transient status text shown under the phrase card
@@ -483,6 +486,38 @@
       speechScores[wordId] = score;
       try{ localStorage.setItem(SPEECH_KEY, JSON.stringify(speechScores)); }catch(e){}
     }
+  }
+
+  function loadLearnSets(){
+    try{
+      const raw = localStorage.getItem(LEARNSET_KEY);
+      if(raw){ learnSets = JSON.parse(raw); }
+    }catch(e){ learnSets = {}; }
+  }
+  function saveLearnSets(){
+    try{ localStorage.setItem(LEARNSET_KEY, JSON.stringify(learnSets)); }catch(e){}
+  }
+
+  // Picks LEARNSET_SIZE words from a topic and locks them in, so the same
+  // set comes back every session until each one is mastered. Words already
+  // mastered are skipped when choosing; if a topic has fewer unmastered
+  // words left than that, the set is just smaller.
+  function buildLearnSet(cat){
+    const pool = sortByPriority(WORDS.filter(w=>w.cat===cat && statusOf(w.id)!=='mastered'));
+    const picks = pool.slice(0, LEARNSET_SIZE);
+    learnSets[cat] = { wordIds: picks.map(w=>w.id), startedAt: new Date().toISOString() };
+    saveLearnSets();
+    return picks;
+  }
+
+  // Returns the stored set as word objects, dropping any id that no longer
+  // exists (e.g. the word was renamed in the spreadsheet). Null when the
+  // topic has no set yet.
+  function getLearnSet(cat){
+    const info = learnSets[cat];
+    if(!info || !info.wordIds || !info.wordIds.length) return null;
+    const words = info.wordIds.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean);
+    return words.length ? words : null;
   }
 
   function todayStr(d){
@@ -1056,6 +1091,7 @@
       + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
       + '<p class="hint">'+mixedHint+'</p>'
       + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
+      + '<button class="btn-secondary" id="learn-set">Learn a set &middot; '+LEARNSET_SIZE+' words from one topic</button>'
       + '<div class="divider"><span>or work one list</span></div>'
       + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a list below, to run every word in just that topic.</p>'
       + '<div class="cat-list">'+catRows+'</div>'
@@ -1081,6 +1117,7 @@
       }
     });
     el('#start-test').addEventListener('click', startTest);
+    el('#learn-set').addEventListener('click', renderLearnPicker);
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
@@ -1505,6 +1542,101 @@
     renderHome();
   }
 
+  function renderLearnPicker(){
+    const rows = CATEGORIES.map(c=>{
+      const set = getLearnSet(c);
+      let meta;
+      if(set){
+        const done = set.filter(w=>statusOf(w.id)==='mastered').length;
+        meta = 'Set in progress &middot; '+done+' of '+set.length+' mastered';
+      } else {
+        const left = WORDS.filter(w=>w.cat===c && statusOf(w.id)!=='mastered').length;
+        meta = left ? left+' words still to learn' : 'Every word here is mastered';
+      }
+      const list = WORDS.filter(w=>w.cat===c);
+      const s = computeStats(list);
+      const pct = Math.round((s.good/list.length)*100);
+      return '<button class="cat-row" data-cat="'+esc(c)+'">'
+        + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
+        + '<div class="cat-row-meta">'+meta+'</div>'
+        + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+        + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Learn a set</div>'
+      + '<h1 class="title">Which topic?</h1>'
+      + '<p class="subtitle">Pick a topic and the app locks in '+LEARNSET_SIZE+' words from it, then keeps working that same set until you have mastered every one.</p>'
+      + '<div class="cat-list">'+rows+'</div>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
+      + '</div>';
+
+    root.querySelectorAll('.cat-row').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const cat = b.dataset.cat;
+        if(!getLearnSet(cat)) buildLearnSet(cat);
+        renderLearnSet(cat);
+      });
+    });
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
+  function renderLearnSet(cat){
+    const set = getLearnSet(cat) || buildLearnSet(cat);
+    const mastered = set.filter(w=>statusOf(w.id)==='mastered');
+    const remaining = sortByPriority(set.filter(w=>statusOf(w.id)!=='mastered'));
+    const pct = set.length ? Math.round((mastered.length/set.length)*100) : 0;
+    const complete = remaining.length===0;
+
+    const rows = set.map(w=>{
+      const s = statusOf(w.id);
+      const label = s==='mastered' ? 'Mastered' : (s==='learning' ? 'Learning' : 'New');
+      const color = s==='mastered' ? 'var(--good)' : (s==='learning' ? 'var(--amber)' : 'var(--new)');
+      return '<div class="follow-row"><span class="follow-word">'+esc(w.w)+'</span>'
+        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span></div>';
+    }).join('');
+
+    // Mastery needs one typed or sentence answer, so a Recognize-only run
+    // can stall just short of the finish line. Say so rather than letting
+    // it look broken.
+    const stalled = !complete && remaining.every(w=>{
+      const p = progress[w.id];
+      return p && !p.typedOnce && p.step >= SRS_MASTER_STEP-1;
+    });
+    const nudge = stalled
+      ? '<p class="hint" style="color:var(--amber);">These are one step from mastered. Switch to Type it or Sentence at home to finish them off.</p>'
+      : '';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">'+esc(cat)+'</div>'
+      + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
+      + '<p class="subtitle">'+(complete
+          ? 'This set is done. Start a fresh '+LEARNSET_SIZE+' from this topic whenever you are ready.'
+          : 'Keep going until all '+set.length+' are mastered. Only the ones you have not finished come up next.')+'</p>'
+      + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+      + (complete
+          ? '<button class="btn-primary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
+          : '<button class="btn-primary" id="start-set">Practice '+remaining.length+' left &rarr;</button>')
+      + nudge
+      + '<div class="divider"><span>this set</span></div>'
+      + '<div class="follow-list">'+rows+'</div>'
+      + '<button class="btn-secondary" id="change-topic" style="margin-top:16px;">&larr; Pick another topic</button>'
+      + '</div>';
+
+    const startBtn = el('#start-set');
+    if(startBtn){
+      startBtn.addEventListener('click', ()=>{
+        startSession(remaining, cat+' set');
+        returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
+      });
+    }
+    const newBtn = el('#new-set');
+    if(newBtn){
+      newBtn.addEventListener('click', ()=>{ buildLearnSet(cat); renderLearnSet(cat); });
+    }
+    el('#change-topic').addEventListener('click', renderLearnPicker);
+  }
+
   function renderMyList(query){
     query = query || '';
     const listWords = myList.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean);
@@ -1702,6 +1834,7 @@
     loadCustomWords();
     loadMyList();
     loadSpeechScores();
+    loadLearnSets();
     renderHome();
   }
   init().catch(()=>{ root.innerHTML = '<p class="loading">Something went wrong loading the app. Refreshing might help.</p>'; });
