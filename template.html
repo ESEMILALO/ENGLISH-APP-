@@ -290,6 +290,38 @@
     .rate-row{ flex-direction:column; }
     .stat{ font-size:1.15rem; }
   }
+
+  /* Desktop: let the home screen use the width so it fits without
+     scrolling. Every other screen stays a single readable column -- a
+     flashcard stretched across a wide monitor reads worse, not better. */
+  @media (min-width:900px){
+    body{ padding:30px 24px 40px; }
+    #app{ max-width:1080px; }
+    .view{ max-width:560px; margin:0 auto; }
+    .view.home{ max-width:none; }
+    .home-head{ max-width:560px; }
+    .home-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 34px; align-items:start; }
+    .home-col{ min-width:0; }
+    /* the right column leads with a divider, so drop its top margin to
+       line the two columns up */
+    .home-col + .home-col .divider{ margin-top:0; }
+    .word-list{ max-height:62vh; }
+
+    /* tighten the second column so both fit in one screen: shorter topic
+       rows, and the footer links flow as a wrapped row instead of a tall
+       stack of full-width buttons */
+    .home-col .cat-row{ padding:10px 13px; }
+    .home-col .cat-row-meta{ margin:3px 0 6px; }
+    .home-col .cat-list{ gap:7px; }
+    .home-col .reset-link{
+      display:inline-block; width:auto; margin:14px 18px 0 0; padding:2px 0;
+    }
+  }
+
+  @media (min-width:1200px){
+    #app{ max-width:1180px; }
+    .home-grid{ gap:0 44px; }
+  }
 </style>
 </head>
 <body>
@@ -1136,32 +1168,43 @@
         + '</button>';
     }
 
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
-      + '<h1 class="title">Word Log</h1>'
-      + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
-      + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
-      + streakHtml
-      + heroHtml
-      + '<div class="stat-row">'
-        + '<div class="stat"><span class="dot dot-good"></span>'+stats.good+'<small>operational</small></div>'
-        + '<div class="stat"><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></div>'
-        + '<div class="stat"><span class="dot dot-new"></span>'+stats.neu+'<small>not started</small></div>'
+    // Split into head + two columns so a wide screen can show everything at
+    // once (see the min-width:900px rules). On a phone the columns simply
+    // stack, which reads exactly as the single column always did.
+    root.innerHTML = '<div class="view home">'
+      + '<div class="home-head">'
+        + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
+        + '<h1 class="title">Word Log</h1>'
+        + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
+        + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+        + streakHtml
       + '</div>'
-      + '<div class="length-toggle">'+lenHtml+'</div>'
-      + '<div class="length-toggle">'+modeHtml+'</div>'
-      + speedHtml
-      + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
-      + '<p class="hint">'+mixedHint+'</p>'
-      + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
-      + '<div class="divider"><span>or work one list</span></div>'
-      + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a list below, to run every word in just that topic.</p>'
-      + '<div class="cat-list">'+catRows+'</div>'
-      + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
-      + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
-      + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
-      + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
-      + '<button class="reset-link" id="reset-progress">Reset progress</button>'
+      + '<div class="home-grid">'
+        + '<div class="home-col">'
+          + heroHtml
+          + '<div class="stat-row">'
+            + '<div class="stat"><span class="dot dot-good"></span>'+stats.good+'<small>operational</small></div>'
+            + '<div class="stat"><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></div>'
+            + '<div class="stat"><span class="dot dot-new"></span>'+stats.neu+'<small>not started</small></div>'
+          + '</div>'
+          + '<div class="length-toggle">'+lenHtml+'</div>'
+          + '<div class="length-toggle">'+modeHtml+'</div>'
+          + speedHtml
+          + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
+          + '<p class="hint">'+mixedHint+'</p>'
+          + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
+        + '</div>'
+        + '<div class="home-col">'
+          + '<div class="divider"><span>or work one list</span></div>'
+          + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a list below, to run every word in just that topic.</p>'
+          + '<div class="cat-list">'+catRows+'</div>'
+          + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
+          + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
+          + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
+          + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
+          + '<button class="reset-link" id="reset-progress">Reset progress</button>'
+        + '</div>'
+      + '</div>'
       + '</div>';
 
     const homeSearch = el('#home-search');
