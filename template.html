@@ -778,13 +778,22 @@
   // "Write down"), which will not match here -- that is intentional: rather
   // than guess at word forms, those words simply are not offered as a
   // sentence-completion card, and the session falls back to Type it for them.
+  // The example does not always spell the word the same way the headword
+  // does -- "Endanger" appears as "endangers", "To hatch" as "hatch". The
+  // build step ships those variants in w.alt, so a card can still be made;
+  // the form actually blanked out is returned so the answer check can
+  // accept it as well as the headword.
   function findClozeExample(w){
+    const candidates = [w.w].concat(w.alt || []);
     for(let i=0;i<w.me.length;i++){
       const m = w.me[i];
       if(!m.e) continue;
-      const re = new RegExp('\\b'+escapeRegExp(w.w)+'\\b', 'i');
-      if(re.test(m.e)){
-        return { meaning: m, blanked: m.e.replace(re, '_____') };
+      for(let c=0;c<candidates.length;c++){
+        const re = new RegExp('\\b'+escapeRegExp(candidates[c])+'\\b', 'i');
+        const hit = m.e.match(re);
+        if(hit){
+          return { meaning: m, blanked: m.e.replace(re, '_____'), answer: hit[0] };
+        }
       }
     }
     return null;
@@ -1034,7 +1043,14 @@
     const input = el('#type-input');
     if(!input) return;
     const w = session[sIndex];
-    const correct = normalizeAnswer(input.value) === normalizeAnswer(w.w);
+    const typed = normalizeAnswer(input.value);
+    let correct = typed === normalizeAnswer(w.w);
+    // In a sentence card the blank may hold an inflected form ("endangers").
+    // Either that or the headword is a fair answer.
+    if(!correct && activeMode==='sentence'){
+      const cloze = findClozeExample(w);
+      if(cloze && cloze.answer) correct = typed === normalizeAnswer(cloze.answer);
+    }
     lastCheckCorrect = correct;
     typedChecked = true;
     recordResult(correct);
@@ -1399,7 +1415,9 @@
     const badge = lastCheckCorrect
       ? '<div class="result-badge result-good">'+ICON_CHECK+'Correct</div>'
       : '<div class="result-badge result-bad">'+ICON_X+'Not quite</div>';
-    const filled = esc(cloze.blanked).replace('_____', '<strong>'+esc(w.w)+'</strong>');
+    // put back the form the sentence actually used, not the headword
+    const answer = cloze.answer || w.w;
+    const filled = esc(cloze.blanked).replace('_____', '<strong>'+esc(answer)+'</strong>');
     return badge
       + '<div class="card-word">'+esc(w.w)+'</div>'
       + '<div class="card-pron"><span class="pron-text">/'+esc(w.p)+'/</span>'

@@ -19,6 +19,7 @@ HOW TO USE:
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 from collections import Counter
@@ -27,6 +28,9 @@ try:
     import openpyxl
 except ImportError:
     sys.exit("Missing dependency. Run this first:\n\n    pip install openpyxl\n")
+
+from detect_verbs import verb_evidence
+from verb_forms import forms_for
 
 FOLDER = Path(__file__).resolve().parent
 TEMPLATE = FOLDER / "template.html"
@@ -46,6 +50,40 @@ def find_spreadsheet():
     names = "\n".join(f"  - {p.name}" for p in candidates)
     sys.exit(f"Found more than one .xlsx file in this folder:\n{names}\n"
               f"Keep just your word-list spreadsheet here and try again.")
+
+
+def alternate_forms(word, meanings, note):
+    """Other ways the headword may be written inside its own examples.
+
+    Covers "To hatch" appearing as "hatch", and a verb appearing in an
+    inflected form ("endangers", "withdrew"). Only forms that actually turn
+    up in one of the word's examples are kept, so the list stays small and
+    every entry in it is known to be useful.
+    """
+    candidates = []
+
+    bare = word[3:].strip() if word.lower().startswith("to ") else ""
+    if bare:
+        candidates.append(bare)
+
+    meaning_texts = [m["m"] for m in meanings]
+    is_verb, base, _ = verb_evidence(word, meaning_texts, note)
+    if is_verb and base:
+        head, tail = base
+        third, past, part, _ = forms_for(head)
+        for variant in (third, past, part):
+            for piece in variant.split("/"):
+                candidates.append((piece.strip() + " " + tail).strip())
+
+    examples = [m["e"] for m in meanings if m["e"]]
+    keep = []
+    for cand in candidates:
+        if not cand or cand.lower() == word.lower() or cand in keep:
+            continue
+        pattern = re.compile(r"\b" + re.escape(cand) + r"\b", re.I)
+        if any(pattern.search(ex) for ex in examples):
+            keep.append(cand)
+    return keep
 
 
 def extract_words(path):
@@ -85,14 +123,23 @@ def extract_words(path):
             if seen[base_id] > 1:
                 dupes.append(base_id)
 
-            words.append({
+            entry = {
                 "id": word_id,
                 "cat": category,
                 "w": word,
                 "p": str(pron).strip(),
                 "me": meanings,
                 "n": str(notes).strip() if notes else "",
-            })
+            }
+
+            # Other spellings the word can take in its own example sentence.
+            # "Endanger" is written "endangers" in its example, so without
+            # these the sentence-completion card could not be built at all.
+            alts = alternate_forms(word, meanings, entry["n"])
+            if alts:
+                entry["alt"] = alts
+
+            words.append(entry)
 
     return words, dupes
 

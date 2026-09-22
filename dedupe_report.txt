@@ -1,0 +1,488 @@
+Admonish (across sheets)
+   keep   School vocabulary row 158  (6 fields, 260 chars)
+   remove Series row 413  (4 fields, 240 chars)
+
+Aim -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 370
+     kept Series row 267
+
+All over (across sheets)
+   keep   School books row 6  (8 fields, 278 chars)
+   remove School vocabulary row 35  (8 fields, 216 chars)
+
+Along -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 132
+     kept Series row 3
+
+Although (across sheets)
+   keep   School vocabulary row 11  (4 fields, 88 chars)
+   remove 504 Secondary row 7  (4 fields, 88 chars)
+   remove Series row 4  (4 fields, 88 chars)
+
+Amusing (across sheets)
+   keep   School vocabulary row 293  (6 fields, 203 chars)
+   + kept sense from a duplicate: Entertaining or funny — Divertido/a.
+   remove Series row 415  (4 fields, 112 chars)
+
+Assemble (across sheets)
+   keep   504 Main words row 55  (8 fields, 362 chars)
+   remove Series row 166  (6 fields, 275 chars)
+
+Aware (across sheets)
+   keep   School vocabulary row 374  (6 fields, 240 chars)
+   + kept sense from a duplicate: Knowing about — Consciente / al tanto de.
+   remove Series row 272  (4 fields, 121 chars)
+   remove Series row 94  (4 fields, 97 chars)
+
+Bare -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 99
+     kept School vocabulary row 120
+     kept Series row 276
+
+Barely (across sheets)
+   keep   School vocabulary row 100  (6 fields, 99 chars)
+   + kept sense from a duplicate: Only just or almost not — Apenas / casi no.
+   remove Series row 277  (4 fields, 125 chars)
+
+Beak (across sheets)
+   keep   School books row 4  (6 fields, 190 chars)
+   + kept sense from a duplicate: Bird's hard mouth — Pico.
+   remove School vocabulary row 33  (6 fields, 151 chars)
+
+Bear (across sheets)
+   keep   504 Secondary row 15  (8 fields, 239 chars)
+   remove School vocabulary row 61  (8 fields, 225 chars)
+
+Beau -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 262
+     kept 504 Secondary row 385
+     kept School vocabulary row 390
+
+Belief (same sheet)
+   keep   504 Secondary row 323  (6 fields, 163 chars)
+   remove 504 Secondary row 122  (6 fields, 151 chars)
+
+Beliefs (across sheets)
+   keep   School vocabulary row 408  (6 fields, 201 chars)
+   + kept sense from a duplicate: Religious or moral principles — Convicciones.
+   remove 504 Secondary row 324  (6 fields, 161 chars)
+
+Bet (across sheets)
+   keep   Series row 7  (8 fields, 242 chars)
+   remove 504 Secondary row 105  (8 fields, 230 chars)
+
+Bill -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 279
+     kept 504 Secondary row 336
+
+Bloom -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 179
+     kept Series row 168
+
+Bother -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 189
+     kept Series row 281
+
+Boundary (across sheets)
+   keep   504 Secondary row 219  (4 fields, 143 chars)
+   remove Series row 283  (4 fields, 131 chars)
+
+Breathtaking (across sheets)
+   keep   School vocabulary row 162  (6 fields, 182 chars)
+   remove Series row 423  (4 fields, 158 chars)
+
+Brief (across sheets)
+   keep   School vocabulary row 28  (8 fields, 297 chars)
+   remove Series row 286  (4 fields, 113 chars)
+
+Brought out -- LEFT ALONE: 6 distinct senses, only 3 slots
+     kept School vocabulary row 403
+     kept 504 Secondary row 348
+
+Brush up on (across sheets)
+   keep   Series row 124  (4 fields, 268 chars)
+   + kept sense from a duplicate: Improve an old skill — Repasar / refrescar.
+   remove School vocabulary row 69  (4 fields, 230 chars)
+
+Bureau -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 401
+     kept 504 Secondary row 344
+
+Burglars (across sheets)
+   keep   School vocabulary row 273  (4 fields, 171 chars)
+   remove 504 Secondary row 181  (4 fields, 149 chars)
+
+Came out (across sheets)
+   keep   School vocabulary row 106  (8 fields, 198 chars)
+   remove 504 Secondary row 120  (8 fields, 180 chars)
+
+Carry -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School books row 15
+     kept School vocabulary row 97
+
+Cellar (across sheets)
+   keep   School vocabulary row 376  (4 fields, 173 chars)
+   + kept sense from a duplicate: Underground room for storage — Sótano / bodega.
+   remove 504 Secondary row 248  (4 fields, 133 chars)
+
+Charming (same sheet)
+   keep   Series row 290  (4 fields, 102 chars)
+   remove Series row 172  (4 fields, 98 chars)
+
+Cheat -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 97
+     kept Series row 424
+
+Cheating -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 408
+     kept Series row 425
+
+Collect (same sheet)
+   keep   School books row 25  (8 fields, 327 chars)
+   remove School books row 45  (8 fields, 289 chars)
+
+Come along (same sheet)
+   keep   Series row 131  (8 fields, 340 chars)
+   remove Series row 175  (6 fields, 245 chars)
+
+Come down (across sheets)
+   keep   504 Secondary row 307  (8 fields, 279 chars)
+   remove Series row 176  (6 fields, 250 chars)
+
+Come up -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 11
+     kept Series row 294
+
+Complain (across sheets)
+   keep   504 Secondary row 259  (6 fields, 323 chars)
+   + kept sense from a duplicate: Say you are unhappy — Quejarse.
+   remove Series row 12  (4 fields, 202 chars)
+
+Crack -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 306
+     kept Series row 48
+
+Crave (across sheets)
+   keep   School vocabulary row 323  (6 fields, 293 chars)
+   + kept sense from a duplicate: Want something intensely — Ansíar / tener antojo de.
+   remove Series row 429  (4 fields, 216 chars)
+
+Damp -- LEFT ALONE: 6 distinct senses, only 3 slots
+     kept School vocabulary row 298
+     kept School vocabulary row 388
+     kept 504 Secondary row 258
+
+Debate -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept 504 Main words row 58
+     kept Series row 184
+
+Dense (across sheets)
+   keep   504 Main words row 41  (8 fields, 275 chars)
+   remove 504 Secondary row 168  (4 fields, 141 chars)
+
+Draw -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 319
+     kept School vocabulary row 89
+
+Eerie (same sheet)
+   keep   Series row 436  (4 fields, 124 chars)
+   remove Series row 306  (4 fields, 117 chars)
+
+Feathers (across sheets)
+   keep   School books row 3  (4 fields, 117 chars)
+   + kept sense from a duplicate: Bird covering — Plumas.
+   remove School vocabulary row 32  (4 fields, 74 chars)
+
+Fell down (across sheets)
+   keep   504 Secondary row 249  (6 fields, 194 chars)
+   + kept sense from a duplicate: Failed or performed poorly — Fracasó.
+   remove School vocabulary row 381  (6 fields, 185 chars)
+
+Find out (across sheets)
+   keep   504 Secondary row 386  (6 fields, 258 chars)
+   remove Series row 19  (4 fields, 186 chars)
+
+Flour (across sheets)
+   keep   504 Secondary row 154  (4 fields, 114 chars)
+   + kept sense from a duplicate: Powder made by grinding grain — Harina.
+   remove Series row 311  (4 fields, 114 chars)
+
+Forecast (across sheets)
+   keep   School vocabulary row 104  (6 fields, 255 chars)
+   + kept sense from a duplicate: Prediction of future conditions — Pronóstico.
+   remove Series row 314  (4 fields, 229 chars)
+
+From scratch (same sheet)
+   keep   Series row 118  (6 fields, 257 chars)
+   remove Series row 315  (4 fields, 135 chars)
+
+Gather -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 337
+     kept Series row 319
+
+Get into -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 47
+     kept 504 Secondary row 374
+
+Go into (across sheets)
+   keep   504 Secondary row 393  (8 fields, 282 chars)
+   remove School books row 19  (6 fields, 264 chars)
+
+Grass (across sheets)
+   keep   School books row 52  (6 fields, 216 chars)
+   + kept sense from a duplicate: Green plants covering the ground — Césped / pasto.
+   remove Series row 323  (4 fields, 107 chars)
+
+Hardship -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Main words row 8
+     kept School vocabulary row 159
+
+High up (across sheets)
+   keep   School books row 10  (6 fields, 211 chars)
+   + kept sense from a duplicate: Important position — Puesto importante.
+   remove School vocabulary row 40  (6 fields, 146 chars)
+
+Humid (across sheets)
+   keep   504 Main words row 43  (6 fields, 222 chars)
+   + kept sense from a duplicate: Containing a lot of moisture in the air — Húmedo/a.
+   remove School vocabulary row 215  (4 fields, 176 chars)
+   remove School vocabulary row 389  (4 fields, 159 chars)
+
+Hump (across sheets)
+   keep   School books row 5  (6 fields, 191 chars)
+   + kept sense from a duplicate: Raised animal back — Joroba.
+   remove School vocabulary row 34  (6 fields, 121 chars)
+
+Hunger -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 346
+     kept Series row 457
+
+Latecomer (across sheets)
+   keep   School vocabulary row 364  (6 fields, 218 chars)
+   + kept sense from a duplicate: Person who arrives late — Persona que llega tarde.
+   remove 504 Secondary row 142  (4 fields, 104 chars)
+
+Leash (across sheets)
+   keep   School vocabulary row 326  (8 fields, 341 chars)
+   remove Series row 210  (6 fields, 183 chars)
+
+Limb -- LEFT ALONE: 6 distinct senses, only 3 slots
+     kept School vocabulary row 399
+     kept School vocabulary row 183
+
+Mainstream (same sheet)
+   keep   Series row 341  (4 fields, 122 chars)
+   remove Series row 465  (4 fields, 117 chars)
+
+Make out -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 125
+     kept Series row 217
+
+Makeup -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 379
+     kept 504 Secondary row 237
+
+Mammal (across sheets)
+   keep   School books row 8  (4 fields, 122 chars)
+   + kept sense from a duplicate: Animal feeding young milk — Mamífero.
+   remove School vocabulary row 38  (4 fields, 80 chars)
+
+Mercy (across sheets)
+   keep   504 Secondary row 380  (6 fields, 229 chars)
+   + kept sense from a duplicate: Compassion shown instead of punishment — Misericordia / clemencia.
+   remove Series row 343  (4 fields, 121 chars)
+
+Mourned -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 176
+     kept 504 Secondary row 134
+
+Offspring (across sheets)
+   keep   School vocabulary row 144  (6 fields, 207 chars)
+   remove Series row 348  (4 fields, 118 chars)
+
+Outcome (across sheets)
+   keep   504 Secondary row 405  (4 fields, 100 chars)
+   remove School vocabulary row 105  (4 fields, 79 chars)
+
+Persuade (across sheets)
+   keep   504 Main words row 30  (6 fields, 389 chars)
+   + kept sense from a duplicate: Convince someone to act or believe — Persuadir / convencer.
+   remove Series row 221  (4 fields, 241 chars)
+
+Plains (across sheets)
+   keep   School vocabulary row 201  (6 fields, 300 chars)
+   remove 504 Secondary row 221  (4 fields, 88 chars)
+
+Pleased (across sheets)
+   keep   School vocabulary row 154  (8 fields, 271 chars)
+   remove 504 Secondary row 5  (6 fields, 187 chars)
+
+Plot -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 96
+     kept Series row 225
+
+Praised (across sheets)
+   keep   School vocabulary row 405  (6 fields, 231 chars)
+   remove 504 Secondary row 401  (4 fields, 126 chars)
+
+Probe -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept 504 Main words row 60
+     kept School vocabulary row 136
+
+Puddle (across sheets)
+   keep   504 Secondary row 38  (4 fields, 82 chars)
+   remove Series row 226  (4 fields, 79 chars)
+
+Pull up -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 138
+     kept Series row 227
+
+Regardless (across sheets)
+   keep   School vocabulary row 56  (6 fields, 171 chars)
+   remove Series row 362  (4 fields, 121 chars)
+
+Rely on (same sheet)
+   keep   Series row 232  (4 fields, 223 chars)
+   + kept sense from a duplicate: Depend on — Depender de / contar con.
+   remove Series row 78  (4 fields, 191 chars)
+
+Reprimand (same sheet)
+   keep   School vocabulary row 157  (6 fields, 271 chars)
+   remove School vocabulary row 64  (6 fields, 245 chars)
+
+Research (across sheets)
+   keep   504 Secondary row 376  (6 fields, 310 chars)
+   remove Series row 363  (4 fields, 148 chars)
+
+Rid (across sheets)
+   keep   504 Secondary row 245  (4 fields, 251 chars)
+   + kept sense from a duplicate: Free someone or something from an unwanted thing — Librar / eliminar.
+   remove Series row 482  (4 fields, 214 chars)
+
+Roamed (across sheets)
+   keep   School vocabulary row 378  (6 fields, 224 chars)
+   remove 504 Secondary row 220  (4 fields, 107 chars)
+
+Row -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept 504 Secondary row 253
+     kept School vocabulary row 387
+
+Rush -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 153
+     kept Series row 367
+
+Scold (across sheets)
+   keep   School vocabulary row 156  (6 fields, 268 chars)
+   remove Series row 369  (4 fields, 196 chars)
+
+Set off -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 127
+     kept Series row 239
+
+Settle -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School vocabulary row 246
+     kept Series row 373
+
+Shaving (across sheets)
+   keep   504 Secondary row 61  (6 fields, 187 chars)
+   remove Series row 486  (4 fields, 127 chars)
+
+Slight (across sheets)
+   keep   Series row 39  (8 fields, 296 chars)
+   remove 504 Secondary row 225  (4 fields, 118 chars)
+
+Smoothly (across sheets)
+   keep   504 Secondary row 165  (4 fields, 113 chars)
+   remove Series row 376  (4 fields, 113 chars)
+
+Somewhat (same sheet)
+   keep   504 Secondary row 282  (4 fields, 129 chars)
+   + kept sense from a duplicate: To some degree — Algo / un poco.
+   remove 504 Secondary row 117  (4 fields, 102 chars)
+
+Stand out -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 139
+     kept Series row 380
+
+Start out (same sheet)
+   keep   Series row 119  (8 fields, 335 chars)
+   remove Series row 244  (6 fields, 255 chars)
+
+Steady (same sheet)
+   keep   Series row 43  (8 fields, 298 chars)
+   remove Series row 492  (4 fields, 93 chars)
+
+Tail (across sheets)
+   keep   School books row 2  (8 fields, 351 chars)
+   remove School vocabulary row 31  (8 fields, 278 chars)
+
+Take down -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept School vocabulary row 355
+     kept Series row 246
+
+Take off (same sheet)
+   keep   Series row 126  (8 fields, 345 chars)
+   remove Series row 247  (6 fields, 262 chars)
+
+Take up (same sheet)
+   keep   Series row 133  (8 fields, 323 chars)
+   remove Series row 249  (6 fields, 256 chars)
+
+Thick -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept School books row 7
+     kept School vocabulary row 37
+
+Thoroughly (same sheet)
+   keep   504 Secondary row 161  (4 fields, 119 chars)
+   remove 504 Secondary row 359  (4 fields, 119 chars)
+
+Tie (across sheets)
+   keep   Series row 112  (8 fields, 233 chars)
+   remove 504 Secondary row 140  (4 fields, 179 chars)
+   remove Series row 393  (4 fields, 174 chars)
+
+Tighten -- LEFT ALONE: 5 distinct senses, only 3 slots
+     kept Series row 154
+     kept School books row 68
+
+Vanish (across sheets)
+   keep   504 Main words row 49  (6 fields, 324 chars)
+   + kept sense from a duplicate: Disappear suddenly — Desaparecer.
+   remove Series row 508  (4 fields, 165 chars)
+
+Wage (across sheets)
+   keep   School vocabulary row 366  (6 fields, 294 chars)
+   + kept sense from a duplicate: Money paid for work — Salario / sueldo.
+   remove 504 Secondary row 147  (4 fields, 119 chars)
+
+Wealth -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept Series row 516
+     kept Series row 261
+
+Wheat (across sheets)
+   keep   School vocabulary row 259  (4 fields, 80 chars)
+   remove Series row 262  (4 fields, 80 chars)
+
+Whether (across sheets)
+   keep   School vocabulary row 102  (6 fields, 160 chars)
+   + kept sense from a duplicate: Introduces alternatives or uncertainty — Si / ya sea.
+   remove Series row 403  (4 fields, 117 chars)
+
+Wicked -- LEFT ALONE: 4 distinct senses, only 3 slots
+     kept 504 Secondary row 93
+     kept Series row 511
+     kept Series row 404
+
+Willing (across sheets)
+   keep   Series row 117  (6 fields, 165 chars)
+   + kept sense from a duplicate: Ready or prepared to do something — Dispuesto/a.
+   remove Series row 512  (4 fields, 121 chars)
+   remove 504 Secondary row 151  (4 fields, 109 chars)
+
+Wind up -- LEFT ALONE: 6 distinct senses, only 3 slots
+     kept Series row 129
+     kept School vocabulary row 77
+
+Wrap up (same sheet)
+   keep   Series row 128  (8 fields, 333 chars)
+   remove Series row 412  (4 fields, 218 chars)
