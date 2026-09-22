@@ -64,9 +64,24 @@
   .stat{
     flex:1; background:var(--panel); border:1px solid var(--rule); border-radius:10px;
     padding:12px 10px; text-align:center; font-family:var(--mono); font-size:1.35rem; font-weight:600;
+    color:var(--text);
   }
   .stat small{ display:block; font-family:var(--sans); font-weight:400; font-size:.72rem; letter-spacing:.02em;
     color:var(--text-soft); margin-top:4px; text-transform:lowercase; }
+  button.stat{ cursor:pointer; transition:border-color .15s ease, transform .1s ease; }
+  button.stat:hover{ border-color:var(--text-soft); }
+  button.stat:active{ transform:scale(.99); }
+  button.stat:disabled{ cursor:default; opacity:.55; }
+
+  /* overall progress + today's activity */
+  .progress-line{ display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    font-size:.82rem; color:var(--text-soft); margin:0 2px 6px; }
+  .progress-line b{ color:var(--text); font-family:var(--mono); font-weight:600; }
+  .progress-wide{ height:8px; background:var(--panel); border:1px solid var(--rule); border-radius:5px;
+    overflow:hidden; margin-bottom:20px; }
+  .progress-wide span{ display:block; height:100%; background:var(--good); border-radius:5px; }
+  .mode-note{ color:var(--text-soft); font-size:.84rem; line-height:1.5; margin:-4px 2px 14px; }
+  .mode-note b{ color:var(--text); font-weight:600; }
   .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
   .dot-good{ background:var(--good); } .dot-warn{ background:var(--warn); } .dot-new{ background:var(--new); }
 
@@ -1111,7 +1126,7 @@
       const pct = Math.round((s.good/list.length)*100);
       return '<button class="cat-row" data-cat="'+esc(c)+'">'
         + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
-        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' operational</div>'
+        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' mastered</div>'
         + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
         + '</button>';
     }).join('');
@@ -1135,9 +1150,30 @@
       ).join('') + '</div>'
     ) : '';
 
+    const todaySessions = meta.history.filter(h=>h.date===todayStr());
+    const todayCards = todaySessions.reduce((a,h)=>a+(h.total||0),0);
+    const todayNote = todaySessions.length
+      ? ' <span class="streak-best">&middot; today: '+todaySessions.length+' session'+(todaySessions.length===1?'':'s')+', '+todayCards+' cards</span>'
+      : '';
     const streakHtml = meta.streak.current > 0
-      ? '<div class="streak-row">'+ICON_FLAME+' '+meta.streak.current+'-day streak <span class="streak-best">&middot; best '+meta.streak.longest+'</span></div>'
-      : '<div class="streak-row" style="color:var(--text-soft);">'+ICON_FLAME+' Start a streak today</div>';
+      ? '<div class="streak-row">'+ICON_FLAME+' '+meta.streak.current+'-day streak <span class="streak-best">&middot; best '+meta.streak.longest+'</span>'+todayNote+'</div>'
+      : '<div class="streak-row" style="color:var(--text-soft);">'+ICON_FLAME+' Start a streak today'+todayNote+'</div>';
+
+    // Say plainly what the selected mode actually does -- the row of labels
+    // alone does not tell you which ones can finish a word off.
+    const MODE_NOTES = {
+      recognize: '<b>Recognize</b> &mdash; see the word, reveal the meaning, rate yourself. Quick review, but a word needs Type it or Sentence to reach mastered.',
+      typed: '<b>Type it</b> &mdash; see the meaning and type the word from memory. Proves real recall, and unlocks mastery.',
+      sentence: '<b>Sentence</b> &mdash; fill the word into its own example sentence, so you learn it in context.',
+      coach: '<b>Speech Coach</b> &mdash; say the sentence out loud and get a score for each word you pronounce.',
+      fast: '<b>Fast</b> &mdash; auto-advancing flashcards for a quick skim. Nothing is scored.'
+    };
+    const modeNote = '<p class="mode-note">'+(MODE_NOTES[interactionMode]||'')+'</p>';
+
+    const overallPct = WORDS.length ? Math.round((stats.good/WORDS.length)*100) : 0;
+    const progressHtml = '<div class="progress-line"><span>Vocabulary mastered</span>'
+        + '<span><b>'+stats.good+'</b> of '+WORDS.length+' &middot; <b>'+overallPct+'%</b></span></div>'
+      + '<div class="progress-wide"><span style="width:'+overallPct+'%"></span></div>';
 
     const mixedHint = sessionLength==='all'
       ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
@@ -1177,14 +1213,17 @@
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
       + streakHtml
       + heroHtml
+      + progressHtml
       + '<div class="stat-row">'
-        + '<div class="stat"><span class="dot dot-good"></span>'+stats.good+'<small>operational</small></div>'
-        + '<div class="stat"><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></div>'
-        + '<div class="stat"><span class="dot dot-new"></span>'+stats.neu+'<small>not started</small></div>'
+        + '<button class="stat" data-status="mastered"'+(stats.good?'':' disabled')+'><span class="dot dot-good"></span>'+stats.good+'<small>mastered</small></button>'
+        + '<button class="stat" data-status="learning"'+(stats.warn?'':' disabled')+'><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></button>'
+        + '<button class="stat" data-status="new"'+(stats.neu?'':' disabled')+'><span class="dot dot-new"></span>'+stats.neu+'<small>not started</small></button>'
       + '</div>'
+      + '<p class="hint" style="margin:-12px 2px 16px;">Tap a number to see those words.</p>'
       + '<div class="length-toggle">'+lenHtml+'</div>'
       + '<div class="length-toggle">'+modeHtml+'</div>'
       + speedHtml
+      + modeNote
       + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
       + '<p class="hint">'+mixedHint+'</p>'
       + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
@@ -1195,7 +1234,8 @@
       + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
       + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
       + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
-      + '<button class="reset-link" id="reset-progress">Reset progress</button>'
+      + '<div class="divider" style="margin-top:30px;"><span></span></div>'
+      + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
       + '</div>';
 
     const homeSearch = el('#home-search');
@@ -1214,6 +1254,9 @@
     });
     el('#start-test').addEventListener('click', startTest);
     el('#learn-set').addEventListener('click', ()=> heroTarget ? renderLearnSet(heroTarget) : renderLearnPicker() );
+    root.querySelectorAll('button.stat[data-status]').forEach(b=>{
+      b.addEventListener('click', ()=>{ if(!b.disabled) renderStatusList(b.dataset.status); });
+    });
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
@@ -1642,6 +1685,55 @@
     renderHome();
   }
 
+  // Opened by tapping one of the home counters, so those numbers lead
+  // somewhere instead of just being a readout.
+  function renderStatusList(status){
+    const LABELS = { mastered:'Mastered', learning:'In progress', new:'Not started' };
+    const BLURBS = {
+      mastered:'Words that survived the full spaced-repetition ladder. They still come back for review now and then.',
+      learning:'Words you have started but not finished. These are the ones worth your next session.',
+      new:'Words you have never been shown yet.'
+    };
+    const words = WORDS.filter(w=>statusOf(w.id)===status);
+    words.sort((a,b)=>{
+      const pa = wordPercent(a.id), pb = wordPercent(b.id);
+      if(pa===null && pb===null) return 0;
+      if(pa===null) return -1;
+      if(pb===null) return 1;
+      return pa - pb;
+    });
+    const shown = words.slice(0, 300);
+
+    const rows = shown.map(w=>{
+      const pct = wordPercent(w.id);
+      const label = pct===null ? 'New' : pct+'%';
+      const color = pct===null ? 'var(--new)' : (pct>=80 ? 'var(--good)' : (pct>=40 ? 'var(--amber)' : 'var(--warn)'));
+      return '<button class="word-row" data-id="'+esc(String(w.id))+'">'
+        + '<span class="word-row-name">'+esc(w.w)+' <span style="color:var(--text-soft); font-weight:400; font-size:.78rem;">'+esc(CAT_ABBR[w.cat]||w.cat)+'</span></span>'
+        + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span>'
+        + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">'+esc(LABELS[status])+' &middot; '+words.length+' words</div>'
+      + '<h1 class="title">'+esc(LABELS[status])+'</h1>'
+      + '<p class="subtitle">'+esc(BLURBS[status])+' Weakest first. Tap any word to practice just that one.</p>'
+      + (words.length ? '<div class="word-list">'+rows+'</div>' : '<p class="hint">Nothing here yet.</p>')
+      + (words.length > shown.length ? '<p class="hint">Showing the first '+shown.length+' of '+words.length+'.</p>' : '')
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
+      + '</div>';
+
+    root.querySelectorAll('.word-row').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const word = shown.find(w=>String(w.id)===b.dataset.id);
+        if(!word) return;
+        startSession([word], CAT_ABBR[word.cat]||word.cat);
+        returnTo = { run: ()=>renderStatusList(status), label:'Back to the list' };
+      });
+    });
+    el('#back-home').addEventListener('click', renderHome);
+  }
+
   function renderLearnPicker(){
     const rows = CATEGORIES.map(c=>{
       const set = getLearnSet(c);
@@ -1812,7 +1904,7 @@
       const pct = Math.round((s.good/list.length)*100);
       return '<button class="cat-row" data-cat="'+esc(c)+'">'
         + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
-        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' operational</div>'
+        + '<div class="cat-row-meta">'+list.length+' words &middot; '+s.good+' mastered</div>'
         + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
         + '</button>';
     }).join('');
