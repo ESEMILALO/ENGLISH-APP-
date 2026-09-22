@@ -71,6 +71,21 @@
   .dot-good{ background:var(--good); } .dot-warn{ background:var(--warn); } .dot-new{ background:var(--new); }
 
   /* buttons */
+  .btn-hero{
+    display:block; width:100%; text-align:left; background:var(--amber); color:var(--amber-ink);
+    border:none; border-radius:12px; padding:20px 20px 18px; cursor:pointer; margin-bottom:22px;
+    font-family:var(--cond); font-weight:700; font-size:clamp(1.25rem,5.2vw,1.5rem); letter-spacing:-.01em;
+    box-shadow:0 12px 26px rgba(0,0,0,.30); transition:background .15s ease, transform .1s ease;
+  }
+  .btn-hero:hover{ background:var(--amber-deep); }
+  .btn-hero:active{ transform:scale(.995); }
+  .btn-hero small{
+    display:block; font-family:var(--sans); font-weight:500; font-size:.84rem; letter-spacing:0;
+    line-height:1.45; margin-top:6px; opacity:.82;
+  }
+  .hero-bar{ height:6px; background:rgba(36,24,4,.22); border-radius:3px; overflow:hidden; margin-top:12px; }
+  .hero-bar span{ display:block; height:100%; background:var(--amber-ink); border-radius:3px; }
+
   .btn-primary{
     display:block; width:100%; background:var(--amber); color:var(--amber-ink); border:none;
     font-weight:700; font-size:.92rem; letter-spacing:.03em; text-transform:uppercase;
@@ -1094,12 +1109,40 @@
       ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
       : 'Pulled evenly across all 5 lists, new and in-progress words come first.';
 
+    // Headline action. If a set is already underway it doubles as "carry on
+    // where you left off", jumping straight back into that topic's set --
+    // most recently started first when several topics have one going.
+    let heroHtml, heroTarget = null;
+    const openSets = CATEGORIES.map(c=>{
+      const set = getLearnSet(c);
+      if(!set) return null;
+      const done = set.filter(w=>statusOf(w.id)==='mastered').length;
+      return done < set.length
+        ? { cat:c, done:done, total:set.length, startedAt:(learnSets[c]||{}).startedAt || '' }
+        : null;
+    }).filter(Boolean).sort((a,b)=> (b.startedAt||'').localeCompare(a.startedAt||''));
+
+    if(openSets.length){
+      const s = openSets[0];
+      heroTarget = s.cat;
+      const pct = Math.round((s.done/s.total)*100);
+      heroHtml = '<button class="btn-hero" id="learn-set">Keep learning &middot; '+esc(s.cat)
+        + '<small>'+s.done+' of '+s.total+' mastered &middot; recognize, then type it, then use it in a sentence</small>'
+        + '<div class="hero-bar"><span style="width:'+pct+'%"></span></div>'
+        + '</button>';
+    } else {
+      heroHtml = '<button class="btn-hero" id="learn-set">Learn a set of '+LEARNSET_SIZE
+        + '<small>Pick a topic and the app takes '+LEARNSET_SIZE+' words all the way to mastered, choosing the method for you.</small>'
+        + '</button>';
+    }
+
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
       + streakHtml
+      + heroHtml
       + '<div class="stat-row">'
         + '<div class="stat"><span class="dot dot-good"></span>'+stats.good+'<small>operational</small></div>'
         + '<div class="stat"><span class="dot dot-warn"></span>'+stats.warn+'<small>in progress</small></div>'
@@ -1111,7 +1154,6 @@
       + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
       + '<p class="hint">'+mixedHint+'</p>'
       + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
-      + '<button class="btn-secondary" id="learn-set">Learn a set &middot; '+LEARNSET_SIZE+' words from one topic</button>'
       + '<div class="divider"><span>or work one list</span></div>'
       + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a list below, to run every word in just that topic.</p>'
       + '<div class="cat-list">'+catRows+'</div>'
@@ -1137,7 +1179,7 @@
       }
     });
     el('#start-test').addEventListener('click', startTest);
-    el('#learn-set').addEventListener('click', renderLearnPicker);
+    el('#learn-set').addEventListener('click', ()=> heroTarget ? renderLearnSet(heroTarget) : renderLearnPicker() );
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
