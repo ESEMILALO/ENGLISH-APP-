@@ -343,6 +343,7 @@
   let activeMode = 'recognize'; // mode actually running this session
   let returnTo = null; // {run, label} set when a session was started from the word browser or search, so summary can return there
   let activePassScope = null; // set to 'Mixed' or a category name during a Complete-length session, for resume tracking
+  let learnMode = false; // Learn-a-set sessions pick each card's mode themselves instead of using the home toggle
   let revealed = false;
   let typedChecked = false;
   let lastCheckCorrect = false;
@@ -508,6 +509,23 @@
     learnSets[cat] = { wordIds: picks.map(w=>w.id), startedAt: new Date().toISOString() };
     saveLearnSets();
     return picks;
+  }
+
+  // Learn-a-set walks each word through the same three stages: meet it in
+  // Recognize, prove you can produce it in Type it, then use it in context
+  // with Sentence. Checked in order, so a missed word (step back to 0)
+  // drops to Recognize for a rep before climbing again, while a word that
+  // has already been typed once never repeats that stage.
+  const LEARN_STAGES = { recognize:'Recognize', typed:'Type it', sentence:'Sentence' };
+  function learnStageFor(w){
+    const p = progress[w.id];
+    if(!p || !p.seen || !p.step) return 'recognize';
+    if(!p.typedOnce) return 'typed';
+    return 'sentence';
+  }
+  function learnStageRank(w){
+    const stage = learnStageFor(w);
+    return stage==='recognize' ? 0 : (stage==='typed' ? 1 : 2);
   }
 
   // Returns the stored set as word objects, dropping any id that no longer
@@ -866,13 +884,14 @@
     return arr.slice(0, Math.min(size, arr.length));
   }
 
-  function startSession(list, label){
+  function startSession(list, label, learn){
     session = list; sIndex = 0; revealed = false; typedChecked = false; results = [];
     sessionRetryCounts = {};
     coachResults = []; scResetCard();
+    learnMode = !!learn;
     sessionKind = 'practice';
     sessionLabel = label;
-    activeMode = interactionMode;
+    activeMode = learnMode ? learnStageFor(list[0]) : interactionMode;
     fastPhase = 'front'; fastPaused = false; clearFastTimer();
     returnTo = null;
     activePassScope = null;
@@ -882,6 +901,7 @@
   function startTest(){
     session = buildTestSession(20); sIndex = 0; revealed = false; typedChecked = false; results = [];
     sessionRetryCounts = {};
+    learnMode = false;
     sessionKind = 'test';
     sessionLabel = 'Test';
     activeMode = 'typed';
@@ -1208,6 +1228,10 @@
 
   function renderSession(){
     const w = session[sIndex];
+    // In a Learn-a-set session the mode is per card, not per session, so it
+    // is recomputed here each time a card comes up (including when a card
+    // is re-shown after a miss, which may have dropped it back a stage).
+    if(learnMode) activeMode = learnStageFor(w);
     const pct = Math.round((sIndex/session.length)*100);
     const isLast = (sIndex+1 >= session.length);
     let cardBody, belowCard;
@@ -1584,40 +1608,32 @@
   function renderLearnSet(cat){
     const set = getLearnSet(cat) || buildLearnSet(cat);
     const mastered = set.filter(w=>statusOf(w.id)==='mastered');
-    const remaining = sortByPriority(set.filter(w=>statusOf(w.id)!=='mastered'));
+    // Stage order first, so a round meets the new words before drilling the
+    // ones already in progress; weakest-first within each stage.
+    const remaining = sortByPriority(set.filter(w=>statusOf(w.id)!=='mastered'))
+      .sort((a,b)=> learnStageRank(a)-learnStageRank(b));
     const pct = set.length ? Math.round((mastered.length/set.length)*100) : 0;
     const complete = remaining.length===0;
 
     const rows = set.map(w=>{
-      const s = statusOf(w.id);
-      const label = s==='mastered' ? 'Mastered' : (s==='learning' ? 'Learning' : 'New');
-      const color = s==='mastered' ? 'var(--good)' : (s==='learning' ? 'var(--amber)' : 'var(--new)');
+      const isMastered = statusOf(w.id)==='mastered';
+      const label = isMastered ? 'Mastered' : LEARN_STAGES[learnStageFor(w)];
+      const color = isMastered ? 'var(--good)'
+        : (learnStageFor(w)==='recognize' ? 'var(--new)' : 'var(--amber)');
       return '<div class="follow-row"><span class="follow-word">'+esc(w.w)+'</span>'
         + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span></div>';
     }).join('');
-
-    // Mastery needs one typed or sentence answer, so a Recognize-only run
-    // can stall just short of the finish line. Say so rather than letting
-    // it look broken.
-    const stalled = !complete && remaining.every(w=>{
-      const p = progress[w.id];
-      return p && !p.typedOnce && p.step >= SRS_MASTER_STEP-1;
-    });
-    const nudge = stalled
-      ? '<p class="hint" style="color:var(--amber);">These are one step from mastered. Switch to Type it or Sentence at home to finish them off.</p>'
-      : '';
 
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">'+esc(cat)+'</div>'
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
           ? 'This set is done. Start a fresh '+LEARNSET_SIZE+' from this topic whenever you are ready.'
-          : 'Keep going until all '+set.length+' are mastered. Only the ones you have not finished come up next.')+'</p>'
+          : 'The app picks the method for you: recognize each word first, then type it from memory, then use it in a sentence. Only what you have not finished comes up next.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
       + (complete
           ? '<button class="btn-primary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
           : '<button class="btn-primary" id="start-set">Practice '+remaining.length+' left &rarr;</button>')
-      + nudge
       + '<div class="divider"><span>this set</span></div>'
       + '<div class="follow-list">'+rows+'</div>'
       + '<button class="btn-secondary" id="change-topic" style="margin-top:16px;">&larr; Pick another topic</button>'
@@ -1626,7 +1642,7 @@
     const startBtn = el('#start-set');
     if(startBtn){
       startBtn.addEventListener('click', ()=>{
-        startSession(remaining, cat+' set');
+        startSession(remaining, cat+' set', true);
         returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
       });
     }
