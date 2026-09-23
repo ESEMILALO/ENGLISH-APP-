@@ -100,6 +100,19 @@
     .hstat-sub{ font-size:.68rem; line-height:1.35; }
   }
 
+  /* Home in two spaces: what to do on the left, how you are doing on the
+     right. One space under the other on a phone, side by side once there
+     is room -- and inside each one the bars still run its whole width. */
+  .home-cols{ display:block; }
+  .home-col-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.11em; text-transform:uppercase;
+    color:var(--text-soft); margin:28px 2px 14px; padding-bottom:10px;
+    border-bottom:1px solid var(--rule);
+  }
+  .home-col-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
+  .home-col-head .home-col-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
+
   /* section headings, so the page reads as groups instead of one long run */
   .section-label{
     font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
@@ -360,11 +373,21 @@
     .stat{ font-size:1.15rem; }
   }
 
-  /* Desktop: one column still, but everything spans the window as full
-     width bars instead of sitting in a phone-width strip. */
+  /* Desktop: the home opens into its two spaces, and inside each one
+     everything is still a bar running the column's full width. */
   @media (min-width:900px){
     body{ padding:30px 28px 44px; }
     #app{ max-width:1400px; }
+
+    .home-cols{
+      display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:0 36px; align-items:start;
+    }
+    /* a rule down the middle, so the two spaces read as two */
+    .home-col-see{ border-left:1px solid var(--rule); padding-left:36px; }
+    .home-col-head{ margin-top:0; }
+    /* first heading inside a space should not push off from the column head */
+    .home-col > .section-label:first-of-type{ margin-top:24px; }
 
     /* bars span the width, but stay compact -- widen without bulking up */
     .btn-hero{ padding:16px 20px 15px; font-size:1.2rem; margin-bottom:16px; }
@@ -1462,17 +1485,15 @@
         + '</button>';
     }
 
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
-      + '<h1 class="title">Word Log</h1>'
-      + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
-      + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+    // The home reads as two spaces: everything you can start is on the
+    // left, everything that tells you how you are doing is on the right.
+    // On a phone the right space simply follows the left one.
+    const doSpace = '<div class="home-col home-col-do">'
+      + '<div class="home-col-head"><span>Practice</span>'
+        + '<span class="home-col-hint">what to do next</span></div>'
       + streakHtml
       + recallHtml(homeDue)
       + heroHtml
-      + progressHtml
-      + '<div class="stat-row">'+statTiles+'</div>'
-      + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
       + '<div class="section-label">Build your own session</div>'
       + '<div class="length-toggle">'+lenHtml+'</div>'
       + '<div class="length-toggle">'+modeHtml+'</div>'
@@ -1481,13 +1502,29 @@
       + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
       + '<p class="hint">'+mixedHint+'</p>'
       + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
+      + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
+      + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
+      + '</div>';
+
+    const seeSpace = '<div class="home-col home-col-see">'
+      + '<div class="home-col-head"><span>Your progress</span>'
+        + '<span class="home-col-hint"><b>'+overallPct+'%</b> of '+WORDS.length+' words</span></div>'
+      + progressHtml
+      + '<div class="stat-row">'+statTiles+'</div>'
+      + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
       + '<div class="section-label">Or work one topic</div>'
-      + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete above, then tap a topic below, to run every word in it.</p>'
+      + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete under Practice, then tap a topic here, to run every word in it.</p>'
       + '<div class="cat-list">'+catRows+'</div>'
       + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
       + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
-      + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
-      + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
+      + '</div>';
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
+      + '<h1 class="title">Word Log</h1>'
+      + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
+      + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+      + '<div class="home-cols">' + doSpace + seeSpace + '</div>'
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
       + '</div>';
