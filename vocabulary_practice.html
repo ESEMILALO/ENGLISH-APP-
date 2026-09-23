@@ -459,7 +459,8 @@
   let coachResults = []; // this session's Speech Coach scores: {id, w, phrase, score}
   let learnSets = {}; // category -> {wordIds:[...], startedAt} -- a locked set worked until all are mastered
   let scRecognizing = false; // Speech Coach's mic state
-  let scActiveRecognition = null;
+  let scRecognizer = null;   // one recognizer, reused for every card
+  let scToken = 0;           // bumped whenever a card is left or restarted
   let scStatus = null; // transient status text shown under the phrase card
   let scResult = null; // {score, diffHtml, transcript} for the current card, or null
   let progress = {};
@@ -504,6 +505,58 @@
   // and Android both do).
   const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
   const canListen = !!SpeechRecognitionCtor;
+
+  // --- Microphone permission: asked once, not once per word --------------
+  // The Web Speech API's own prompt is per-use, so every new recognizer
+  // could bring it back. getUserMedia is the one that asks for a lasting
+  // grant, so the first speaking card goes through it, releases the mic
+  // straight away, and every card after that starts listening in silence.
+  // The stored flag only skips the check -- the browser stays the real
+  // authority, and a refusal clears it again.
+  const MIC_KEY = 'wordlog_mic_ok';
+  let micGranted = false;
+  try{ micGranted = localStorage.getItem(MIC_KEY) === '1'; }catch(e){}
+  let micRequest = null; // in flight, so two quick taps cannot ask twice
+
+  // file:// and plain http have nowhere to remember a grant, so there the
+  // browser will keep asking whatever we do. Worth saying out loud.
+  const micCanPersist = window.isSecureContext === true;
+
+  function setMicGranted(ok){
+    micGranted = ok;
+    try{
+      if(ok) localStorage.setItem(MIC_KEY, '1');
+      else localStorage.removeItem(MIC_KEY);
+    }catch(e){}
+  }
+
+  function ensureMic(){
+    if(micGranted) return Promise.resolve(true);
+    if(micRequest) return micRequest;
+    const media = navigator.mediaDevices;
+    if(!media || !media.getUserMedia){
+      // Nothing to pre-ask with; let the speech API handle it as before.
+      micGranted = true;
+      return Promise.resolve(true);
+    }
+    const asked = (navigator.permissions && navigator.permissions.query)
+      ? navigator.permissions.query({name:'microphone'}).catch(()=>null)
+      : Promise.resolve(null);
+    micRequest = asked
+      .then(status=>{
+        // Already allowed from a previous visit: no prompt at all.
+        if(status && status.state === 'granted') return null;
+        return media.getUserMedia({audio:true});
+      })
+      .then(stream=>{
+        if(stream) stream.getTracks().forEach(t=>t.stop()); // only wanted the grant
+        setMicGranted(true);
+        micRequest = null;
+        return true;
+      })
+      .catch(()=>{ micRequest = null; return false; });
+    return micRequest;
+  }
 
   const root = document.getElementById('app');
   const el = sel => root.querySelector(sel);
@@ -865,7 +918,7 @@
   }
 
   function speechErrorMessage(code){
-    if(code==='not-allowed' || code==='service-not-allowed') return 'Microphone access is blocked. Allow it in your browser settings, or switch to Type it.';
+    if(code==='not-allowed' || code==='service-not-allowed') return 'Microphone blocked. Tap the padlock in the address bar, set Microphone to Allow, then reload -- it will not ask again after that.';
     if(code==='no-speech') return 'Did not catch that -- tap the mic and try again.';
     if(code==='audio-capture') return 'No microphone found on this device.';
     return 'Could not use the microphone right now. Try again, or switch to Type it.';
@@ -942,11 +995,26 @@
   }
 
   function scStopListening(){
-    if(scActiveRecognition){
-      try{ scActiveRecognition.abort(); }catch(e){}
-      scActiveRecognition = null;
+    scToken++; // anything still in flight belongs to a card we have left
+    if(scRecognizer && scRecognizing){
+      try{ scRecognizer.abort(); }catch(e){}
     }
     scRecognizing = false;
+  }
+
+  // One recognizer for the whole app, built the first time it is needed and
+  // reused card after card. A new instance per card is what made Chrome
+  // re-arm its microphone bubble every word; scToken now does the job the
+  // old per-card identity check did, so a late callback from a card you
+  // have already left is still ignored.
+  function scGetRecognizer(){
+    if(!scRecognizer){
+      scRecognizer = new SpeechRecognitionCtor();
+      scRecognizer.lang = 'en-US';
+      scRecognizer.interimResults = false;
+      scRecognizer.maxAlternatives = 1;
+    }
+    return scRecognizer;
   }
 
   // Runs inside a normal practice session: scores the current card's
@@ -957,23 +1025,33 @@
     const w = session[sIndex];
     const phrase = coachPhraseFor(w);
     scStopListening();
-    scStatus = null;
     scResult = null;
     scRecognizing = true;
+    const token = ++scToken;
+    // Only the very first card can stall here, and only long enough to
+    // answer the browser once.
+    scStatus = micGranted ? null : 'Allow the microphone once and it will not ask again.';
     renderSession();
 
-    const recognition = new SpeechRecognitionCtor();
-    scActiveRecognition = recognition;
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+    ensureMic().then(ok=>{
+      if(scToken !== token) return;
+      if(!ok){
+        scRecognizing = false;
+        scStatus = speechErrorMessage('not-allowed');
+        renderSession();
+        return;
+      }
+      if(scStatus){ scStatus = null; renderSession(); }
+      scListen(w, phrase, token);
+    });
+  }
 
-    // Same guard as the earlier single-word mode needed: a late callback
-    // from a previous card's recognition must not clobber this one.
+  function scListen(w, phrase, token, isRetry){
+    const recognition = scGetRecognizer();
+
     recognition.onresult = (e)=>{
-      if(scActiveRecognition !== recognition) return;
+      if(scToken !== token) return;
       const transcript = e.results[0][0].transcript;
-      scActiveRecognition = null;
       scRecognizing = false;
       scResult = scScorePhrase(phrase, transcript);
       saveSpeechScore(w.id, scResult.score);
@@ -986,32 +1064,48 @@
       renderSession();
     };
     recognition.onerror = (e)=>{
-      if(scActiveRecognition !== recognition) return;
-      scActiveRecognition = null;
+      if(scToken !== token) return;
+      const code = e.error || 'error';
+      // Permission was withdrawn in browser settings: forget the shortcut
+      // so the next attempt asks properly instead of failing silently.
+      if(code==='not-allowed' || code==='service-not-allowed') setMicGranted(false);
       scRecognizing = false;
-      scStatus = speechErrorMessage(e.error || 'error');
+      scStatus = speechErrorMessage(code);
       renderSession();
     };
     recognition.onend = ()=>{
-      if(scActiveRecognition !== recognition) return;
+      if(scToken !== token) return;
       if(scRecognizing){
-        scActiveRecognition = null;
         scRecognizing = false;
         scStatus = speechErrorMessage('no-speech');
         renderSession();
       }
     };
-    // Give the mic a moment to release from the previous card (see the
-    // Android note in the earlier fix); the Listening state already shows.
+
+    // The recognizer needs a moment between an abort and the next start, or
+    // it throws; the Listening state is already on screen meanwhile.
     setTimeout(()=>{
-      if(scActiveRecognition !== recognition) return;
-      try{ recognition.start(); }catch(e){
-        scActiveRecognition = null;
-        scRecognizing = false;
-        scStatus = speechErrorMessage('error');
-        renderSession();
+      if(scToken !== token) return;
+      try{
+        recognition.start();
+      }catch(e){
+        // Almost always "already started", from a card left in a hurry. The
+        // instance is past saving, so drop it and go round once more with a
+        // fresh one -- the permission is granted by now, so no prompt.
+        try{ recognition.abort(); }catch(e2){}
+        scRecognizer = null;
+        if(isRetry){
+          scRecognizing = false;
+          scStatus = speechErrorMessage('error');
+          renderSession();
+          return;
+        }
+        setTimeout(()=>{
+          if(scToken !== token) return;
+          scListen(w, phrase, token, true);
+        }, 250);
       }
-    }, 300);
+    }, 250);
   }
 
   function buildMixedSession(size){
@@ -1551,6 +1645,9 @@
         + (canSpeak ? '<button class="speak-btn" id="sc-listen-word" aria-label="Listen to phrase" style="margin-top:12px;">'+ICON_SPEAKER+'</button>' : '')
         + '<button class="listen-btn'+(scRecognizing?' is-listening':'')+'" id="sc-mic-btn" style="margin-top:18px;">'+ICON_MIC+micLabel+'</button>'
         + (scStatus ? '<p class="listen-error">'+esc(scStatus)+'</p>' : '')
+        // Opened from a file or over plain http there is nowhere for the
+        // grant to live, so no amount of code stops the repeat prompts.
+        + (micCanPersist ? '' : '<p class="listen-error">Opened this way, the browser cannot remember microphone permission. Open the app over https and it will only ask once.</p>')
         + resultHtml;
       belowCard = '<button class="'+(scResult?'btn-primary':'btn-secondary')+'" id="next-btn" style="margin-top:16px;">'+(isLast?'See results':'Next card')+' &rarr;</button>'
         + '<p class="hint" style="text-align:center;">'+(scResult ? 'Press Enter for the next card' : 'Space to speak &middot; Enter to skip')+'</p>';
