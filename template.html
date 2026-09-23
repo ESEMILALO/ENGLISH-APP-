@@ -1296,8 +1296,11 @@
       const s = openSets[0];
       heroTarget = s.cat;
       const pct = Math.round((s.done/s.total)*100);
-      heroHtml = '<button class="btn-hero" id="learn-set">Keep learning &middot; '+esc(s.cat)
-        + '<small>'+s.done+' of '+s.total+' mastered &middot; recognize, then type it, then use it in a sentence</small>'
+      const stageList = canListen
+        ? 'recognize, type it, sentence, say it'
+        : 'recognize, type it, sentence';
+      heroHtml = '<button class="btn-hero" id="learn-set">Finish your set &middot; '+esc(s.cat)
+        + '<small>'+s.done+' of '+s.total+' mastered &middot; '+stageList+'</small>'
         + '<div class="hero-bar"><span style="width:'+pct+'%"></span></div>'
         + '</button>';
     } else {
