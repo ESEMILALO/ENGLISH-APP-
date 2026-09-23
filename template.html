@@ -627,21 +627,28 @@
     return picks;
   }
 
-  // Learn-a-set walks each word through the same three stages: meet it in
-  // Recognize, prove you can produce it in Type it, then use it in context
-  // with Sentence. Checked in order, so a missed word (step back to 0)
-  // drops to Recognize for a rep before climbing again, while a word that
-  // has already been typed once never repeats that stage.
-  const LEARN_STAGES = { recognize:'Recognize', typed:'Type it', sentence:'Sentence' };
+  // Learn-a-set walks each word through the same stages: meet it in
+  // Recognize, produce it from memory in Type it, use it in context with
+  // Sentence, then say it out loud in Speech Coach. Checked in order, so a
+  // missed word (step back to 0) drops to Recognize for a rep before
+  // climbing again, while a stage already passed is never repeated.
+  // Reaching mastered takes five correct answers in a row, so every stage
+  // is met on the way up. Speaking is skipped where the browser has no
+  // speech recognition, rather than leaving the word stuck there.
+  const LEARN_STAGES = {
+    recognize:'Recognize', typed:'Type it', sentence:'Sentence', coach:'Say it'
+  };
+  const LEARN_ORDER = ['recognize', 'typed', 'sentence', 'coach'];
   function learnStageFor(w){
     const p = progress[w.id];
     if(!p || !p.seen || !p.step) return 'recognize';
     if(!p.typedOnce) return 'typed';
-    return 'sentence';
+    if(!p.sentOnce) return 'sentence';
+    if(canListen && !p.spokeOnce) return 'coach';
+    return 'sentence'; // keep using it in context for the remaining reps
   }
   function learnStageRank(w){
-    const stage = learnStageFor(w);
-    return stage==='recognize' ? 0 : (stage==='typed' ? 1 : 2);
+    return LEARN_ORDER.indexOf(learnStageFor(w));
   }
 
   // Returns the stored set as word objects, dropping any id that no longer
@@ -915,6 +922,10 @@
       saveSpeechScore(w.id, scResult.score);
       coachResults = coachResults.filter(r=>r.id!==w.id);
       coachResults.push({ id:w.id, w:w.w, phrase, score:scResult.score });
+      // Inside Learn-a-set the spoken card has to move the word along like
+      // any other stage, otherwise it would sit here forever. Anything from
+      // "good, keep practicing" upward counts as getting it right.
+      if(learnMode) recordResult(scResult.score >= 60);
       renderSession();
     };
     recognition.onerror = (e)=>{
@@ -1072,6 +1083,9 @@
     // Math.max keeps this from ever demoting a step reached before this
     // rule existed.
     if((activeMode==='typed' || activeMode==='sentence') && correct) p.typedOnce = true;
+    // which stages this word has cleared, so Learn-a-set can move it on
+    if(activeMode==='sentence' && correct) p.sentOnce = true;
+    if(activeMode==='coach' && correct) p.spokeOnce = true;
     if(correct){
       p.correct = (p.correct||0)+1;
       const ceiling = p.typedOnce ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
@@ -1114,7 +1128,7 @@
       clearFastTimer();
       let correctCount;
       if(activeMode==='fast') correctCount = null;
-      else if(activeMode==='coach') correctCount = coachResults.filter(r=>r.score>=60).length;
+      else if(activeMode==='coach' && !learnMode) correctCount = coachResults.filter(r=>r.score>=60).length;
       else correctCount = latestResults().filter(r=>r.correct).length;
       recordSession(sessionKind, sessionLabel, session.length, correctCount);
       renderSummary();
@@ -1577,7 +1591,9 @@
     const backAction = returnTo ? returnTo.run : renderHome;
     const backLabel = returnTo ? returnTo.label : 'Back to home';
 
-    if(activeMode==='coach'){
+    // a Learn-a-set session gets the normal scored summary even if its
+    // last card happened to be a spoken one
+    if(activeMode==='coach' && !learnMode){
       const spoken = coachResults.length;
       const avg = spoken ? Math.round(coachResults.reduce((a,r)=>a+r.score,0)/spoken) : 0;
       const weak = coachResults.filter(r=>r.score<60);
@@ -1874,9 +1890,10 @@
 
     const rows = set.map(w=>{
       const isMastered = statusOf(w.id)==='mastered';
-      const label = isMastered ? 'Mastered' : LEARN_STAGES[learnStageFor(w)];
+      const stage = learnStageFor(w);
+      const label = isMastered ? 'Mastered' : LEARN_STAGES[stage];
       const color = isMastered ? 'var(--good)'
-        : (learnStageFor(w)==='recognize' ? 'var(--new)' : 'var(--amber)');
+        : (stage==='recognize' ? 'var(--new)' : 'var(--amber)');
       return '<div class="follow-row"><span class="follow-word">'+esc(w.w)+'</span>'
         + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span></div>';
     }).join('');
@@ -1886,7 +1903,7 @@
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
           ? 'This set is done. Keep these '+set.length+' fresh, or start a new '+LEARNSET_SIZE+' from this topic.'
-          : 'The app picks the method for you: recognize each word first, then type it from memory, then use it in a sentence. Only what you have not finished comes up next.')+'</p>'
+          : 'The app picks the method for you: recognize each word, type it from memory, use it in a sentence, then say it out loud. Only what you have not finished comes up next.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
       + (complete
           ? '<button class="btn-primary" id="review-set">Keep practicing these '+set.length+' words &rarr;</button>'
