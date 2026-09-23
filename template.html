@@ -134,6 +134,21 @@
   .hero-bar{ height:6px; background:rgba(36,24,4,.22); border-radius:3px; overflow:hidden; margin-top:12px; }
   .hero-bar span{ display:block; height:100%; background:var(--amber-ink); border-radius:3px; }
 
+  /* reminder for finished words whose spaced-repetition slot came round */
+  .recall-bar{
+    display:block; width:100%; text-align:left; background:var(--panel); color:var(--text);
+    border:1px solid var(--rule); border-left:4px solid var(--good); border-radius:10px;
+    padding:13px 16px; cursor:pointer; margin:0 0 20px;
+    font-family:var(--cond); font-weight:700; font-size:1.05rem; letter-spacing:-.01em;
+    transition:border-color .15s ease, transform .1s ease;
+  }
+  .recall-bar:hover{ border-color:var(--good); }
+  .recall-bar:active{ transform:scale(.995); }
+  .recall-bar small{
+    display:block; font-family:var(--sans); font-weight:500; font-size:.82rem; letter-spacing:0;
+    line-height:1.45; margin-top:5px; color:var(--text-soft);
+  }
+
   .btn-primary{
     display:block; width:100%; background:var(--amber); color:var(--amber-ink); border:none;
     font-weight:700; font-size:.92rem; letter-spacing:.03em; text-transform:uppercase;
@@ -649,6 +664,48 @@
   }
   function learnStageRank(w){
     return LEARN_ORDER.indexOf(learnStageFor(w));
+  }
+
+  // Words already taken to mastered whose spaced-repetition interval has
+  // come round again. Moving on to a new set should not mean forgetting the
+  // last one, so these are offered for review and, being mastered, are
+  // handed the later practice stages automatically.
+  function dueForReview(list, limit){
+    const now = Date.now();
+    const due = list.filter(w=>{
+      const p = progress[w.id];
+      if(!p || !p.seen || statusOf(w.id)!=='mastered') return false;
+      return p.due ? new Date(p.due).getTime() <= now : true;
+    });
+    due.sort((a,b)=>{
+      const da = progress[a.id].due ? new Date(progress[a.id].due).getTime() : 0;
+      const db = progress[b.id].due ? new Date(progress[b.id].due).getTime() : 0;
+      return da - db; // longest overdue first
+    });
+    return limit ? due.slice(0, limit) : due;
+  }
+
+  // The reminder: one line that only appears when finished words have come
+  // due again. Tapping it starts them in learn mode, so learnStageFor hands
+  // each word the stage it needs -- type it, sentence or say it -- and
+  // there is nothing to choose.
+  function recallHtml(due){
+    if(!due.length) return '';
+    const names = due.slice(0,3).map(w=>w.w).join(', ');
+    const more = due.length>3 ? ' and '+(due.length-3)+' more' : '';
+    return '<button class="recall-bar" id="recall-due">'
+      + 'Don&rsquo;t forget &middot; '+due.length+' word'+(due.length===1?'':'s')+' to refresh'
+      + '<small>'+esc(names)+more+'. You mastered these earlier and they are due again. '
+      + 'The app picks the method for each one.</small>'
+      + '</button>';
+  }
+  function wireRecall(due, label, back){
+    const btn = el('#recall-due');
+    if(!btn) return;
+    btn.addEventListener('click', ()=>{
+      startSession(due, label, true);
+      returnTo = back;
+    });
   }
 
   // Returns the stored set as word objects, dropping any id that no longer
@@ -1275,6 +1332,9 @@
         + '<span><b>'+stats.good+'</b> of '+WORDS.length+' &middot; <b>'+overallPct+'%</b></span></div>'
       + '<div class="progress-wide"><span style="width:'+overallPct+'%"></span></div>';
 
+    // Words from earlier sets that the schedule says are ready again.
+    const homeDue = dueForReview(WORDS, LEARNSET_SIZE);
+
     const mixedHint = sessionLength==='all'
       ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
       : 'Pulled evenly across all 5 lists, new and in-progress words come first.';
@@ -1282,7 +1342,7 @@
     // Headline action. If a set is already underway it doubles as "carry on
     // where you left off", jumping straight back into that topic's set --
     // most recently started first when several topics have one going.
-    let heroHtml, heroTarget = null;
+    let heroHtml;
     const openSets = CATEGORIES.map(c=>{
       const set = getLearnSet(c);
       if(!set) return null;
@@ -1294,13 +1354,12 @@
 
     if(openSets.length){
       const s = openSets[0];
-      heroTarget = s.cat;
       const pct = Math.round((s.done/s.total)*100);
       const stageList = canListen
         ? 'recognize, type it, sentence, say it'
         : 'recognize, type it, sentence';
       heroHtml = '<button class="btn-hero" id="learn-set">Finish your set &middot; '+esc(s.cat)
-        + '<small>'+s.done+' of '+s.total+' mastered &middot; '+stageList+'</small>'
+        + '<small>'+s.done+' of '+s.total+' mastered. Choose a topic, then keep practicing or start a new set &middot; '+stageList+'</small>'
         + '<div class="hero-bar"><span style="width:'+pct+'%"></span></div>'
         + '</button>';
     } else {
@@ -1315,6 +1374,7 @@
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
       + streakHtml
+      + recallHtml(homeDue)
       + heroHtml
       + progressHtml
       + '<div class="stat-row">'+statTiles+'</div>'
@@ -1353,7 +1413,10 @@
       }
     });
     el('#start-test').addEventListener('click', startTest);
-    el('#learn-set').addEventListener('click', ()=> heroTarget ? renderLearnSet(heroTarget) : renderLearnPicker() );
+    // Always through the topic picker, even with a set underway -- from
+    // there you pick the topic, then keep practicing or start a new set.
+    el('#learn-set').addEventListener('click', renderLearnPicker);
+    wireRecall(homeDue, 'Refresher', null);
     root.querySelectorAll('.hstat[data-status]').forEach(b=>{
       b.addEventListener('click', ()=>{ if(!b.disabled) renderStatusList(b.dataset.status); });
     });
@@ -1843,6 +1906,7 @@
   }
 
   function renderLearnPicker(){
+    const pickerDue = dueForReview(WORDS, LEARNSET_SIZE);
     const rows = CATEGORIES.map(c=>{
       const set = getLearnSet(c);
       let meta;
@@ -1854,6 +1918,8 @@
         meta = left ? left+' words still to learn' : 'Every word here is mastered';
       }
       const list = WORDS.filter(w=>w.cat===c);
+      const due = dueForReview(list).length;
+      if(due) meta += ' &middot; '+due+' to refresh';
       const s = computeStats(list);
       const pct = Math.round((s.good/list.length)*100);
       return '<button class="cat-row" data-cat="'+esc(c)+'">'
@@ -1866,7 +1932,8 @@
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Learn a set</div>'
       + '<h1 class="title">Which topic?</h1>'
-      + '<p class="subtitle">Pick a topic and the app locks in '+LEARNSET_SIZE+' words from it, then keeps working that same set until you have mastered every one.</p>'
+      + '<p class="subtitle">Pick a topic, then choose to keep practicing the set you have or start a new '+LEARNSET_SIZE+'. Either way the app works that same set until you have mastered every word.</p>'
+      + recallHtml(pickerDue)
       + '<div class="cat-list">'+rows+'</div>'
       + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
       + '</div>';
@@ -1878,10 +1945,11 @@
         renderLearnSet(cat);
       });
     });
+    wireRecall(pickerDue, 'Refresher', { run: renderLearnPicker, label:'Back to the topics' });
     el('#back-home').addEventListener('click', renderHome);
   }
 
-  function renderLearnSet(cat){
+  function renderLearnSet(cat, confirmingNew){
     const set = getLearnSet(cat) || buildLearnSet(cat);
     const mastered = set.filter(w=>statusOf(w.id)==='mastered');
     // Stage order first, so a round meets the new words before drilling the
@@ -1890,6 +1958,13 @@
       .sort((a,b)=> learnStageRank(a)-learnStageRank(b));
     const pct = set.length ? Math.round((mastered.length/set.length)*100) : 0;
     const complete = remaining.length===0;
+    const stageList = canListen
+      ? 'recognize, type it, sentence, say it'
+      : 'recognize, type it, sentence';
+    // Words mastered in earlier sets from this same topic that the schedule
+    // has brought round again -- the whole point of the reminder is that
+    // moving on to a new set does not cost you the last one.
+    const setDue = dueForReview(WORDS.filter(w=>w.cat===cat), LEARNSET_SIZE);
 
     const rows = set.map(w=>{
       const isMastered = statusOf(w.id)==='mastered';
@@ -1908,11 +1983,20 @@
           ? 'This set is done. Keep these '+set.length+' fresh, or start a new '+LEARNSET_SIZE+' from this topic.'
           : 'The app picks the method for you: recognize each word, type it from memory, use it in a sentence, then say it out loud. Only what you have not finished comes up next.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+      + recallHtml(setDue)
+      // Both options, always: carry on with this set, or take a fresh one.
       + (complete
           ? '<button class="btn-primary" id="review-set">Keep practicing these '+set.length+' words &rarr;</button>'
             + '<p class="hint">Reviews the words you just finished. Miss one and it goes back into the set to work on again.</p>'
-            + '<button class="btn-secondary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
-          : '<button class="btn-primary" id="start-set">Practice '+remaining.length+' left &rarr;</button>')
+          : '<button class="btn-primary" id="start-set">Keep practicing &middot; '+remaining.length+' left &rarr;</button>'
+            + '<p class="hint">Carries on with this set. The app picks the method for each word: '+stageList+'.</p>')
+      + (confirmingNew
+          ? '<button class="btn-secondary" id="new-set" style="border-color:var(--warn); color:var(--warn);">Yes, replace them &middot; new set of '+LEARNSET_SIZE+'</button>'
+            + '<p class="hint">'+remaining.length+' word'+(remaining.length===1?'':'s')+' here '+(remaining.length===1?'is':'are')+' not finished. '
+              + 'Nothing you have done is lost &mdash; they keep their progress and can come back in a later set.</p>'
+            + '<button class="reset-link" id="keep-set">Never mind, keep this set</button>'
+          : '<button class="btn-secondary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
+            + '<p class="hint">Picks '+LEARNSET_SIZE+' fresh words from '+esc(cat)+'. Once you do, the app reminds you about the ones you finished here and brings them back on schedule.</p>')
       + '<div class="divider"><span>this set</span></div>'
       + '<div class="follow-list">'+rows+'</div>'
       + '<button class="btn-secondary" id="change-topic" style="margin-top:16px;">&larr; Pick another topic</button>'
@@ -1934,8 +2018,17 @@
     }
     const newBtn = el('#new-set');
     if(newBtn){
-      newBtn.addEventListener('click', ()=>{ buildLearnSet(cat); renderLearnSet(cat); });
+      // Asking first when a set is still unfinished, in the page itself
+      // rather than a browser popup.
+      newBtn.addEventListener('click', ()=>{
+        if(!complete && !confirmingNew){ renderLearnSet(cat, true); return; }
+        buildLearnSet(cat);
+        renderLearnSet(cat);
+      });
     }
+    const keepBtn = el('#keep-set');
+    if(keepBtn) keepBtn.addEventListener('click', ()=>renderLearnSet(cat));
+    wireRecall(setDue, cat+' refresher', { run: ()=>renderLearnSet(cat), label:'Back to the set' });
     el('#change-topic').addEventListener('click', renderLearnPicker);
   }
 
