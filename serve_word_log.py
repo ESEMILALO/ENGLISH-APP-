@@ -25,8 +25,10 @@ HOW TO USE:
 """
 
 import argparse
+import http.client
 import http.server
 import json
+import os
 import socketserver
 import subprocess
 import sys
@@ -118,7 +120,28 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
 class Server(socketserver.ThreadingTCPServer):
     daemon_threads = True
-    allow_reuse_address = True
+    # Deliberately not allow_reuse_address on Windows. There it does not
+    # mean "reuse a port in TIME_WAIT", it means "bind a port somebody
+    # else already has", and a second copy would quietly steal traffic
+    # from the first instead of failing.
+    allow_reuse_address = (os.name != "nt")
+
+
+def already_running(port):
+    """True when a Word Log server is already answering on this port.
+
+    The login shortcut fires at every login, and you may well double-click
+    the launcher as well, so starting twice has to be handled rather than
+    left to chance."""
+    try:
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=2)
+        conn.request("HEAD", "/")
+        response = conn.getresponse()
+        served_by = response.getheader("Server", "")
+        conn.close()
+        return served_by.startswith("WordLog")
+    except Exception:
+        return False
 
 
 TAILSCALE = Path(r"C:\Program Files\Tailscale\tailscale.exe")
@@ -153,6 +176,16 @@ def main():
                  "Run  python build_word_log.py  first, then start this again.")
 
     host = tailnet_name()
+
+    # Starting a second copy would not fail on Windows, it would quietly
+    # take the port off the first one, so say so and stop instead.
+    if already_running(args.port):
+        print("  Word Log is already running.\n")
+        if host:
+            print("      https://%s:%d\n" % (host, args.https_port))
+        print("  Nothing to do -- just open that address.\n")
+        return
+
     if host:
         print("  Open this on your laptop and on your phone:\n")
         print("      https://%s:%d\n" % (host, args.https_port))
