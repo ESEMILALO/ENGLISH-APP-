@@ -459,6 +459,7 @@
   let returnTo = null; // {run, label} set when a session was started from the word browser or search, so summary can return there
   let activePassScope = null; // set to 'Mixed' or a category name during a Complete-length session, for resume tracking
   let learnMode = false; // Learn-a-set sessions pick each card's mode themselves instead of using the home toggle
+  let learnCardMode = null; // the stage chosen for the card on screen, held steady while it is shown
   let revealed = false;
   let typedChecked = false;
   let lastCheckCorrect = false;
@@ -1013,6 +1014,7 @@
     sessionRetryCounts = {};
     coachResults = []; scResetCard();
     learnMode = !!learn;
+    learnCardMode = null;
     sessionKind = 'practice';
     sessionLabel = label;
     activeMode = learnMode ? learnStageFor(list[0]) : interactionMode;
@@ -1106,6 +1108,7 @@
   function advance(){
     if(activePassScope){ markPassCovered(activePassScope, session[sIndex].id); }
     scResetCard();
+    learnCardMode = null; // next card picks its own stage
     sIndex++; revealed=false; typedChecked=false; fastPhase='front';
     if(sIndex>=session.length){
       clearFastTimer();
@@ -1429,10 +1432,14 @@
 
   function renderSession(){
     const w = session[sIndex];
-    // In a Learn-a-set session the mode is per card, not per session, so it
-    // is recomputed here each time a card comes up (including when a card
-    // is re-shown after a miss, which may have dropped it back a stage).
-    if(learnMode) activeMode = learnStageFor(w);
+    // In a Learn-a-set session the mode is per card, not per session. It is
+    // decided once, when the card first appears, and held: answering can
+    // change the word's stage, and recomputing here would swap the result
+    // screen for a fresh prompt of the new stage before it could be read.
+    if(learnMode){
+      if(learnCardMode === null) learnCardMode = learnStageFor(w);
+      activeMode = learnCardMode;
+    }
     const pct = Math.round((sIndex/session.length)*100);
     const isLast = (sIndex+1 >= session.length);
     let cardBody, belowCard;
@@ -1878,11 +1885,13 @@
       + '<div class="eyebrow">'+esc(cat)+'</div>'
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
-          ? 'This set is done. Start a fresh '+LEARNSET_SIZE+' from this topic whenever you are ready.'
+          ? 'This set is done. Keep these '+set.length+' fresh, or start a new '+LEARNSET_SIZE+' from this topic.'
           : 'The app picks the method for you: recognize each word first, then type it from memory, then use it in a sentence. Only what you have not finished comes up next.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
       + (complete
-          ? '<button class="btn-primary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
+          ? '<button class="btn-primary" id="review-set">Keep practicing these '+set.length+' words &rarr;</button>'
+            + '<p class="hint">Reviews the words you just finished. Miss one and it goes back into the set to work on again.</p>'
+            + '<button class="btn-secondary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
           : '<button class="btn-primary" id="start-set">Practice '+remaining.length+' left &rarr;</button>')
       + '<div class="divider"><span>this set</span></div>'
       + '<div class="follow-list">'+rows+'</div>'
@@ -1893,6 +1902,13 @@
     if(startBtn){
       startBtn.addEventListener('click', ()=>{
         startSession(remaining, cat+' set', true);
+        returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
+      });
+    }
+    const reviewBtn = el('#review-set');
+    if(reviewBtn){
+      reviewBtn.addEventListener('click', ()=>{
+        startSession(sortByPriority(set), cat+' set review', true);
         returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
       });
     }
