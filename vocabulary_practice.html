@@ -542,7 +542,10 @@
   const MYLIST_MAX = 10;
   const SPEECH_KEY = 'wordlog_speech_scores';
   const LEARNSET_KEY = 'wordlog_learn_sets';
-  const LEARNSET_SIZE = 15;
+  const LEARNSET_SIZE = 10;
+  // Two from each of the five lists, which is what makes 10. Kept as its
+  // own number so the arithmetic is stated rather than implied.
+  const PER_TOPIC = 2;
   // Spaced-repetition ladder, in minutes until the next review: just seen,
   // 10 min, 1 hour, 1 day, 3 days, 7 days. A correct answer promotes a word
   // one step; a miss drops it back to step 0. "Mastered" means it survived
@@ -785,23 +788,50 @@
   }
 
   // Today's set. There is no topic to choose any more: every day the app
-  // puts LEARNSET_SIZE words in front of you, drawn from the whole
-  // vocabulary rather than one list.
+  // puts LEARNSET_SIZE words in front of you, PER_TOPIC from each list,
+  // so every list moves forward together instead of one racing ahead.
   //
   // Anything you did not finish yesterday comes first, so a word is never
-  // quietly abandoned half-learnt, and the rest is topped up with fresh
-  // ones. The set stays LEARNSET_SIZE either way -- carrying leftovers
-  // forward *and* adding a full batch would grow it without end.
+  // quietly abandoned half-learnt, and the rest is topped up. The set
+  // stays LEARNSET_SIZE either way -- carrying leftovers forward *and*
+  // adding a full batch would grow it without end.
+  //
+  // Carried words already occupy slots, so the top-up goes to whichever
+  // list has the fewest words in today's set, over and over. That keeps
+  // the balance as even as the leftovers allow, and a list that has run
+  // out simply yields its slots to the others rather than shrinking the
+  // set.
   function buildDailySet(){
     const carried = (getDailySet() || []).filter(w=>statusOf(w.id)!=='mastered');
-    const room = LEARNSET_SIZE - carried.length;
-    let picks = carried;
-    if(room > 0){
-      const taken = {};
-      carried.forEach(w=>{ taken[w.id] = true; });
-      const pool = sortByPriority(WORDS.filter(w=>
-        !taken[w.id] && statusOf(w.id) !== 'mastered'));
-      picks = carried.concat(pool.slice(0, room));
+    const picks = carried.slice();
+
+    const taken = {};
+    picks.forEach(w=>{ taken[w.id] = true; });
+
+    const inSet = {};
+    CATEGORIES.forEach(c=>{ inSet[c] = 0; });
+    picks.forEach(w=>{ if(inSet[w.cat] !== undefined) inSet[w.cat]++; });
+
+    // weakest-first within each list, so the top-up takes the words most
+    // in need from whichever list is behind
+    const pools = {};
+    CATEGORIES.forEach(c=>{
+      pools[c] = sortByPriority(WORDS.filter(w=>
+        w.cat === c && !taken[w.id] && statusOf(w.id) !== 'mastered'));
+    });
+
+    while(picks.length < LEARNSET_SIZE){
+      // the list with the least representation so far that still has words
+      let next = null;
+      CATEGORIES.forEach(c=>{
+        if(!pools[c].length) return;
+        if(next === null || inSet[c] < inSet[next]) next = c;
+      });
+      if(next === null) break; // every list exhausted
+      const w = pools[next].shift();
+      picks.push(w);
+      taken[w.id] = true;
+      inSet[next]++;
     }
     learnSets.daily = {
       wordIds: picks.map(w=>w.id),
@@ -1687,7 +1717,7 @@
 
     const doSpace = '<div class="home-col home-col-do">'
       + '<div class="home-col-head"><span>Today</span>'
-        + '<span class="home-col-hint">'+LEARNSET_SIZE+' new words a day</span></div>'
+        + '<span class="home-col-hint">'+LEARNSET_SIZE+' a day &middot; '+PER_TOPIC+' from each list</span></div>'
       + streakHtml
       + recallHtml(homeDue)
       + heroHtml
@@ -2257,8 +2287,9 @@
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
           ? 'Today is done. Tomorrow brings '+LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
-          : 'Your '+LEARNSET_SIZE+' words for today, chosen from across every list. The app picks the method for each one: '
-            + stageList+'. A word is only mastered once you have said it out loud.')+'</p>'
+          : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+CATEGORIES.length+' lists. '
+            + 'The app picks the method for each one: '+stageList
+            + '. A word is only mastered once you have said it out loud.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
       + recallHtml(setDue)
       + (complete
