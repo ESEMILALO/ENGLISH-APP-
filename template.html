@@ -123,6 +123,29 @@
   .home-col-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
   .home-col-head .home-col-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
 
+  /* Progress sits at the top of the home now, above the day's work. */
+  .home-top{ margin-bottom:10px; }
+
+  /* Topics and the odd corners of the app, folded away at the end so the
+     screen is only what there is to do today. */
+  .home-more{
+    border:1px solid var(--rule); border-radius:12px; background:var(--panel);
+    margin-top:26px; overflow:hidden;
+  }
+  .home-more summary{
+    cursor:pointer; list-style:none; padding:14px 16px;
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); display:flex; align-items:center; gap:9px;
+    transition:color .15s ease;
+  }
+  .home-more summary::-webkit-details-marker{ display:none; }
+  .home-more summary::before{
+    content:'+'; font-size:1rem; line-height:1; color:var(--amber); flex-shrink:0;
+  }
+  .home-more[open] summary::before{ content:'2'; }
+  .home-more summary:hover{ color:var(--text); }
+  .home-more-body{ padding:0 16px 14px; border-top:1px solid var(--rule); }
+
   /* Mastered words, shown one at a time and changing on their own, so a
      finished word still crosses your eyes now and then. */
   .fresh-block{
@@ -761,16 +784,52 @@
     try{ localStorage.setItem(LEARNSET_KEY, JSON.stringify(learnSets)); }catch(e){}
   }
 
-  // Picks LEARNSET_SIZE words from a topic and locks them in, so the same
-  // set comes back every session until each one is mastered. Words already
-  // mastered are skipped when choosing; if a topic has fewer unmastered
-  // words left than that, the set is just smaller.
-  function buildLearnSet(cat){
-    const pool = sortByPriority(WORDS.filter(w=>w.cat===cat && statusOf(w.id)!=='mastered'));
-    const picks = pool.slice(0, LEARNSET_SIZE);
-    learnSets[cat] = { wordIds: picks.map(w=>w.id), startedAt: new Date().toISOString() };
+  // Today's set. There is no topic to choose any more: every day the app
+  // puts LEARNSET_SIZE words in front of you, drawn from the whole
+  // vocabulary rather than one list.
+  //
+  // Anything you did not finish yesterday comes first, so a word is never
+  // quietly abandoned half-learnt, and the rest is topped up with fresh
+  // ones. The set stays LEARNSET_SIZE either way -- carrying leftovers
+  // forward *and* adding a full batch would grow it without end.
+  function buildDailySet(){
+    const carried = (getDailySet() || []).filter(w=>statusOf(w.id)!=='mastered');
+    const room = LEARNSET_SIZE - carried.length;
+    let picks = carried;
+    if(room > 0){
+      const taken = {};
+      carried.forEach(w=>{ taken[w.id] = true; });
+      const pool = sortByPriority(WORDS.filter(w=>
+        !taken[w.id] && statusOf(w.id) !== 'mastered'));
+      picks = carried.concat(pool.slice(0, room));
+    }
+    learnSets.daily = {
+      wordIds: picks.map(w=>w.id),
+      day: todayStr(),
+      startedAt: new Date().toISOString()
+    };
     saveLearnSets();
     return picks;
+  }
+
+  // Today's set as word objects, or null when today has none yet. A set
+  // built on an earlier day is still returned -- todaysSet() decides when
+  // to roll it over, so the words stay visible until that happens.
+  function getDailySet(){
+    const info = learnSets.daily;
+    if(!info || !info.wordIds || !info.wordIds.length) return null;
+    const words = info.wordIds.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean);
+    return words.length ? words : null;
+  }
+
+  function dailySetDay(){
+    return (learnSets.daily && learnSets.daily.day) || null;
+  }
+
+  // The set to work on right now, rolled over when the date has changed.
+  function todaysSet(){
+    if(dailySetDay() !== todayStr()) return buildDailySet();
+    return getDailySet() || buildDailySet();
   }
 
   // Learn-a-set walks each word through the same stages: meet it in
@@ -792,6 +851,15 @@
     if(!p.sentOnce) return 'sentence';
     if(canListen && !p.spokeOnce) return 'coach';
     return 'sentence'; // keep using it in context for the remaining reps
+  }
+
+  // Every stage a word must clear before it can be called mastered.
+  // Speaking is part of it now, except where the browser cannot listen at
+  // all -- there it is dropped rather than leaving the word unmasterable.
+  function stagesCleared(p){
+    if(!p) return false;
+    if(!p.typedOnce || !p.sentOnce) return false;
+    return canListen ? !!p.spokeOnce : true;
   }
   function learnStageRank(w){
     return LEARN_ORDER.indexOf(learnStageFor(w));
@@ -837,16 +905,6 @@
       startSession(due, label, true);
       returnTo = back;
     });
-  }
-
-  // Returns the stored set as word objects, dropping any id that no longer
-  // exists (e.g. the word was renamed in the spreadsheet). Null when the
-  // topic has no set yet.
-  function getLearnSet(cat){
-    const info = learnSets[cat];
-    if(!info || !info.wordIds || !info.wordIds.length) return null;
-    const words = info.wordIds.map(id=>WORDS.find(w=>w.id===id)).filter(Boolean);
-    return words.length ? words : null;
   }
 
   function todayStr(d){
@@ -1317,7 +1375,10 @@
     if(activeMode==='coach' && correct) p.spokeOnce = true;
     if(correct){
       p.correct = (p.correct||0)+1;
-      const ceiling = p.typedOnce ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
+      // A word only reaches the top step once it has been recognised,
+      // typed, used in a sentence and said out loud. Until then correct
+      // answers carry it to one step below mastered and no further.
+      const ceiling = stagesCleared(p) ? SRS_MASTER_STEP : SRS_MASTER_STEP - 1;
       p.step = Math.max(p.step||0, Math.min((p.step||0)+1, ceiling));
     } else {
       p.step = 0;
@@ -1566,25 +1627,6 @@
         + '</button>';
     }).join('');
 
-    const lens = [[15,'Quick'],[25,'Standard'],[40,'Deep'],['all','Complete']];
-    const lenHtml = lens.map(([val,label])=>
-      '<button class="len-btn '+(sessionLength===val?'active':'')+'" data-len="'+val+'">'+label+'<small>'+(val==='all'?'no cap':val+' cards')+'</small></button>'
-    ).join('');
-
-    const modes = [['recognize','Recognize'],['typed','Type it'],['sentence','Sentence']];
-    if(canListen) modes.push(['coach','Speech Coach']);
-    modes.push(['fast','Fast']);
-    const modeHtml = modes.map(([val,label])=>
-      '<button class="len-btn '+(interactionMode===val?'active':'')+'" data-mode="'+val+'">'+label+'</button>'
-    ).join('');
-
-    const speeds = [['relaxed','Relaxed'],['normal','Normal'],['rapid','Rapid']];
-    const speedHtml = interactionMode==='fast' ? (
-      '<div class="length-toggle">' + speeds.map(([val,label])=>
-        '<button class="len-btn '+(fastSpeed===val?'active':'')+'" data-speed="'+val+'">'+label+'</button>'
-      ).join('') + '</div>'
-    ) : '';
-
     const todaySessions = meta.history.filter(h=>h.date===todayStr());
     const todayCards = todaySessions.reduce((a,h)=>a+(h.total||0),0);
     const todayNote = todaySessions.length
@@ -1593,17 +1635,6 @@
     const streakHtml = meta.streak.current > 0
       ? '<div class="streak-row">'+ICON_FLAME+' '+meta.streak.current+'-day streak <span class="streak-best">&middot; best '+meta.streak.longest+'</span>'+todayNote+'</div>'
       : '<div class="streak-row" style="color:var(--text-soft);">'+ICON_FLAME+' Start a streak today'+todayNote+'</div>';
-
-    // Say plainly what the selected mode actually does -- the row of labels
-    // alone does not tell you which ones can finish a word off.
-    const MODE_NOTES = {
-      recognize: '<b>Recognize</b> &mdash; see the word, reveal the meaning, rate yourself. Quick review, but a word needs Type it or Sentence to reach mastered.',
-      typed: '<b>Type it</b> &mdash; see the meaning and type the word from memory. Proves real recall, and unlocks mastery.',
-      sentence: '<b>Sentence</b> &mdash; fill the word into its own example sentence, so you learn it in context.',
-      coach: '<b>Speech Coach</b> &mdash; say the sentence out loud and get a score for each word you pronounce.',
-      fast: '<b>Fast</b> &mdash; auto-advancing flashcards for a quick skim. Nothing is scored.'
-    };
-    const modeNote = '<p class="mode-note">'+(MODE_NOTES[interactionMode]||'')+'</p>';
 
     const share = n => WORDS.length ? Math.round((n/WORDS.length)*100) : 0;
     const statTiles = [
@@ -1629,80 +1660,70 @@
     // Everything already mastered, for the block that cycles through them.
     const fresh = freshPool();
 
-    const mixedHint = sessionLength==='all'
-      ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
-      : 'Pulled evenly across all 5 lists, new and in-progress words come first.';
+    // Headline action: today's words. The app chooses them, so there is
+    // nothing to pick -- this either starts the day or carries it on.
+    const today = todaysSet();
+    const todayDone = today.filter(w=>statusOf(w.id)==='mastered').length;
+    const todayPct = today.length ? Math.round((todayDone/today.length)*100) : 0;
+    const stageList = canListen
+      ? 'recognize, type it, sentence, say it'
+      : 'recognize, type it, sentence';
+    const heroHtml = '<button class="btn-hero" id="learn-set">'
+      + (todayDone >= today.length
+          ? 'Today is done &middot; practice again'
+          : "Today&rsquo;s " + today.length + " words")
+      + '<small>'+todayDone+' of '+today.length+' mastered &middot; '+stageList+'</small>'
+      + '<div class="hero-bar"><span style="width:'+todayPct+'%"></span></div>'
+      + '</button>';
 
-    // Headline action. If a set is already underway it doubles as "carry on
-    // where you left off", jumping straight back into that topic's set --
-    // most recently started first when several topics have one going.
-    let heroHtml;
-    const openSets = CATEGORIES.map(c=>{
-      const set = getLearnSet(c);
-      if(!set) return null;
-      const done = set.filter(w=>statusOf(w.id)==='mastered').length;
-      return done < set.length
-        ? { cat:c, done:done, total:set.length, startedAt:(learnSets[c]||{}).startedAt || '' }
-        : null;
-    }).filter(Boolean).sort((a,b)=> (b.startedAt||'').localeCompare(a.startedAt||''));
+    // Progress comes first now, then today's work, then everything else
+    // folded away at the bottom. The two spaces hold the daily work on the
+    // left and the words you have finished on the right.
+    const topHtml = '<div class="home-top">'
+      + progressHtml
+      + '<div class="stat-row">'+statTiles+'</div>'
+      + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
+      + '</div>';
 
-    if(openSets.length){
-      const s = openSets[0];
-      const pct = Math.round((s.done/s.total)*100);
-      const stageList = canListen
-        ? 'recognize, type it, sentence, say it'
-        : 'recognize, type it, sentence';
-      heroHtml = '<button class="btn-hero" id="learn-set">Finish your set &middot; '+esc(s.cat)
-        + '<small>'+s.done+' of '+s.total+' mastered. Choose a topic, then keep practicing or start a new set &middot; '+stageList+'</small>'
-        + '<div class="hero-bar"><span style="width:'+pct+'%"></span></div>'
-        + '</button>';
-    } else {
-      heroHtml = '<button class="btn-hero" id="learn-set">Learn a set of '+LEARNSET_SIZE
-        + '<small>Pick a topic and the app takes '+LEARNSET_SIZE+' words all the way to mastered, choosing the method for you.</small>'
-        + '</button>';
-    }
-
-    // The home reads as two spaces: everything you can start is on the
-    // left, everything that tells you how you are doing is on the right.
-    // On a phone the right space simply follows the left one.
     const doSpace = '<div class="home-col home-col-do">'
-      + '<div class="home-col-head"><span>Practice</span>'
-        + '<span class="home-col-hint">what to do next</span></div>'
+      + '<div class="home-col-head"><span>Today</span>'
+        + '<span class="home-col-hint">'+LEARNSET_SIZE+' new words a day</span></div>'
       + streakHtml
       + recallHtml(homeDue)
       + heroHtml
-      + '<div class="section-label">Build your own session</div>'
-      + '<div class="length-toggle">'+lenHtml+'</div>'
-      + '<div class="length-toggle">'+modeHtml+'</div>'
-      + speedHtml
-      + modeNote
-      + '<button class="btn-primary" id="start-mixed">Start mixed session</button>'
-      + '<p class="hint">'+mixedHint+'</p>'
-      + '<button class="btn-secondary" id="start-test">Take a test &middot; 20 words, scored</button>'
-      + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
-      + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
       + '</div>';
 
     const seeSpace = '<div class="home-col home-col-see">'
-      + '<div class="home-col-head"><span>Your progress</span>'
-        + '<span class="home-col-hint"><b>'+overallPct+'%</b> of '+WORDS.length+' words</span></div>'
-      + progressHtml
-      + '<div class="stat-row">'+statTiles+'</div>'
-      + '<p class="hint" style="margin:-12px 2px 14px;">Tap any box to see those words and practice them.</p>'
-      + freshBlockHtml(fresh)
-      + '<div class="section-label">Or work one topic</div>'
-      + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete under Practice, then tap a topic here, to run every word in it.</p>'
-      + '<div class="cat-list">'+catRows+'</div>'
-      + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
-      + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
+      + '<div class="home-col-head"><span>Keep them fresh</span>'
+        + '<span class="home-col-hint"><b>'+stats.good+'</b> mastered so far</span></div>'
+      + (fresh.length
+          ? freshBlockHtml(fresh)
+          : '<p class="hint" style="margin:0 2px;">Nothing mastered yet. Words you finish will show up here, '
+            + 'one at a time, so they stay in your head.</p>')
       + '</div>';
+
+    // Topics and the odds and ends live at the end, closed up, so the
+    // screen is only what you need to do today.
+    const moreHtml = '<details class="home-more">'
+      + '<summary>Everything else &middot; topics, your list, history</summary>'
+      + '<div class="home-more-body">'
+        + '<div class="section-label" style="margin-top:6px;">Work one topic</div>'
+        + '<div class="cat-list">'+catRows+'</div>'
+        + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
+        + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
+        + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
+        + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
+      + '</div>'
+      + '</details>';
 
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+      + topHtml
       + '<div class="home-cols">' + doSpace + seeSpace + '</div>'
+      + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
       + '</div>';
@@ -1712,19 +1733,9 @@
     homeSearch.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); renderSearch(homeSearch.value); } });
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#add-word').addEventListener('click', renderAddWord);
-    el('#start-mixed').addEventListener('click', ()=>{
-      if(sessionLength==='all'){
-        const result = buildCompletePass('Mixed', WORDS);
-        startSession(result.words, result.continuing ? 'Mixed (remaining)' : 'Mixed');
-        activePassScope = 'Mixed';
-      } else {
-        startSession(buildMixedSession(sessionLength), 'Mixed');
-      }
-    });
-    el('#start-test').addEventListener('click', startTest);
     // Always through the topic picker, even with a set underway -- from
     // there you pick the topic, then keep practicing or start a new set.
-    el('#learn-set').addEventListener('click', renderLearnPicker);
+    el('#learn-set').addEventListener('click', renderDailySet);
     wireRecall(homeDue, 'Refresher', null);
     root.querySelectorAll('.hstat[data-status]').forEach(b=>{
       b.addEventListener('click', ()=>{ if(!b.disabled) renderStatusList(b.dataset.status); });
@@ -1733,15 +1744,6 @@
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireFresh(fresh);
     startFresh(fresh);
-    root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
-      b.addEventListener('click', ()=>{ sessionLength = (b.dataset.len==='all') ? 'all' : parseInt(b.dataset.len,10); renderHome(); });
-    });
-    root.querySelectorAll('.len-btn[data-mode]').forEach(b=>{
-      b.addEventListener('click', ()=>{ interactionMode = b.dataset.mode; renderHome(); });
-    });
-    root.querySelectorAll('.len-btn[data-speed]').forEach(b=>{
-      b.addEventListener('click', ()=>{ fastSpeed = b.dataset.speed; renderHome(); });
-    });
     root.querySelectorAll('.cat-row').forEach(b=>{
       b.addEventListener('click', ()=>{
         const cat = b.dataset.cat;
@@ -2219,52 +2221,11 @@
     el('#back-home').addEventListener('click', renderHome);
   }
 
-  function renderLearnPicker(){
-    const pickerDue = dueForReview(WORDS, LEARNSET_SIZE);
-    const rows = CATEGORIES.map(c=>{
-      const set = getLearnSet(c);
-      let meta;
-      if(set){
-        const done = set.filter(w=>statusOf(w.id)==='mastered').length;
-        meta = 'Set in progress &middot; '+done+' of '+set.length+' mastered';
-      } else {
-        const left = WORDS.filter(w=>w.cat===c && statusOf(w.id)!=='mastered').length;
-        meta = left ? left+' words still to learn' : 'Every word here is mastered';
-      }
-      const list = WORDS.filter(w=>w.cat===c);
-      const due = dueForReview(list).length;
-      if(due) meta += ' &middot; '+due+' to refresh';
-      const s = computeStats(list);
-      const pct = Math.round((s.good/list.length)*100);
-      return '<button class="cat-row" data-cat="'+esc(c)+'">'
-        + '<div class="cat-row-top"><span class="cat-name">'+esc(c)+'</span><span class="cat-arrow">&rarr;</span></div>'
-        + '<div class="cat-row-meta">'+meta+'</div>'
-        + '<div class="bar"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
-        + '</button>';
-    }).join('');
-
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Learn a set</div>'
-      + '<h1 class="title">Which topic?</h1>'
-      + '<p class="subtitle">Pick a topic, then choose to keep practicing the set you have or start a new '+LEARNSET_SIZE+'. Either way the app works that same set until you have mastered every word.</p>'
-      + recallHtml(pickerDue)
-      + '<div class="cat-list">'+rows+'</div>'
-      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
-      + '</div>';
-
-    root.querySelectorAll('.cat-row').forEach(b=>{
-      b.addEventListener('click', ()=>{
-        const cat = b.dataset.cat;
-        if(!getLearnSet(cat)) buildLearnSet(cat);
-        renderLearnSet(cat);
-      });
-    });
-    wireRecall(pickerDue, 'Refresher', { run: renderLearnPicker, label:'Back to the topics' });
-    el('#back-home').addEventListener('click', renderHome);
-  }
-
-  function renderLearnSet(cat, confirmingNew){
-    const set = getLearnSet(cat) || buildLearnSet(cat);
+  // Today's words. No topic to choose any more -- the app decides, every
+  // day, and this screen just shows what it chose and how far through you
+  // are. The four stages are walked automatically, one per card.
+  function renderDailySet(){
+    const set = todaysSet();
     const mastered = set.filter(w=>statusOf(w.id)==='mastered');
     // Stage order first, so a round meets the new words before drilling the
     // ones already in progress; weakest-first within each stage.
@@ -2275,10 +2236,7 @@
     const stageList = canListen
       ? 'recognize, type it, sentence, say it'
       : 'recognize, type it, sentence';
-    // Words mastered in earlier sets from this same topic that the schedule
-    // has brought round again -- the whole point of the reminder is that
-    // moving on to a new set does not cost you the last one.
-    const setDue = dueForReview(WORDS.filter(w=>w.cat===cat), LEARNSET_SIZE);
+    const setDue = dueForReview(WORDS, LEARNSET_SIZE);
 
     const rows = set.map(w=>{
       const isMastered = statusOf(w.id)==='mastered';
@@ -2286,64 +2244,49 @@
       const label = isMastered ? 'Mastered' : LEARN_STAGES[stage];
       const color = isMastered ? 'var(--good)'
         : (stage==='recognize' ? 'var(--new)' : 'var(--amber)');
-      return '<div class="follow-row"><span class="follow-word">'+esc(w.w)+'</span>'
+      return '<div class="follow-row"><span class="follow-word">'+esc(w.w)
+        + ' <span style="color:var(--text-soft); font-weight:400; font-size:.78rem;">'
+        + esc(CAT_ABBR[w.cat]||w.cat)+'</span></span>'
         + '<span class="word-row-pct" style="color:'+color+';">'+label+'</span></div>';
     }).join('');
 
     root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">'+esc(cat)+'</div>'
+      // friendlyDate turns today's date into the word "Today", so spelling
+      // out the date here as well would just read "Today - Today".
+      + '<div class="eyebrow">Today &middot; '+new Date().toLocaleDateString('en-US',{weekday:'long', month:'short', day:'numeric'})+'</div>'
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
-          ? 'This set is done. Keep these '+set.length+' fresh, or start a new '+LEARNSET_SIZE+' from this topic.'
-          : 'The app picks the method for you: recognize each word, type it from memory, use it in a sentence, then say it out loud. Only what you have not finished comes up next.')+'</p>'
+          ? 'Today is done. Tomorrow brings '+LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
+          : 'Your '+LEARNSET_SIZE+' words for today, chosen from across every list. The app picks the method for each one: '
+            + stageList+'. A word is only mastered once you have said it out loud.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
       + recallHtml(setDue)
-      // Both options, always: carry on with this set, or take a fresh one.
       + (complete
-          ? '<button class="btn-primary" id="review-set">Keep practicing these '+set.length+' words &rarr;</button>'
-            + '<p class="hint">Reviews the words you just finished. Miss one and it goes back into the set to work on again.</p>'
-          : '<button class="btn-primary" id="start-set">Keep practicing &middot; '+remaining.length+' left &rarr;</button>'
-            + '<p class="hint">Carries on with this set. The app picks the method for each word: '+stageList+'.</p>')
-      + (confirmingNew
-          ? '<button class="btn-secondary" id="new-set" style="border-color:var(--warn); color:var(--warn);">Yes, replace them &middot; new set of '+LEARNSET_SIZE+'</button>'
-            + '<p class="hint">'+remaining.length+' word'+(remaining.length===1?'':'s')+' here '+(remaining.length===1?'is':'are')+' not finished. '
-              + 'Nothing you have done is lost &mdash; they keep their progress and can come back in a later set.</p>'
-            + '<button class="reset-link" id="keep-set">Never mind, keep this set</button>'
-          : '<button class="btn-secondary" id="new-set">Start a new set of '+LEARNSET_SIZE+'</button>'
-            + '<p class="hint">Picks '+LEARNSET_SIZE+' fresh words from '+esc(cat)+'. Once you do, the app reminds you about the ones you finished here and brings them back on schedule.</p>')
-      + '<div class="divider"><span>this set</span></div>'
+          ? '<button class="btn-primary" id="review-set">Practice these '+set.length+' again &rarr;</button>'
+            + '<p class="hint">Goes back over today’s words. Miss one and it returns to the set to work on again.</p>'
+          : '<button class="btn-primary" id="start-set">Start &middot; '+remaining.length+' left &rarr;</button>'
+            + '<p class="hint">Carries on from wherever each word had got to.</p>')
+      + '<div class="divider"><span>today&rsquo;s '+set.length+'</span></div>'
       + '<div class="follow-list">'+rows+'</div>'
-      + '<button class="btn-secondary" id="change-topic" style="margin-top:16px;">&larr; Pick another topic</button>'
+      + '<button class="btn-secondary" id="back-home" style="margin-top:16px;">&larr; Back to home</button>'
       + '</div>';
 
     const startBtn = el('#start-set');
     if(startBtn){
       startBtn.addEventListener('click', ()=>{
-        startSession(remaining, cat+' set', true);
-        returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
+        startSession(remaining, 'Today', true);
+        returnTo = { run: renderDailySet, label:'Back to today' };
       });
     }
     const reviewBtn = el('#review-set');
     if(reviewBtn){
       reviewBtn.addEventListener('click', ()=>{
-        startSession(sortByPriority(set), cat+' set review', true);
-        returnTo = { run: ()=>renderLearnSet(cat), label:'Back to the set' };
+        startSession(sortByPriority(set), 'Today again', true);
+        returnTo = { run: renderDailySet, label:'Back to today' };
       });
     }
-    const newBtn = el('#new-set');
-    if(newBtn){
-      // Asking first when a set is still unfinished, in the page itself
-      // rather than a browser popup.
-      newBtn.addEventListener('click', ()=>{
-        if(!complete && !confirmingNew){ renderLearnSet(cat, true); return; }
-        buildLearnSet(cat);
-        renderLearnSet(cat);
-      });
-    }
-    const keepBtn = el('#keep-set');
-    if(keepBtn) keepBtn.addEventListener('click', ()=>renderLearnSet(cat));
-    wireRecall(setDue, cat+' refresher', { run: ()=>renderLearnSet(cat), label:'Back to the set' });
-    el('#change-topic').addEventListener('click', renderLearnPicker);
+    wireRecall(setDue, 'Refresher', { run: renderDailySet, label:'Back to today' });
+    el('#back-home').addEventListener('click', renderHome);
   }
 
   function renderMyList(query){
