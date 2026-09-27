@@ -123,6 +123,51 @@
   .home-col-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
   .home-col-head .home-col-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
 
+  /* Mastered words, shown one at a time and changing on their own, so a
+     finished word still crosses your eyes now and then. */
+  .fresh-block{
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--good);
+    border-radius:12px; padding:14px 16px 12px; margin:0 0 20px;
+  }
+  .fresh-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:9px;
+  }
+  .fresh-count{ letter-spacing:.04em; }
+  .fresh-word{
+    font-family:var(--cond); font-weight:700; font-size:1.35rem; letter-spacing:-.01em;
+    color:var(--text); line-height:1.15;
+  }
+  .fresh-pron{ font-family:var(--mono); font-size:.78rem; color:var(--text-soft); margin-top:2px; }
+  .fresh-mean{ font-size:.88rem; line-height:1.45; color:var(--text); margin-top:7px; }
+  .fresh-ex{ font-size:.82rem; line-height:1.45; color:var(--text-soft); font-style:italic; margin-top:5px; }
+  /* the sliver that runs down before the next word arrives */
+  .fresh-tick{ height:3px; background:var(--rule); border-radius:2px; overflow:hidden; margin:11px 0 10px; }
+  .fresh-tick span{ display:block; height:100%; width:0; background:var(--good); border-radius:2px; }
+  .fresh-tick span.run{ animation:freshTick linear forwards; }
+  @keyframes freshTick{ from{ width:0; } to{ width:100%; } }
+  .fresh-actions{ display:flex; align-items:center; gap:7px; }
+  .fresh-btn{
+    background:transparent; border:1px solid var(--rule); color:var(--text-soft);
+    width:30px; height:30px; border-radius:7px; cursor:pointer; flex-shrink:0;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:.9rem; line-height:1;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .fresh-btn:hover{ border-color:var(--text-soft); color:var(--text); }
+  .fresh-btn svg{ width:12px; height:12px; }
+  .fresh-practice{
+    flex:1; background:transparent; border:1px solid var(--rule); color:var(--text);
+    border-radius:7px; padding:0 12px; height:30px; cursor:pointer; text-align:center;
+    font-family:var(--sans); font-size:.8rem; font-weight:600;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .fresh-practice:hover{ border-color:var(--good); background:var(--good-bg); }
+  @media (prefers-reduced-motion:reduce){
+    .fresh-tick span.run{ animation:none; width:100%; }
+  }
+
   /* section headings, so the page reads as groups instead of one long run */
   .section-label{
     font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
@@ -1321,6 +1366,125 @@
     }
   }
 
+  // --- Keep them fresh -------------------------------------------------
+  // A mastered word is the easiest kind to lose: nothing brings it back
+  // until its review falls due, which can be a week away. This block puts
+  // one in front of you and changes it on its own, so finished words keep
+  // crossing your eyes between sessions. It is exposure, not testing --
+  // the reminder bar above still handles the words actually due.
+  const FRESH_MS = 7000;
+  let freshTimer = null;
+  let freshIndex = 0;
+  let freshPaused = false;
+
+  function clearFreshTimer(){
+    if(freshTimer){ clearTimeout(freshTimer); freshTimer = null; }
+  }
+
+  // Mastered words, the ones closest to falling due first, so the block
+  // spends its time on whatever is nearest to slipping.
+  function freshPool(){
+    const list = WORDS.filter(w=>statusOf(w.id)==='mastered');
+    list.sort((a,b)=>{
+      const pa = progress[a.id] || {}, pb = progress[b.id] || {};
+      const da = pa.due ? new Date(pa.due).getTime() : 0;
+      const db = pb.due ? new Date(pb.due).getTime() : 0;
+      return da - db;
+    });
+    return list;
+  }
+
+  function freshBlockHtml(pool){
+    if(!pool.length) return '';
+    return '<div class="fresh-block">'
+      + '<div class="fresh-head"><span>Keep them fresh</span>'
+        + '<span class="fresh-count" id="fresh-count"></span></div>'
+      + '<div class="fresh-word" id="fresh-word"></div>'
+      + '<div class="fresh-pron" id="fresh-pron"></div>'
+      + '<div class="fresh-mean" id="fresh-mean"></div>'
+      + '<div class="fresh-ex" id="fresh-ex"></div>'
+      + '<div class="fresh-tick"><span id="fresh-tick-fill"></span></div>'
+      + '<div class="fresh-actions">'
+        + '<button class="fresh-btn" id="fresh-prev" aria-label="Previous word">&lsaquo;</button>'
+        + '<button class="fresh-btn" id="fresh-play" aria-label="Pause or resume"></button>'
+        + '<button class="fresh-btn" id="fresh-next" aria-label="Next word">&rsaquo;</button>'
+        + '<button class="fresh-practice" id="fresh-practice">Practice this one &rarr;</button>'
+      + '</div>'
+      + '</div>';
+  }
+
+  // Stepping back past the first word makes freshIndex negative, and a
+  // negative remainder is still negative in JavaScript, so the wrap is
+  // done here and both callers use it.
+  function freshAt(pool){
+    return ((freshIndex % pool.length) + pool.length) % pool.length;
+  }
+
+  function paintFresh(pool){
+    // Leaving the home screen wipes these nodes; that is the signal to
+    // stop, since nothing else tells the timer the view has gone.
+    const wordEl = el('#fresh-word');
+    if(!wordEl || !pool.length){ clearFreshTimer(); return false; }
+
+    const at = freshAt(pool);
+    const w = pool[at];
+    const m = w.me[0] || {};
+    el('#fresh-count').textContent = (at + 1) + ' / ' + pool.length;
+    wordEl.textContent = w.w;
+    const pron = el('#fresh-pron');
+    pron.textContent = w.p ? '/' + w.p + '/' : '';
+    pron.style.display = w.p ? '' : 'none';
+    el('#fresh-mean').textContent = m.m || '';
+    const ex = el('#fresh-ex');
+    ex.textContent = m.e ? '“' + m.e + '”' : '';
+    ex.style.display = m.e ? '' : 'none';
+    el('#fresh-play').innerHTML = freshPaused ? ICON_PLAY : ICON_PAUSE;
+
+    // Restart the sliver by replacing the node -- re-adding the class
+    // alone would not retrigger the animation. The clone carries the old
+    // class attribute with it, so paused has to take 'run' back off or
+    // the bar would go on filling while nothing was moving.
+    const tick = el('#fresh-tick-fill');
+    const fresh = tick.cloneNode(false);
+    fresh.style.animationDuration = (FRESH_MS/1000) + 's';
+    fresh.classList.toggle('run', !freshPaused);
+    tick.parentNode.replaceChild(fresh, tick);
+    return true;
+  }
+
+  function scheduleFresh(pool){
+    clearFreshTimer();
+    if(freshPaused) return;
+    freshTimer = setTimeout(()=>{
+      freshTimer = null;
+      freshIndex++;
+      if(paintFresh(pool)) scheduleFresh(pool);
+    }, FRESH_MS);
+  }
+
+  function startFresh(pool){
+    clearFreshTimer();
+    if(!pool.length) return;
+    if(paintFresh(pool)) scheduleFresh(pool);
+  }
+
+  function wireFresh(pool){
+    if(!pool.length) return;
+    const step = n => { freshIndex += n; if(paintFresh(pool)) scheduleFresh(pool); };
+    el('#fresh-prev').addEventListener('click', ()=>step(-1));
+    el('#fresh-next').addEventListener('click', ()=>step(1));
+    el('#fresh-play').addEventListener('click', ()=>{
+      freshPaused = !freshPaused;
+      if(paintFresh(pool)) scheduleFresh(pool);
+    });
+    el('#fresh-practice').addEventListener('click', ()=>{
+      const w = pool[freshAt(pool)];
+      clearFreshTimer();
+      startSession([w], 'Keeping ' + w.w + ' fresh', true);
+      returnTo = null; // straight back home afterwards
+    });
+  }
+
   function clearFastTimer(){
     if(fastTimerHandle){ clearTimeout(fastTimerHandle); fastTimerHandle = null; }
   }
@@ -1387,6 +1551,7 @@
   }
 
   function renderHome(){
+    clearFreshTimer(); // this render replaces the block the old timer was painting
     const stats = computeStats(WORDS);
     const catRows = CATEGORIES.map(c=>{
       const list = WORDS.filter(w=>w.cat===c);
@@ -1461,6 +1626,8 @@
 
     // Words from earlier sets that the schedule says are ready again.
     const homeDue = dueForReview(WORDS, LEARNSET_SIZE);
+    // Everything already mastered, for the block that cycles through them.
+    const fresh = freshPool();
 
     const mixedHint = sessionLength==='all'
       ? 'No cap: every word across all 5 lists, in whichever mode is selected above.'
@@ -1521,7 +1688,8 @@
         + '<span class="home-col-hint"><b>'+overallPct+'%</b> of '+WORDS.length+' words</span></div>'
       + progressHtml
       + '<div class="stat-row">'+statTiles+'</div>'
-      + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
+      + '<p class="hint" style="margin:-12px 2px 14px;">Tap any box to see those words and practice them.</p>'
+      + freshBlockHtml(fresh)
       + '<div class="section-label">Or work one topic</div>'
       + '<p class="hint" style="margin:0 0 10px;">Tip: pick Complete under Practice, then tap a topic here, to run every word in it.</p>'
       + '<div class="cat-list">'+catRows+'</div>'
@@ -1563,6 +1731,8 @@
     });
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
+    wireFresh(fresh);
+    startFresh(fresh);
     root.querySelectorAll('.len-btn[data-len]').forEach(b=>{
       b.addEventListener('click', ()=>{ sessionLength = (b.dataset.len==='all') ? 'all' : parseInt(b.dataset.len,10); renderHome(); });
     });
