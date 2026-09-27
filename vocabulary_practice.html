@@ -123,6 +123,66 @@
   .home-col-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
   .home-col-head .home-col-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
 
+  /* The recall check that meets you at the door. Lives on top of the app
+     rather than replacing it, so answering it puts you back where you
+     were instead of anywhere new. */
+  .recall-scrim{
+    position:fixed; inset:0; z-index:200; background:rgba(12,16,19,.82);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    animation:recallIn .22s ease both;
+  }
+  @keyframes recallIn{ from{ opacity:0; } to{ opacity:1; } }
+  .recall-box{
+    width:100%; max-width:520px; max-height:90vh; overflow-y:auto;
+    background:var(--panel); border:1px solid var(--rule); border-radius:16px;
+    padding:20px 20px 18px; box-shadow:0 26px 60px rgba(0,0,0,.5);
+    animation:recallRise .26s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes recallRise{ from{ transform:translateY(14px); } to{ transform:none; } }
+  .recall-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:4px;
+  }
+  .recall-title{
+    font-family:var(--cond); font-weight:700; font-size:1.3rem; letter-spacing:-.01em;
+    color:var(--text); margin:0 0 4px;
+  }
+  .recall-how{ font-size:.8rem; color:var(--amber); margin:0 0 14px; font-weight:600; }
+  .recall-subject{
+    font-family:var(--cond); font-weight:700; font-size:1.9rem; letter-spacing:-.015em;
+    color:var(--text); line-height:1.1; margin:2px 0 4px;
+  }
+  .recall-pron{ font-family:var(--mono); font-size:.8rem; color:var(--text-soft); margin-bottom:12px; }
+  .recall-prompt{ font-size:.95rem; line-height:1.5; color:var(--text); margin:0 0 14px; }
+  .recall-ex{ font-size:.85rem; line-height:1.5; color:var(--text-soft); font-style:italic; margin:6px 0 14px; }
+  .recall-input{
+    width:100%; background:var(--bg); border:1px solid var(--rule); color:var(--text);
+    border-radius:9px; padding:13px 14px; font-size:1rem; font-family:var(--sans);
+    margin-bottom:12px; box-sizing:border-box;
+  }
+  .recall-input:focus{ outline:none; border-color:var(--amber); }
+  .recall-btns{ display:flex; gap:9px; flex-wrap:wrap; }
+  .recall-btns button{ flex:1; min-width:120px; }
+  /* .btn-primary has no rule for an inline icon, so an unconstrained SVG
+     stretches to fill the whole button. */
+  .recall-box .btn-primary svg{
+    width:15px; height:15px; vertical-align:-2px; margin-right:8px;
+  }
+  .recall-verdict{ font-weight:700; font-size:1rem; margin:0 0 8px; }
+  .recall-answer{ font-size:.9rem; color:var(--text-soft); line-height:1.5; margin:0 0 14px; }
+  .recall-dismiss{
+    display:block; width:100%; background:none; border:none; color:var(--text-soft);
+    font-family:var(--sans); font-size:.82rem; text-decoration:underline; cursor:pointer;
+    margin-top:12px; padding:4px;
+  }
+  .recall-dismiss:hover{ color:var(--text); }
+  .recall-dots{ display:flex; gap:5px; margin-top:14px; }
+  .recall-dots span{ flex:1; height:3px; border-radius:2px; background:var(--rule); }
+  .recall-dots span.ok{ background:var(--good); }
+  .recall-dots span.miss{ background:var(--warn); }
+  .recall-dots span.now{ background:var(--amber); }
+
   /* Progress sits at the top of the home now, above the day's work. */
   .home-top{ margin-bottom:10px; }
 
@@ -2511,6 +2571,272 @@
   }
   document.addEventListener('keydown', handleGlobalKeydown);
 
+  // --- The recall check on the way in ------------------------------------
+  // Different from "Keep them fresh", which only shows you a word. This
+  // asks, and the answer counts: forget one and it stops being mastered
+  // and rejoins the normal rotation. The method is not yours to pick --
+  // the app rotates recognize, type it and speaking so a word is not
+  // always checked the way it is easiest to remember.
+  const RECALL_COUNT = 5;
+  const RECALL_METHODS = ['recognize', 'typed', 'coach'];
+  let recallQuiz = null;
+  let recallShown = false;
+
+  // Mastered words, longest since you last saw one first, so the check
+  // works its way through all of them instead of circling a few.
+  function recallPool(n){
+    const list = WORDS.filter(w=>statusOf(w.id)==='mastered');
+    list.sort((a,b)=>{
+      const pa = progress[a.id] || {}, pb = progress[b.id] || {};
+      const ta = pa.lastSeen ? new Date(pa.lastSeen).getTime() : 0;
+      const tb = pb.lastSeen ? new Date(pb.lastSeen).getTime() : 0;
+      return ta - tb;
+    });
+    return list.slice(0, n);
+  }
+
+  function recallMethods(){
+    return RECALL_METHODS.filter(m=> m !== 'coach' || canListen);
+  }
+
+  // Rotated by position, shifted by the day, so the same word is not met
+  // with the same question every morning.
+  function recallMethodFor(i){
+    const avail = recallMethods();
+    const day = Math.floor(Date.now() / 86400000);
+    return avail[(i + day) % avail.length];
+  }
+
+  const RECALL_HOW = {
+    recognize: 'Do you remember what it means?',
+    typed: 'Type the word from its meaning',
+    coach: 'Say it out loud'
+  };
+
+  function maybeOpenRecall(){
+    if(recallShown) return;
+    recallShown = true;
+    const words = recallPool(RECALL_COUNT);
+    if(!words.length) return; // nothing mastered yet, so nothing to forget
+    recallQuiz = { words: words, i: 0, revealed: false, verdict: null, marks: [], status: null };
+    renderRecall();
+  }
+
+  function closeRecall(){
+    scStopListening();
+    recallQuiz = null;
+    const box = document.getElementById('recall-scrim');
+    if(box) box.remove();
+    renderHome(); // counts may have moved while the check was open
+  }
+
+  // Forgetting a mastered word means it is not mastered any more. It drops
+  // back far enough to come round again soon, but not all the way to new --
+  // you did learn it once.
+  function recallRecord(w, correct){
+    const p = progress[w.id];
+    if(!p) return;
+    p.seen = (p.seen||0) + 1;
+    if(correct){
+      p.correct = (p.correct||0) + 1;
+      p.due = new Date(Date.now() + SRS_STEP_MINUTES[SRS_MASTER_STEP]*60000).toISOString();
+    } else {
+      p.step = 2;
+      p.status = 'learning';
+      p.due = new Date(Date.now() + SRS_STEP_MINUTES[2]*60000).toISOString();
+    }
+    p.lastSeen = new Date().toISOString();
+    progress[w.id] = p;
+    saveProgress();
+  }
+
+  function recallAnswer(correct){
+    const q = recallQuiz;
+    if(!q || q.verdict !== null) return;
+    recallRecord(q.words[q.i], correct);
+    q.verdict = correct;
+    q.marks[q.i] = correct ? 'ok' : 'miss';
+    renderRecall();
+  }
+
+  function recallNext(){
+    const q = recallQuiz;
+    if(!q) return;
+    q.i++;
+    q.revealed = false;
+    q.verdict = null;
+    q.status = null;
+    if(q.i >= q.words.length){ renderRecall(); return; } // summary
+    renderRecall();
+  }
+
+  function recallDots(q){
+    return '<div class="recall-dots">' + q.words.map(function(w, idx){
+      const cls = q.marks[idx] || (idx === q.i ? 'now' : '');
+      return '<span class="'+cls+'"></span>';
+    }).join('') + '</div>';
+  }
+
+  function renderRecall(){
+    const q = recallQuiz;
+    if(!q) return;
+    let scrim = document.getElementById('recall-scrim');
+    if(!scrim){
+      scrim = document.createElement('div');
+      scrim.id = 'recall-scrim';
+      scrim.className = 'recall-scrim';
+      document.body.appendChild(scrim);
+    }
+
+    // finished: say what happened, then get out of the way
+    if(q.i >= q.words.length){
+      const kept = q.marks.filter(function(m){ return m === 'ok'; }).length;
+      const lost = q.marks.length - kept;
+      scrim.innerHTML = '<div class="recall-box">'
+        + '<div class="recall-head"><span>Recall check</span><span>done</span></div>'
+        + '<h2 class="recall-title">'+kept+' of '+q.marks.length+' still there</h2>'
+        + '<p class="recall-answer">'+(lost
+            ? lost+' word'+(lost===1?'':'s')+' slipped, so '+(lost===1?'it is':'they are')
+              + ' back in the rotation and will come round again soon.'
+            : 'Nothing forgotten. They are all booked in for a longer gap.')+'</p>'
+        + '<button class="btn-primary" id="recall-done">Go to the app &rarr;</button>'
+        + '</div>';
+      document.getElementById('recall-done').addEventListener('click', closeRecall);
+      return;
+    }
+
+    const w = q.words[q.i];
+    const method = recallMethodFor(q.i);
+    const m = w.me[0] || {};
+    const head = '<div class="recall-head"><span>Recall check</span>'
+      + '<span>'+(q.i+1)+' of '+q.words.length+'</span></div>'
+      + '<h2 class="recall-title">Do you remember this word?</h2>'
+      + '<p class="recall-how">'+RECALL_HOW[method]+'</p>';
+
+    let body = '';
+
+    if(q.verdict !== null){
+      // the same closing panel, whichever way it was asked
+      body = '<div class="recall-subject">'+esc(w.w)+'</div>'
+        + (w.p ? '<div class="recall-pron">/'+esc(w.p)+'/</div>' : '')
+        + '<p class="recall-verdict" style="color:'+(q.verdict?'var(--good)':'var(--warn)')+';">'
+          + (q.verdict ? 'Still yours' : 'Back into the rotation')+'</p>'
+        + '<p class="recall-answer">'+esc(m.m||'')+(m.e ? '<br><em>&ldquo;'+esc(m.e)+'&rdquo;</em>' : '')+'</p>'
+        + '<button class="btn-primary" id="recall-next">'
+          + (q.i+1 >= q.words.length ? 'See how you did' : 'Next word')+' &rarr;</button>';
+    } else if(method === 'recognize'){
+      body = '<div class="recall-subject">'+esc(w.w)+'</div>'
+        + (w.p ? '<div class="recall-pron">/'+esc(w.p)+'/</div>' : '')
+        + (q.revealed
+            ? '<p class="recall-prompt">'+esc(m.m||'')+'</p>'
+              + (m.e ? '<p class="recall-ex">&ldquo;'+esc(m.e)+'&rdquo;</p>' : '')
+              + '<div class="recall-btns">'
+                + '<button class="btn-secondary" id="recall-no">I had forgotten</button>'
+                + '<button class="btn-primary" id="recall-yes">I knew it</button>'
+              + '</div>'
+            : '<button class="btn-primary" id="recall-reveal">Show the meaning</button>');
+    } else if(method === 'typed'){
+      body = '<p class="recall-prompt">'+esc(m.m||'')+'</p>'
+        + '<input type="text" class="recall-input" id="recall-input" autocomplete="off" '
+          + 'autocapitalize="off" spellcheck="false" placeholder="Type the word...">'
+        + '<button class="btn-primary" id="recall-check">Check</button>';
+    } else {
+      const phrase = coachPhraseFor(w);
+      body = '<div class="recall-subject">'+esc(w.w)+'</div>'
+        + '<p class="recall-prompt">&ldquo;'+esc(phrase)+'&rdquo;</p>'
+        + (q.status ? '<p class="recall-ex">'+esc(q.status)+'</p>' : '')
+        + '<button class="btn-primary" id="recall-speak">'+ICON_MIC
+          + (q.listening ? ' Listening&hellip;' : ' Tap and say it')+'</button>';
+    }
+
+    scrim.innerHTML = '<div class="recall-box">' + head + body
+      + recallDots(q)
+      + '<button class="recall-dismiss" id="recall-skip">Not now &mdash; take me to the app</button>'
+      + '</div>';
+
+    const on = function(id, fn){
+      const b = document.getElementById(id);
+      if(b) b.addEventListener('click', fn);
+    };
+    on('recall-skip', closeRecall);
+    on('recall-next', recallNext);
+    on('recall-reveal', function(){ q.revealed = true; renderRecall(); });
+    on('recall-yes', function(){ recallAnswer(true); });
+    on('recall-no', function(){ recallAnswer(false); });
+    on('recall-check', function(){
+      const input = document.getElementById('recall-input');
+      recallAnswer(normalizeAnswer(input ? input.value : '') === normalizeAnswer(w.w));
+    });
+    on('recall-speak', function(){ recallListen(w); });
+
+    const input = document.getElementById('recall-input');
+    if(input){
+      input.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){
+          e.preventDefault();
+          recallAnswer(normalizeAnswer(input.value) === normalizeAnswer(w.w));
+        }
+      });
+      input.focus();
+    }
+  }
+
+  // The speaking question. It leans on the same primitives the practice
+  // sessions use -- one recognizer, one permission, the same token guard --
+  // but renders into the pop-up rather than the session screen, so the two
+  // never fight over who owns the page.
+  function recallListen(w){
+    const q = recallQuiz;
+    if(!q || !canListen) return;
+    const phrase = coachPhraseFor(w);
+    scStopListening();
+    const token = ++scToken;
+    q.listening = true;
+    q.status = micGranted ? null : 'Allow the microphone once and it will not ask again.';
+    renderRecall();
+
+    ensureMic().then(function(ok){
+      if(scToken !== token || recallQuiz !== q) return;
+      if(!ok){
+        q.listening = false;
+        q.status = speechErrorMessage('not-allowed');
+        renderRecall();
+        return;
+      }
+      const recognition = scGetRecognizer();
+      const finish = function(status){
+        if(scToken !== token || recallQuiz !== q) return;
+        q.listening = false;
+        q.status = status;
+        renderRecall();
+      };
+      recognition.onresult = function(e){
+        if(scToken !== token || recallQuiz !== q) return;
+        const scored = scScorePhrase(phrase, e.results[0][0].transcript);
+        saveSpeechScore(w.id, scored.score);
+        q.listening = false;
+        recallAnswer(scored.score >= 60);
+      };
+      recognition.onerror = function(e){
+        const code = e.error || 'error';
+        if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+        finish(speechErrorMessage(code));
+      };
+      recognition.onend = function(){
+        if(q.listening) finish(speechErrorMessage('no-speech'));
+      };
+      setTimeout(function(){
+        if(scToken !== token || recallQuiz !== q) return;
+        try{ recognition.start(); }
+        catch(err){
+          try{ recognition.abort(); }catch(e2){}
+          scRecognizer = null;
+          finish(speechErrorMessage('error'));
+        }
+      }, 250);
+    });
+  }
+
   async function init(){
     loadProgress();
     loadMeta();
@@ -2519,6 +2845,8 @@
     loadSpeechScores();
     loadLearnSets();
     renderHome();
+    // Meets you at the door, once per opening of the app.
+    maybeOpenRecall();
   }
   init().catch(()=>{ root.innerHTML = '<p class="loading">Something went wrong loading the app. Refreshing might help.</p>'; });
 
