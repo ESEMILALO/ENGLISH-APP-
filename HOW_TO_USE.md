@@ -13,13 +13,30 @@ https://eduardo-cruz.tail16a220.ts.net:8443
 Only devices signed in to your tailnet get an answer. It is not on the
 public internet.
 
-## Starting it
+## Opening it
 
-Double-click **`start_word_log.cmd`**. It prints the address and then
-serves the app. Leave the window open while you practice.
+Double-click **`Open Word Log`** in this folder. There are two of them
+and either will do:
 
-To have it start on its own every time you log in, run
-**`install_startup.cmd`** once. Run it again to undo that.
+- **`Open Word Log.url`** — a normal Windows shortcut, with the app's
+  icon. Drag it to the taskbar or Start to pin it.
+- **`Open Word Log.html`** — the same thing, but it also works from your
+  phone: open this folder in the OneDrive app and tap it.
+
+**`phone-qr.png`** is the address as a QR code. Point your phone's
+camera at it the first time instead of typing the address in.
+
+If the machine is ever renamed, run `python make_opener.py` to write all
+three again with the new address. Nothing has the address hard-coded —
+it is asked of Tailscale each time.
+
+## Starting the server
+
+It already starts on its own at login. You only need this if you stopped
+it: double-click **`start_word_log.cmd`**, which prints the address and
+then serves the app. Leave the window open while you practice.
+
+To turn the login start-up on or off, run **`install_startup.cmd`**.
 
 ## Installing it as an app
 
