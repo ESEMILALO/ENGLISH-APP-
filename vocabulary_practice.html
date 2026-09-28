@@ -183,6 +183,32 @@
   .recall-dots span.miss{ background:var(--warn); }
   .recall-dots span.now{ background:var(--amber); }
 
+  /* The one line that says whether this device and the laptop agree. */
+  .sync-line{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:.78rem; color:var(--text-soft); margin:14px 2px 0;
+  }
+  .sync-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--rule); }
+  .sync-dot.on{ background:var(--good); }
+  .sync-dot.busy{ background:var(--amber); }
+  .sync-dot.bad{ background:var(--warn); }
+  .sync-line button{
+    background:none; border:none; color:var(--amber); font-family:var(--sans);
+    font-size:.78rem; text-decoration:underline; cursor:pointer; padding:0;
+  }
+  .sync-setup{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .sync-setup input{
+    flex:1; min-width:140px; background:var(--bg); border:1px solid var(--rule);
+    color:var(--text); border-radius:8px; padding:10px 12px; font-family:var(--mono);
+    font-size:.9rem; letter-spacing:.06em;
+  }
+  .sync-setup input:focus{ outline:none; border-color:var(--amber); }
+  .sync-setup button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:8px;
+    padding:10px 18px; font-weight:700; font-size:.82rem; cursor:pointer;
+    text-decoration:none; font-family:var(--sans);
+  }
+
   /* Progress sits at the top of the home now, above the day's work. */
   .home-top{ margin-bottom:10px; }
 
@@ -755,7 +781,13 @@
     });
     if(changed) saveProgress();
   }
+  // Anything written locally should make its way over shortly after.
   function saveProgress(){
+    syncSoon();
+    saveProgressLocal();
+  }
+
+  function saveProgressLocal(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
   }
 
@@ -785,6 +817,9 @@
   }
   function saveCustomWords(){
     try{ localStorage.setItem(CUSTOM_KEY, JSON.stringify(customWords)); }catch(e){}
+  }
+  function saveSpeechScores(){
+    try{ localStorage.setItem(SPEECH_KEY, JSON.stringify(speechScores)); }catch(e){}
   }
 
   // Mirrors the id scheme build_word_log.py uses: category::word, with a
@@ -1773,6 +1808,7 @@
       + progressHtml
       + '<div class="stat-row">'+statTiles+'</div>'
       + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
+      + '<div id="sync-host">'+syncLineHtml()+'</div>'
       + '</div>';
 
     const doSpace = '<div class="home-col home-col-do">'
@@ -1832,6 +1868,7 @@
     });
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
+    wireSyncLine();
     wireFresh(fresh);
     startFresh(fresh);
     root.querySelectorAll('.cat-row').forEach(b=>{
@@ -2670,6 +2707,82 @@
     renderRecall();
   }
 
+  // Drawn into whatever container is on screen, and repainted in place
+  // rather than through renderHome, so a sync finishing never steals the
+  // cursor out of a box you are typing in.
+  function syncLineHtml(){
+    if(!syncAvailable()){
+      return '<div class="sync-line"><span class="sync-dot"></span>'
+        + 'Opened as a file, so there is nothing to sync with.</div>';
+    }
+    if(!syncKey){
+      return '<div class="sync-line" id="sync-line">'
+        + '<span class="sync-dot"></span>'
+        + '<span>Progress is only on this device.</span>'
+        + '<button id="sync-start">Share it with my other devices &rarr;</button>'
+        + '</div>'
+        + '<div class="sync-setup" id="sync-setup" style="display:none;">'
+          + '<input type="text" id="sync-code" placeholder="passcode" autocomplete="off" '
+            + 'autocapitalize="off" spellcheck="false">'
+          + '<button id="sync-save">Connect</button>'
+        + '</div>'
+        + '<p class="hint" id="sync-help" style="display:none;">The laptop prints the passcode '
+          + 'in the Word Log window when it starts, and keeps it in <b>wordlog_key.txt</b> '
+          + 'next to the app. Type the same one on every device.</p>';
+    }
+    const cls = syncState === 'busy' ? 'busy' : (syncState === 'error' ? 'bad' : 'on');
+    const label = syncState === 'busy' ? 'Syncing&hellip;'
+      : (syncState === 'error' ? esc(syncNote) : (syncNote ? esc(syncNote) : 'Progress is shared'));
+    return '<div class="sync-line" id="sync-line">'
+      + '<span class="sync-dot '+cls+'"></span><span>'+label+'</span>'
+      + '<button id="sync-now">Sync now</button>'
+      + '<button id="sync-forget">Stop sharing</button>'
+      + '</div>';
+  }
+
+  function wireSyncLine(){
+    const on = function(id, fn){
+      const b = document.getElementById(id);
+      if(b) b.addEventListener('click', fn);
+    };
+    on('sync-start', function(){
+      const setup = document.getElementById('sync-setup');
+      const help = document.getElementById('sync-help');
+      if(setup) setup.style.display = 'flex';
+      if(help) help.style.display = 'block';
+      const box = document.getElementById('sync-code');
+      if(box) box.focus();
+    });
+    const save = function(){
+      const box = document.getElementById('sync-code');
+      if(!box || !box.value.trim()) return;
+      setSyncKey(box.value);
+      syncNow().then(function(ok){
+        if(ok){ startSyncLoop(); renderHome(); }
+        else { setSyncKey(''); paintSyncLine(); }
+      });
+    };
+    on('sync-save', save);
+    const box = document.getElementById('sync-code');
+    if(box) box.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); save(); }
+    });
+    on('sync-now', function(){ syncNow().then(function(){ renderHome(); }); });
+    on('sync-forget', function(){
+      setSyncKey('');
+      if(syncTimer) clearInterval(syncTimer);
+      renderHome();
+    });
+  }
+
+  // Swaps just this one line, leaving the rest of the page alone.
+  function paintSyncLine(){
+    const host = document.getElementById('sync-host');
+    if(!host) return;
+    host.innerHTML = syncLineHtml();
+    wireSyncLine();
+  }
+
   function recallDots(q){
     return '<div class="recall-dots">' + q.words.map(function(w, idx){
       const cls = q.marks[idx] || (idx === q.i ? 'now' : '');
@@ -2837,6 +2950,242 @@
     });
   }
 
+  // --- Sharing progress between the phone and the laptop ----------------
+  //
+  // Everything the app knows still lives in localStorage on each device;
+  // the laptop just keeps a copy that both of them reconcile against. So
+  // the app still works with nothing to talk to, and two devices that
+  // have been used apart come back together rather than one flattening
+  // the other.
+  //
+  // The merge is per word, not per device. For each word the side that
+  // saw it more recently wins, which is the only ordering either device
+  // can agree on without a clock they share. Everything else merges the
+  // way its own shape allows: speaking scores take the higher, lists take
+  // the union, counters take the larger.
+  //
+  // The address is public, so the server will not say a word without the
+  // passcode. It is typed once per device and kept here.
+  const SYNC_KEY_STORE = 'wordlog_sync_key';
+  const SYNC_URL = '/api/state';
+  const SYNC_EVERY_MS = 30000;
+
+  let syncKey = '';
+  try{ syncKey = localStorage.getItem(SYNC_KEY_STORE) || ''; }catch(e){}
+  let syncState = syncKey ? 'idle' : 'off';   // off | idle | busy | error
+  let syncNote = '';
+  let syncTimer = null;
+  let syncQueued = false;
+
+  function syncAvailable(){
+    return location.protocol === 'http:' || location.protocol === 'https:';
+  }
+
+  function setSyncKey(key){
+    syncKey = (key || '').trim();
+    try{
+      if(syncKey) localStorage.setItem(SYNC_KEY_STORE, syncKey);
+      else localStorage.removeItem(SYNC_KEY_STORE);
+    }catch(e){}
+    syncState = syncKey ? 'idle' : 'off';
+  }
+
+  // Everything worth carrying between devices, in one bundle.
+  function localBundle(){
+    return {
+      progress: progress,
+      meta: meta,
+      speech: speechScores,
+      myList: myList,
+      custom: customWords,
+      learnSets: learnSets
+    };
+  }
+
+  function seenAt(p){
+    if(!p) return 0;
+    if(p.lastSeen){
+      const t = new Date(p.lastSeen).getTime();
+      if(!isNaN(t)) return t;
+    }
+    return 0;
+  }
+
+  // Per word: whoever saw it last is right about it. Where neither side
+  // has a timestamp -- progress saved before lastSeen existed -- the one
+  // with more reps is the better guess.
+  function mergeProgress(mine, theirs){
+    const out = {};
+    Object.keys(mine || {}).forEach(id=>{ out[id] = mine[id]; });
+    Object.keys(theirs || {}).forEach(id=>{
+      const a = out[id], b = theirs[id];
+      if(!a){ out[id] = b; return; }
+      const ta = seenAt(a), tb = seenAt(b);
+      if(tb > ta) out[id] = b;
+      else if(tb === ta && (b.seen||0) > (a.seen||0)) out[id] = b;
+    });
+    return out;
+  }
+
+  function mergeScores(mine, theirs){
+    const out = {};
+    Object.keys(mine || {}).forEach(id=>{ out[id] = mine[id]; });
+    Object.keys(theirs || {}).forEach(id=>{
+      if(out[id] === undefined || theirs[id] > out[id]) out[id] = theirs[id];
+    });
+    return out;
+  }
+
+  function mergeMeta(mine, theirs){
+    if(!theirs) return mine;
+    const out = JSON.parse(JSON.stringify(mine || {}));
+    const ms = out.streak || {current:0, longest:0, lastDate:null};
+    const ts = theirs.streak || {current:0, longest:0, lastDate:null};
+    // The later day is the live one; the longest ever is the larger.
+    out.streak = {
+      current: (ts.lastDate || '') > (ms.lastDate || '') ? ts.current : ms.current,
+      longest: Math.max(ms.longest||0, ts.longest||0),
+      lastDate: (ts.lastDate || '') > (ms.lastDate || '') ? ts.lastDate : ms.lastDate
+    };
+    // Sessions happened on both sides; keep them all, newest first, and
+    // drop anything that is plainly the same entry twice.
+    const seen = {};
+    out.history = (mine && mine.history ? mine.history : [])
+      .concat(theirs.history || [])
+      .filter(h=>{
+        const k = [h.date, h.label, h.total, h.correct, h.at || ''].join('|');
+        if(seen[k]) return false;
+        seen[k] = true;
+        return true;
+      })
+      .slice(0, 200);
+    out.passes = Object.assign({}, theirs.passes || {}, (mine && mine.passes) || {});
+    return out;
+  }
+
+  function mergeLearnSets(mine, theirs){
+    if(!theirs || !theirs.daily) return mine;
+    if(!mine || !mine.daily) return theirs;
+    // The set belonging to the later day is the real one.
+    const md = mine.daily.day || '', td = theirs.daily.day || '';
+    if(td > md) return theirs;
+    if(md > td) return mine;
+    // Same day on both: keep whichever was started later.
+    return (theirs.daily.startedAt || '') > (mine.daily.startedAt || '') ? theirs : mine;
+  }
+
+  function mergeBundle(mine, theirs){
+    if(!theirs) return mine;
+    const customIds = {};
+    const custom = (mine.custom || []).slice();
+    custom.forEach(w=>{ customIds[w.id] = true; });
+    (theirs.custom || []).forEach(w=>{ if(!customIds[w.id]){ custom.push(w); customIds[w.id] = true; } });
+
+    const list = (mine.myList || []).slice();
+    (theirs.myList || []).forEach(id=>{ if(list.indexOf(id) === -1) list.push(id); });
+
+    return {
+      progress: mergeProgress(mine.progress, theirs.progress),
+      meta: mergeMeta(mine.meta, theirs.meta),
+      speech: mergeScores(mine.speech, theirs.speech),
+      myList: list.slice(0, MYLIST_MAX),
+      custom: custom,
+      learnSets: mergeLearnSets(mine.learnSets, theirs.learnSets)
+    };
+  }
+
+  function adoptBundle(b){
+    progress = b.progress || {};
+    meta = b.meta || meta;
+    speechScores = b.speech || {};
+    myList = b.myList || [];
+    const knownCustom = {};
+    customWords.forEach(w=>{ knownCustom[w.id] = true; });
+    customWords = b.custom || [];
+    // A word added on the other device has to join WORDS here too, or
+    // its progress would point at an id this device cannot resolve.
+    customWords.forEach(w=>{
+      if(!knownCustom[w.id] && !WORDS.some(x=>x.id === w.id)) WORDS.push(w);
+    });
+    learnSets = b.learnSets || {};
+    if(!meta.streak) meta.streak = {current:0, longest:0, lastDate:null};
+    if(!meta.history) meta.history = [];
+    if(!meta.passes) meta.passes = {};
+    // the local saver, not saveProgress: adopting what the server just
+    // sent must not schedule another push of the same thing
+    saveProgressLocal();
+    saveMeta();
+    saveSpeechScores();
+    saveMyList();
+    saveCustomWords();
+    saveLearnSets();
+  }
+
+  // One round trip: take what the laptop has, merge it with what is here,
+  // and hand the result back. Both devices end up holding the same thing.
+  async function syncNow(quiet){
+    if(!syncKey || !syncAvailable()) return false;
+    if(syncState === 'busy'){ syncQueued = true; return false; }
+    syncState = 'busy';
+    if(!quiet) paintSyncLine();
+    try{
+      const headers = { 'X-Word-Log-Key': syncKey };
+      const got = await fetch(SYNC_URL, { headers: headers, cache: 'no-store' });
+      if(got.status === 403){
+        syncState = 'error';
+        syncNote = 'That passcode was not accepted.';
+        paintSyncLine();
+        return false;
+      }
+      if(!got.ok) throw new Error('get failed');
+      const remote = await got.json();
+      const merged = mergeBundle(localBundle(), remote.data || null);
+      adoptBundle(merged);
+
+      const put = await fetch(SYNC_URL, {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+        body: JSON.stringify({ data: merged })
+      });
+      if(!put.ok) throw new Error('put failed');
+      syncState = 'idle';
+      syncNote = 'Last synced ' + new Date().toLocaleTimeString();
+      paintSyncLine();
+      return true;
+    }catch(e){
+      syncState = 'error';
+      syncNote = 'The laptop did not answer. Your work is saved here and will go over next time.';
+      paintSyncLine();
+      return false;
+    }finally{
+      if(syncState !== 'busy' && syncQueued){
+        syncQueued = false;
+        setTimeout(()=>syncNow(true), 400);
+      }
+    }
+  }
+
+  // Called after anything is written locally. Debounced, because a
+  // session writes on every single card.
+  let syncSoonHandle = null;
+  function syncSoon(){
+    if(!syncKey) return;
+    if(syncSoonHandle) clearTimeout(syncSoonHandle);
+    syncSoonHandle = setTimeout(()=>{ syncSoonHandle = null; syncNow(true); }, 2500);
+  }
+
+  function startSyncLoop(){
+    if(syncTimer) clearInterval(syncTimer);
+    if(!syncKey) return;
+    syncTimer = setInterval(()=>{
+      if(document.visibilityState === 'visible') syncNow(true);
+    }, SYNC_EVERY_MS);
+  }
+
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'visible') syncNow(true);
+  });
+
   async function init(){
     loadProgress();
     loadMeta();
@@ -2845,6 +3194,14 @@
     loadSpeechScores();
     loadLearnSets();
     renderHome();
+    // Catch up with the other device before deciding what to show, so the
+    // day's set and the recall check are built from the shared picture
+    // rather than this device's stale half of it.
+    if(syncKey && syncAvailable()){
+      const caughtUp = await syncNow(true);
+      startSyncLoop();
+      if(caughtUp) renderHome();
+    }
     // Meets you at the door, once per opening of the app.
     maybeOpenRecall();
   }

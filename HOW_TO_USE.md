@@ -51,6 +51,34 @@ then serves the app. Leave the window open while you practice.
 
 To turn the login start-up on or off, run **`install_startup.cmd`**.
 
+## One progress, both devices
+
+By default each device keeps its own progress. To share one:
+
+1. Start the app on the laptop. The window prints a **sync passcode**,
+   and keeps it in `wordlog_key.txt` next to the app.
+2. On each device, open Word Log, find *"Progress is only on this
+   device"* under the counters, tap **Share it with my other devices**,
+   and type that same passcode.
+
+After that they stay together on their own: on opening, whenever the app
+comes back to the front, every thirty seconds while it is open, and
+shortly after anything you answer.
+
+**Merging, not overwriting.** Each word goes to whichever device
+practised it most recently, so a phone that has been shut in a drawer
+for a week cannot undo a week of work on the laptop. Lists join up,
+speaking scores keep the higher of the two, and the streak keeps the
+longest.
+
+**The laptop being off is fine.** Your work is saved on the device in
+front of you and goes over next time the two can talk. The line under
+the counters says so when that happens.
+
+The passcode exists because the address is public. Without it, anyone
+with the link could read your progress or wipe it. The server refuses
+every sync request that does not carry it.
+
 ## Installing it as an app
 
 Nothing needs installing on the phone first — just open the address.

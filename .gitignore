@@ -1,3 +1,9 @@
 __pycache__/
 *.pyc
 backups/
+
+# Shared progress and the passcode that guards it: personal, and this
+# machine's alone.
+wordlog_state.json
+wordlog_state.json.tmp
+wordlog_key.txt
