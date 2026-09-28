@@ -21,7 +21,12 @@ echo.
 REM  Put Tailscale in front of the local server. --bg keeps the mapping
 REM  after this window closes; running it again just re-states the same
 REM  thing, so it is safe to run at every login.
-%TS% serve --bg --https=%HTTPS_PORT% http://127.0.0.1:%PORT% >nul 2>&1
+REM
+REM  This says "funnel", not "serve", on purpose: the app is meant to be
+REM  reachable from the phone without a VPN. "serve" here would quietly
+REM  put it back to your own devices only at every login. To make it
+REM  private again, swap funnel for serve on the line below.
+%TS% funnel --bg --https=%HTTPS_PORT% http://127.0.0.1:%PORT% >nul 2>&1
 
 REM  The server prints the address to open -- it asks Tailscale for this
 REM  machine's name rather than having it written down here.

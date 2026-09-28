@@ -1,8 +1,7 @@
 # Word Log — running it as an app
 
-Word Log now runs from your own laptop and installs as a real app on
-your phone and your desktop. Tailscale carries it between them, and
-nobody else can reach it.
+Word Log runs from your own laptop and installs as a real app on your
+phone and your desktop.
 
 ## The address
 
@@ -10,8 +9,22 @@ nobody else can reach it.
 https://eduardo-cruz.tail16a220.ts.net:8443
 ```
 
-Only devices signed in to your tailnet get an answer. It is not on the
-public internet.
+**This address is public.** Anyone who has it can open the app and see
+your word list — no VPN, no sign-in, on any device anywhere. That is
+deliberate: it is what lets the phone work without installing Tailscale.
+
+What is exposed is the vocabulary itself: your words, meanings and
+example sentences. What is not: your progress, which lives on whichever
+device you are holding and never leaves it, so a stranger opening the
+link gets a fresh app with nothing filled in. The server only answers
+GET requests for the app's own files, so nobody can change anything or
+reach the spreadsheet.
+
+To take it off the internet again and go back to your own devices only:
+
+```
+tailscale serve --bg --https=8443 http://127.0.0.1:8777
+```
 
 ## Opening it
 
@@ -40,8 +53,7 @@ To turn the login start-up on or off, run **`install_startup.cmd`**.
 
 ## Installing it as an app
 
-Your phone needs the Tailscale app installed and signed in to the same
-account — that is what lets it reach the laptop.
+Nothing needs installing on the phone first — just open the address.
 
 **Android (Chrome):** open the address, then menu ⋮ → *Add to Home
 screen* → *Install*. It gets its own icon and opens without an address

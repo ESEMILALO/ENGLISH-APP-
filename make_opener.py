@@ -20,6 +20,7 @@ The address is not written down here. It is asked of Tailscale, so these
 files stay correct if the machine is ever renamed.
 """
 
+import io
 import json
 import subprocess
 import sys
@@ -30,7 +31,7 @@ try:
 except ImportError:
     sys.exit("Missing dependency. Run this first:\n\n    pip install segno\n")
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 FOLDER = Path(__file__).resolve().parent
 TAILSCALE = Path(r"C:\Program Files\Tailscale\tailscale.exe")
@@ -93,9 +94,9 @@ def write_html(url):
   <a class="go" href="URL_HERE">Open Word Log</a>
   <p>If nothing happened, tap the button.</p>
   <code>URL_HERE</code>
-  <p class="note">Only your own devices can reach this address. If it will not load,
-  your phone may not be signed in to Tailscale, or the laptop may not be running
-  <b>start_word_log.cmd</b>.</p>
+  <p class="note">This address is open to anyone who has it, so no VPN or sign-in is
+  needed on any device. If it will not load, the laptop is probably asleep or not
+  running <b>start_word_log.cmd</b> &mdash; the app is served from there.</p>
 </div>
 <script>
   // Replace rather than assign, so the back button does not bounce you
@@ -133,12 +134,45 @@ def write_icon():
     return path
 
 
+def _font(size):
+    for name in ("segoeui.ttf", "arial.ttf", "DejaVuSans.ttf"):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+
+
 def write_qr(url):
+    """The QR with its title and the address printed underneath, so the
+    picture explains itself when it turns up in a photo roll months from
+    now -- and so the address can still be read if a camera will not
+    scan it."""
     path = FOLDER / "phone-qr.png"
     qr = segno.make(url, error="m")
-    # dark modules in the app's amber on its own background, with a wide
-    # quiet zone so a phone camera locks on quickly
-    qr.save(str(path), scale=10, border=4, dark=AMBER, light=INK)
+    # to_pil needs a segno plugin, so go through a PNG in memory instead
+    buf = io.BytesIO()
+    qr.save(buf, kind="png", scale=10, border=3, dark=AMBER, light=INK)
+    buf.seek(0)
+    code = Image.open(buf).convert("RGB")
+
+    pad, title_h, url_h = 36, 46, 40
+    W = code.width + pad * 2
+    H = title_h + code.height + url_h + pad
+    card = Image.new("RGB", (W, H), INK)
+    card.paste(code, (pad, title_h))
+
+    d = ImageDraw.Draw(card)
+    title, small = _font(26), _font(15)
+
+    def centred(text, y, font, fill):
+        left, top, right, bottom = d.textbbox((0, 0), text, font=font)
+        d.text(((W - (right - left)) / 2 - left, y), text, font=font, fill=fill)
+
+    centred("Word Log", 12, title, AMBER)
+    centred(url, title_h + code.height + 12, small, "#96A0A6")
+
+    card.save(path, "PNG", optimize=True)
     return path
 
 
