@@ -21,7 +21,10 @@ import openpyxl
 from detect_verbs import verb_evidence
 from verb_forms import forms_for
 
-FILE = "ENGLISH SCHOOL.xlsx"
+# the workbook lives in the project root, one level up from tools/
+import pathlib
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+FILE = str(ROOT / "ENGLISH SCHOOL.xlsx")
 FORMS_PREFIX = re.compile(r"^(Regular|Irregular) verb\.\s*Base:.*?(?:Past participle:[^.]*\.)\s*", re.S)
 
 # The old notes restate the verb forms, sometimes wrongly ("Carry" was

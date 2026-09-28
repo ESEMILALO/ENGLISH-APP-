@@ -36,7 +36,10 @@ def meaning_key(text):
     english = text.split("—")[0]
     return re.sub(r"[^a-z ]", "", english.lower()).strip()
 
-FILE = "ENGLISH SCHOOL.xlsx"
+# the workbook lives in the project root, one level up from tools/
+import pathlib
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+FILE = str(ROOT / "ENGLISH SCHOOL.xlsx")
 SHEET_ORDER = ["School vocabulary", "504 Main words", "504 Secondary", "School books", "Series"]
 
 

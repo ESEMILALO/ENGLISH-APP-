@@ -19,7 +19,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-FOLDER = Path(__file__).resolve().parent
+# icons are served, so they belong with the rest of the served files
+FOLDER = Path(__file__).resolve().parent.parent / "app"
 
 # taken straight from :root in template.html, so the icon and the app
 # are the same colours

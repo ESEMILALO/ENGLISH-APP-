@@ -28,7 +28,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-FOLDER = Path(__file__).resolve().parent
+# Everything served lives in app/. Nothing outside it is reachable, and
+# that includes the spreadsheet, the build scripts and this file.
+FOLDER = Path(__file__).resolve().parent.parent / "app"
 DEFAULT_PORT = 8777
 NL = chr(10)  # written this way so the banner stays easy to edit
 

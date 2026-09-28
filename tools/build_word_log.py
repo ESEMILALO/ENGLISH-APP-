@@ -32,9 +32,14 @@ except ImportError:
 from detect_verbs import verb_evidence
 from verb_forms import forms_for
 
-FOLDER = Path(__file__).resolve().parent
-TEMPLATE = FOLDER / "template.html"
-OUTPUT = FOLDER / "vocabulary_practice.html"
+# tools/ holds this script and the template; the spreadsheet sits in the
+# project root beside it, and the built page goes into app/, which is the
+# only folder the server ever hands anything out of.
+TOOLS = Path(__file__).resolve().parent
+ROOT = TOOLS.parent
+FOLDER = ROOT                      # where the spreadsheet is looked for
+TEMPLATE = TOOLS / "template.html"
+OUTPUT = ROOT / "app" / "vocabulary_practice.html"
 
 
 def find_spreadsheet():
