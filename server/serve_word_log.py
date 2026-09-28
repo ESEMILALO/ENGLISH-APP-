@@ -19,18 +19,73 @@ HOW TO USE:
 """
 
 import argparse
+import datetime
 import http.client
 import http.server
 import json
 import os
 import socketserver
-import subprocess
 import sys
+import threading
 from pathlib import Path
 
 # Everything served lives in app/. Nothing outside it is reachable, and
 # that includes the spreadsheet, the build scripts and this file.
-FOLDER = Path(__file__).resolve().parent.parent / "app"
+ROOT = Path(__file__).resolve().parent.parent
+FOLDER = ROOT / "app"
+
+# A copy of your progress, kept as an ordinary file in the project folder
+# so it outlives the browser. Clearing site data, switching browser or a
+# new laptop no longer costs you anything: the file is the real record
+# and the browser is just where the app reads it from.
+#
+# No passcode guards this. The server answers 127.0.0.1 only, so the only
+# thing that can reach it is this machine.
+PROGRESS_DIR = ROOT / "progress"
+PROGRESS_FILE = PROGRESS_DIR / "progress.json"
+DAILY_DIR = PROGRESS_DIR / "daily"
+KEEP_DAILY = 30
+
+PROGRESS_LOCK = threading.Lock()
+API_PROGRESS = "/api/progress"
+
+
+def read_progress():
+    if not PROGRESS_FILE.exists():
+        return {"savedAt": None, "data": {}}
+    try:
+        return json.loads(PROGRESS_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        # A half-written file must not stop the app loading. The dated
+        # copies in daily/ are the way back from that.
+        return {"savedAt": None, "data": {}}
+
+
+def write_progress(data):
+    PROGRESS_DIR.mkdir(exist_ok=True)
+    DAILY_DIR.mkdir(exist_ok=True)
+    payload = {"savedAt": datetime.datetime.now().isoformat(timespec="seconds"),
+               "data": data}
+    text = json.dumps(payload, indent=1)
+
+    # Write beside the real file and swap it in, so a crash mid-write
+    # cannot leave a truncated backup where a good one used to be.
+    tmp = PROGRESS_FILE.with_suffix(".json.tmp")
+    tmp.write_text(text, encoding="utf-8")
+    tmp.replace(PROGRESS_FILE)
+
+    # One dated copy a day, so a mistake is recoverable rather than
+    # immediately overwritten by the next save.
+    day_file = DAILY_DIR / ("progress-%s.json" % datetime.date.today().isoformat())
+    day_file.write_text(text, encoding="utf-8")
+
+    old = sorted(DAILY_DIR.glob("progress-*.json"))[:-KEEP_DAILY]
+    for f in old:
+        try:
+            f.unlink()
+        except OSError:
+            pass
+    return payload
 DEFAULT_PORT = 8777
 NL = chr(10)  # written this way so the banner stays easy to edit
 
@@ -76,10 +131,48 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         return body
 
+    # --- the progress backup ------------------------------------------
+
+    def _json(self, obj, status=200):
+        body = json.dumps(obj).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_PUT(self):
+        if self.path.split("?", 1)[0] != API_PROGRESS:
+            self.send_error(501, "Not supported")
+            return
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except ValueError:
+            length = 0
+        if length <= 0 or length > 16 * 1024 * 1024:
+            self._json({"error": "bad length"}, 400)
+            return
+        try:
+            sent = json.loads(self.rfile.read(length).decode("utf-8"))
+        except Exception:
+            self._json({"error": "bad json"}, 400)
+            return
+        if not isinstance(sent.get("data"), dict):
+            self._json({"error": "no data"}, 400)
+            return
+        with PROGRESS_LOCK:
+            saved = write_progress(sent["data"])
+        self._json({"savedAt": saved["savedAt"]})
+
     def do_HEAD(self):
         self.do_GET(head_only=True)
 
     def do_GET(self, head_only=False):
+        if self.path.split("?", 1)[0] == API_PROGRESS:
+            with PROGRESS_LOCK:
+                self._json(read_progress())
+            return
         target = self._resolve()
         if target is None:
             self.send_error(404, "Not part of Word Log")

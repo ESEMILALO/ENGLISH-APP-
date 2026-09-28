@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 backups/
 tools/__pycache__/
+
+# Your progress, backed up as a file. Personal, and belongs to this
+# machine rather than the repository.
+progress/

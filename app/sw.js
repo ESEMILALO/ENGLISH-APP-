@@ -15,7 +15,7 @@
  * device you are holding, exactly as before.
  */
 
-const VERSION = 'wordlog-v1';
+const VERSION = 'wordlog-v2';
 const SHELL = [
   '/',
   '/manifest.webmanifest',
@@ -90,6 +90,11 @@ self.addEventListener('fetch', event => {
   // Only our own origin. The Google Fonts request goes straight out; if
   // it fails the app falls back to system fonts on its own.
   if (url.origin !== self.location.origin) return;
+
+  // The progress backup must never be cached. Serving yesterday's answer
+  // to "what is in the file?" would tell the app there is nothing to
+  // restore when there is -- which is the one moment this all matters.
+  if (url.pathname.startsWith('/api/')) return;
 
   if (request.mode === 'navigate' || url.pathname === '/' ||
       url.pathname.endsWith('.html')) {

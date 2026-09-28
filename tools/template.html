@@ -183,6 +183,20 @@
   .recall-dots span.miss{ background:var(--warn); }
   .recall-dots span.now{ background:var(--amber); }
 
+  /* The line that says your progress is safe in a file, not only here. */
+  .backup-line{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:.78rem; color:var(--text-soft); margin:14px 2px 0;
+  }
+  .backup-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; background:var(--rule); }
+  .backup-dot.on{ background:var(--good); }
+  .backup-dot.busy{ background:var(--amber); }
+  .backup-dot.bad{ background:var(--warn); }
+  .backup-line button{
+    background:none; border:none; color:var(--amber); font-family:var(--sans);
+    font-size:.78rem; text-decoration:underline; cursor:pointer; padding:0;
+  }
+
   /* Progress sits at the top of the home now, above the day's work. */
   .home-top{ margin-bottom:10px; }
 
@@ -756,6 +770,11 @@
     if(changed) saveProgress();
   }
   function saveProgress(){
+    saveProgressLocal();
+    backupSoon();
+  }
+
+  function saveProgressLocal(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
   }
 
@@ -785,6 +804,9 @@
   }
   function saveCustomWords(){
     try{ localStorage.setItem(CUSTOM_KEY, JSON.stringify(customWords)); }catch(e){}
+  }
+  function saveSpeechScores(){
+    try{ localStorage.setItem(SPEECH_KEY, JSON.stringify(speechScores)); }catch(e){}
   }
   function saveSpeechScores(){
     try{ localStorage.setItem(SPEECH_KEY, JSON.stringify(speechScores)); }catch(e){}
@@ -1776,6 +1798,7 @@
       + progressHtml
       + '<div class="stat-row">'+statTiles+'</div>'
       + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
+      + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
     const doSpace = '<div class="home-col home-col-do">'
@@ -1835,6 +1858,7 @@
     });
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
+    wireBackupLine();
     wireFresh(fresh);
     startFresh(fresh);
     root.querySelectorAll('.cat-row').forEach(b=>{
@@ -2840,6 +2864,153 @@
     });
   }
 
+  // --- Keeping your progress in a file -----------------------------------
+  //
+  // The browser is a fine place to read progress from and a poor place to
+  // keep it: clearing site data, switching browser or moving laptop all
+  // take it with them. So every change is also written to a plain file in
+  // the project folder, which is the copy that actually lasts -- and,
+  // since the folder is inside OneDrive, is carried off this machine too.
+  //
+  // The file follows the browser, never the other way round, with one
+  // exception: if this browser has nothing at all and the file does, the
+  // file is read back. That covers exactly the case this is for, and
+  // means a backup can never quietly overwrite work you have just done.
+  const BACKUP_URL = '/api/progress';
+  let backupState = 'idle';   // idle | busy | saved | error | restored
+  let backupNote = '';
+  let backupHandle = null;
+
+  function backupAvailable(){
+    return location.protocol === 'http:' || location.protocol === 'https:';
+  }
+
+  function everythingLocal(){
+    return {
+      progress: progress,
+      meta: meta,
+      speech: speechScores,
+      myList: myList,
+      custom: customWords,
+      learnSets: learnSets
+    };
+  }
+
+  async function backupNow(){
+    if(!backupAvailable()) return false;
+    backupState = 'busy';
+    paintBackupLine();
+    try{
+      const res = await fetch(BACKUP_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: everythingLocal() })
+      });
+      if(!res.ok) throw new Error('save failed');
+      const out = await res.json();
+      backupState = 'saved';
+      backupNote = 'Saved to your folder at ' + new Date().toLocaleTimeString();
+      paintBackupLine();
+      return true;
+    }catch(e){
+      backupState = 'error';
+      backupNote = 'Could not write the backup. Is the Word Log window still running?';
+      paintBackupLine();
+      return false;
+    }
+  }
+
+  // Debounced, because a session writes after every single card.
+  function backupSoon(){
+    if(!backupAvailable()) return;
+    if(backupHandle) clearTimeout(backupHandle);
+    backupHandle = setTimeout(()=>{ backupHandle = null; backupNow(); }, 3000);
+  }
+
+  function adoptBackup(b){
+    progress = b.progress || {};
+    meta = b.meta || meta;
+    speechScores = b.speech || {};
+    myList = b.myList || [];
+    customWords = b.custom || [];
+    learnSets = b.learnSets || {};
+    if(!meta.streak) meta.streak = {current:0, longest:0, lastDate:null};
+    if(!meta.history) meta.history = [];
+    if(!meta.passes) meta.passes = {};
+    // Words you added on a machine whose browser storage is now gone have
+    // to rejoin WORDS, or their progress would point at ids nothing here
+    // can resolve.
+    customWords.forEach(w=>{ if(!WORDS.some(x=>x.id === w.id)) WORDS.push(w); });
+    saveProgressLocal();
+    saveMeta();
+    saveSpeechScores();
+    saveMyList();
+    saveCustomWords();
+    saveLearnSets();
+  }
+
+  // Run once at startup. Only reads the file back when this browser has
+  // nothing of its own, so it can never undo anything.
+  async function restoreIfEmpty(){
+    if(!backupAvailable()) return false;
+    if(Object.keys(progress).length) return false;
+    try{
+      const res = await fetch(BACKUP_URL, { cache: 'no-store' });
+      if(!res.ok) return false;
+      const saved = await res.json();
+      const data = saved && saved.data;
+      if(!data || !data.progress || !Object.keys(data.progress).length) return false;
+      adoptBackup(data);
+      backupState = 'restored';
+      backupNote = 'Your progress was restored from the backup in your folder.';
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function backupLineHtml(){
+    if(!backupAvailable()){
+      return '<div class="backup-line" id="backup-line"><span class="backup-dot"></span>'
+        + 'Opened as a file, so nothing is being backed up.</div>';
+    }
+    const cls = backupState === 'busy' ? 'busy'
+      : (backupState === 'error' ? 'bad' : 'on');
+    const label = backupState === 'busy' ? 'Saving&hellip;'
+      : (backupNote ? esc(backupNote) : 'Your progress is kept in your folder as well');
+    return '<div class="backup-line" id="backup-line">'
+      + '<span class="backup-dot '+cls+'"></span><span>'+label+'</span>'
+      + '<button id="backup-now">Save now</button>'
+      + '</div>';
+  }
+
+  function wireBackupLine(){
+    const b = document.getElementById('backup-now');
+    if(b) b.addEventListener('click', ()=>{ backupNow(); });
+  }
+
+  // Repaints only this line, so a save finishing never disturbs the page.
+  function paintBackupLine(){
+    const host = document.getElementById('backup-host');
+    if(!host) return;
+    host.innerHTML = backupLineHtml();
+    wireBackupLine();
+  }
+
+  // A tab being closed is the one moment a pending save would be lost.
+  window.addEventListener('pagehide', ()=>{
+    if(!backupHandle || !backupAvailable()) return;
+    clearTimeout(backupHandle);
+    try{
+      const blob = new Blob([JSON.stringify({ data: everythingLocal() })],
+                            { type: 'application/json' });
+      // fetch would be cancelled with the page; a beacon is not. The
+      // server takes it on PUT, so send it as one where possible.
+      fetch(BACKUP_URL, { method:'PUT', body: blob, keepalive: true,
+                          headers: { 'Content-Type': 'application/json' } });
+    }catch(e){}
+  });
+
   async function init(){
     loadProgress();
     loadMeta();
@@ -2847,6 +3018,10 @@
     loadMyList();
     loadSpeechScores();
     loadLearnSets();
+    // If this browser has lost everything -- cleared site data, a new
+    // profile, a new laptop -- take it back from the file before anything
+    // is drawn, so the day's set is built from the real picture.
+    await restoreIfEmpty();
     renderHome();
     // Meets you at the door, once per opening of the app.
     maybeOpenRecall();

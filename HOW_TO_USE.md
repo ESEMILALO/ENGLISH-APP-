@@ -26,6 +26,7 @@ app/                   the app itself, and the only folder the
 tools/                 the template and the scripts that build the
                        app from the spreadsheet
 server/                the little web server and its launchers
+progress/              your progress, backed up as a file
 backups/               dated copies of the spreadsheet
 ```
 
@@ -61,16 +62,41 @@ To turn the login start-up on or off, run **`server\install_startup.cmd`**.
 
 ## Your progress
 
-It lives in this browser, on this laptop. Nothing is uploaded anywhere.
-Because browsers store it per address, clearing site data for
-`localhost` clears your progress with it.
+It is kept in two places: in this browser, and as a plain file in
+`progress/`. The file is written a few seconds after anything you
+answer, and you do not have to do anything to make that happen — the
+line under the counters says when it last saved.
+
+If this browser ever loses its copy — you clear site data, start a new
+profile, move to another browser, or a new laptop — the app reads the
+file back on the next start and tells you it did.
+
+It only ever works that way round. The file follows the browser; the
+browser is only read back from the file when it has nothing at all, so a
+backup can never undo something you just did.
+
+`progress/daily/` keeps one dated copy per day for the last thirty days,
+so a bad day is recoverable and not immediately written over. And since
+this folder is inside OneDrive, all of it is carried off this machine
+without you arranging anything.
+
+Nothing goes anywhere else. The server that writes the file answers this
+machine only.
+
+**One thing that does lose progress:** renaming a word in the
+spreadsheet. Progress is filed under `category::word`, so a rename looks
+like a brand-new word and the old record is orphaned. Reordering rows,
+adding words and editing meanings are all safe.
 
 ## What the server will hand out
 
 Only what is in `app/`: the page, its icons, its manifest and its
 service worker. The spreadsheet, the build scripts, the template and the
-backups are all outside that folder and are refused. It answers GET
-requests only.
+backups are all outside that folder and are refused.
+
+The one other thing it answers is your progress backup, at
+`/api/progress`. That is the only address it will accept a write on, and
+it only ever listens to this machine.
 
 ## If you change the port
 
