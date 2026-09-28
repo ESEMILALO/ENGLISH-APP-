@@ -1,41 +1,29 @@
 """
 Makes the files that open Word Log.
 
-Run this once (and again only if your Tailscale machine name ever
-changes):
+Run this once (and again only if you change the port):
 
     python make_opener.py
 
-It writes three things into this folder:
+It writes into this folder:
 
-    Open Word Log.html   double-click it on the laptop, or open it from
-                         the OneDrive app on your phone -- either way it
-                         goes straight to the app
     Open Word Log.url    a normal Windows shortcut with the app's icon,
                          for pinning to the taskbar or Start
-    phone-qr.png         point your phone's camera at it to get the
-                         address across without typing
+    Open Word Log.html   the same thing as a page, for when you would
+                         rather double-click an ordinary file
+    wordlog.ico          the icon those two use
 
-The address is not written down here. It is asked of Tailscale, so these
-files stay correct if the machine is ever renamed.
+The app is served from this laptop and reachable from nowhere else, so
+the address never changes and is written in below.
 """
 
-import io
-import json
-import subprocess
 import sys
 from pathlib import Path
 
-try:
-    import segno
-except ImportError:
-    sys.exit("Missing dependency. Run this first:\n\n    pip install segno\n")
-
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 FOLDER = Path(__file__).resolve().parent
-TAILSCALE = Path(r"C:\Program Files\Tailscale\tailscale.exe")
-HTTPS_PORT = 8443
+APP_URL = "http://localhost:8777/"
 
 INK = "#1B2124"
 PANEL = "#232B31"
@@ -46,24 +34,9 @@ AMBER = "#E39A3A"
 AMBER_INK = "#241804"
 
 
-def tailnet_url():
-    exe = TAILSCALE if TAILSCALE.exists() else Path("tailscale")
-    try:
-        out = subprocess.run([str(exe), "status", "--json"],
-                             capture_output=True, text=True, timeout=10)
-        if out.returncode != 0:
-            return None
-        host = json.loads(out.stdout)["Self"]["DNSName"].rstrip(".")
-        return "https://%s:%d/" % (host, HTTPS_PORT) if host else None
-    except Exception:
-        return None
-
-
 def write_html(url):
-    # Redirects on its own, three ways over, because this one file has to
-    # work when double-clicked from the desktop and when tapped inside the
-    # OneDrive app on a phone. If every one of them is blocked, the button
-    # is still there to press.
+    # Redirects three ways over -- meta refresh, location.replace and a
+    # button -- so it still works if any one of them is blocked.
     page = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,9 +67,8 @@ def write_html(url):
   <a class="go" href="URL_HERE">Open Word Log</a>
   <p>If nothing happened, tap the button.</p>
   <code>URL_HERE</code>
-  <p class="note">This address is open to anyone who has it, so no VPN or sign-in is
-  needed on any device. If it will not load, the laptop is probably asleep or not
-  running <b>start_word_log.cmd</b> &mdash; the app is served from there.</p>
+  <p class="note">The app is served from this laptop. If it will not load, it is not
+  running &mdash; double-click <b>start_word_log.cmd</b>.</p>
 </div>
 <script>
   // Replace rather than assign, so the back button does not bounce you
@@ -134,63 +106,18 @@ def write_icon():
     return path
 
 
-def _font(size):
-    for name in ("segoeui.ttf", "arial.ttf", "DejaVuSans.ttf"):
-        try:
-            return ImageFont.truetype(name, size)
-        except OSError:
-            continue
-    return ImageFont.load_default()
-
-
-def write_qr(url):
-    """The QR with its title and the address printed underneath, so the
-    picture explains itself when it turns up in a photo roll months from
-    now -- and so the address can still be read if a camera will not
-    scan it."""
-    path = FOLDER / "phone-qr.png"
-    qr = segno.make(url, error="m")
-    # to_pil needs a segno plugin, so go through a PNG in memory instead
-    buf = io.BytesIO()
-    qr.save(buf, kind="png", scale=10, border=3, dark=AMBER, light=INK)
-    buf.seek(0)
-    code = Image.open(buf).convert("RGB")
-
-    pad, title_h, url_h = 36, 46, 40
-    W = code.width + pad * 2
-    H = title_h + code.height + url_h + pad
-    card = Image.new("RGB", (W, H), INK)
-    card.paste(code, (pad, title_h))
-
-    d = ImageDraw.Draw(card)
-    title, small = _font(26), _font(15)
-
-    def centred(text, y, font, fill):
-        left, top, right, bottom = d.textbbox((0, 0), text, font=font)
-        d.text(((W - (right - left)) / 2 - left, y), text, font=font, fill=fill)
-
-    centred("Word Log", 12, title, AMBER)
-    centred(url, title_h + code.height + 12, small, "#96A0A6")
-
-    card.save(path, "PNG", optimize=True)
-    return path
-
-
 def main():
-    url = tailnet_url()
-    if not url:
-        sys.exit("Tailscale is not answering, so I cannot tell what this machine's\n"
-                 "address is. Start Tailscale, then run this again.")
-
-    print("Address: %s\n" % url)
+    if not (FOLDER / "vocabulary_practice.html").exists():
+        sys.exit("vocabulary_practice.html is not here yet.\n"
+                 "Run  python build_word_log.py  first.")
+    print("Address: %s" % APP_URL)
     icon = write_icon()
-    for path in (write_html(url), write_url_shortcut(url, icon), write_qr(url)):
+    for path in (write_html(APP_URL), write_url_shortcut(APP_URL, icon)):
         print("  wrote %s" % path.name)
     if icon:
         print("  wrote %s" % icon.name)
-
-    print("\nDouble-click \"Open Word Log\" to start practicing.")
-    print("Scan phone-qr.png with your phone to get the address across.")
+    print("")
+    print('Double-click "Open Word Log" to start practicing.')
 
 
 if __name__ == "__main__":

@@ -2,8 +2,8 @@
 setlocal
 cd /d "%~dp0"
 
-REM  Makes Word Log start on its own when you log in, so the app on your
-REM  phone always has something to talk to. No administrator rights
+REM  Makes Word Log start on its own when you log in, so the app is
+REM  always there when you open it. No administrator rights
 REM  needed -- this only adds a shortcut to your own Startup folder.
 REM
 REM  To undo it, run this again and choose R, or just delete the shortcut
@@ -29,7 +29,7 @@ powershell -NoProfile -Command ^
   "$s.Arguments='\"%~dp0run_hidden.vbs\"';" ^
   "$s.WorkingDirectory='%~dp0';" ^
   "$s.IconLocation='%SystemRoot%\system32\shell32.dll,14';" ^
-  "$s.Description='Serves Word Log to your own devices over Tailscale';" ^
+  "$s.Description='Serves Word Log on this laptop';" ^
   "$s.Save()"
 
 if exist "%LINK%" (
