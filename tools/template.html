@@ -110,18 +110,18 @@
     .hstat-sub{ font-size:.68rem; line-height:1.35; }
   }
 
-  /* Home in two spaces: what to do on the left, how you are doing on the
-     right. One space under the other when narrow, side by side once there
-     is room -- and inside each one the bars still run its whole width. */
-  .home-cols{ display:block; }
-  .home-col-head{
+  /* The home runs straight down in bands, each one a heading and the
+     thing it names, every bar the full width of the page. */
+  .home-band{ margin-bottom:30px; }
+  .home-band:last-of-type{ margin-bottom:22px; }
+  .band-head{
     display:flex; align-items:baseline; justify-content:space-between; gap:12px;
     font-family:var(--mono); font-size:.72rem; letter-spacing:.11em; text-transform:uppercase;
-    color:var(--text-soft); margin:28px 2px 14px; padding-bottom:10px;
+    color:var(--text-soft); margin:0 2px 14px; padding-bottom:10px;
     border-bottom:1px solid var(--rule);
   }
-  .home-col-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
-  .home-col-head .home-col-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
+  .band-head b{ color:var(--amber); font-weight:600; letter-spacing:.06em; }
+  .band-hint{ text-transform:none; letter-spacing:0; font-family:var(--sans); font-size:.76rem; }
 
   /* The recall check that meets you at the door. Lives on top of the app
      rather than replacing it, so answering it puts you back where you
@@ -196,9 +196,6 @@
     background:none; border:none; color:var(--amber); font-family:var(--sans);
     font-size:.78rem; text-decoration:underline; cursor:pointer; padding:0;
   }
-
-  /* Progress sits at the top of the home now, above the day's work. */
-  .home-top{ margin-bottom:10px; }
 
   /* Topics and the odd corners of the app, folded away at the end so the
      screen is only what there is to do today. */
@@ -531,15 +528,9 @@
     body{ padding:30px 28px 44px; }
     #app{ max-width:1400px; }
 
-    .home-cols{
-      display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-      gap:0 36px; align-items:start;
-    }
-    /* a rule down the middle, so the two spaces read as two */
-    .home-col-see{ border-left:1px solid var(--rule); padding-left:36px; }
-    .home-col-head{ margin-top:0; }
-    /* first heading inside a space should not push off from the column head */
-    .home-col > .section-label:first-of-type{ margin-top:24px; }
+    /* bands keep their headings tight to the content on a wide screen */
+    .home-band{ margin-bottom:26px; }
+    .band-head{ margin-bottom:12px; padding-bottom:9px; }
 
     /* bars span the width, but stay compact -- widen without bulking up */
     .btn-hero{ padding:16px 20px 15px; font-size:1.2rem; margin-bottom:16px; }
@@ -1573,7 +1564,7 @@
   function freshBlockHtml(pool){
     if(!pool.length) return '';
     return '<div class="fresh-block">'
-      + '<div class="fresh-head"><span>Keep them fresh</span>'
+      + '<div class="fresh-head"><span id="fresh-cat"></span>'
         + '<span class="fresh-count" id="fresh-count"></span></div>'
       + '<div class="fresh-word" id="fresh-word"></div>'
       + '<div class="fresh-pron" id="fresh-pron"></div>'
@@ -1606,6 +1597,7 @@
     const w = pool[at];
     const m = w.me[0] || {};
     el('#fresh-count').textContent = (at + 1) + ' / ' + pool.length;
+    el('#fresh-cat').textContent = CAT_ABBR[w.cat] || w.cat;
     wordEl.textContent = w.w;
     const pron = el('#fresh-pron');
     pron.textContent = w.p ? '/' + w.p + '/' : '';
@@ -1791,31 +1783,34 @@
       + '<div class="hero-bar"><span style="width:'+todayPct+'%"></span></div>'
       + '</button>';
 
-    // Progress comes first now, then today's work, then everything else
-    // folded away at the bottom. The two spaces hold the daily work on the
-    // left and the words you have finished on the right.
-    const topHtml = '<div class="home-top">'
+    // The home reads straight down in the order the day happens: what to
+    // practice now, how far you have got, then the words you have already
+    // finished, kept moving so they stay put. Everything else is folded
+    // away at the end.
+    const todayHtml = '<div class="home-band">'
+      + '<div class="band-head"><span>Today</span>'
+        + '<span class="band-hint">'+LEARNSET_SIZE+' a day &middot; '+PER_TOPIC+' from each list</span></div>'
+      + streakHtml
+      + heroHtml
+      + recallHtml(homeDue)
+      + '</div>';
+
+    const statsHtml = '<div class="home-band">'
+      + '<div class="band-head"><span>Your progress</span>'
+        + '<span class="band-hint"><b>'+overallPct+'%</b> of '+WORDS.length+' words</span></div>'
       + progressHtml
       + '<div class="stat-row">'+statTiles+'</div>'
       + '<p class="hint" style="margin:-12px 2px 0;">Tap any box to see those words and practice them.</p>'
-      + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
-    const doSpace = '<div class="home-col home-col-do">'
-      + '<div class="home-col-head"><span>Today</span>'
-        + '<span class="home-col-hint">'+LEARNSET_SIZE+' a day &middot; '+PER_TOPIC+' from each list</span></div>'
-      + streakHtml
-      + recallHtml(homeDue)
-      + heroHtml
-      + '</div>';
-
-    const seeSpace = '<div class="home-col home-col-see">'
-      + '<div class="home-col-head"><span>Keep them fresh</span>'
-        + '<span class="home-col-hint"><b>'+stats.good+'</b> mastered so far</span></div>'
+    const freshHtml = '<div class="home-band">'
+      + '<div class="band-head"><span>Keep them fresh</span>'
+        + '<span class="band-hint"><b>'+stats.good+'</b> mastered so far</span></div>'
       + (fresh.length
           ? freshBlockHtml(fresh)
           : '<p class="hint" style="margin:0 2px;">Nothing mastered yet. Words you finish will show up here, '
             + 'one at a time, so they stay in your head.</p>')
+      + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
     // Topics and the odds and ends live at the end, closed up, so the
@@ -1837,8 +1832,9 @@
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
-      + topHtml
-      + '<div class="home-cols">' + doSpace + seeSpace + '</div>'
+      + todayHtml
+      + statsHtml
+      + freshHtml
       + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
@@ -2898,6 +2894,11 @@
 
   async function backupNow(){
     if(!backupAvailable()) return false;
+    // An app holding nothing has nothing worth writing, and saving it
+    // would look exactly like "forget everything" to the file that exists
+    // to rescue this case. The server refuses it too; this stops it being
+    // asked for at all.
+    if(!Object.keys(progress).length) return false;
     backupState = 'busy';
     paintBackupLine();
     try{
@@ -2906,6 +2907,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: everythingLocal() })
       });
+      if(res.status === 409){
+        // the file holds more than this copy does; it is right, not us
+        backupState = 'error';
+        backupNote = 'The saved copy in your folder is ahead of this one, so it was left alone.';
+        paintBackupLine();
+        return false;
+      }
       if(!res.ok) throw new Error('save failed');
       const out = await res.json();
       backupState = 'saved';
@@ -3000,6 +3008,7 @@
   // A tab being closed is the one moment a pending save would be lost.
   window.addEventListener('pagehide', ()=>{
     if(!backupHandle || !backupAvailable()) return;
+    if(!Object.keys(progress).length) return;
     clearTimeout(backupHandle);
     try{
       const blob = new Blob([JSON.stringify({ data: everythingLocal() })],

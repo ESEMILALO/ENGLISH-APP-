@@ -61,6 +61,41 @@ def read_progress():
         return {"savedAt": None, "data": {}}
 
 
+def count_words(data):
+    p = (data or {}).get("progress")
+    return len(p) if isinstance(p, dict) else 0
+
+
+def guard(incoming):
+    """Decide whether a write may replace what is already stored.
+
+    A browser that has lost its storage looks exactly like a browser with
+    nothing to say, and its first save would otherwise wipe the very file
+    kept to rescue it. So the file never shrinks to nothing, and any write
+    that drops words is kept alongside the copy it replaced.
+
+    Returns (allowed, reason, previous).
+    """
+    previous = read_progress()
+    had = count_words(previous.get("data"))
+    now = count_words(incoming)
+
+    if had and now == 0:
+        return False, "refused: %d words stored, nothing offered" % had, previous
+    if had and now < had:
+        return True, "shrinking: %d -> %d, previous kept" % (had, now), previous
+    return True, None, previous
+
+
+def keep_superseded(previous):
+    """Park the copy a shrinking write is about to replace."""
+    DAILY_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S")
+    path = DAILY_DIR / ("superseded-%s.json" % stamp)
+    path.write_text(json.dumps(previous, indent=1), encoding="utf-8")
+    return path
+
+
 def write_progress(data):
     PROGRESS_DIR.mkdir(exist_ok=True)
     DAILY_DIR.mkdir(exist_ok=True)
@@ -162,6 +197,19 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self._json({"error": "no data"}, 400)
             return
         with PROGRESS_LOCK:
+            allowed, reason, previous = guard(sent["data"])
+            if not allowed:
+                # Not an error the app should act on -- it simply keeps its
+                # own copy. Saying so out loud makes it visible in the log.
+                sys.stdout.write("  backup %s\n" % reason)
+                sys.stdout.flush()
+                self._json({"savedAt": previous.get("savedAt"),
+                            "ignored": True, "reason": reason}, 409)
+                return
+            if reason:
+                kept = keep_superseded(previous)
+                sys.stdout.write("  backup %s -> %s\n" % (reason, kept.name))
+                sys.stdout.flush()
             saved = write_progress(sent["data"])
         self._json({"savedAt": saved["savedAt"]})
 
