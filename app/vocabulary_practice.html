@@ -271,6 +271,27 @@
     }
   }
 
+  /* Select a word on a card and this offers to look it up. */
+  .gloss-bubble{
+    position:absolute; z-index:300; transform:translate(-50%, -100%);
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:9px;
+    padding:9px 14px; font-family:var(--sans); font-weight:700; font-size:.82rem;
+    cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.4); white-space:nowrap;
+    max-width:min(80vw, 340px); overflow:hidden; text-overflow:ellipsis;
+  }
+  .gloss-bubble:hover{ filter:brightness(1.06); }
+  .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  .gloss-toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:310;
+    background:var(--panel); color:var(--text); border:1px solid var(--rule);
+    border-left:3px solid var(--amber); border-radius:10px; padding:12px 16px;
+    font-size:.85rem; line-height:1.45; max-width:min(92vw, 430px);
+    box-shadow:0 14px 34px rgba(0,0,0,.45);
+  }
+  .gloss-toast.ok{ border-left-color:var(--good); }
+  .gloss-toast.bad{ border-left-color:var(--warn); }
+  .gloss-toast b{ color:var(--text); }
+
   /* Today's ten, broken down by the stage each one has reached. */
   .stage-row{ display:flex; gap:6px; margin:12px 0 0; }
   .stage-pill{
@@ -3340,6 +3361,112 @@
       });
     });
   }
+
+  // --- Adding a word you did not know ------------------------------------
+  //
+  // Select any word on a card and this offers to look it up. The server
+  // asks Claude for the entry in the same style as the rest of the
+  // spreadsheet, appends the row, and rebuilds -- so a refresh has it.
+  //
+  // The selection has to be a plausible word or short phrase, or every
+  // stray drag across a sentence would pop a button up.
+  let glossBubble = null;
+
+  function plausibleWord(text){
+    const t = (text || '').trim().replace(/\s+/g, ' ');
+    if(t.length < 2 || t.length > 40) return null;
+    if(!/^[A-Za-z][A-Za-z'\-]*( [A-Za-z'\-]+){0,3}$/.test(t)) return null;
+    return t;
+  }
+
+  function clearGlossBubble(){
+    if(glossBubble){ glossBubble.remove(); glossBubble = null; }
+  }
+
+  function glossToast(message, tone, ms){
+    const old = document.getElementById('gloss-toast');
+    if(old) old.remove();
+    const el = document.createElement('div');
+    el.id = 'gloss-toast';
+    el.className = 'gloss-toast' + (tone ? ' ' + tone : '');
+    el.innerHTML = message;
+    document.body.appendChild(el);
+    if(ms) setTimeout(()=>{ if(el.parentNode) el.remove(); }, ms);
+    return el;
+  }
+
+  async function addToGlossary(word, context, bubble){
+    if(bubble){ bubble.disabled = true; bubble.textContent = 'Looking up ' + word + '\u2026'; }
+    glossToast('Looking up <b>' + esc(word) + '</b>\u2026');
+    try{
+      const res = await fetch('/api/glossary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ word: word, context: context || '' })
+      });
+      const out = await res.json();
+      clearGlossBubble();
+      if(out.added){
+        const m = out.entry && out.entry.meanings && out.entry.meanings[0];
+        glossToast('<b>' + esc(out.entry.word) + '</b> added to your spreadsheet.'
+          + (m ? '<br>' + esc(m.meaning) : '')
+          + '<br><small>Refresh to practice it.</small>', 'ok', 9000);
+      } else if(out.already){
+        glossToast(esc(out.message), 'ok', 6000);
+      } else if(out.queued){
+        glossToast(esc(out.message) + '<br><small>It is waiting in '
+          + 'progress/pending-words.json.</small>', 'bad', 9000);
+      } else {
+        glossToast(esc(out.message || 'That did not work.'), 'bad', 7000);
+      }
+    }catch(e){
+      clearGlossBubble();
+      glossToast('Could not reach the app server.', 'bad', 6000);
+    }
+  }
+
+  // The sentence the word came from, so the lookup can tell which sense
+  // is meant -- "harness" on a dog is not "harness" on an engine.
+  function selectionContext(node){
+    const card = node && node.closest ? node.closest('.card') : null;
+    const text = card ? card.innerText : '';
+    return text.replace(/\s+/g, ' ').trim().slice(0, 300);
+  }
+
+  function onSelectionChanged(){
+    const sel = window.getSelection();
+    if(!sel || sel.isCollapsed || !sel.rangeCount){ clearGlossBubble(); return; }
+    const word = plausibleWord(sel.toString());
+    if(!word){ clearGlossBubble(); return; }
+
+    const range = sel.getRangeAt(0);
+    const host = range.commonAncestorContainer;
+    const node = host.nodeType === 1 ? host : host.parentElement;
+    // only inside a practice card: selecting the app's own labels is noise
+    if(!node || !node.closest || !node.closest('.card')){ clearGlossBubble(); return; }
+
+    const rect = range.getBoundingClientRect();
+    if(!rect || (!rect.width && !rect.height)){ clearGlossBubble(); return; }
+
+    clearGlossBubble();
+    const b = document.createElement('button');
+    b.className = 'gloss-bubble';
+    b.textContent = '+ Add \u201c' + word + '\u201d to your glossary';
+    b.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
+    b.style.top = (rect.top + window.scrollY - 8) + 'px';
+    const context = selectionContext(node);
+    b.addEventListener('mousedown', e=>e.preventDefault());  // keep the selection
+    b.addEventListener('click', ()=>addToGlossary(word, context, b));
+    document.body.appendChild(b);
+    glossBubble = b;
+  }
+
+  document.addEventListener('selectionchange', ()=>{
+    // let the selection settle before measuring it
+    clearTimeout(window.__glossTimer);
+    window.__glossTimer = setTimeout(onSelectionChanged, 180);
+  });
+  document.addEventListener('scroll', clearGlossBubble, true);
 
   async function init(){
     loadProgress();

@@ -60,6 +60,30 @@ to touch it if you have stopped it: double-click
 
 To turn the login start-up on or off, run **`server\install_startup.cmd`**.
 
+## Adding a word you do not know
+
+While practising, select any word on a card. A button appears offering
+to add it to your glossary. Tap it and the word is looked up, written
+into `ENGLISH SCHOOL.xlsx` in the same style as everything else, and the
+app is rebuilt — refresh and you can practice it.
+
+The sentence it came from is sent with it, so the right sense is chosen:
+a harness on a dog is not a harness on an engine.
+
+**This needs an Anthropic API key.** Get one from console.anthropic.com
+and put it, on one line and nothing else, in:
+
+```
+servernthropic_key.txt
+```
+
+Then restart the app. Without a key nothing is lost — words are saved in
+`progress/pending-words.json` and filled in as soon as a key appears.
+
+New words join **School vocabulary**. A dated copy of the spreadsheet is
+kept in `backups/` before every write, and a word already somewhere in
+the sheet is refused rather than duplicated.
+
 ## Your progress
 
 It is kept in two places: in this browser, and as a plain file in

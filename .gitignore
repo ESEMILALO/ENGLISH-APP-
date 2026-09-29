@@ -6,3 +6,6 @@ tools/__pycache__/
 # Your progress, backed up as a file. Personal, and belongs to this
 # machine rather than the repository.
 progress/
+
+# The Anthropic API key for filling in glossary words. Never committed.
+server/anthropic_key.txt

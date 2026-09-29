@@ -48,6 +48,7 @@ KEEP_DAILY = 30
 
 PROGRESS_LOCK = threading.Lock()
 API_PROGRESS = "/api/progress"
+API_GLOSSARY = "/api/glossary"
 
 
 def read_progress():
@@ -177,6 +178,35 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def do_POST(self):
+        """Adding a word to the glossary.
+
+        The work is slow by web standards -- it asks Claude and rewrites
+        the workbook -- but the server threads requests, so the app stays
+        responsive while it happens.
+        """
+        if self.path.split("?", 1)[0] != API_GLOSSARY:
+            self.send_error(501, "Not supported")
+            return
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except ValueError:
+            length = 0
+        if length <= 0 or length > 64 * 1024:
+            self._json({"ok": False, "error": "bad length"}, 400)
+            return
+        try:
+            sent = json.loads(self.rfile.read(length).decode("utf-8"))
+        except Exception:
+            self._json({"ok": False, "error": "bad json"}, 400)
+            return
+
+        import glossary
+        result = glossary.add(sent.get("word", ""), sent.get("context", ""))
+        sys.stdout.write("  glossary: %s\n" % result.get("message", result))
+        sys.stdout.flush()
+        self._json(result, 200 if result.get("ok") else 409)
+
     def do_PUT(self):
         if self.path.split("?", 1)[0] != API_PROGRESS:
             self.send_error(501, "Not supported")
@@ -243,6 +273,12 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.path.split("?", 1)[0] == API_PROGRESS:
             with PROGRESS_LOCK:
                 self._json(read_progress())
+            return
+        if self.path.split("?", 1)[0] == API_GLOSSARY:
+            # what is waiting, and whether it can be filled in yet
+            import glossary
+            self._json({"pending": glossary.read_pending(),
+                        "hasKey": bool(glossary.api_key())})
             return
         target = self._resolve()
         if target is None:
