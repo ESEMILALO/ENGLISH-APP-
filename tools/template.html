@@ -271,16 +271,6 @@
     }
   }
 
-  /* Select a word on a card and this offers to look it up. */
-  .gloss-bubble{
-    position:absolute; z-index:300; transform:translate(-50%, -100%);
-    background:var(--amber); color:var(--amber-ink); border:none; border-radius:9px;
-    padding:9px 14px; font-family:var(--sans); font-weight:700; font-size:.82rem;
-    cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.4); white-space:nowrap;
-    max-width:min(80vw, 340px); overflow:hidden; text-overflow:ellipsis;
-  }
-  .gloss-bubble:hover{ filter:brightness(1.06); }
-  .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
   /* Conversation practice: the words you are learning, used for real. */
   .chat-wrap{ display:flex; flex-direction:column; height:calc(100vh - 150px); min-height:380px; }
   .chat-words{
@@ -453,6 +443,32 @@
     font-size:.78rem; padding:5px 2px 0; margin:0; text-align:center;
   }
   .gloss-pick .gloss-cancel:hover{ background:none; border:none; color:var(--text); }
+
+  /* two things you can do with a selection, side by side */
+  .gloss-bar{
+    position:absolute; z-index:300; transform:translate(-50%, -100%);
+    display:flex; gap:6px; white-space:nowrap;
+  }
+  .gloss-bar button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:9px;
+    padding:9px 13px; font-family:var(--sans); font-weight:700; font-size:.8rem;
+    cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.4);
+  }
+  .gloss-bar button.ask{ background:var(--good); color:var(--bg); }
+  .gloss-bar button:hover{ filter:brightness(1.07); }
+
+  /* an explanation, sitting under the thing it explains */
+  .explain{
+    margin:8px 4px 0; border-left:2px solid var(--good); padding:8px 0 8px 11px;
+    font-size:.84rem; line-height:1.5; color:var(--text);
+  }
+  .explain .explain-phrase{
+    font-family:var(--mono); font-size:.72rem; color:var(--good);
+    letter-spacing:.02em; margin-bottom:4px;
+  }
+  .explain .explain-es{ color:var(--text-soft); font-style:italic; }
+  .explain .explain-note{ color:var(--text-soft); font-size:.8rem; margin-top:4px; }
+  .explain .explain-wait{ color:var(--text-soft); font-style:italic; }
 
   .gloss-toast{
     position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:310;
@@ -3571,8 +3587,11 @@
   function onSelectionChanged(){
     const sel = window.getSelection();
     if(!sel || sel.isCollapsed || !sel.rangeCount){ clearGlossBubble(); return; }
-    const word = plausibleWord(sel.toString());
-    if(!word){ clearGlossBubble(); return; }
+    // Anything readable can be asked about; only something word-shaped
+    // can be added to the spreadsheet.
+    const phrase = sel.toString().replace(/\s+/g, ' ').trim();
+    if(phrase.length < 2 || phrase.length > 200){ clearGlossBubble(); return; }
+    const word = plausibleWord(phrase);
 
     const range = sel.getRangeAt(0);
     const anchor = range.commonAncestorContainer;
@@ -3587,18 +3606,82 @@
     if(!rect || (!rect.width && !rect.height)){ clearGlossBubble(); return; }
 
     clearGlossBubble();
-    const b = document.createElement('button');
-    b.className = 'gloss-bubble';
-    b.textContent = '+ Add \u201c' + word + '\u201d to your glossary';
-    b.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
-    b.style.top = (rect.top + window.scrollY - 8) + 'px';
     const context = selectionContext(node);
     const left = rect.left + rect.width/2 + window.scrollX;
     const top = rect.top + window.scrollY - 8;
-    b.addEventListener('mousedown', e=>e.preventDefault());  // keep the selection
-    b.addEventListener('click', ()=>askWhichTopic(word, context, left, top));
-    document.body.appendChild(b);
-    glossBubble = b;
+
+    const bar = document.createElement('div');
+    bar.className = 'gloss-bar';
+    bar.style.left = left + 'px';
+    bar.style.top = top + 'px';
+    bar.addEventListener('mousedown', e=>e.preventDefault());  // keep the selection
+
+    // Anything you can read, you can ask about. Whole sentences included:
+    // not understanding is usually about a phrase, not a single word.
+    const askBtn = document.createElement('button');
+    askBtn.className = 'ask';
+    askBtn.textContent = 'What does this mean?';
+    askBtn.addEventListener('click', ()=>explainSelection(phrase, context, within));
+    bar.appendChild(askBtn);
+
+    // Adding to the spreadsheet only makes sense for something word-shaped.
+    if(word){
+      const addBtn = document.createElement('button');
+      addBtn.textContent = '+ Add \u201c' + word + '\u201d';
+      addBtn.addEventListener('click', ()=>askWhichTopic(word, context, left, top));
+      bar.appendChild(addBtn);
+    }
+
+    document.body.appendChild(bar);
+    // keep it on screen if the selection is near an edge
+    const box = bar.getBoundingClientRect();
+    if(box.left < 8) bar.style.left = (left + (8 - box.left)) + 'px';
+    else if(box.right > window.innerWidth - 8)
+      bar.style.left = (left - (box.right - window.innerWidth + 8)) + 'px';
+    if(box.top < 8){ bar.style.transform = 'translate(-50%, 0)'; bar.style.top = (top + 26) + 'px'; }
+
+    glossBubble = bar;
+  }
+
+  // Where the answer goes: under whatever was being read, so it stays next
+  // to the thing it is about rather than floating over the page.
+  function explainInto(within){
+    let slot = within.parentElement
+      ? within.parentElement.querySelector(':scope > .explain') : null;
+    if(!slot){
+      slot = document.createElement('div');
+      slot.className = 'explain';
+      (within.parentElement || within).appendChild(slot);
+    }
+    return slot;
+  }
+
+  async function explainSelection(phrase, context, within){
+    clearGlossBubble();
+    const sel = window.getSelection(); if(sel) sel.removeAllRanges();
+    const slot = explainInto(within);
+    slot.innerHTML = '<div class="explain-phrase">' + esc(phrase) + '</div>'
+      + '<div class="explain-wait">asking&hellip;</div>';
+    slot.scrollIntoView({ block:'nearest' });
+    try{
+      const out = await fetch('/api/explain', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ phrase: phrase, context: context })
+      }).then(r=>r.json());
+      if(!out.ok){
+        slot.innerHTML = '<div class="explain-phrase">' + esc(phrase) + '</div>'
+          + '<div class="explain-note">' + esc(out.message || 'That did not work.') + '</div>';
+        return;
+      }
+      slot.innerHTML = '<div class="explain-phrase">' + esc(out.phrase) + '</div>'
+        + '<div>' + esc(out.meaning) + '</div>'
+        + (out.spanish ? '<div class="explain-es">' + esc(out.spanish) + '</div>' : '')
+        + (out.note ? '<div class="explain-note">' + esc(out.note) + '</div>' : '');
+      slot.scrollIntoView({ block:'nearest' });
+    }catch(e){
+      slot.innerHTML = '<div class="explain-phrase">' + esc(phrase) + '</div>'
+        + '<div class="explain-note">Could not reach the app server.</div>';
+    }
   }
 
   document.addEventListener('selectionchange', ()=>{

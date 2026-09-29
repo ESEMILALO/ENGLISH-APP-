@@ -64,6 +64,77 @@ example: You said "I have 25 years" -- in English it is "I am 25 years old". \
 Leave it empty for small slips and for anything you understood fine."""
 
 
+EXPLAIN = """Someone learning English, whose first language is Spanish, \
+has picked out something they did not understand. Explain it.
+
+Keep it short. Three lines at most:
+- what it means, in plain English
+- the Spanish for it
+- when people say it, if that is not obvious, or why it is worded that way
+
+If it is an idiom, say so and give the nearest Spanish equivalent rather than \
+a word-for-word translation. If it is ordinary language they simply have not \
+met, just say what it means without making a fuss of it. Do not lecture, do \
+not list grammar rules, and do not repeat the phrase back at them before \
+starting.
+
+Return ONLY a JSON object, no other text:
+
+{"meaning": "what it means in plain English",
+ "spanish": "the Spanish",
+ "note": "when it is used or why it is put that way, or empty"}"""
+
+
+def explain(phrase, context=""):
+    """What does that mean? Asked of something they read, not something
+    they wrote, so there is nothing to correct -- only to make clear."""
+    phrase = (phrase or "").strip()
+    if not phrase:
+        return {"ok": False, "message": "nothing selected"}
+    if len(phrase) > 300:
+        return {"ok": False, "message": "that is too long to explain in one go"}
+
+    key = api_key()
+    if not key:
+        return {"ok": False, "message": "Explaining needs an Anthropic API key."}
+
+    user = "They did not understand: " + phrase
+    if context:
+        user += "\n\nIt appeared here, which may matter:\n" + context
+
+    body = json.dumps({
+        "model": MODEL,
+        "max_tokens": 1500,
+        "system": EXPLAIN,
+        "messages": [{"role": "user", "content": user}],
+    }).encode("utf-8")
+
+    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": API_VERSION,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=45) as res:
+            payload = json.loads(res.read().decode("utf-8"))
+    except Exception as e:
+        return {"ok": False, "message": "The explanation did not arrive.",
+                "detail": str(e)[:160]}
+
+    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    try:
+        out = json.loads(text)
+    except Exception:
+        return {"ok": True, "phrase": phrase, "meaning": text, "spanish": "", "note": ""}
+
+    return {"ok": True, "phrase": phrase,
+            "meaning": (out.get("meaning") or "").strip(),
+            "spanish": (out.get("spanish") or "").strip(),
+            "note": (out.get("note") or "").strip()}
+
+
 SUGGEST = """You invent a situation for someone practising English.
 
 These are the words they have just learnt:

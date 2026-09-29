@@ -110,9 +110,16 @@ words**. It asks for a situation those particular ten would really come
 up in, rather than one off a list, and you can ask for another if you do
 not like it.
 
-If a word comes up in the conversation that you do not know, select it —
-the same *add to your glossary* button appears, and it goes into your
-spreadsheet like any other.
+**If you do not understand something, select it and ask.** A button
+appears: *what does this mean?* The answer arrives underneath, in plain
+English with the Spanish and a note on when people say it. It works on
+whole phrases, which is usually what trips you up — "what brings you in
+today" is not hard word by word.
+
+If what you selected is a single word, you also get the *add to your
+glossary* button, so it can go into your spreadsheet like any other.
+
+Both work on practice cards too, not only in the conversation.
 
 Your ten words sit along the top and turn green as you use them. Only
 what **you** write counts: the partner is told not to use them itself,
