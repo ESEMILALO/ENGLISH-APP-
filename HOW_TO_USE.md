@@ -135,12 +135,22 @@ and it goes in as your message — no need to press send afterwards. It
 reads its own replies out loud too; *voice on* in the corner turns that
 off if you would rather read.
 
-**Conversations are kept.** Close the tab mid-sentence and the next time
-you open the conversation screen it offers to carry on where you
-stopped, with the words you had already used still ticked. Finished ones
-are listed underneath and can be read back — the last twenty, saved to
-the same file as your progress, so losing the browser does not lose
-them.
+**Conversations are kept, and they are yours.** Close the tab
+mid-sentence and the next time you open the conversation screen it
+offers to carry on where you stopped, with the words you had already
+used still ticked.
+
+Every conversation you have had is listed underneath. Open one to read
+it back, and **carry on with this one** picks the thread up again — the
+partner still has everything that was said. Whatever was open at the
+time is filed away rather than dropped, so starting or resuming one
+never costs you another.
+
+The **×** beside each one deletes it. It asks first, and the ask is in
+the page rather than a browser popup, so nothing goes on a mis-tap.
+
+The last twenty are saved to the same file as your progress, so losing
+the browser does not lose them.
 
 Time spent talking counts toward the day's hour.
 

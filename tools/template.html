@@ -353,6 +353,20 @@
   .chat-heard{ font-size:.78rem; color:var(--amber); margin:0 4px 8px; font-style:italic; }
 
   /* past conversations */
+  .past-item{ display:flex; gap:7px; align-items:stretch; margin-bottom:7px; }
+  .past-item .past-row{ flex:1; margin-bottom:0; }
+  .past-del{
+    background:var(--panel); border:1px solid var(--rule); color:var(--text-soft);
+    border-radius:10px; padding:0 13px; cursor:pointer; flex-shrink:0;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .past-del svg{ width:13px; height:13px; }
+  .past-del:hover{ border-color:var(--warn); color:var(--warn); }
+  .past-del.sure{ background:var(--warn); border-color:var(--warn); color:var(--bg);
+    font-family:var(--sans); font-weight:700; font-size:.76rem; padding:0 12px; }
+  .past-actions{ display:flex; gap:9px; margin-top:18px; flex-wrap:wrap; }
+  .past-actions .btn-primary, .past-actions .btn-secondary{ flex:1; min-width:150px; margin:0; }
+
   .past-row{
     display:block; width:100%; text-align:left; background:var(--panel);
     border:1px solid var(--rule); border-radius:10px; padding:11px 14px;
@@ -1212,6 +1226,13 @@
   // Conversations are worth keeping: leaving the page mid-sentence should
   // not throw one away, and reading an old one back is its own practice.
   const CHATS_KEPT = 20;
+
+  // Every conversation carries an id, so picking one up or throwing it
+  // away never depends on its position in a list that shifts underneath.
+  function newChatId(){
+    return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
   function loadChats(){
     try{
       const raw = localStorage.getItem(CHATS_KEY);
@@ -1220,6 +1241,11 @@
         chats = { current: got.current || null, past: got.past || [] };
       }
     }catch(e){ chats = { current: null, past: [] }; }
+    // conversations saved before ids existed
+    let changed = false;
+    if(chats.current && !chats.current.id){ chats.current.id = newChatId(); changed = true; }
+    (chats.past || []).forEach(c=>{ if(!c.id){ c.id = newChatId(); changed = true; } });
+    if(changed){ try{ localStorage.setItem(CHATS_KEY, JSON.stringify(chats)); }catch(e){} }
   }
   function saveChats(){
     try{
@@ -4078,6 +4104,7 @@
 
   // Kept between renders so asking for another does not lose the last.
   let chatMade = null;
+  let chatDeleting = null;   // the one being asked about, if any
 
   function madeCardHtml(){
     if(chatMade === 'thinking'){
@@ -4137,6 +4164,9 @@
               + '<span>' + (chats.current.turns.length) + ' messages &middot; '
               + (chats.current.used||[]).length + ' of ' + (chats.current.words||[]).length
               + ' words used. Carry on where you stopped.</span></button>'
+            + '<button class="reset-link" id="drop-current" style="color:var(--warn); margin-top:2px;">'
+            + (chatDeleting === chats.current.id
+                ? 'Tap again to throw this one away' : 'Throw it away instead')+'</button>'
           : '')
       + '<div class="section-label">Pick a situation</div>'
       + madeCardHtml()
@@ -4144,11 +4174,18 @@
           + '<b>'+esc(sc.name)+'</b><span>'+esc(sc.blurb)+'</span></button>').join('')
       + ((chats.past||[]).length
           ? '<div class="section-label">Conversations you have had</div>'
-            + chats.past.slice(0, 8).map((c,i)=>'<button class="past-row" data-past="'+i+'">'
-                + '<b>'+esc(c.scenario.name)+'</b>'
-                + '<span>'+friendlyDate((c.endedAt||c.startedAt||'').slice(0,10))
-                + ' &middot; ' + (c.used||[]).length + ' of ' + (c.words||[]).length + ' words'
-                + ' &middot; ' + (c.turns||[]).length + ' messages</span></button>').join('')
+            + chats.past.map(c=>'<div class="past-item">'
+                + '<button class="past-row" data-open="'+esc(c.id)+'">'
+                  + '<b>'+esc(c.scenario.name)+'</b>'
+                  + '<span>'+friendlyDate((c.endedAt||c.startedAt||'').slice(0,10))
+                  + ' &middot; ' + (c.used||[]).length + ' of ' + (c.words||[]).length + ' words'
+                  + ' &middot; ' + (c.turns||[]).length + ' messages</span></button>'
+                + (chatDeleting === c.id
+                    ? '<button class="past-del sure" data-confirm="'+esc(c.id)+'">Delete</button>'
+                      + '<button class="past-del" data-cancel="1" aria-label="Keep it">'+ICON_X+'</button>'
+                    : '<button class="past-del" data-del="'+esc(c.id)+'" '
+                      + 'aria-label="Delete this conversation">'+ICON_X+'</button>')
+                + '</div>').join('')
           : '')
       + '<button class="btn-secondary" id="chat-home" style="margin-top:14px;">&larr; Back to home</button>'
       + '</div>';
@@ -4164,8 +4201,30 @@
     if(made) made.addEventListener('click', ()=>startChat(chatMade, words));
     const resume = el('#chat-resume');
     if(resume) resume.addEventListener('click', ()=>{ if(!resumeChat()) renderChatPicker(); });
-    root.querySelectorAll('.past-row').forEach(b=>{
-      b.addEventListener('click', ()=>renderPastChat(chats.past[+b.dataset.past]));
+    const drop = el('#drop-current');
+    if(drop) drop.addEventListener('click', ()=>{
+      if(chatDeleting === chats.current.id){ deleteChat(chats.current.id); chatDeleting = null; }
+      else { chatDeleting = chats.current.id; }
+      renderChatPicker();
+    });
+    root.querySelectorAll('.past-row[data-open]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const c = (chats.past||[]).find(x=>x.id === b.dataset.open);
+        renderPastChat(c);
+      });
+    });
+    root.querySelectorAll('.past-del[data-del]').forEach(b=>{
+      b.addEventListener('click', ()=>{ chatDeleting = b.dataset.del; renderChatPicker(); });
+    });
+    root.querySelectorAll('.past-del[data-cancel]').forEach(b=>{
+      b.addEventListener('click', ()=>{ chatDeleting = null; renderChatPicker(); });
+    });
+    root.querySelectorAll('.past-del[data-confirm]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        deleteChat(b.dataset.confirm);
+        chatDeleting = null;
+        renderChatPicker();
+      });
     });
     el('#chat-home').addEventListener('click', renderHome);
   }
@@ -4246,7 +4305,8 @@
   }
 
   function startChat(scenario, words){
-    chat = { scenario: scenario, words: words, used: [], turns: [],
+    parkCurrentChat();
+    chat = { id: newChatId(), scenario: scenario, words: words, used: [], turns: [],
              startedAt: new Date().toISOString(), busy: true, error: '' };
     rememberChat();
     renderChat();
@@ -4258,20 +4318,44 @@
   // the error, which mean nothing once you come back to it.
   function rememberChat(){
     chats.current = chat ? {
-      scenario: chat.scenario, words: chat.words, used: chat.used,
+      id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
       turns: chat.turns, startedAt: chat.startedAt
     } : null;
     saveChats();
   }
 
-  function resumeChat(){
-    const saved = chats.current;
+  // Whatever was open goes to the list rather than being dropped, so
+  // opening a second conversation never costs you the first.
+  function parkCurrentChat(){
+    const open = chats.current;
+    if(open && (open.turns || []).length){
+      chats.past = (chats.past || []).filter(c=>c.id !== open.id);
+      chats.past.unshift(open);
+    }
+    chats.current = null;
+  }
+
+  function openChat(saved){
     if(!saved) return false;
-    chat = { scenario: saved.scenario, words: saved.words || [],
-             used: saved.used || [], turns: saved.turns || [],
-             startedAt: saved.startedAt, busy: false, error: '' };
+    if(!chats.current || chats.current.id !== saved.id) parkCurrentChat();
+    chats.past = (chats.past || []).filter(c=>c.id !== saved.id);
+    chat = { id: saved.id || newChatId(), scenario: saved.scenario,
+             words: saved.words || [], used: saved.used || [],
+             turns: saved.turns || [], startedAt: saved.startedAt,
+             busy: false, error: '' };
+    rememberChat();
     renderChat();
     return true;
+  }
+
+  function resumeChat(){
+    return openChat(chats.current);
+  }
+
+  function deleteChat(id){
+    chats.past = (chats.past || []).filter(c=>c.id !== id);
+    if(chats.current && chats.current.id === id) chats.current = null;
+    saveChats();
   }
 
   function renderChat(){
@@ -4419,10 +4503,30 @@
           return '<div class="chat-turn them"><div class="chat-who">'+esc(c.scenario.name)+'</div>'
             + '<div class="chat-bubble">'+esc(t.text)+'</div></div>';
         }).join('')
-      + '<button class="btn-secondary" id="past-back" style="margin-top:18px;">'
-        + '&larr; Back to conversations</button>'
+      + '<div class="past-actions">'
+        + '<button class="btn-primary" id="past-continue">Carry on with this one &rarr;</button>'
+        + '<button class="btn-secondary" id="past-back">&larr; Back to conversations</button>'
+      + '</div>'
+      + (chatDeleting === c.id
+          ? '<p class="hint" style="color:var(--warn); margin-top:14px;">'
+            + 'This conversation and everything in it goes for good.</p>'
+            + '<button class="btn-secondary" id="past-really" '
+            + 'style="margin-top:8px; border-color:var(--warn); color:var(--warn);">'
+            + 'Yes, delete it</button>'
+            + '<button class="reset-link" id="past-keep">Never mind</button>'
+          : '<button class="reset-link" id="past-delete" style="color:var(--warn);">'
+            + 'Delete this conversation</button>')
       + '</div>';
-    el('#past-back').addEventListener('click', renderChatPicker);
+    el('#past-back').addEventListener('click', ()=>{ chatDeleting = null; renderChatPicker(); });
+    el('#past-continue').addEventListener('click', ()=>{ chatDeleting = null; openChat(c); });
+    const del = el('#past-delete');
+    if(del) del.addEventListener('click', ()=>{ chatDeleting = c.id; renderPastChat(c); });
+    const really = el('#past-really');
+    if(really) really.addEventListener('click', ()=>{
+      deleteChat(c.id); chatDeleting = null; renderChatPicker();
+    });
+    const keep = el('#past-keep');
+    if(keep) keep.addEventListener('click', ()=>{ chatDeleting = null; renderPastChat(c); });
   }
 
   function endChat(){
@@ -4432,8 +4536,9 @@
     const total = chat ? chat.words.length : 0;
     const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
     if(chat && chat.turns.length){
+      chats.past = (chats.past || []).filter(c=>c.id !== chat.id);
       chats.past.unshift({
-        scenario: chat.scenario, words: chat.words, used: chat.used,
+        id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
         turns: chat.turns, startedAt: chat.startedAt,
         endedAt: new Date().toISOString()
       });
