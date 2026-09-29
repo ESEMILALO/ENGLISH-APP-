@@ -2844,11 +2844,13 @@
   // --- The recall check on the way in ------------------------------------
   // Different from "Keep them fresh", which only shows you a word. This
   // asks, and the answer counts: forget one and it stops being mastered
-  // and rejoins the normal rotation. The method is not yours to pick --
-  // the app rotates recognize, type it and speaking so a word is not
-  // always checked the way it is easiest to remember.
+  // and rejoins the normal rotation.
+  //
+  // It always asks you to type the word from its meaning. Recognising a
+  // word you are looking at proves little, and this is meant to be the
+  // hard question -- if you cannot produce it from memory, you have not
+  // really kept it.
   const RECALL_COUNT = 5;
-  const RECALL_METHODS = ['recognize', 'typed', 'coach'];
   let recallQuiz = null;
   let recallShown = false;
 
@@ -2865,23 +2867,7 @@
     return list.slice(0, n);
   }
 
-  function recallMethods(){
-    return RECALL_METHODS.filter(m=> m !== 'coach' || canListen);
-  }
-
-  // Rotated by position, shifted by the day, so the same word is not met
-  // with the same question every morning.
-  function recallMethodFor(i){
-    const avail = recallMethods();
-    const day = Math.floor(Date.now() / 86400000);
-    return avail[(i + day) % avail.length];
-  }
-
-  const RECALL_HOW = {
-    recognize: 'Do you remember what it means?',
-    typed: 'Type the word from its meaning',
-    coach: 'Say it out loud'
-  };
+  const RECALL_HOW = 'Type the word from its meaning';
 
   function maybeOpenRecall(){
     if(recallShown) return;
@@ -2934,9 +2920,7 @@
     const q = recallQuiz;
     if(!q) return;
     q.i++;
-    q.revealed = false;
     q.verdict = null;
-    q.status = null;
     if(q.i >= q.words.length){ renderRecall(); return; } // summary
     renderRecall();
   }
@@ -2977,12 +2961,11 @@
     }
 
     const w = q.words[q.i];
-    const method = recallMethodFor(q.i);
     const m = w.me[0] || {};
     const head = '<div class="recall-head"><span>Recall check</span>'
       + '<span>'+(q.i+1)+' of '+q.words.length+'</span></div>'
       + '<h2 class="recall-title">Do you remember this word?</h2>'
-      + '<p class="recall-how">'+RECALL_HOW[method]+'</p>';
+      + '<p class="recall-how">'+RECALL_HOW+'</p>';
 
     let body = '';
 
@@ -2995,29 +2978,12 @@
         + '<p class="recall-answer">'+esc(m.m||'')+(m.e ? '<br><em>&ldquo;'+esc(m.e)+'&rdquo;</em>' : '')+'</p>'
         + '<button class="btn-primary" id="recall-next">'
           + (q.i+1 >= q.words.length ? 'See how you did' : 'Next word')+' &rarr;</button>';
-    } else if(method === 'recognize'){
-      body = '<div class="recall-subject">'+esc(w.w)+'</div>'
-        + (w.p ? '<div class="recall-pron">/'+esc(w.p)+'/</div>' : '')
-        + (q.revealed
-            ? '<p class="recall-prompt">'+esc(m.m||'')+'</p>'
-              + (m.e ? '<p class="recall-ex">&ldquo;'+esc(m.e)+'&rdquo;</p>' : '')
-              + '<div class="recall-btns">'
-                + '<button class="btn-secondary" id="recall-no">I had forgotten</button>'
-                + '<button class="btn-primary" id="recall-yes">I knew it</button>'
-              + '</div>'
-            : '<button class="btn-primary" id="recall-reveal">Show the meaning</button>');
-    } else if(method === 'typed'){
+    } else {
       body = '<p class="recall-prompt">'+esc(m.m||'')+'</p>'
+        + (m.e ? '<p class="recall-ex">&ldquo;'+esc(m.e.replace(new RegExp('\\b'+escapeRegExp(w.w)+'\\b','gi'), '\u2014\u2014\u2014'))+'&rdquo;</p>' : '')
         + '<input type="text" class="recall-input" id="recall-input" autocomplete="off" '
           + 'autocapitalize="off" spellcheck="false" placeholder="Type the word...">'
         + '<button class="btn-primary" id="recall-check">Check</button>';
-    } else {
-      const phrase = coachPhraseFor(w);
-      body = '<div class="recall-subject">'+esc(w.w)+'</div>'
-        + '<p class="recall-prompt">&ldquo;'+esc(phrase)+'&rdquo;</p>'
-        + (q.status ? '<p class="recall-ex">'+esc(q.status)+'</p>' : '')
-        + '<button class="btn-primary" id="recall-speak">'+ICON_MIC
-          + (q.listening ? ' Listening&hellip;' : ' Tap and say it')+'</button>';
     }
 
     scrim.innerHTML = '<div class="recall-box">' + head + body
@@ -3031,14 +2997,10 @@
     };
     on('recall-skip', closeRecall);
     on('recall-next', recallNext);
-    on('recall-reveal', function(){ q.revealed = true; renderRecall(); });
-    on('recall-yes', function(){ recallAnswer(true); });
-    on('recall-no', function(){ recallAnswer(false); });
     on('recall-check', function(){
       const input = document.getElementById('recall-input');
       recallAnswer(normalizeAnswer(input ? input.value : '') === normalizeAnswer(w.w));
     });
-    on('recall-speak', function(){ recallListen(w); });
 
     const input = document.getElementById('recall-input');
     if(input){
@@ -3050,62 +3012,6 @@
       });
       input.focus();
     }
-  }
-
-  // The speaking question. It leans on the same primitives the practice
-  // sessions use -- one recognizer, one permission, the same token guard --
-  // but renders into the pop-up rather than the session screen, so the two
-  // never fight over who owns the page.
-  function recallListen(w){
-    const q = recallQuiz;
-    if(!q || !canListen) return;
-    const phrase = coachPhraseFor(w);
-    scStopListening();
-    const token = ++scToken;
-    q.listening = true;
-    q.status = micGranted ? null : 'Allow the microphone once and it will not ask again.';
-    renderRecall();
-
-    ensureMic().then(function(ok){
-      if(scToken !== token || recallQuiz !== q) return;
-      if(!ok){
-        q.listening = false;
-        q.status = speechErrorMessage('not-allowed');
-        renderRecall();
-        return;
-      }
-      const recognition = scGetRecognizer();
-      const finish = function(status){
-        if(scToken !== token || recallQuiz !== q) return;
-        q.listening = false;
-        q.status = status;
-        renderRecall();
-      };
-      recognition.onresult = function(e){
-        if(scToken !== token || recallQuiz !== q) return;
-        const scored = scScorePhrase(phrase, e.results[0][0].transcript);
-        saveSpeechScore(w.id, scored.score);
-        q.listening = false;
-        recallAnswer(scored.score >= 60);
-      };
-      recognition.onerror = function(e){
-        const code = e.error || 'error';
-        if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
-        finish(speechErrorMessage(code));
-      };
-      recognition.onend = function(){
-        if(q.listening) finish(speechErrorMessage('no-speech'));
-      };
-      setTimeout(function(){
-        if(scToken !== token || recallQuiz !== q) return;
-        try{ recognition.start(); }
-        catch(err){
-          try{ recognition.abort(); }catch(e2){}
-          scRecognizer = null;
-          finish(speechErrorMessage('error'));
-        }
-      }, 250);
-    });
   }
 
   // --- Keeping your progress in a file -----------------------------------
