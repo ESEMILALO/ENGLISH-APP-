@@ -1,4 +1,1366 @@
 {
+ "504 Main words::Abandon": {
+  "q": "abandoned building"
+ },
+ "504 Main words::Annual": {
+  "q": "yearly festival"
+ },
+ "504 Main words::Approach": {
+  "q": "train approaching station"
+ },
+ "504 Main words::Assemble": {
+  "q": "students gathered hall"
+ },
+ "504 Main words::Blend": {
+  "q": "blender mixing"
+ },
+ "504 Main words::Burden": {
+  "q": "donkey heavy load"
+ },
+ "504 Main words::Campus": {
+  "q": "university campus"
+ },
+ "504 Main words::Circulate": {
+  "q": "blood circulation diagram"
+ },
+ "504 Main words::Client": {
+  "q": "client meeting"
+ },
+ "504 Main words::Comprehensive": {
+  "q": "detailed report"
+ },
+ "504 Main words::Data": {
+  "q": "data charts"
+ },
+ "504 Main words::Debate": {
+  "q": "political debate stage"
+ },
+ "504 Main words::Deceive": {
+  "q": "scam artist"
+ },
+ "504 Main words::Defect": {
+  "q": "cracked product"
+ },
+ "504 Main words::Defraud": {
+  "q": "-"
+ },
+ "504 Main words::Dense": {
+  "q": "dense forest"
+ },
+ "504 Main words::Descend": {
+  "q": "hikers descending mountain"
+ },
+ "504 Main words::Detect": {
+  "q": "medical test"
+ },
+ "504 Main words::Devise": {
+  "q": "engineers designing blueprint"
+ },
+ "504 Main words::Eliminate": {
+  "q": "crossing out list"
+ },
+ "504 Main words::Employee": {
+  "q": "office worker"
+ },
+ "504 Main words::Enormous": {
+  "q": "elephant ears"
+ },
+ "504 Main words::Essential": {
+  "q": "drinking water"
+ },
+ "504 Main words::Evade": {
+  "q": "police car chase"
+ },
+ "504 Main words::Expensive": {
+  "q": "luxury car"
+ },
+ "504 Main words::Explore": {
+  "q": "island exploration"
+ },
+ "504 Main words::Gallant": {
+  "q": "firefighter rescue"
+ },
+ "504 Main words::Hardship": {
+  "q": "struggling family"
+ },
+ "504 Main words::Humid": {
+  "q": "humid tropical weather"
+ },
+ "504 Main words::Jealous": {
+  "q": "jealous couple"
+ },
+ "504 Main words::Keen": {
+  "q": "eager student"
+ },
+ "504 Main words::Majority": {
+  "q": "raised hands voting"
+ },
+ "504 Main words::Minimum": {
+  "q": "-"
+ },
+ "504 Main words::Neglect": {
+  "q": "overgrown garden"
+ },
+ "504 Main words::Oath": {
+  "q": "swearing oath"
+ },
+ "504 Main words::Persuade": {
+  "q": "convincing conversation"
+ },
+ "504 Main words::Popular": {
+  "q": "concert crowd"
+ },
+ "504 Main words::Predict": {
+  "q": "weather forecast"
+ },
+ "504 Main words::Probe": {
+  "q": "police investigation"
+ },
+ "504 Main words::Reform": {
+  "q": "government reform meeting"
+ },
+ "504 Main words::Rural": {
+  "q": "rural countryside"
+ },
+ "504 Main words::Scarce": {
+  "q": "empty shelves"
+ },
+ "504 Main words::Sinister": {
+  "q": "sinister smile"
+ },
+ "504 Main words::Tact": {
+  "q": "-"
+ },
+ "504 Main words::Talent": {
+  "q": "child playing piano"
+ },
+ "504 Main words::Tempt": {
+  "q": "tempting dessert"
+ },
+ "504 Main words::Theory": {
+  "q": "science experiment lab"
+ },
+ "504 Main words::Thorough": {
+  "q": "detailed inspection"
+ },
+ "504 Main words::Topic": {
+  "q": "-"
+ },
+ "504 Main words::Tradition": {
+  "q": "family tradition"
+ },
+ "504 Main words::Typical": {
+  "q": "-"
+ },
+ "504 Main words::Undoubtedly": {
+  "q": "-"
+ },
+ "504 Main words::Utilize": {
+  "q": "solar panels energy"
+ },
+ "504 Main words::Vacant": {
+  "q": "empty apartment"
+ },
+ "504 Main words::Vanish": {
+  "q": "rabbit forest"
+ },
+ "504 Main words::Vapor": {
+  "q": "steam rising pot"
+ },
+ "504 Main words::Villain": {
+  "q": "movie villain character"
+ },
+ "504 Main words::Visible": {
+  "q": "mountain view"
+ },
+ "504 Main words::Wager": {
+  "q": "placing bet"
+ },
+ "504 Main words::Wholesale": {
+  "q": "warehouse pallets goods"
+ },
+ "504 Secondary::According": {
+  "q": "-"
+ },
+ "504 Secondary::Accordingly": {
+  "q": "-"
+ },
+ "504 Secondary::Acts": {
+  "q": "act of kindness"
+ },
+ "504 Secondary::Against": {
+  "q": "protest march"
+ },
+ "504 Secondary::Aggravate": {
+  "q": "person headache"
+ },
+ "504 Secondary::Aim": {
+  "q": "archer aiming bow"
+ },
+ "504 Secondary::Ancient": {
+  "q": "ancient temple"
+ },
+ "504 Secondary::Anecdote": {
+  "q": "-"
+ },
+ "504 Secondary::Angered by": {
+  "q": "angry protesters"
+ },
+ "504 Secondary::Appeal": {
+  "q": "courtroom lawyer"
+ },
+ "504 Secondary::As the": {
+  "q": "-"
+ },
+ "504 Secondary::Autos": {
+  "q": "classic cars"
+ },
+ "504 Secondary::Award": {
+  "q": "award trophy"
+ },
+ "504 Secondary::Bachelorette": {
+  "q": "single woman"
+ },
+ "504 Secondary::Back up": {
+  "q": "evidence documents"
+ },
+ "504 Secondary::Backward": {
+  "q": "step backward"
+ },
+ "504 Secondary::Barely visible": {
+  "q": "faint distant silhouette"
+ },
+ "504 Secondary::Basement": {
+  "q": "basement room"
+ },
+ "504 Secondary::Beard": {
+  "q": "man beard"
+ },
+ "504 Secondary::Beau#2": {
+  "q": "couple arm arm"
+ },
+ "504 Secondary::Become fit": {
+  "q": "person jogging"
+ },
+ "504 Secondary::Beforehand": {
+  "q": "-"
+ },
+ "504 Secondary::Being": {
+  "q": "group of people"
+ },
+ "504 Secondary::Bench": {
+  "q": "park bench"
+ },
+ "504 Secondary::Beyond": {
+  "q": "-"
+ },
+ "504 Secondary::Bible": {
+  "q": "bible book"
+ },
+ "504 Secondary::Bill": {
+  "q": "restaurant bill"
+ },
+ "504 Secondary::Blade": {
+  "q": "knife blade"
+ },
+ "504 Secondary::Blend in": {
+  "q": "camouflaged animal rocks"
+ },
+ "504 Secondary::Bound": {
+  "q": "-"
+ },
+ "504 Secondary::Boundary": {
+  "q": "property fence"
+ },
+ "504 Secondary::Branches": {
+  "q": "-"
+ },
+ "504 Secondary::Breeding": {
+  "q": "horse breeding"
+ },
+ "504 Secondary::Breezes": {
+  "q": "sea breeze"
+ },
+ "504 Secondary::Bright": {
+  "q": "bright sunny room"
+ },
+ "504 Secondary::Bring out": {
+  "q": "sunlight on flowers"
+ },
+ "504 Secondary::Bring together": {
+  "q": "people holding hands"
+ },
+ "504 Secondary::Brought out": {
+  "q": "sunlight on flowers"
+ },
+ "504 Secondary::Bureau": {
+  "q": "government office building"
+ },
+ "504 Secondary::Butcher": {
+  "q": "butcher shop"
+ },
+ "504 Secondary::Butler": {
+  "q": "butler serving"
+ },
+ "504 Secondary::Butter": {
+  "q": "butter block"
+ },
+ "504 Secondary::By the use of tact": {
+  "q": "-"
+ },
+ "504 Secondary::Came in": {
+  "q": "person entering door"
+ },
+ "504 Secondary::Came over": {
+  "q": "friend visiting home"
+ },
+ "504 Secondary::Captain": {
+  "q": "ship captain"
+ },
+ "504 Secondary::Carcass": {
+  "q": "animal carcass"
+ },
+ "504 Secondary::Careful": {
+  "q": "careful cutting"
+ },
+ "504 Secondary::Carefully": {
+  "q": "careful driving"
+ },
+ "504 Secondary::Carry a tune": {
+  "q": "woman singing"
+ },
+ "504 Secondary::Cheating": {
+  "q": "cheating exam"
+ },
+ "504 Secondary::Checkup": {
+  "q": "dental checkup"
+ },
+ "504 Secondary::Chorus": {
+  "q": "crowd singing"
+ },
+ "504 Secondary::Cleaning up": {
+  "q": "cleaning kitchen"
+ },
+ "504 Secondary::Cleverly": {
+  "q": "-"
+ },
+ "504 Secondary::Cleverness": {
+  "q": "solving puzzle"
+ },
+ "504 Secondary::Climate": {
+  "q": "tropical landscape"
+ },
+ "504 Secondary::Cloak": {
+  "q": "black cloak"
+ },
+ "504 Secondary::Closely packed together": {
+  "q": "crowded houses close"
+ },
+ "504 Secondary::Closet": {
+  "q": "clothes closet"
+ },
+ "504 Secondary::Coffin": {
+  "q": "coffin"
+ },
+ "504 Secondary::Come down": {
+  "q": "climbing down roof"
+ },
+ "504 Secondary::Come near": {
+  "q": "person approaching edge"
+ },
+ "504 Secondary::Congress": {
+  "q": "capitol building"
+ },
+ "504 Secondary::Costly": {
+  "q": "expensive car repair"
+ },
+ "504 Secondary::Costume": {
+  "q": "pirate costume"
+ },
+ "504 Secondary::Cot": {
+  "q": "camp bed"
+ },
+ "504 Secondary::Covering": {
+  "q": "floor covering"
+ },
+ "504 Secondary::Crossing": {
+  "q": "pedestrian crossing"
+ },
+ "504 Secondary::Crowds": {
+  "q": "crowd of people"
+ },
+ "504 Secondary::Curse": {
+  "q": "shouting person"
+ },
+ "504 Secondary::Cut through": {
+  "q": "walking through forest"
+ },
+ "504 Secondary::Darkness": {
+  "q": "dark room"
+ },
+ "504 Secondary::Deadened": {
+  "q": "numbing injection"
+ },
+ "504 Secondary::Dear": {
+  "q": "close friends hugging"
+ },
+ "504 Secondary::Decent": {
+  "q": "decent hotel room"
+ },
+ "504 Secondary::Dense fog": {
+  "q": "thick fog"
+ },
+ "504 Secondary::Densely": {
+  "q": "densely packed crowd"
+ },
+ "504 Secondary::Desert": {
+  "q": "desert landscape"
+ },
+ "504 Secondary::Dictator": {
+  "q": "dictator speech"
+ },
+ "504 Secondary::Dined": {
+  "q": "couple dining restaurant"
+ },
+ "504 Secondary::Disappear": {
+  "q": "sun behind clouds"
+ },
+ "504 Secondary::Discover": {
+  "q": "scientist new species"
+ },
+ "504 Secondary::Disobey": {
+  "q": "disobedient child"
+ },
+ "504 Secondary::Dispute": {
+  "q": "argument dispute"
+ },
+ "504 Secondary::Doing away": {
+  "q": "shredding documents"
+ },
+ "504 Secondary::Doing away with": {
+  "q": "shredding documents"
+ },
+ "504 Secondary::Downwards": {
+  "q": "downhill path"
+ },
+ "504 Secondary::Dragnet": {
+  "q": "police search"
+ },
+ "504 Secondary::Drop": {
+  "q": "falling glass"
+ },
+ "504 Secondary::Droplets": {
+  "q": "water droplets"
+ },
+ "504 Secondary::Dropped": {
+  "q": "dropped keys"
+ },
+ "504 Secondary::Eager": {
+  "q": "eager student"
+ },
+ "504 Secondary::Early spring": {
+  "q": "early spring flowers"
+ },
+ "504 Secondary::Earn livings": {
+  "q": "fishermen working boat"
+ },
+ "504 Secondary::Encyclopedia": {
+  "q": "encyclopedia books"
+ },
+ "504 Secondary::Excessive": {
+  "q": "-"
+ },
+ "504 Secondary::Executive": {
+  "q": "business executive"
+ },
+ "504 Secondary::Extravagant": {
+  "q": "lavish wedding"
+ },
+ "504 Secondary::Eye out": {
+  "q": "person watching alert"
+ },
+ "504 Secondary::Eye out for": {
+  "q": "person watching bus stop"
+ },
+ "504 Secondary::Eyesight": {
+  "q": "eye chart"
+ },
+ "504 Secondary::Fall asleep": {
+  "q": "person sleeping sofa"
+ },
+ "504 Secondary::Farm stand": {
+  "q": "farm stand"
+ },
+ "504 Secondary::Fate": {
+  "q": "-"
+ },
+ "504 Secondary::Faults": {
+  "q": "building inspection"
+ },
+ "504 Secondary::Fell down": {
+  "q": "person falling down"
+ },
+ "504 Secondary::Fell out": {
+  "q": "friends arguing"
+ },
+ "504 Secondary::Figuring": {
+  "q": "woman calculating bills"
+ },
+ "504 Secondary::Find out": {
+  "q": "-"
+ },
+ "504 Secondary::Flirting": {
+  "q": "flirting couple"
+ },
+ "504 Secondary::Flour": {
+  "q": "flour powder"
+ },
+ "504 Secondary::Fog": {
+  "q": "foggy road"
+ },
+ "504 Secondary::Forced": {
+  "q": "-"
+ },
+ "504 Secondary::Forces": {
+  "q": "-"
+ },
+ "504 Secondary::Foretell": {
+  "q": "fortune teller"
+ },
+ "504 Secondary::Fortify": {
+  "q": "fortified city wall"
+ },
+ "504 Secondary::Frighten": {
+  "q": "scared child"
+ },
+ "504 Secondary::Frightening someone out of something": {
+  "q": "-"
+ },
+ "504 Secondary::Gardener": {
+  "q": "gardener planting flowers"
+ },
+ "504 Secondary::Gather": {
+  "q": "crowd gathering"
+ },
+ "504 Secondary::Gather together": {
+  "q": "family gathering"
+ },
+ "504 Secondary::Gathered": {
+  "q": "crowd gathered"
+ },
+ "504 Secondary::Germs": {
+  "q": "bacteria microscope"
+ },
+ "504 Secondary::Gesture": {
+  "q": "hand gesture"
+ },
+ "504 Secondary::Get away from": {
+  "q": "escaping fire"
+ },
+ "504 Secondary::Get into": {
+  "q": "entering car"
+ },
+ "504 Secondary::Get into#2": {
+  "q": "person entering car"
+ },
+ "504 Secondary::Get mixed up": {
+  "q": "confused expression"
+ },
+ "504 Secondary::Go over": {
+  "q": "reviewing notes"
+ },
+ "504 Secondary::Go straight": {
+  "q": "walking directly"
+ },
+ "504 Secondary::Gossip": {
+  "q": "women gossiping"
+ },
+ "504 Secondary::Grant": {
+  "q": "judge signing document"
+ },
+ "504 Secondary::Grave": {
+  "q": "grave headstone"
+ },
+ "504 Secondary::Hangings": {
+  "q": "wall tapestry"
+ },
+ "504 Secondary::Heated": {
+  "q": "room radiator"
+ },
+ "504 Secondary::Hence": {
+  "q": "-"
+ },
+ "504 Secondary::High-priced": {
+  "q": "luxury furniture store"
+ },
+ "504 Secondary::Historians": {
+  "q": "historian examining documents"
+ },
+ "504 Secondary::Hoop": {
+  "q": "toy hoop"
+ },
+ "504 Secondary::However": {
+  "q": "-"
+ },
+ "504 Secondary::Hunger": {
+  "q": "hungry child"
+ },
+ "504 Secondary::Hurt in": {
+  "q": "car accident injury"
+ },
+ "504 Secondary::Ice skating": {
+  "q": "ice skating rink"
+ },
+ "504 Secondary::Immoderate": {
+  "q": "-"
+ },
+ "504 Secondary::Improve": {
+  "q": "student improving"
+ },
+ "504 Secondary::Incredible": {
+  "q": "-"
+ },
+ "504 Secondary::Invaluable": {
+  "q": "-"
+ },
+ "504 Secondary::Judicial": {
+  "q": "courtroom judge"
+ },
+ "504 Secondary::Jury": {
+  "q": "courtroom jury"
+ },
+ "504 Secondary::Labor dispute": {
+  "q": "workers strike"
+ },
+ "504 Secondary::Lack": {
+  "q": "empty wallet"
+ },
+ "504 Secondary::Lack of": {
+  "q": "empty pantry"
+ },
+ "504 Secondary::Laid": {
+  "q": "book on table"
+ },
+ "504 Secondary::Landscape": {
+  "q": "mountain landscape"
+ },
+ "504 Secondary::Lasted": {
+  "q": "long meeting"
+ },
+ "504 Secondary::Lateness": {
+  "q": "-"
+ },
+ "504 Secondary::Later": {
+  "q": "-"
+ },
+ "504 Secondary::Lay ahead": {
+  "q": "-"
+ },
+ "504 Secondary::Layers": {
+  "q": "layered cake"
+ },
+ "504 Secondary::Layers of thin clothing": {
+  "q": "layered clothing"
+ },
+ "504 Secondary::Least": {
+  "q": "-"
+ },
+ "504 Secondary::Legislative": {
+  "q": "parliament chamber"
+ },
+ "504 Secondary::Let out": {
+  "q": "dog leaving door"
+ },
+ "504 Secondary::Librarian": {
+  "q": "librarian library"
+ },
+ "504 Secondary::Lied": {
+  "q": "-"
+ },
+ "504 Secondary::Lights-out": {
+  "q": "bedroom lights off"
+ },
+ "504 Secondary::Live happily ever after": {
+  "q": "happy couple wedding"
+ },
+ "504 Secondary::Look into": {
+  "q": "police investigation"
+ },
+ "504 Secondary::Loss": {
+  "q": "-"
+ },
+ "504 Secondary::Losses": {
+  "q": "financial loss chart"
+ },
+ "504 Secondary::Loud tie": {
+  "q": "colorful necktie"
+ },
+ "504 Secondary::Low-paid": {
+  "q": "low wage worker"
+ },
+ "504 Secondary::Low-paid workers": {
+  "q": "fast food worker"
+ },
+ "504 Secondary::Major": {
+  "q": "-"
+ },
+ "504 Secondary::Major leagues": {
+  "q": "baseball stadium"
+ },
+ "504 Secondary::Make better": {
+  "q": "upward graph"
+ },
+ "504 Secondary::Make up": {
+  "q": "-"
+ },
+ "504 Secondary::Make up for": {
+  "q": "-"
+ },
+ "504 Secondary::Makeup": {
+  "q": "makeup cosmetics"
+ },
+ "504 Secondary::Making a living": {
+  "q": "street vendor working"
+ },
+ "504 Secondary::March of Dimes": {
+  "q": "-"
+ },
+ "504 Secondary::Marched out": {
+  "q": "soldiers marching"
+ },
+ "504 Secondary::Margarine": {
+  "q": "margarine tub"
+ },
+ "504 Secondary::Meaningless": {
+  "q": "-"
+ },
+ "504 Secondary::Mercy": {
+  "q": "prisoner begging mercy"
+ },
+ "504 Secondary::Messy": {
+  "q": "messy bedroom"
+ },
+ "504 Secondary::Mist": {
+  "q": "misty hills"
+ },
+ "504 Secondary::Mistaken": {
+  "q": "wrong answer mark"
+ },
+ "504 Secondary::Misty": {
+  "q": "misty morning"
+ },
+ "504 Secondary::Mixture": {
+  "q": "mixing bowl"
+ },
+ "504 Secondary::Moisture": {
+  "q": "water droplets"
+ },
+ "504 Secondary::Moonlight": {
+  "q": "moonlight night"
+ },
+ "504 Secondary::Mourned": {
+  "q": "mourning funeral"
+ },
+ "504 Secondary::Move off": {
+  "q": "train departing"
+ },
+ "504 Secondary::Much more": {
+  "q": "-"
+ },
+ "504 Secondary::Mud": {
+  "q": "muddy boots"
+ },
+ "504 Secondary::Muddy": {
+  "q": "muddy shoes"
+ },
+ "504 Secondary::Murder": {
+  "q": "crime scene"
+ },
+ "504 Secondary::Nearby": {
+  "q": "nearby store"
+ },
+ "504 Secondary::Nearer to": {
+  "q": "moving chair closer"
+ },
+ "504 Secondary::No one": {
+  "q": "-"
+ },
+ "504 Secondary::No peril": {
+  "q": "-"
+ },
+ "504 Secondary::Noted": {
+  "q": "-"
+ },
+ "504 Secondary::Nylon": {
+  "q": "nylon fabric"
+ },
+ "504 Secondary::Nylon strings": {
+  "q": "guitar strings"
+ },
+ "504 Secondary::Ocean floor": {
+  "q": "ocean floor"
+ },
+ "504 Secondary::Of a kind": {
+  "q": "-"
+ },
+ "504 Secondary::Oil paints": {
+  "q": "oil paints tubes"
+ },
+ "504 Secondary::Omit": {
+  "q": "-"
+ },
+ "504 Secondary::On the contrary": {
+  "q": "-"
+ },
+ "504 Secondary::Outcome": {
+  "q": "test result"
+ },
+ "504 Secondary::Passage": {
+  "q": "book page"
+ },
+ "504 Secondary::Passing mark": {
+  "q": "exam grade paper"
+ },
+ "504 Secondary::Peaceful": {
+  "q": "peaceful afternoon"
+ },
+ "504 Secondary::Perceive": {
+  "q": "dog listening"
+ },
+ "504 Secondary::Perilous": {
+  "q": "dangerous journey"
+ },
+ "504 Secondary::Plan for": {
+  "q": "boarding up windows"
+ },
+ "504 Secondary::Pointed": {
+  "q": "sharp knife blade"
+ },
+ "504 Secondary::Precious": {
+  "q": "precious gemstone"
+ },
+ "504 Secondary::Priceless": {
+  "q": "museum artifact"
+ },
+ "504 Secondary::Publishers": {
+  "q": "publishing house"
+ },
+ "504 Secondary::Puddle": {
+  "q": "puddle water"
+ },
+ "504 Secondary::Put out": {
+  "q": "extinguishing candle"
+ },
+ "504 Secondary::Quarrel": {
+  "q": "couple arguing"
+ },
+ "504 Secondary::Quart lower": {
+  "q": "measuring jug"
+ },
+ "504 Secondary::Railroad tracks": {
+  "q": "railroad tracks"
+ },
+ "504 Secondary::Rainy": {
+  "q": "rainy street"
+ },
+ "504 Secondary::Realized": {
+  "q": "surprised realization"
+ },
+ "504 Secondary::Realizing": {
+  "q": "eureka moment"
+ },
+ "504 Secondary::Relatives": {
+  "q": "family members"
+ },
+ "504 Secondary::Remain": {
+  "q": "person sitting still"
+ },
+ "504 Secondary::Research": {
+  "q": "scientist in laboratory"
+ },
+ "504 Secondary::Retail": {
+  "q": "retail store"
+ },
+ "504 Secondary::Rid": {
+  "q": "pest spray garden"
+ },
+ "504 Secondary::Rioters": {
+  "q": "rioters street"
+ },
+ "504 Secondary::Rise out": {
+  "q": "smoke rising chimney"
+ },
+ "504 Secondary::Rise out of": {
+  "q": "smoke rising chimney"
+ },
+ "504 Secondary::Road map": {
+  "q": "road map"
+ },
+ "504 Secondary::Rose out of": {
+  "q": "steam rising pot"
+ },
+ "504 Secondary::Row": {
+  "q": "row of seats"
+ },
+ "504 Secondary::Rule breaker": {
+  "q": "jaywalking pedestrian"
+ },
+ "504 Secondary::Safety": {
+  "q": "safety helmet"
+ },
+ "504 Secondary::Salesman": {
+  "q": "car salesman"
+ },
+ "504 Secondary::Schemer": {
+  "q": "-"
+ },
+ "504 Secondary::Scholarship": {
+  "q": "scholarship certificate"
+ },
+ "504 Secondary::Search into": {
+  "q": "detective investigation"
+ },
+ "504 Secondary::Seated": {
+  "q": "people sitting"
+ },
+ "504 Secondary::Setting": {
+  "q": "peaceful village landscape"
+ },
+ "504 Secondary::Shack": {
+  "q": "small shack"
+ },
+ "504 Secondary::Shaker": {
+  "q": "cocktail shaker"
+ },
+ "504 Secondary::Shape up": {
+  "q": "-"
+ },
+ "504 Secondary::Shaving": {
+  "q": "man shaving"
+ },
+ "504 Secondary::Shelter": {
+  "q": "homeless shelter"
+ },
+ "504 Secondary::Shortening": {
+  "q": "vegetable shortening"
+ },
+ "504 Secondary::Sinking ship": {
+  "q": "sinking ship"
+ },
+ "504 Secondary::Slaughter": {
+  "q": "slaughterhouse"
+ },
+ "504 Secondary::Sleet": {
+  "q": "sleet on road"
+ },
+ "504 Secondary::Slip on": {
+  "q": "putting on shoes"
+ },
+ "504 Secondary::Slum": {
+  "q": "urban slum"
+ },
+ "504 Secondary::Slum area": {
+  "q": "slum area"
+ },
+ "504 Secondary::Smooth": {
+  "q": "smooth stone"
+ },
+ "504 Secondary::Smoothly": {
+  "q": "-"
+ },
+ "504 Secondary::Somehow": {
+  "q": "-"
+ },
+ "504 Secondary::Somewhat": {
+  "q": "-"
+ },
+ "504 Secondary::Sooner": {
+  "q": "-"
+ },
+ "504 Secondary::Spacecraft": {
+  "q": "spacecraft orbit"
+ },
+ "504 Secondary::Spotlight": {
+  "q": "stage spotlight"
+ },
+ "504 Secondary::Spotlight on": {
+  "q": "spotlight on person"
+ },
+ "504 Secondary::Spread": {
+  "q": "wildfire spreading"
+ },
+ "504 Secondary::Square": {
+  "q": "square shape"
+ },
+ "504 Secondary::Standing guard duty": {
+  "q": "soldier standing guard"
+ },
+ "504 Secondary::Steam": {
+  "q": "steaming pot"
+ },
+ "504 Secondary::Stream": {
+  "q": "forest stream"
+ },
+ "504 Secondary::Stuck in": {
+  "q": "traffic jam"
+ },
+ "504 Secondary::Suffered": {
+  "q": "injured person"
+ },
+ "504 Secondary::Sunlight": {
+  "q": "sunlight through window"
+ },
+ "504 Secondary::Sunshine": {
+  "q": "sunshine garden"
+ },
+ "504 Secondary::Swamp": {
+  "q": "swamp wetland"
+ },
+ "504 Secondary::Sworn over": {
+  "q": "swearing oath"
+ },
+ "504 Secondary::Tactfully": {
+  "q": "polite conversation"
+ },
+ "504 Secondary::Tailoring": {
+  "q": "tailor sewing"
+ },
+ "504 Secondary::Take on": {
+  "q": "-"
+ },
+ "504 Secondary::Tax rates": {
+  "q": "tax rate chart"
+ },
+ "504 Secondary::Telegram": {
+  "q": "old telegram"
+ },
+ "504 Secondary::Tell beforehand": {
+  "q": "-"
+ },
+ "504 Secondary::Teller": {
+  "q": "bank teller"
+ },
+ "504 Secondary::Therefore": {
+  "q": "-"
+ },
+ "504 Secondary::Thickest": {
+  "q": "thick wall"
+ },
+ "504 Secondary::Thin": {
+  "q": "thin paper"
+ },
+ "504 Secondary::Thoroughly": {
+  "q": "-"
+ },
+ "504 Secondary::Though": {
+  "q": "-"
+ },
+ "504 Secondary::Thoughtfulness": {
+  "q": "-"
+ },
+ "504 Secondary::Through": {
+  "q": "train tunnel"
+ },
+ "504 Secondary::Throughout": {
+  "q": "city skyline"
+ },
+ "504 Secondary::Thus": {
+  "q": "-"
+ },
+ "504 Secondary::Thus clearing": {
+  "q": "fog clearing road"
+ },
+ "504 Secondary::Tight jacket": {
+  "q": "tight jacket"
+ },
+ "504 Secondary::Tombstones": {
+  "q": "cemetery tombstones"
+ },
+ "504 Secondary::Took an oath": {
+  "q": "swearing oath"
+ },
+ "504 Secondary::Tracks": {
+  "q": "animal tracks snow"
+ },
+ "504 Secondary::Trapping": {
+  "q": "fish net"
+ },
+ "504 Secondary::Treated": {
+  "q": "kind treatment"
+ },
+ "504 Secondary::Treatment": {
+  "q": "medical treatment"
+ },
+ "504 Secondary::Trial": {
+  "q": "courtroom trial"
+ },
+ "504 Secondary::Trickery": {
+  "q": "con man"
+ },
+ "504 Secondary::Tried out": {
+  "q": "testing software laptop"
+ },
+ "504 Secondary::Trouble": {
+  "q": "confused tourist map"
+ },
+ "504 Secondary::Tune up": {
+  "q": "mechanic tuning engine"
+ },
+ "504 Secondary::Unforgettable": {
+  "q": "-"
+ },
+ "504 Secondary::Upbringing": {
+  "q": "parent raising child"
+ },
+ "504 Secondary::Upwards": {
+  "q": "smoke rising"
+ },
+ "504 Secondary::Used in": {
+  "q": "construction materials"
+ },
+ "504 Secondary::Valuable": {
+  "q": "gold jewelry"
+ },
+ "504 Secondary::Vapor trail": {
+  "q": "airplane vapor trail"
+ },
+ "504 Secondary::Walk someone through": {
+  "q": "teaching demonstration"
+ },
+ "504 Secondary::Wand": {
+  "q": "magic wand"
+ },
+ "504 Secondary::Waved": {
+  "q": "woman waving"
+ },
+ "504 Secondary::Weather forecasters": {
+  "q": "weather forecaster"
+ },
+ "504 Secondary::Widow": {
+  "q": "grieving widow"
+ },
+ "504 Secondary::Win over to": {
+  "q": "-"
+ },
+ "504 Secondary::Win over to do or believe": {
+  "q": "-"
+ },
+ "504 Secondary::Wipe out": {
+  "q": "storm destroyed crops"
+ },
+ "504 Secondary::Withheld": {
+  "q": "-"
+ },
+ "504 Secondary::Witness": {
+  "q": "witness accident"
+ },
+ "School books::Above": {
+  "q": "lamp above table"
+ },
+ "School books::Alive": {
+  "q": "living animal"
+ },
+ "School books::All over": {
+  "q": "world map"
+ },
+ "School books::Almost nothing but": {
+  "q": "-"
+ },
+ "School books::Arab": {
+  "q": "arab man"
+ },
+ "School books::Away from": {
+  "q": "-"
+ },
+ "School books::Beak": {
+  "q": "bird beak"
+ },
+ "School books::Beg your pardon": {
+  "q": "-"
+ },
+ "School books::Breath": {
+  "q": "visible breath cold"
+ },
+ "School books::Breathe": {
+  "q": "person breathing"
+ },
+ "School books::Broom": {
+  "q": "broom sweeping"
+ },
+ "School books::By hand": {
+  "q": "planting by hand"
+ },
+ "School books::Carry": {
+  "q": "carrying box"
+ },
+ "School books::Carry away": {
+  "q": "river carrying branches"
+ },
+ "School books::Carry up": {
+  "q": "carrying bags upstairs"
+ },
+ "School books::Climb": {
+  "q": "climbing mountain"
+ },
+ "School books::Collect": {
+  "q": "collecting rainwater"
+ },
+ "School books::Crop": {
+  "q": "rice field"
+ },
+ "School books::Date palm": {
+  "q": "date palm tree"
+ },
+ "School books::Dates": {
+  "q": "dates fruit"
+ },
+ "School books::Diseases": {
+  "q": "sick patient"
+ },
+ "School books::Farm": {
+  "q": "farm field"
+ },
+ "School books::Farmers": {
+  "q": "farmers harvesting"
+ },
+ "School books::Feathers": {
+  "q": "bird feathers"
+ },
+ "School books::Fertilizer": {
+  "q": "fertilizer bag"
+ },
+ "School books::Flooded": {
+  "q": "flooded field"
+ },
+ "School books::Freshwater": {
+  "q": "freshwater lake"
+ },
+ "School books::Grass": {
+  "q": "green grass"
+ },
+ "School books::High up": {
+  "q": "bird high tree"
+ },
+ "School books::Hump": {
+  "q": "camel hump"
+ },
+ "School books::Hyacinth": {
+  "q": "hyacinth flower"
+ },
+ "School books::Insects": {
+  "q": "insects on leaf"
+ },
+ "School books::Instead of": {
+  "q": "-"
+ },
+ "School books::Keep away": {
+  "q": "warning sign cliff"
+ },
+ "School books::Leaf": {
+  "q": "green leaf"
+ },
+ "School books::Leaves": {
+  "q": "fallen leaves"
+ },
+ "School books::Mammal": {
+  "q": "whale swimming"
+ },
+ "School books::Methane gas": {
+  "q": "gas flame"
+ },
+ "School books::Move into": {
+  "q": "moving boxes apartment"
+ },
+ "School books::Palm trees": {
+  "q": "palm trees"
+ },
+ "School books::Pass out": {
+  "q": "person fainting"
+ },
+ "School books::Petroleum": {
+  "q": "crude oil"
+ },
+ "School books::Poison": {
+  "q": "poison bottle"
+ },
+ "School books::Poisonous": {
+  "q": "poisonous mushroom"
+ },
+ "School books::Probably": {
+  "q": "-"
+ },
+ "School books::Rug": {
+  "q": "floor rug"
+ },
+ "School books::Run away": {
+  "q": "prisoner running away"
+ },
+ "School books::Run into": {
+  "q": "friends meeting street"
+ },
+ "School books::Sandals": {
+  "q": "sandals beach"
+ },
+ "School books::Slaves": {
+  "q": "enslaved people plantation"
+ },
+ "School books::Soil": {
+  "q": "soil dirt"
+ },
+ "School books::Sparkling water": {
+  "q": "glass sparkling water"
+ },
+ "School books::Stay away": {
+  "q": "warning sign fire"
+ },
+ "School books::Stone": {
+  "q": "stone rock"
+ },
+ "School books::Strip": {
+  "q": "tape strip"
+ },
+ "School books::Tail": {
+  "q": "dog tail"
+ },
+ "School books::Tapes": {
+  "q": "ribbon tape roll"
+ },
+ "School books::Thick": {
+  "q": "thick book"
+ },
+ "School books::Tighten": {
+  "q": "tightening screw"
+ },
+ "School books::Took it to other parts": {
+  "q": "-"
+ },
+ "School books::Toward": {
+  "q": "walking toward door"
+ },
+ "School books::Tropics": {
+  "q": "tropical rainforest"
+ },
+ "School books::Upland": {
+  "q": "highland landscape"
+ },
+ "School books::Venomous": {
+  "q": "venomous snake"
+ },
+ "School books::Water hyacinth": {
+  "q": "water hyacinth"
+ },
+ "School books::Wrote about it almost": {
+  "q": "-"
+ },
+ "School vocabulary::Accept something with good grace": {
+  "q": "-"
+ },
+ "School vocabulary::Admonish": {
+  "q": "teacher admonishing class"
+ },
+ "School vocabulary::Aeronomy": {
+  "q": "upper atmosphere"
+ },
  "School vocabulary::Although": {
   "none": "nothing to photograph",
   "q": "-"
@@ -12,6 +1374,33 @@
   "title": "Friends group picture.jpg",
   "why": "One person's shoe among a group"
  },
+ "School vocabulary::Amusing": {
+  "q": "children laughing"
+ },
+ "School vocabulary::Announce": {
+  "q": "press announcement"
+ },
+ "School vocabulary::Appear": {
+  "q": "rainbow appearing"
+ },
+ "School vocabulary::Appomattox": {
+  "q": "appomattox courthouse"
+ },
+ "School vocabulary::Archaic": {
+  "q": "old manuscript"
+ },
+ "School vocabulary::Arrange": {
+  "q": "arranging books"
+ },
+ "School vocabulary::Assert": {
+  "q": "confident speaker"
+ },
+ "School vocabulary::Asset": {
+  "q": "gold bars"
+ },
+ "School vocabulary::Back down": {
+  "q": "-"
+ },
  "School vocabulary::Bactrian": {
   "by": "Vsatinet",
   "file": "bactrian-be1df79257.jpg",
@@ -20,6 +1409,15 @@
   "q": "bactrian camel",
   "title": "Bactrian camel in the zoo 02.jpg",
   "why": "Clearly shows camel with two humps"
+ },
+ "School vocabulary::Bag": {
+  "q": "shopping bag"
+ },
+ "School vocabulary::Bale of hay": {
+  "q": "hay bale"
+ },
+ "School vocabulary::Balloon": {
+  "q": "rubber balloon"
  },
  "School vocabulary::Ban": {
   "by": "CEphoto, Uwe Aranas",
@@ -30,12 +1428,48 @@
   "title": "KotaKinabalu Sabah Parking-prohibited-sign-at-Terminal-Wawasan-01.jpg",
   "why": "No parking sign shows prohibition symbol"
  },
+ "School vocabulary::Banner": {
+  "q": "welcome banner"
+ },
+ "School vocabulary::Banners": {
+  "q": "crowd banners"
+ },
+ "School vocabulary::Bare": {
+  "q": "bare feet"
+ },
+ "School vocabulary::Bare#2": {
+  "q": "bare walls"
+ },
+ "School vocabulary::Barely": {
+  "q": "-"
+ },
+ "School vocabulary::Barn": {
+  "q": "red barn"
+ },
+ "School vocabulary::Bass": {
+  "q": "man singing"
+ },
+ "School vocabulary::Bear with me": {
+  "q": "-"
+ },
+ "School vocabulary::Beau": {
+  "q": "couple with boyfriend"
+ },
+ "School vocabulary::Beef": {
+  "q": "raw beef"
+ },
  "School vocabulary::Behave": {
   "none": "Needs caption text to convey meaning",
   "q": "well-behaved child",
   "seen": [
    "https://commons.wikimedia.org/wiki/File:Well_behaved_(5508674893).jpg"
   ]
+ },
+ "School vocabulary::Beliefs": {
+  "q": "-"
+ },
+ "School vocabulary::Bengal": {
+  "q": "Bengal landscape"
  },
  "School vocabulary::Beside": {
   "by": "PattayaPatrol",
@@ -50,6 +1484,12 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "School vocabulary::Biennials": {
+  "q": "carrot plant"
+ },
+ "School vocabulary::Bill": {
+  "q": "restaurant bill"
+ },
  "School vocabulary::Binder": {
   "by": "Jacek",
   "file": "binder-e680b9f5d3.jpg",
@@ -58,6 +1498,39 @@
   "q": "ring binder",
   "title": "Compare SpineLess ringless binder with comparable Ring binder dimensions.jpg",
   "why": "Shows ring binder holding papers"
+ },
+ "School vocabulary::Blank": {
+  "q": "blank page"
+ },
+ "School vocabulary::Bloom": {
+  "q": "blooming roses"
+ },
+ "School vocabulary::Blueprint": {
+  "q": "architectural blueprint"
+ },
+ "School vocabulary::Boarder": {
+  "q": "boarding house guest"
+ },
+ "School vocabulary::Bocana": {
+  "q": "harbor entrance"
+ },
+ "School vocabulary::Bonds": {
+  "q": "friends hugging"
+ },
+ "School vocabulary::Bother": {
+  "q": "child annoying parent"
+ },
+ "School vocabulary::Brag": {
+  "q": "man boasting"
+ },
+ "School vocabulary::Brag about": {
+  "q": "friends bragging"
+ },
+ "School vocabulary::Breaking/cracking": {
+  "q": "breaking toy"
+ },
+ "School vocabulary::Breathtaking": {
+  "q": "mountain view"
  },
  "School vocabulary::Brief": {
   "none": "No image shows short duration/length",
@@ -68,8 +1541,62 @@
    "https://commons.wikimedia.org/wiki/File:A_Brief_Meeting_Between_Shahaboddin_Habibi_Khoozani_and_Zhaleh_Amoozgar.jpg"
   ]
  },
+ "School vocabulary::Broad": {
+  "q": "wide river"
+ },
+ "School vocabulary::Brought out": {
+  "q": "product launch"
+ },
+ "School vocabulary::Bug": {
+  "q": "small insect"
+ },
+ "School vocabulary::Bump": {
+  "q": "speed bump"
+ },
+ "School vocabulary::Bundled up": {
+  "q": "child bundled up"
+ },
+ "School vocabulary::Bureau": {
+  "q": "government office building"
+ },
+ "School vocabulary::Burglars": {
+  "q": "burglar breaking in"
+ },
+ "School vocabulary::Cabinets": {
+  "q": "kitchen cabinets"
+ },
+ "School vocabulary::Came out": {
+  "q": "new book display"
+ },
+ "School vocabulary::Canvas": {
+  "q": "canvas fabric roll"
+ },
  "School vocabulary::Capable": {
   "none": "nothing to photograph",
+  "q": "-"
+ },
+ "School vocabulary::Cargo": {
+  "q": "ship cargo"
+ },
+ "School vocabulary::Carnivorous plants": {
+  "q": "venus flytrap"
+ },
+ "School vocabulary::Carry": {
+  "q": "carrying box"
+ },
+ "School vocabulary::Casket": {
+  "q": "funeral casket"
+ },
+ "School vocabulary::Catch somebody red-handed": {
+  "q": "police catching thief"
+ },
+ "School vocabulary::Cattle": {
+  "q": "cattle grazing"
+ },
+ "School vocabulary::Chide": {
+  "q": "gentle scolding"
+ },
+ "School vocabulary::Chiefly": {
   "q": "-"
  },
  "School vocabulary::Chit-chat": {
@@ -81,6 +1608,93 @@
   "title": "Friends Chatting (25242731825).jpg",
   "why": "Two women casually talking together"
  },
+ "School vocabulary::Christen": {
+  "q": "baptism ceremony"
+ },
+ "School vocabulary::Christened": {
+  "q": "baptism ceremony"
+ },
+ "School vocabulary::Christening": {
+  "q": "christening ceremony"
+ },
+ "School vocabulary::Cigars": {
+  "q": "cigars box"
+ },
+ "School vocabulary::Coal": {
+  "q": "coal pile"
+ },
+ "School vocabulary::Coaled": {
+  "q": "coal loading ship"
+ },
+ "School vocabulary::Coat": {
+  "q": "winter coat"
+ },
+ "School vocabulary::Constituent": {
+  "q": "puzzle piece"
+ },
+ "School vocabulary::Cop": {
+  "q": "police officer"
+ },
+ "School vocabulary::Count": {
+  "q": "counting objects"
+ },
+ "School vocabulary::Counter": {
+  "q": "kitchen counter"
+ },
+ "School vocabulary::Countertop": {
+  "q": "kitchen countertop"
+ },
+ "School vocabulary::Court-martial": {
+  "q": "military court"
+ },
+ "School vocabulary::Crack": {
+  "q": "cracked wall"
+ },
+ "School vocabulary::Cracking": {
+  "q": "cracking ice"
+ },
+ "School vocabulary::Crave": {
+  "q": "woman eating dessert"
+ },
+ "School vocabulary::Craving": {
+  "q": "chocolate craving"
+ },
+ "School vocabulary::Cross": {
+  "q": "crossing street"
+ },
+ "School vocabulary::Cross your fingers": {
+  "q": "crossed fingers"
+ },
+ "School vocabulary::Crowd": {
+  "q": "crowd of people"
+ },
+ "School vocabulary::Cubicle": {
+  "q": "bathroom stall"
+ },
+ "School vocabulary::Cul-de-sac": {
+  "q": "cul-de-sac street"
+ },
+ "School vocabulary::Daily Mail": {
+  "q": "Daily Mail newspaper"
+ },
+ "School vocabulary::Damp": {
+  "q": "damp towel"
+ },
+ "School vocabulary::Damp#2": {
+  "q": "damp towel"
+ },
+ "School vocabulary::Dare": {
+  "q": "cliff jump"
+ },
+ "School vocabulary::Dead end": {
+  "q": "dead end sign"
+ },
+ "School vocabulary::Decay": {
+  "q": "tooth decay"
+ },
+ "School vocabulary::Decaying": {
+  "q": "decaying leaves"
+ },
  "School vocabulary::Deck": {
   "by": "Andy Li",
   "file": "deck-989488c9a5.jpg",
@@ -90,9 +1704,51 @@
   "title": "Deck 7 outdoor area of Seven Sisters 2025-03-21.jpg",
   "why": "Ship's outdoor deck with seating"
  },
+ "School vocabulary::Decompose": {
+  "q": "decaying leaves"
+ },
+ "School vocabulary::Derive": {
+  "q": "plant extract"
+ },
+ "School vocabulary::Derived": {
+  "q": "plant medicine"
+ },
  "School vocabulary::Despite": {
   "none": "nothing to photograph",
   "q": "-"
+ },
+ "School vocabulary::Diabetes": {
+  "q": "blood sugar test"
+ },
+ "School vocabulary::Dog harness": {
+  "q": "dog harness"
+ },
+ "School vocabulary::Don't bother me": {
+  "q": "do not disturb sign"
+ },
+ "School vocabulary::Don't bug me": {
+  "q": "person covering ears"
+ },
+ "School vocabulary::Dove": {
+  "q": "white dove"
+ },
+ "School vocabulary::Draw": {
+  "q": "child drawing picture"
+ },
+ "School vocabulary::Draw#2": {
+  "q": "person drawing"
+ },
+ "School vocabulary::Dye": {
+  "q": "fabric dye"
+ },
+ "School vocabulary::Elderly": {
+  "q": "elderly person"
+ },
+ "School vocabulary::Eloped": {
+  "q": "couple eloping"
+ },
+ "School vocabulary::Encourage": {
+  "q": "teacher encouraging student"
  },
  "School vocabulary::Endanger": {
   "none": "None clearly depict putting in danger",
@@ -103,6 +1759,21 @@
    "https://commons.wikimedia.org/wiki/File:Endangered_species_pie_chart_2020_USA.jpg"
   ]
  },
+ "School vocabulary::Endure": {
+  "q": "-"
+ },
+ "School vocabulary::Engagement": {
+  "q": "engagement ring"
+ },
+ "School vocabulary::Escalator": {
+  "q": "escalator"
+ },
+ "School vocabulary::Exasperating": {
+  "q": "frustrated man"
+ },
+ "School vocabulary::Exploded view": {
+  "q": "exploded engine diagram"
+ },
  "School vocabulary::Fast": {
   "by": "Richard Giles",
   "file": "fast-4bd083373e.jpg",
@@ -111,6 +1782,12 @@
   "q": "person sprinting",
   "title": "Usain Bolt Olympics Celebration.jpg",
   "why": "Sprinter running fast on track"
+ },
+ "School vocabulary::Feed": {
+  "q": "feeding dog"
+ },
+ "School vocabulary::Fence": {
+  "q": "garden fence"
  },
  "School vocabulary::Finch": {
   "by": "MichaelMaggs – Edited (sharpened, down-sampled, contrast corrected, noise remove",
@@ -121,6 +1798,24 @@
   "title": "Fringilla coelebs chaffinch male edit2.jpg",
   "why": "Small seed-eating finch clearly shown"
  },
+ "School vocabulary::Firecrackers": {
+  "q": "firecrackers exploding"
+ },
+ "School vocabulary::Fireworks": {
+  "q": "fireworks display"
+ },
+ "School vocabulary::Flabbergasted": {
+  "q": "shocked face"
+ },
+ "School vocabulary::Flats": {
+  "q": "apartment building"
+ },
+ "School vocabulary::Food": {
+  "q": "plate of food"
+ },
+ "School vocabulary::For scient": {
+  "q": "-"
+ },
  "School vocabulary::Forbids": {
   "by": "CEphoto, Uwe Aranas",
   "file": "forbids-8d25c2f89d.jpg",
@@ -129,6 +1824,42 @@
   "q": "no smoking sign",
   "title": "Malaysia Prohibition-signs-No-smoking-sign-01.jpg",
   "why": "No smoking sign shows prohibition clearl"
+ },
+ "School vocabulary::Forecast": {
+  "q": "weather forecast map"
+ },
+ "School vocabulary::Forgiveness": {
+  "q": "hug reconciliation"
+ },
+ "School vocabulary::Frontier": {
+  "q": "frontier settlement"
+ },
+ "School vocabulary::Fur": {
+  "q": "cat fur"
+ },
+ "School vocabulary::Gambling": {
+  "q": "casino gambling"
+ },
+ "School vocabulary::Gay": {
+  "q": "same-sex couple"
+ },
+ "School vocabulary::Get lucky": {
+  "q": "four leaf clover"
+ },
+ "School vocabulary::Give birth": {
+  "q": "childbirth"
+ },
+ "School vocabulary::Good": {
+  "q": "good book"
+ },
+ "School vocabulary::Goods": {
+  "q": "store shelves products"
+ },
+ "School vocabulary::Grace": {
+  "q": "graceful dancer"
+ },
+ "School vocabulary::Greenhouse": {
+  "q": "glass greenhouse"
  },
  "School vocabulary::Hail": {
   "by": "Shixart1985",
@@ -139,6 +1870,30 @@
   "title": "Hand catching hailstones during a rainstorm.jpg",
   "why": "Shows small ice balls in hand"
  },
+ "School vocabulary::Harbor": {
+  "q": "boat harbor"
+ },
+ "School vocabulary::Hardship": {
+  "q": "financial hardship"
+ },
+ "School vocabulary::Hare": {
+  "q": "hare running"
+ },
+ "School vocabulary::Harm": {
+  "q": "chemical burn injury"
+ },
+ "School vocabulary::Harmful": {
+  "q": "warning sign"
+ },
+ "School vocabulary::Harness": {
+  "q": "horse harness"
+ },
+ "School vocabulary::Harsh": {
+  "q": "-"
+ },
+ "School vocabulary::Hassle": {
+  "q": "crowded parking lot"
+ },
  "School vocabulary::Hatching": {
   "by": "USDA",
   "file": "hatching-1683d42716.jpg",
@@ -148,9 +1903,69 @@
   "title": "Chicks hatching USDA95c1973.jpg",
   "why": "Chick emerging from broken eggshell clea"
  },
+ "School vocabulary::Have drawn a blank": {
+  "q": "-"
+ },
+ "School vocabulary::Hay": {
+  "q": "hay bale"
+ },
+ "School vocabulary::He who": {
+  "q": "-"
+ },
+ "School vocabulary::Heirloom": {
+  "q": "heirloom jewelry"
+ },
+ "School vocabulary::Herd": {
+  "q": "herd of cows"
+ },
+ "School vocabulary::Hogs": {
+  "q": "pigs farm"
+ },
+ "School vocabulary::Holster": {
+  "q": "gun holster"
+ },
+ "School vocabulary::Hot-air balloon": {
+  "q": "hot air balloon"
+ },
+ "School vocabulary::Hypothesis": {
+  "q": "-"
+ },
+ "School vocabulary::I lost my train of thought": {
+  "q": "-"
+ },
+ "School vocabulary::In fact": {
+  "q": "-"
+ },
  "School vocabulary::In spite of": {
   "none": "nothing to photograph",
   "q": "-"
+ },
+ "School vocabulary::In time": {
+  "q": "running to catch train"
+ },
+ "School vocabulary::Increase": {
+  "q": "rising price graph"
+ },
+ "School vocabulary::Inflation": {
+  "q": "grocery price tags"
+ },
+ "School vocabulary::Ink": {
+  "q": "ink bottle"
+ },
+ "School vocabulary::Ink tattoos": {
+  "q": "tattoo artist working"
+ },
+ "School vocabulary::Inked out": {
+  "q": "redacted document"
+ },
+ "School vocabulary::Intangible": {
+  "q": "-"
+ },
+ "School vocabulary::Intended": {
+  "q": "-"
+ },
+ "School vocabulary::It's like finding a needle in a haystack": {
+  "q": "needle in haystack"
  },
  "School vocabulary::Jot down": {
   "none": "None show quick handwriting action clear",
@@ -161,6 +1976,75 @@
    "https://commons.wikimedia.org/wiki/File:Garret_Quick_Brokaw_(1821-1885)_portrait.jpg"
   ]
  },
+ "School vocabulary::Jowls": {
+  "q": "sagging jowls"
+ },
+ "School vocabulary::Judge": {
+  "q": "judge courtroom"
+ },
+ "School vocabulary::Jump someone": {
+  "q": "street mugging"
+ },
+ "School vocabulary::Kneeling down": {
+  "q": "person kneeling"
+ },
+ "School vocabulary::Knitted": {
+  "q": "knitted sweater"
+ },
+ "School vocabulary::Kueve": {
+  "q": "-"
+ },
+ "School vocabulary::Latecomer": {
+  "q": "late arrival"
+ },
+ "School vocabulary::Lawsuit": {
+  "q": "courtroom hearing"
+ },
+ "School vocabulary::Leash": {
+  "q": "dog leash"
+ },
+ "School vocabulary::Lecture": {
+  "q": "lecture hall"
+ },
+ "School vocabulary::Likelihood": {
+  "q": "-"
+ },
+ "School vocabulary::Likely": {
+  "q": "rain clouds"
+ },
+ "School vocabulary::Limb": {
+  "q": "human arm"
+ },
+ "School vocabulary::Limb#2": {
+  "q": "human limb"
+ },
+ "School vocabulary::Limp": {
+  "q": "man limping"
+ },
+ "School vocabulary::Literally": {
+  "q": "-"
+ },
+ "School vocabulary::Lollipop": {
+  "q": "lollipop candy"
+ },
+ "School vocabulary::Look forward to + verb-ing": {
+  "q": "-"
+ },
+ "School vocabulary::Loud": {
+  "q": "noisy crowd"
+ },
+ "School vocabulary::Make the water still": {
+  "q": "calm water"
+ },
+ "School vocabulary::Male purse": {
+  "q": "man bag"
+ },
+ "School vocabulary::Manlike": {
+  "q": "humanoid figure"
+ },
+ "School vocabulary::Match": {
+  "q": "soccer match"
+ },
  "School vocabulary::Mesh": {
   "by": "Shadowmeld Photography",
   "file": "mesh-55deef00c4.jpg",
@@ -169,6 +2053,78 @@
   "q": "mesh fabric",
   "title": "Mesh Fabric Texture DTXR-FB-1.jpg",
   "why": "Shows woven material with small holes"
+ },
+ "School vocabulary::Meters": {
+  "q": "electricity meter"
+ },
+ "School vocabulary::Metres": {
+  "q": "measuring tape metres"
+ },
+ "School vocabulary::Motion": {
+  "q": "motion blur"
+ },
+ "School vocabulary::Mourned": {
+  "q": "mourner at funeral"
+ },
+ "School vocabulary::Mule": {
+  "q": "pack mule"
+ },
+ "School vocabulary::Mule ride": {
+  "q": "mule ride canyon"
+ },
+ "School vocabulary::Needle": {
+  "q": "sewing needle"
+ },
+ "School vocabulary::Nightstand": {
+  "q": "nightstand table"
+ },
+ "School vocabulary::Noisy": {
+  "q": "noisy classroom"
+ },
+ "School vocabulary::Not until + auxiliary + subject + main verb": {
+  "q": "-"
+ },
+ "School vocabulary::Note": {
+  "q": "handwritten note"
+ },
+ "School vocabulary::Nuisance": {
+  "q": "noisy construction site"
+ },
+ "School vocabulary::Offspring": {
+  "q": "baby animal"
+ },
+ "School vocabulary::Ominously": {
+  "q": "dark stormy sky"
+ },
+ "School vocabulary::On time": {
+  "q": "train arriving station"
+ },
+ "School vocabulary::Outer space": {
+  "q": "outer space"
+ },
+ "School vocabulary::Overrun": {
+  "q": "weeds overtaking garden"
+ },
+ "School vocabulary::Paste": {
+  "q": "flour paste"
+ },
+ "School vocabulary::Permitted": {
+  "q": "-"
+ },
+ "School vocabulary::Pigeon": {
+  "q": "city pigeon"
+ },
+ "School vocabulary::Piggyback": {
+  "q": "piggyback ride"
+ },
+ "School vocabulary::Plague": {
+  "q": "plague doctor"
+ },
+ "School vocabulary::Planted": {
+  "q": "planting seedling"
+ },
+ "School vocabulary::Plateau": {
+  "q": "rocky plateau"
  },
  "School vocabulary::Play": {
   "by": "Original: Azimronnie Derivative work: Radomianin",
@@ -179,6 +2135,9 @@
   "title": "Children playing in the rice mill (edited).jpg",
   "why": "Children playing with hoops outdoors, ha"
  },
+ "School vocabulary::Pleased": {
+  "q": "pleased smiling person"
+ },
  "School vocabulary::Pointy": {
   "none": "Only shows pointy ears, not general poin",
   "q": "pointy ears",
@@ -188,13 +2147,67 @@
    "https://commons.wikimedia.org/wiki/File:Chara05.png"
   ]
  },
+ "School vocabulary::Poke": {
+  "q": "finger poking button"
+ },
+ "School vocabulary::Police dog": {
+  "q": "police dog"
+ },
+ "School vocabulary::Polish": {
+  "q": "polishing silver"
+ },
+ "School vocabulary::Pollution": {
+  "q": "air pollution smoke"
+ },
+ "School vocabulary::Poppers": {
+  "q": "party poppers"
+ },
  "School vocabulary::Postscript": {
   "none": "nothing found",
   "q": "handwritten letter postscript"
  },
+ "School vocabulary::Pot": {
+  "q": "cooking pot"
+ },
+ "School vocabulary::Powertrain": {
+  "q": "car engine parts"
+ },
+ "School vocabulary::Praised": {
+  "q": "teacher praising student"
+ },
+ "School vocabulary::Pride": {
+  "q": "proud smile"
+ },
+ "School vocabulary::Private tutoring class": {
+  "q": "private tutoring lesson"
+ },
+ "School vocabulary::Probe": {
+  "q": "detective investigating"
+ },
+ "School vocabulary::Prove": {
+  "q": "presenting evidence"
+ },
+ "School vocabulary::Pull out": {
+  "q": "pulling out chair"
+ },
+ "School vocabulary::Punch": {
+  "q": "punching bag"
+ },
  "School vocabulary::Punishing": {
   "none": "nothing found",
   "q": "exhausted workout"
+ },
+ "School vocabulary::Purse": {
+  "q": "handbag"
+ },
+ "School vocabulary::Queue": {
+  "q": "people waiting queue"
+ },
+ "School vocabulary::Queue up": {
+  "q": "people forming line"
+ },
+ "School vocabulary::Quote-unquote": {
+  "q": "-"
  },
  "School vocabulary::Railing": {
   "by": "Basile Morin",
@@ -205,12 +2218,54 @@
   "title": "Symmetric view of the staircase at The Fullerton Hotel Singapore.jpg",
   "why": "Shows staircase railings clearly protect"
  },
+ "School vocabulary::Raise": {
+  "q": "raising hand"
+ },
+ "School vocabulary::Rare": {
+  "q": "rare snowfall"
+ },
+ "School vocabulary::Reading": {
+  "q": "person reading book"
+ },
+ "School vocabulary::Redundancies": {
+  "q": "-"
+ },
+ "School vocabulary::Regardless": {
+  "q": "-"
+ },
+ "School vocabulary::Reprimand": {
+  "q": "official reprimand"
+ },
+ "School vocabulary::Result": {
+  "q": "test results paper"
+ },
+ "School vocabulary::Retarded": {
+  "q": "-"
+ },
+ "School vocabulary::Retirement": {
+  "q": "retirement party"
+ },
+ "School vocabulary::Retrieve": {
+  "q": "picking up keys"
+ },
+ "School vocabulary::Revenge": {
+  "q": "angry clenched fist"
+ },
  "School vocabulary::Rewarding": {
   "none": "Classroom photo doesn't convey satisfact",
   "q": "happy teacher classroom",
   "seen": [
    "https://commons.wikimedia.org/wiki/File:People_behaving_in_a_classroom_(6170252894).jpg"
   ]
+ },
+ "School vocabulary::Riot": {
+  "q": "street riot"
+ },
+ "School vocabulary::Rise": {
+  "q": "sunrise"
+ },
+ "School vocabulary::Roads": {
+  "q": "highway roads"
  },
  "School vocabulary::Rods": {
   "by": "Whoisjohngalt",
@@ -221,6 +2276,30 @@
   "title": "Lampin metal rods ans pipe.jpg",
   "why": "Shows many long thin metal bars"
  },
+ "School vocabulary::Root": {
+  "q": "plant root"
+ },
+ "School vocabulary::Row": {
+  "q": "row of seats"
+ },
+ "School vocabulary::Rucksack": {
+  "q": "rucksack"
+ },
+ "School vocabulary::Rum": {
+  "q": "rum bottle"
+ },
+ "School vocabulary::Rush": {
+  "q": "person rushing"
+ },
+ "School vocabulary::Salary": {
+  "q": "paycheck"
+ },
+ "School vocabulary::Says": {
+  "q": "person talking"
+ },
+ "School vocabulary::Scarf": {
+  "q": "wool scarf"
+ },
  "School vocabulary::School": {
   "by": "G. Edward Johnson",
   "file": "school-f3213371f5.jpg",
@@ -230,6 +2309,12 @@
   "title": "Centennial High School entrance Ellicott City MD 2023-04-02 10-01-46.jpg",
   "why": "Clear school building with visible sign"
  },
+ "School vocabulary::Scold": {
+  "q": "teacher scolding student"
+ },
+ "School vocabulary::Seldom": {
+  "q": "-"
+ },
  "School vocabulary::Serves": {
   "by": "File:Hacker-Pschorr Oktoberfest Girl.jpg by Markburger83 Derivative work: Lauro ",
   "file": "serves-6c50725aff.jpg",
@@ -238,6 +2323,9 @@
   "q": "waiter serving food",
   "title": "Hacker-Pschorr Oktoberfest Girl Remix.jpg",
   "why": "Woman serving beer, providing food/drink"
+ },
+ "School vocabulary::Settle": {
+  "q": "handshake agreement"
  },
  "School vocabulary::Shade": {
   "by": "Roger A Smith",
@@ -257,9 +2345,48 @@
   "title": "Conical shadow of Mount Nam Xay over green trees at golden hour, South-West view from the top, Vang Vieng, Laos.jpg",
   "why": "Clear dark shadow cast by hill"
  },
+ "School vocabulary::Shape": {
+  "q": "round shape"
+ },
+ "School vocabulary::Shoulder holster": {
+  "q": "shoulder holster"
+ },
+ "School vocabulary::Shuffle": {
+  "q": "shuffling playing cards"
+ },
+ "School vocabulary::Shut": {
+  "q": "closing door"
+ },
+ "School vocabulary::Sinking": {
+  "q": "sinking boat"
+ },
+ "School vocabulary::Snatch": {
+  "q": "purse snatching"
+ },
  "School vocabulary::Somber": {
   "none": "nothing found",
   "q": "dark gloomy room"
+ },
+ "School vocabulary::Sorrow": {
+  "q": "crying woman"
+ },
+ "School vocabulary::Spin": {
+  "q": "spinning wheel"
+ },
+ "School vocabulary::Sprout": {
+  "q": "seed sprouting"
+ },
+ "School vocabulary::Stamps": {
+  "q": "postage stamps"
+ },
+ "School vocabulary::Stationary": {
+  "q": "stationary car"
+ },
+ "School vocabulary::Stationery": {
+  "q": "stationery supplies"
+ },
+ "School vocabulary::Steamship": {
+  "q": "steamship ocean"
  },
  "School vocabulary::Stern": {
   "none": "nothing found",
@@ -267,6 +2394,9 @@
   "seen": [
    "https://commons.wikimedia.org/wiki/File:Man_with_stern_expression_in_profile_to_left_MET_DP823768.jpg"
   ]
+ },
+ "School vocabulary::Stretches across": {
+  "q": "bridge over river"
  },
  "School vocabulary::Strike": {
   "none": "No image shows hitting action",
@@ -277,6 +2407,12 @@
    "https://commons.wikimedia.org/wiki/File:Lightning_Strike_-_geograph.org.uk_-_1009175.jpg"
   ]
  },
+ "School vocabulary::Strikes me": {
+  "q": "-"
+ },
+ "School vocabulary::Sue": {
+  "q": "courtroom trial"
+ },
  "School vocabulary::Supper": {
   "by": "Henri Bergius from Finland",
   "file": "supper-0829c4999b.jpg",
@@ -285,6 +2421,36 @@
   "q": "evening meal",
   "title": "Dinner in common room.jpg",
   "why": "People sharing evening meal together"
+ },
+ "School vocabulary::Surrender": {
+  "q": "soldier surrendering"
+ },
+ "School vocabulary::Synonyms": {
+  "q": "thesaurus page"
+ },
+ "School vocabulary::THC cookies": {
+  "q": "cannabis cookies"
+ },
+ "School vocabulary::THC gummies": {
+  "q": "cannabis gummies"
+ },
+ "School vocabulary::Take down": {
+  "q": "removing box shelf"
+ },
+ "School vocabulary::Tame": {
+  "q": "tame fox"
+ },
+ "School vocabulary::Tamer": {
+  "q": "lion tamer"
+ },
+ "School vocabulary::Tangible": {
+  "q": "touching object"
+ },
+ "School vocabulary::Tar": {
+  "q": "tar road"
+ },
+ "School vocabulary::Tattoos": {
+  "q": "tattooed skin"
  },
  "School vocabulary::Thick": {
   "none": "No clear thick object shown",
@@ -295,6 +2461,15 @@
    "https://commons.wikimedia.org/wiki/File:Open_Thick_Book_(51943035500).jpg"
   ]
  },
+ "School vocabulary::Thong": {
+  "q": "thong underwear"
+ },
+ "School vocabulary::Throb": {
+  "q": "sore finger"
+ },
+ "School vocabulary::Throbbing": {
+  "q": "headache pain"
+ },
  "School vocabulary::Thunderhead": {
   "by": "fir0002 flagstaffotos [at] gmail.com Canon 20D + Canon 17-40mm f/4 L",
   "file": "thunderhead-4d8389e7f2.jpg",
@@ -303,6 +2478,9 @@
   "q": "storm cloud",
   "title": "Anvil shaped cumulus panorama edit.jpg",
   "why": "Shows large towering storm cloud clearly"
+ },
+ "School vocabulary::Tight": {
+  "q": "tight shoes"
  },
  "School vocabulary::Tissue": {
   "by": "Captain MarcusL",
@@ -313,6 +2491,9 @@
   "title": "A tissue box.jpg",
   "why": "Shows tissue paper clearly, box"
  },
+ "School vocabulary::To be on a leash": {
+  "q": "dog on leash"
+ },
  "School vocabulary::To hatch": {
   "by": "Mike Pennington",
   "file": "to-hatch-28e4f0c276.jpg",
@@ -321,6 +2502,36 @@
   "q": "egg hatching",
   "title": "Hatching skua egg, Hermaness - geograph.org.uk - 6187228.jpg",
   "why": "Egg cracking open shows hatching"
+ },
+ "School vocabulary::To poke": {
+  "q": "poking finger"
+ },
+ "School vocabulary::Toast": {
+  "q": "toasted bread"
+ },
+ "School vocabulary::Tote": {
+  "q": "carrying boxes"
+ },
+ "School vocabulary::Treasurer": {
+  "q": "treasurer counting money"
+ },
+ "School vocabulary::Treat": {
+  "q": "helping stranger"
+ },
+ "School vocabulary::Troublesome": {
+  "q": "broken machine"
+ },
+ "School vocabulary::Tuition": {
+  "q": "student paying tuition"
+ },
+ "School vocabulary::Typewriter": {
+  "q": "typewriter"
+ },
+ "School vocabulary::Unbearable": {
+  "q": "sweating in heat"
+ },
+ "School vocabulary::Unconsciously": {
+  "q": "-"
  },
  "School vocabulary::Union": {
   "by": "San Diego Air & Space Museum Archives",
@@ -331,6 +2542,84 @@
   "title": "10 0030582 SDASM Misc Image - Possible Union Meeting (53957736217).jpg",
   "why": "Workers meeting with union badges shown"
  },
+ "School vocabulary::Unlearning": {
+  "q": "-"
+ },
+ "School vocabulary::Upholstery": {
+  "q": "sofa upholstery"
+ },
+ "School vocabulary::User-friendly": {
+  "q": "simple smartphone interface"
+ },
+ "School vocabulary::Utterance": {
+  "q": "-"
+ },
+ "School vocabulary::Vase": {
+  "q": "flower vase"
+ },
+ "School vocabulary::Vermin": {
+  "q": "rats mice"
+ },
+ "School vocabulary::Vice": {
+  "q": "person gambling"
+ },
+ "School vocabulary::Vise": {
+  "q": "bench vise"
+ },
+ "School vocabulary::Wage": {
+  "q": "hourly wage worker"
+ },
+ "School vocabulary::Wages": {
+  "q": "cash wages"
+ },
+ "School vocabulary::Wagged": {
+  "q": "dog wagging tail"
+ },
+ "School vocabulary::Waist bag": {
+  "q": "fanny pack"
+ },
+ "School vocabulary::Weeds": {
+  "q": "garden weeds"
+ },
+ "School vocabulary::Well": {
+  "q": "healthy woman"
+ },
+ "School vocabulary::Wheat": {
+  "q": "wheat field"
+ },
+ "School vocabulary::Whether": {
+  "q": "-"
+ },
+ "School vocabulary::Whip": {
+  "q": "leather whip"
+ },
+ "School vocabulary::White-out": {
+  "q": "correction fluid"
+ },
+ "School vocabulary::Whole wheat bread": {
+  "q": "whole wheat bread"
+ },
+ "School vocabulary::Windy": {
+  "q": "windy day"
+ },
+ "School vocabulary::Withdraw": {
+  "q": "withdrawing cash atm"
+ },
+ "School vocabulary::Withdrawn": {
+  "q": "-"
+ },
+ "School vocabulary::Withstands": {
+  "q": "bridge storm"
+ },
+ "School vocabulary::Wool": {
+  "q": "sheep wool"
+ },
+ "School vocabulary::Wound (past of wind)": {
+  "q": "thread spool wound"
+ },
+ "School vocabulary::Wristband": {
+  "q": "wristband"
+ },
  "School vocabulary::Write down": {
   "by": "Jairus Monilla",
   "file": "write-down-40e6bb6467.jpg",
@@ -339,5 +2628,1172 @@
   "q": "writing notes",
   "title": "Notebook writing.jpg",
   "why": "Shows hand writing notes in notebook"
+ },
+ "School vocabulary::Wrongdoing": {
+  "q": "-"
+ },
+ "School vocabulary::Yarn": {
+  "q": "ball of yarn"
+ },
+ "School vocabulary::Youngest": {
+  "q": "youngest child"
+ },
+ "Series::Ace": {
+  "q": "-"
+ },
+ "Series::Acknowledgment": {
+  "q": "nodding agreement"
+ },
+ "Series::Admire": {
+  "q": "admiring look"
+ },
+ "Series::Advert": {
+  "q": "magazine advertisement"
+ },
+ "Series::Affection": {
+  "q": "mother hugging child"
+ },
+ "Series::Afterward": {
+  "q": "-"
+ },
+ "Series::Aim": {
+  "q": "archer aiming target"
+ },
+ "Series::Aiming": {
+  "q": "camera aiming stage"
+ },
+ "Series::Allowance": {
+  "q": "child allowance money"
+ },
+ "Series::Along": {
+  "q": "walking along beach"
+ },
+ "Series::Along#2": {
+  "q": "walking along river"
+ },
+ "Series::Ammo": {
+  "q": "ammunition bullets"
+ },
+ "Series::Anchor": {
+  "q": "ship anchor"
+ },
+ "Series::Antique": {
+  "q": "antique desk"
+ },
+ "Series::Append": {
+  "q": "-"
+ },
+ "Series::Appreciate": {
+  "q": "thank you handshake"
+ },
+ "Series::Are they naughty": {
+  "q": "naughty children"
+ },
+ "Series::Arrangement": {
+  "q": "-"
+ },
+ "Series::Arranging": {
+  "q": "arranging chairs"
+ },
+ "Series::Assess": {
+  "q": "teacher grading paper"
+ },
+ "Series::Assessment": {
+  "q": "teacher grading exam"
+ },
+ "Series::Awkward": {
+  "q": "awkward handshake"
+ },
+ "Series::Awry": {
+  "q": "-"
+ },
+ "Series::Babysitting": {
+  "q": "babysitter with child"
+ },
+ "Series::Baffle": {
+  "q": "confused expression"
+ },
+ "Series::Bait": {
+  "q": "fishing bait"
+ },
+ "Series::Balance": {
+  "q": "tightrope walker"
+ },
+ "Series::Bare": {
+  "q": "bare floor"
+ },
+ "Series::Being chauffeured around": {
+  "q": "chauffeur driving car"
+ },
+ "Series::Beseech": {
+  "q": "pleading hands"
+ },
+ "Series::Bet": {
+  "q": "placing bet"
+ },
+ "Series::Betray": {
+  "q": "-"
+ },
+ "Series::Betting": {
+  "q": "placing bet"
+ },
+ "Series::Binge-watch": {
+  "q": "watching tv couch"
+ },
+ "Series::Bizarre": {
+  "q": "bizarre art"
+ },
+ "Series::Bleak": {
+  "q": "bleak landscape"
+ },
+ "Series::Bloom": {
+  "q": "blooming rose"
+ },
+ "Series::Blunt": {
+  "q": "blunt knife"
+ },
+ "Series::Boastful": {
+  "q": "man bragging"
+ },
+ "Series::Bond": {
+  "q": "close friends hugging"
+ },
+ "Series::Bother": {
+  "q": "covering ears noise"
+ },
+ "Series::Bothersome": {
+  "q": "annoyed person phone"
+ },
+ "Series::Bow": {
+  "q": "bow and arrow"
+ },
+ "Series::Break out": {
+  "q": "house fire"
+ },
+ "Series::Bribe": {
+  "q": "money envelope handshake"
+ },
+ "Series::Bride": {
+  "q": "bride wedding dress"
+ },
+ "Series::Bring": {
+  "q": "carrying book"
+ },
+ "Series::Bring it on": {
+  "q": "beckoning challenge gesture"
+ },
+ "Series::Bring on": {
+  "q": "person headache pain"
+ },
+ "Series::Bruise": {
+  "q": "bruise on skin"
+ },
+ "Series::Brush up on": {
+  "q": "studying textbook"
+ },
+ "Series::Bulletproof": {
+  "q": "bulletproof vest"
+ },
+ "Series::Bunch": {
+  "q": "group of friends"
+ },
+ "Series::Called my bluff": {
+  "q": "poker table bluff"
+ },
+ "Series::Campfire": {
+  "q": "campfire"
+ },
+ "Series::Cape": {
+  "q": "red cape"
+ },
+ "Series::Carry on": {
+  "q": "person working desk"
+ },
+ "Series::Catch up": {
+  "q": "runners racing"
+ },
+ "Series::Catch up on": {
+  "q": "student doing homework"
+ },
+ "Series::Catch up with": {
+  "q": "runner catching up"
+ },
+ "Series::Charming": {
+  "q": "charming village"
+ },
+ "Series::Chauffeured": {
+  "q": "chauffeur driving"
+ },
+ "Series::Cheat": {
+  "q": "student cheating exam"
+ },
+ "Series::Cheating": {
+  "q": "cheating exam"
+ },
+ "Series::Cheesy": {
+  "q": "melted cheese pizza"
+ },
+ "Series::Chop up": {
+  "q": "chopping onions"
+ },
+ "Series::Chore": {
+  "q": "washing dishes"
+ },
+ "Series::Cliff": {
+  "q": "cliff edge"
+ },
+ "Series::Cliffhanger": {
+  "q": "-"
+ },
+ "Series::Clue someone": {
+  "q": "whispering secret"
+ },
+ "Series::Cobblestone": {
+  "q": "cobblestone street"
+ },
+ "Series::Come about": {
+  "q": "-"
+ },
+ "Series::Come across": {
+  "q": "old photograph found"
+ },
+ "Series::Come along": {
+  "q": "friends walking together"
+ },
+ "Series::Come off": {
+  "q": "broken door handle"
+ },
+ "Series::Come over": {
+  "q": "friends visiting home"
+ },
+ "Series::Come to a decision": {
+  "q": "handshake agreement"
+ },
+ "Series::Come up": {
+  "q": "-"
+ },
+ "Series::Come up#2": {
+  "q": "-"
+ },
+ "Series::Compelling": {
+  "q": "-"
+ },
+ "Series::Convenience": {
+  "q": "online banking app"
+ },
+ "Series::Courage": {
+  "q": "firefighter rescue"
+ },
+ "Series::Crack": {
+  "q": "cracked wall"
+ },
+ "Series::Crack the window": {
+  "q": "window slightly open"
+ },
+ "Series::Crack-up": {
+  "q": "man breaking down"
+ },
+ "Series::Cram": {
+  "q": "studying night"
+ },
+ "Series::Cranky": {
+  "q": "cranky child"
+ },
+ "Series::Creek": {
+  "q": "small stream"
+ },
+ "Series::Crotch": {
+  "q": "torn pants crotch"
+ },
+ "Series::Crushed": {
+  "q": "crushed box"
+ },
+ "Series::Crust": {
+  "q": "bread crust"
+ },
+ "Series::Cue": {
+  "q": "-"
+ },
+ "Series::Cupboard": {
+  "q": "kitchen cupboard"
+ },
+ "Series::Curate": {
+  "q": "museum exhibit display"
+ },
+ "Series::Curiosity": {
+  "q": "curious child"
+ },
+ "Series::Curious": {
+  "q": "curious child"
+ },
+ "Series::Cut off": {
+  "q": "cutting bread"
+ },
+ "Series::Cut out": {
+  "q": "cutting paper scissors"
+ },
+ "Series::Debate": {
+  "q": "political debate"
+ },
+ "Series::Debunk": {
+  "q": "-"
+ },
+ "Series::Deep-sea divers": {
+  "q": "deep sea divers"
+ },
+ "Series::Deeply hurtful": {
+  "q": "-"
+ },
+ "Series::Defunct": {
+  "q": "closed factory"
+ },
+ "Series::Delight": {
+  "q": "children laughing"
+ },
+ "Series::Derail": {
+  "q": "train derailment"
+ },
+ "Series::Deserve": {
+  "q": "-"
+ },
+ "Series::Dickish": {
+  "q": "-"
+ },
+ "Series::Dig": {
+  "q": "digging hole"
+ },
+ "Series::Dimwit": {
+  "q": "confused person"
+ },
+ "Series::Disagree": {
+  "q": "people arguing"
+ },
+ "Series::Ditto": {
+  "q": "-"
+ },
+ "Series::Dive": {
+  "q": "diving into pool"
+ },
+ "Series::Doubt": {
+  "q": "confused expression"
+ },
+ "Series::Drafting": {
+  "q": "writing letter"
+ },
+ "Series::Draw up": {
+  "q": "lawyer drafting contract"
+ },
+ "Series::Drawer": {
+  "q": "open drawer"
+ },
+ "Series::Drive away": {
+  "q": "car driving away"
+ },
+ "Series::Due": {
+  "q": "-"
+ },
+ "Series::Dues": {
+  "q": "membership fee payment"
+ },
+ "Series::Dull": {
+  "q": "bored audience lecture"
+ },
+ "Series::Dump": {
+  "q": "discarding furniture"
+ },
+ "Series::Dusk": {
+  "q": "dusk sky"
+ },
+ "Series::Eagerly": {
+  "q": "children opening gift"
+ },
+ "Series::Eerie": {
+  "q": "eerie foggy forest"
+ },
+ "Series::Either": {
+  "q": "-"
+ },
+ "Series::Embrace": {
+  "q": "couple embracing"
+ },
+ "Series::End up": {
+  "q": "-"
+ },
+ "Series::Entrust": {
+  "q": "handing over keys"
+ },
+ "Series::Envy": {
+  "q": "envious look"
+ },
+ "Series::Equity": {
+  "q": "-"
+ },
+ "Series::Everyone else": {
+  "q": "group of people"
+ },
+ "Series::Excruciating": {
+  "q": "man grimacing pain"
+ },
+ "Series::Expense": {
+  "q": "receipt stack"
+ },
+ "Series::Explain": {
+  "q": "teacher explaining"
+ },
+ "Series::Fairness": {
+  "q": "-"
+ },
+ "Series::Faith": {
+  "q": "-"
+ },
+ "Series::Fill out": {
+  "q": "filling form"
+ },
+ "Series::Fill up on": {
+  "q": "eating snacks"
+ },
+ "Series::Fine with me": {
+  "q": "thumbs up"
+ },
+ "Series::Fit into": {
+  "q": "shoes fitting box"
+ },
+ "Series::Flee": {
+  "q": "people fleeing fire"
+ },
+ "Series::Foil": {
+  "q": "aluminum foil"
+ },
+ "Series::Font": {
+  "q": "font samples"
+ },
+ "Series::From scratch": {
+  "q": "baking ingredients kitchen"
+ },
+ "Series::Fulfill": {
+  "q": "-"
+ },
+ "Series::Furthermore": {
+  "q": "-"
+ },
+ "Series::Gal": {
+  "q": "young woman"
+ },
+ "Series::Gather": {
+  "q": "people gathering"
+ },
+ "Series::Gaze": {
+  "q": "person stargazing"
+ },
+ "Series::Generous": {
+  "q": "person donating"
+ },
+ "Series::Get along": {
+  "q": "friends laughing together"
+ },
+ "Series::Get by": {
+  "q": "-"
+ },
+ "Series::Get out of": {
+  "q": "child avoiding chores"
+ },
+ "Series::Give out": {
+  "q": "teacher distributing papers"
+ },
+ "Series::Gnaw": {
+  "q": "dog gnawing bone"
+ },
+ "Series::Godly": {
+  "q": "-"
+ },
+ "Series::Gross": {
+  "q": "spoiled food"
+ },
+ "Series::Hallway": {
+  "q": "building hallway"
+ },
+ "Series::Hang on": {
+  "q": "hand stop gesture"
+ },
+ "Series::Have to": {
+  "q": "-"
+ },
+ "Series::Healthy": {
+  "q": "fit person exercising"
+ },
+ "Series::Hectic": {
+  "q": "busy office"
+ },
+ "Series::Help out": {
+  "q": "helping hand"
+ },
+ "Series::Hesitate": {
+  "q": "person hesitating"
+ },
+ "Series::Hesitation": {
+  "q": "person pausing"
+ },
+ "Series::Hiatus": {
+  "q": "closed sign"
+ },
+ "Series::History": {
+  "q": "history books"
+ },
+ "Series::Hit it off": {
+  "q": "two people laughing"
+ },
+ "Series::Hit the hay": {
+  "q": "person sleeping bed"
+ },
+ "Series::Hodgepodge": {
+  "q": "jumbled objects"
+ },
+ "Series::Hold up": {
+  "q": "traffic jam"
+ },
+ "Series::Hooker": {
+  "q": "sex worker"
+ },
+ "Series::Hookup": {
+  "q": "couple kissing"
+ },
+ "Series::Household": {
+  "q": "family at home"
+ },
+ "Series::How'd you get by": {
+  "q": "-"
+ },
+ "Series::Hum": {
+  "q": "person humming"
+ },
+ "Series::Humble": {
+  "q": "-"
+ },
+ "Series::Hunch": {
+  "q": "-"
+ },
+ "Series::Hunger": {
+  "q": "hungry child"
+ },
+ "Series::Hunt": {
+  "q": "searching for keys"
+ },
+ "Series::Hustle": {
+  "q": "people rushing"
+ },
+ "Series::I'm mad at": {
+  "q": "angry face"
+ },
+ "Series::Idea": {
+  "q": "lightbulb idea"
+ },
+ "Series::In no time": {
+  "q": "-"
+ },
+ "Series::Incoming": {
+  "q": "incoming call screen"
+ },
+ "Series::Inmate": {
+  "q": "prison inmate"
+ },
+ "Series::Innovate": {
+  "q": "new invention"
+ },
+ "Series::Insight": {
+  "q": "-"
+ },
+ "Series::Invest": {
+  "q": "stock investment chart"
+ },
+ "Series::Isolated": {
+  "q": "isolated village"
+ },
+ "Series::Jar": {
+  "q": "glass jar"
+ },
+ "Series::Jeopardize": {
+  "q": "-"
+ },
+ "Series::Joy": {
+  "q": "joyful smile"
+ },
+ "Series::Judge someone": {
+  "q": "-"
+ },
+ "Series::Keep up": {
+  "q": "runners keeping pace"
+ },
+ "Series::Keeper": {
+  "q": "zookeeper feeding animal"
+ },
+ "Series::Kidnap": {
+  "q": "person forced into car"
+ },
+ "Series::Kidnapping": {
+  "q": "police crime scene"
+ },
+ "Series::Kneel": {
+  "q": "man kneeling"
+ },
+ "Series::Knob": {
+  "q": "door knob"
+ },
+ "Series::Lair": {
+  "q": "animal den"
+ },
+ "Series::Lap": {
+  "q": "child sitting lap"
+ },
+ "Series::Lawn": {
+  "q": "green lawn"
+ },
+ "Series::Layover": {
+  "q": "airport waiting lounge"
+ },
+ "Series::Lend": {
+  "q": "handing over pen"
+ },
+ "Series::Let’s catch up": {
+  "q": "friends coffee chat"
+ },
+ "Series::Lid": {
+  "q": "jar lid"
+ },
+ "Series::Likewise": {
+  "q": "-"
+ },
+ "Series::Lipstick": {
+  "q": "lipstick tube"
+ },
+ "Series::Log": {
+  "q": "wood log"
+ },
+ "Series::Look forward to": {
+  "q": "-"
+ },
+ "Series::Look up": {
+  "q": "dictionary word search"
+ },
+ "Series::Lullaby": {
+  "q": "mother singing baby"
+ },
+ "Series::Lush": {
+  "q": "lush vegetation"
+ },
+ "Series::Maggot": {
+  "q": "maggots on food"
+ },
+ "Series::Maim": {
+  "q": "bandaged injury"
+ },
+ "Series::Mainstream": {
+  "q": "-"
+ },
+ "Series::Make out": {
+  "q": "squinting to see"
+ },
+ "Series::Make out#2": {
+  "q": "person squinting distance"
+ },
+ "Series::Mangle": {
+  "q": "mangled metal"
+ },
+ "Series::Maze": {
+  "q": "garden maze"
+ },
+ "Series::Mess": {
+  "q": "messy room"
+ },
+ "Series::Messed up": {
+  "q": "-"
+ },
+ "Series::Milestone": {
+  "q": "milestone marker"
+ },
+ "Series::Mind": {
+  "q": "-"
+ },
+ "Series::Mind blown": {
+  "q": "shocked expression"
+ },
+ "Series::Misunderstand": {
+  "q": "-"
+ },
+ "Series::Nasty": {
+  "q": "sneering face"
+ },
+ "Series::Naughty": {
+  "q": "mischievous child"
+ },
+ "Series::Nest": {
+  "q": "bird nest"
+ },
+ "Series::No longer be able": {
+  "q": "-"
+ },
+ "Series::No slouch": {
+  "q": "-"
+ },
+ "Series::Nod": {
+  "q": "person nodding"
+ },
+ "Series::On the up and up": {
+  "q": "-"
+ },
+ "Series::Otherwise": {
+  "q": "-"
+ },
+ "Series::Out of": {
+  "q": "empty milk carton"
+ },
+ "Series::Outstanding": {
+  "q": "gold medal"
+ },
+ "Series::Outstretched": {
+  "q": "outstretched arms"
+ },
+ "Series::Overdue": {
+  "q": "overdue library book"
+ },
+ "Series::Overrated": {
+  "q": "-"
+ },
+ "Series::Overwhelmed": {
+  "q": "overwhelmed with paperwork"
+ },
+ "Series::Pad": {
+  "q": "knee pad"
+ },
+ "Series::Patsy": {
+  "q": "finger pointing blame"
+ },
+ "Series::Pay for": {
+  "q": "paying cashier"
+ },
+ "Series::Pebble": {
+  "q": "small pebble"
+ },
+ "Series::Pesky": {
+  "q": "mosquito swarm"
+ },
+ "Series::Petal": {
+  "q": "flower petal"
+ },
+ "Series::Petrified": {
+  "q": "terrified face"
+ },
+ "Series::Philosophy": {
+  "q": "philosophy books"
+ },
+ "Series::Pile up": {
+  "q": "dishes piling sink"
+ },
+ "Series::Placeholder": {
+  "q": "placeholder icon"
+ },
+ "Series::Plot": {
+  "q": "-"
+ },
+ "Series::Plunge": {
+  "q": "person diving"
+ },
+ "Series::Prayer": {
+  "q": "praying hands"
+ },
+ "Series::Pry": {
+  "q": "crowbar prying"
+ },
+ "Series::Pull over": {
+  "q": "car pulled over"
+ },
+ "Series::Pull up": {
+  "q": "car stopped roadside"
+ },
+ "Series::Pull up#2": {
+  "q": "car stopping"
+ },
+ "Series::Pursue": {
+  "q": "police chase"
+ },
+ "Series::Query": {
+  "q": "question mark"
+ },
+ "Series::Quite": {
+  "q": "-"
+ },
+ "Series::Rash": {
+  "q": "skin rash"
+ },
+ "Series::Rather": {
+  "q": "-"
+ },
+ "Series::Recognizable": {
+  "q": "-"
+ },
+ "Series::Redness": {
+  "q": "red skin rash"
+ },
+ "Series::Reflect on": {
+  "q": "person thinking"
+ },
+ "Series::Relationship": {
+  "q": "two people talking"
+ },
+ "Series::Relief": {
+  "q": "relieved person"
+ },
+ "Series::Rely on": {
+  "q": "person leaning on friend"
+ },
+ "Series::Resolve": {
+  "q": "solving puzzle"
+ },
+ "Series::Restraining": {
+  "q": "police restraining person"
+ },
+ "Series::Restraint": {
+  "q": "-"
+ },
+ "Series::Rock off": {
+  "q": "walking away"
+ },
+ "Series::Rope": {
+  "q": "coiled rope"
+ },
+ "Series::Rub": {
+  "q": "hand rubbing surface"
+ },
+ "Series::Ruining": {
+  "q": "rain ruining picnic"
+ },
+ "Series::Run out of": {
+  "q": "empty milk carton"
+ },
+ "Series::Rush": {
+  "q": "person rushing"
+ },
+ "Series::Sack": {
+  "q": "burlap sack"
+ },
+ "Series::Sandbox": {
+  "q": "sandbox playground"
+ },
+ "Series::Save up": {
+  "q": "piggy bank savings"
+ },
+ "Series::Scope": {
+  "q": "-"
+ },
+ "Series::Seed": {
+  "q": "seed in soil"
+ },
+ "Series::Self-sufficient": {
+  "q": "self-sufficient farm"
+ },
+ "Series::Sell out": {
+  "q": "sold out sign"
+ },
+ "Series::Set down": {
+  "q": "placing box down"
+ },
+ "Series::Set off": {
+  "q": "hikers departing sunrise"
+ },
+ "Series::Set off#2": {
+  "q": "hikers starting journey"
+ },
+ "Series::Settle": {
+  "q": "handshake agreement"
+ },
+ "Series::Sewing": {
+  "q": "sewing button"
+ },
+ "Series::Shallow": {
+  "q": "shallow water"
+ },
+ "Series::Show up": {
+  "q": "person arriving late"
+ },
+ "Series::Shy": {
+  "q": "shy child"
+ },
+ "Series::Signal": {
+  "q": "traffic signal"
+ },
+ "Series::Slight": {
+  "q": "small crack"
+ },
+ "Series::Slouch": {
+  "q": "person slouching"
+ },
+ "Series::Slowing down": {
+  "q": "car braking"
+ },
+ "Series::Smart": {
+  "q": "student raising hand"
+ },
+ "Series::Smoothness": {
+  "q": "smooth fabric"
+ },
+ "Series::So am I": {
+  "q": "-"
+ },
+ "Series::Sparkle": {
+  "q": "sparkling stars"
+ },
+ "Series::Spot": {
+  "q": "stain on shirt"
+ },
+ "Series::Sprinkler": {
+  "q": "lawn sprinkler"
+ },
+ "Series::Squealing": {
+  "q": "squealing car brakes"
+ },
+ "Series::Stall door": {
+  "q": "toilet cubicle door"
+ },
+ "Series::Stand out": {
+  "q": "red coat crowd"
+ },
+ "Series::Stand out#2": {
+  "q": "red coat crowd"
+ },
+ "Series::Start out": {
+  "q": "new teacher classroom"
+ },
+ "Series::Steady": {
+  "q": "steady pace running"
+ },
+ "Series::Stomp": {
+  "q": "stomping foot"
+ },
+ "Series::Stood up": {
+  "q": "waiting alone restaurant"
+ },
+ "Series::Straightforward": {
+  "q": "-"
+ },
+ "Series::Strategy": {
+  "q": "strategy meeting"
+ },
+ "Series::Stripe": {
+  "q": "striped shirt"
+ },
+ "Series::Strive": {
+  "q": "-"
+ },
+ "Series::Subtle": {
+  "q": "-"
+ },
+ "Series::Sucker": {
+  "q": "-"
+ },
+ "Series::Support someone": {
+  "q": "comforting hug"
+ },
+ "Series::Supposed to be great": {
+  "q": "-"
+ },
+ "Series::Swear": {
+  "q": "courtroom oath"
+ },
+ "Series::Swelling": {
+  "q": "swollen ankle"
+ },
+ "Series::Swot": {
+  "q": "studying hard"
+ },
+ "Series::Syringe": {
+  "q": "medical syringe"
+ },
+ "Series::Take down": {
+  "q": "removing wall picture"
+ },
+ "Series::Take off": {
+  "q": "removing shoes"
+ },
+ "Series::Take part in": {
+  "q": "people in competition"
+ },
+ "Series::Take up": {
+  "q": "woman painting easel"
+ },
+ "Series::Take your time": {
+  "q": "-"
+ },
+ "Series::Tale": {
+  "q": "storytelling book"
+ },
+ "Series::Tapestry": {
+  "q": "wall tapestry"
+ },
+ "Series::Tend": {
+  "q": "-"
+ },
+ "Series::That must've been": {
+  "q": "-"
+ },
+ "Series::The welcome wagon": {
+  "q": "welcome committee"
+ },
+ "Series::There's no way": {
+  "q": "-"
+ },
+ "Series::They're gossiping about our life": {
+  "q": "women gossiping"
+ },
+ "Series::Think": {
+  "q": "person thinking"
+ },
+ "Series::Thoughtful": {
+  "q": "person giving gift"
+ },
+ "Series::Thread": {
+  "q": "spool of thread"
+ },
+ "Series::Throw out": {
+  "q": "throwing away trash"
+ },
+ "Series::Throw up": {
+  "q": "person vomiting"
+ },
+ "Series::Tidy": {
+  "q": "tidy room"
+ },
+ "Series::Tie": {
+  "q": "tying shoelaces"
+ },
+ "Series::Tie up": {
+  "q": "tying rope"
+ },
+ "Series::Tighten": {
+  "q": "tightening screw"
+ },
+ "Series::Timetable": {
+  "q": "train schedule board"
+ },
+ "Series::To assume": {
+  "q": "-"
+ },
+ "Series::To clue": {
+  "q": "whispering hint"
+ },
+ "Series::To cut bait": {
+  "q": "cutting fishing line"
+ },
+ "Series::Trophy": {
+  "q": "trophy award"
+ },
+ "Series::Trunk": {
+  "q": "tree trunk"
+ },
+ "Series::Tryst": {
+  "q": "secret couple meeting"
+ },
+ "Series::Turn around": {
+  "q": "person turning around"
+ },
+ "Series::Turn over": {
+  "q": "flipping page"
+ },
+ "Series::Turning in": {
+  "q": "person going bed"
+ },
+ "Series::Typo": {
+  "q": "typo document"
+ },
+ "Series::Unfaithful": {
+  "q": "man cheating"
+ },
+ "Series::Unlike": {
+  "q": "-"
+ },
+ "Series::Unload": {
+  "q": "unloading truck"
+ },
+ "Series::Velvet": {
+  "q": "velvet fabric"
+ },
+ "Series::Vex": {
+  "q": "annoyed woman"
+ },
+ "Series::Vital": {
+  "q": "-"
+ },
+ "Series::Vivid": {
+  "q": "vivid colors painting"
+ },
+ "Series::Wad": {
+  "q": "wad of cash"
+ },
+ "Series::Wander": {
+  "q": "wandering old town"
+ },
+ "Series::Waxing": {
+  "q": "waxing car"
+ },
+ "Series::Wealth": {
+  "q": "pile of money"
+ },
+ "Series::What brings you here": {
+  "q": "-"
+ },
+ "Series::What is there to gossip about": {
+  "q": "-"
+ },
+ "Series::When you moved here": {
+  "q": "-"
+ },
+ "Series::Wicked": {
+  "q": "evil witch"
+ },
+ "Series::Will": {
+  "q": "-"
+ },
+ "Series::Willing": {
+  "q": "raising hand volunteer"
+ },
+ "Series::Wind up": {
+  "q": "-"
+ },
+ "Series::Wisdom": {
+  "q": "wise old man"
+ },
+ "Series::Wisely": {
+  "q": "-"
+ },
+ "Series::With whom": {
+  "q": "-"
+ },
+ "Series::Within": {
+  "q": "-"
+ },
+ "Series::Worn": {
+  "q": "worn carpet"
+ },
+ "Series::Worth": {
+  "q": "expensive painting"
+ },
+ "Series::Worthy": {
+  "q": "charity donation"
+ },
+ "Series::Wound": {
+  "q": "bandaged wound"
+ },
+ "Series::Wound up": {
+  "q": "-"
+ },
+ "Series::Wrap up": {
+  "q": "closing meeting handshake"
+ },
+ "Series::Wrist": {
+  "q": "wrist joint"
+ },
+ "Series::You're breaking up": {
+  "q": "-"
+ },
+ "Series::Youths": {
+  "q": "group teenagers"
  }
 }

@@ -136,6 +136,78 @@ def explain(phrase, context=""):
             "note": (out.get("note") or "").strip()}
 
 
+TRANSLATE = """Give the Spanish for a piece of English. Nothing else.
+
+The person reading it speaks Spanish and is learning English. They have \
+highlighted something while reading and want to know, straight away, what \
+it says.
+
+- Translate the sense it has HERE, in the sentence it came from, not the \
+first sense in a dictionary.
+- Natural Spanish, the way someone would actually say it. For an idiom, \
+the Spanish people really use, not word for word.
+- A single word may have two close translations: give at most two, \
+separated by " / ".
+- Keep a phrase a phrase and a sentence a sentence. Do not explain, do not \
+add notes, do not repeat the English.
+
+Return ONLY a JSON object, no other text: {"es": "the Spanish"}"""
+
+
+def translate(phrase, context=""):
+    """The quick one: what does this say, in Spanish.
+
+    This fires whenever something is highlighted, so it is kept small and
+    fast on purpose. Anything more than the translation belongs to
+    explain(), which is a button away.
+    """
+    phrase = (phrase or "").strip()
+    if not phrase:
+        return {"ok": False, "message": "nothing selected"}
+    if len(phrase) > 300:
+        return {"ok": False, "message": "too long"}
+
+    key = api_key()
+    if not key:
+        return {"ok": False, "message": "Translating needs an Anthropic API key."}
+
+    user = phrase
+    if context:
+        user += "\n\n(from: " + context[:300] + ")"
+
+    body = json.dumps({
+        "model": MODEL,
+        # Its own working counts against this, not just the answer, so a
+        # budget that looks generous for one line is the right size.
+        "max_tokens": 800,
+        "system": TRANSLATE,
+        "messages": [{"role": "user", "content": user}],
+    }).encode("utf-8")
+
+    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": API_VERSION,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=25) as res:
+            payload = json.loads(res.read().decode("utf-8"))
+    except Exception as e:
+        return {"ok": False, "message": "no answer", "detail": str(e)[:120]}
+
+    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    try:
+        out = json.loads(text)
+        es = (out.get("es") or "").strip()
+    except Exception:
+        es = text.strip().strip('"')
+    if not es:
+        return {"ok": False, "message": "no answer"}
+    return {"ok": True, "phrase": phrase, "es": es}
+
+
 SUGGEST = """You invent a situation for someone practising English.
 
 These are the words they have just learnt:

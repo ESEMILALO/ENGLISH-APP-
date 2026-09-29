@@ -352,6 +352,21 @@
   .chat-head{ display:flex; align-items:baseline; gap:10px; }
   .chat-heard{ font-size:.78rem; color:var(--amber); margin:0 4px 8px; font-style:italic; }
 
+  /* the translation, shown the moment something is selected */
+  .gloss-es{
+    display:block; text-align:left; padding:9px 12px 9px;
+    border-bottom:1px solid var(--rule); font-size:.92rem; line-height:1.45;
+    color:var(--text); white-space:normal;
+  }
+  .gloss-es .gloss-es-wait{
+    color:var(--text-soft); font-style:italic; font-size:.82rem;
+  }
+  .gloss-es .gloss-es-from{
+    display:block; font-family:var(--mono); font-size:.55rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--text-soft);
+    opacity:.7; margin-top:3px;
+  }
+
   /* a picture of what the word means */
   .word-pic{
     margin:14px 0 0; padding:0; width:100%; display:flex;
@@ -574,12 +589,15 @@
   /* two things you can do with a selection, side by side */
   .gloss-bar{
     position:absolute; z-index:300; transform:translate(-50%, -100%);
-    display:flex; gap:6px; white-space:nowrap;
+    display:flex; flex-direction:column; align-items:stretch;
+    background:var(--panel); border:1px solid var(--rule); border-radius:12px;
+    box-shadow:0 10px 26px rgba(0,0,0,.45); overflow:hidden; max-width:23rem;
   }
+  .gloss-actions{ display:flex; gap:6px; padding:7px; white-space:nowrap; }
   .gloss-bar button{
     background:var(--amber); color:var(--amber-ink); border:none; border-radius:9px;
     padding:9px 13px; font-family:var(--sans); font-weight:700; font-size:.8rem;
-    cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.4);
+    cursor:pointer; flex:1;
   }
   .gloss-bar button.ask{ background:var(--good); color:var(--bg); }
   .gloss-bar button:hover{ filter:brightness(1.07); }
@@ -3752,6 +3770,27 @@
   let glossBubble = null;
   const GLOSS_LAST = 'wordlog_last_glossary_topic';
 
+  // Your own spreadsheet already holds the Spanish for 1410 words, in
+  // the form "Evening meal -- Cena." When the selection is one of them
+  // there is nothing to ask anybody: it is on the page already.
+  function spanishFromSheet(text){
+    const want = (text || '').trim().toLowerCase().replace(/^to /, '');
+    if(!want) return '';
+    for(let i = 0; i < WORDS.length; i++){
+      const w = WORDS[i];
+      if(w.w.toLowerCase().replace(/^to /, '') !== want) continue;
+      const first = (w.me || [])[0];
+      const m = first && first.m ? first.m : '';
+      // the part after the dash is the Spanish, minus its full stop
+      const cut = m.split(/\s[\u2014\u2013-]\s/);
+      if(cut.length > 1){
+        const es = cut[cut.length - 1].trim().replace(/\.$/, '');
+        if(es) return es;
+      }
+    }
+    return '';
+  }
+
   function plausibleWord(text){
     const t = (text || '').trim().replace(/\s+/g, ' ');
     if(t.length < 2 || t.length > 40) return null;
@@ -3905,20 +3944,39 @@
     bar.style.top = top + 'px';
     bar.addEventListener('mousedown', e=>e.preventDefault());  // keep the selection
 
+    // What it says, in Spanish, without being asked. Understanding is the
+    // usual reason for highlighting something; the buttons are for the
+    // times that is not enough.
+    const es = document.createElement('div');
+    es.className = 'gloss-es';
+    const known = spanishFromSheet(phrase);
+    if(known){
+      es.innerHTML = esc(known)
+        + '<span class="gloss-es-from">from your spreadsheet</span>';
+    } else {
+      es.innerHTML = '<span class="gloss-es-wait">translating&hellip;</span>';
+      askSpanish(phrase, context, es);
+    }
+    bar.appendChild(es);
+
     // Anything you can read, you can ask about. Whole sentences included:
     // not understanding is usually about a phrase, not a single word.
+    const actions = document.createElement('div');
+    actions.className = 'gloss-actions';
+    bar.appendChild(actions);
+
     const askBtn = document.createElement('button');
     askBtn.className = 'ask';
-    askBtn.textContent = 'What does this mean?';
+    askBtn.textContent = 'Explain it';
     askBtn.addEventListener('click', ()=>explainSelection(phrase, context, within));
-    bar.appendChild(askBtn);
+    actions.appendChild(askBtn);
 
     // Adding to the spreadsheet only makes sense for something word-shaped.
     if(word){
       const addBtn = document.createElement('button');
       addBtn.textContent = '+ Add \u201c' + word + '\u201d';
       addBtn.addEventListener('click', ()=>askWhichTopic(word, context, left, top));
-      bar.appendChild(addBtn);
+      actions.appendChild(addBtn);
     }
 
     document.body.appendChild(bar);
@@ -3930,6 +3988,27 @@
     if(box.top < 8){ bar.style.transform = 'translate(-50%, 0)'; bar.style.top = (top + 26) + 'px'; }
 
     glossBubble = bar;
+  }
+
+  // One at a time: dragging across a sentence changes the selection
+  // several times, and only the last one is worth an answer.
+  let glossAsk = 0;
+
+  async function askSpanish(phrase, context, slot){
+    const mine = ++glossAsk;
+    try{
+      const out = await fetch('/api/translate', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ phrase: phrase, context: context })
+      }).then(r=>r.json());
+      if(mine !== glossAsk || !slot.isConnected) return;
+      slot.innerHTML = out.ok
+        ? esc(out.es)
+        : '<span class="gloss-es-wait">' + esc(out.message || 'no translation') + '</span>';
+    }catch(e){
+      if(mine !== glossAsk || !slot.isConnected) return;
+      slot.innerHTML = '<span class="gloss-es-wait">the app server did not answer</span>';
+    }
   }
 
   // Where the answer goes: under whatever was being read, so it stays next

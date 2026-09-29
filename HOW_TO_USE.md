@@ -121,6 +121,22 @@ glossary* button, so it can go into your spreadsheet like any other.
 
 Both work on practice cards too, not only in the conversation.
 
+**Selecting something now shows the Spanish straight away.** Highlight a
+word or a phrase, anywhere on a card or in the conversation, and the
+translation appears above it before you press anything. If the word is
+one of your own, the Spanish comes out of your spreadsheet instantly and
+nothing is asked of anybody; otherwise Claude translates it, using the
+sentence around it, so you get the sense it has *there* rather than the
+first one in a dictionary. Idioms come back as the Spanish people
+actually say: "hate someone's guts" gives *odiar a alguien a muerte*,
+not a word-for-word version.
+
+The two buttons are still underneath. **Explain it** gives the longer
+answer -- what it means, when people say it, why it is worded that way --
+and **+ Add** puts a word into your spreadsheet. Most of the time the
+translation alone is what you wanted, which is why it no longer takes a
+click to see it.
+
 Your ten words sit along the top and turn green as you use them. Only
 what **you** write counts: the partner is told not to use them itself,
 so each one has to come from you. A word you wrote exactly as it stands
