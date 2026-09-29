@@ -222,7 +222,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
         result = glossary.add(sent.get("word", ""), sent.get("context", ""),
                               sent.get("sheet"))
-        sys.stdout.write("  glossary: %s\n" % result.get("message", result))
+        note = result.get("message", result)
+        if result.get("detail"):
+            note = "%s  [%s]" % (note, result["detail"])
+        sys.stdout.write("  glossary: %s\n" % note)
         sys.stdout.flush()
         self._json(result, 200 if result.get("ok") else 409)
 

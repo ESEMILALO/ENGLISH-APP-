@@ -3705,7 +3705,12 @@
           + (out.meaning ? '<br>' + esc(out.meaning) : '')
           + '<br><small>Nothing was added.</small>', 'ok', 8000);
       } else if(out.queued){
-        glossToast(esc(out.message), 'bad', 8000);
+        // Say what went wrong, not just that something did -- otherwise
+        // neither of us can tell a dropped connection from a real fault.
+        glossToast(esc(out.message)
+          + (out.detail ? '<br><small>' + esc(out.detail) + '</small>' : '')
+          + '<br><small>It is waiting; there is a button to fill it in '
+          + 'under Everything else.</small>', 'bad', 11000);
       } else {
         glossToast(esc(out.message || 'That did not work.'), 'bad', 7000);
       }

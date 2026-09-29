@@ -29,6 +29,7 @@ import json
 import os
 import re
 import shutil
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -172,8 +173,34 @@ Return ONLY a JSON object, no other text:
 "example": "..."}], "notes": "..."}"""
 
 
-def ask_claude(word, context, key, timeout=45):
-    """Ask for the entry. Raises on anything that is not a usable answer."""
+def ask_claude(word, context, key, timeout=45, attempts=3):
+    """Ask for the entry, retrying a stumble.
+
+    A dropped connection or a busy minute at the API is not a reason to
+    make you come back later, so a failure that might pass is tried again
+    after a short wait. A refusal that will not pass -- a bad key, a
+    malformed request -- is raised at once.
+    """
+    last = None
+    for attempt in range(attempts):
+        try:
+            return _ask_once(word, context, key, timeout)
+        except urllib.error.HTTPError as e:
+            # a 4xx is our fault and waiting will not change it; 429 and 5xx may pass
+            # 529 is Anthropic's own "overloaded", which is the most
+            # likely one to pass on a second try
+            if e.code not in (408, 409, 429, 500, 502, 503, 504, 529):
+                raise
+            last = e
+        except Exception as e:
+            last = e
+        if attempt + 1 < attempts:
+            time.sleep(1.5 * (attempt + 1))
+    raise last
+
+
+def _ask_once(word, context, key, timeout):
+    """One attempt. Raises on anything that is not a usable answer."""
     user = "The word to add: " + word
     if context:
         user += "\n\nIt appeared in this sentence, which may disambiguate it:\n" + context
@@ -358,9 +385,10 @@ def add(word, context="", sheet=None):
                 "detail": detail}
     except Exception as e:
         queue_word(word, context, target)
+        why = "%s: %s" % (type(e).__name__, e)
         return {"ok": False, "queued": True,
-                "message": "Saved for later; the lookup failed.",
-                "detail": str(e)[:200]}
+                "message": "Saved for later %s the lookup failed after three tries." % DASH,
+                "detail": why[:300]}
 
     # Look again with the word the lookup settled on. You may have typed
     # "to strip" or "cubicles"; what comes back is "Strip" and "Cubicle",
