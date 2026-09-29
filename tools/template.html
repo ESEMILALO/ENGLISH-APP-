@@ -281,6 +281,28 @@
   }
   .gloss-bubble:hover{ filter:brightness(1.06); }
   .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  /* Today's two hours: what you have put in, and what it unlocks. */
+  .studybar{ margin:14px 0 0; }
+  .studybar-line{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    font-size:.82rem; color:var(--text-soft); margin:0 2px 6px;
+  }
+  .studybar-line b{ color:var(--text); font-family:var(--mono); font-weight:600; }
+  .studybar-line b.met{ color:var(--good); }
+  .studybar-track{
+    height:8px; background:var(--panel); border:1px solid var(--rule);
+    border-radius:5px; overflow:hidden;
+  }
+  .studybar-track span{
+    display:block; height:100%; background:var(--amber); border-radius:5px;
+    transition:width .4s ease;
+  }
+  .studybar-track span.met{ background:var(--good); }
+  .studybar-note{ font-size:.8rem; color:var(--text-soft); line-height:1.5; margin:8px 2px 0; }
+  .studybar-note b{ color:var(--text); font-weight:600; }
+  .studybar-note.met b{ color:var(--good); }
+  .studying{ color:var(--amber); }
+
   /* Adding a word by typing it, at the top where the search box was. */
   .addword{
     background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--amber);
@@ -1129,9 +1151,27 @@
     return (learnSets.daily && learnSets.daily.day) || null;
   }
 
-  // The set to work on right now, rolled over when the date has changed.
+  // Yesterday, as the app writes dates.
+  function yesterdayStr(){
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return todayStr(d);
+  }
+
+  // Whether today brings new words. The first set is free; after that
+  // they are earned by yesterday's two hours.
+  function newWordsUnlocked(){
+    if(!dailySetDay()) return true;
+    if(dailySetDay() === todayStr()) return true;
+    return goalMet(yesterdayStr());
+  }
+
+  // The set to work on right now. The date changing is not enough on its
+  // own: without yesterday's two hours the same words stay, which is the
+  // point -- ten words you have not learnt are not helped by ten more
+  // arriving on top of them.
   function todaysSet(){
-    if(dailySetDay() !== todayStr()) return buildDailySet();
+    if(dailySetDay() !== todayStr() && newWordsUnlocked()) return buildDailySet();
     return getDailySet() || buildDailySet();
   }
 
@@ -2001,8 +2041,7 @@
           : "Today&rsquo;s " + today.length + " words")
       + '<small>'+todayDone+' of '+today.length+' mastered &middot; '+stageList+'</small>'
       + '<div class="hero-bar"><span style="width:'+todayPct+'%"></span></div>'
-      + '</button>'
-      + '<div class="stage-row">'+stagePills+'</div>';
+      + '</button>';
 
     // The home reads straight down in the order the day happens: what to
     // practice now, how far you have got, then the words you have already
@@ -2013,6 +2052,8 @@
         + '<span class="band-hint">'+LEARNSET_SIZE+' a day &middot; '+PER_TOPIC+' from each list</span></div>'
       + streakHtml
       + heroHtml
+      + '<div class="stage-row">'+stagePills+'</div>'
+      + '<div id="studybar-host">'+studyBarHtml()+'</div>'
       + recallHtml(homeDue)
       + '</div>';
 
@@ -2570,7 +2611,12 @@
       + '<div class="eyebrow">Today &middot; '+new Date().toLocaleDateString('en-US',{weekday:'long', month:'short', day:'numeric'})+'</div>'
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
-          ? 'Today is done. Tomorrow brings '+LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
+          ? (goalMet(todayStr())
+              ? 'Today is done, and so are your '+Math.floor(DAILY_GOAL_MIN/60)+' hours. Tomorrow brings '
+                + LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
+              : 'These '+set.length+' are done. Keep practicing to finish today’s '
+                + Math.floor(DAILY_GOAL_MIN/60)+' hours — that is what brings '
+                + LEARNSET_SIZE+' new words tomorrow.')
           : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+CATEGORIES.length+' lists. '
             + 'The app picks the method for each one: '+stageList
             + '. A word is only mastered once you have said it out loud.')+'</p>'
@@ -3731,6 +3777,109 @@
     });
   }
 
+  // --- The daily two hours -----------------------------------------------
+  //
+  // New words are earned. Put the time in today and tomorrow brings ten
+  // more; do not, and you keep working the same ones -- which is what you
+  // would want anyway, since ten words you have not learnt are not helped
+  // by ten more arriving on top.
+  //
+  // The time has to be honestly measured, or the rule means nothing. It
+  // counts only while a session is actually on screen, the window is
+  // visible, and you have touched something in the last two minutes. A
+  // card left open while you make dinner is not study.
+  const DAILY_GOAL_MIN = 120;
+  const STUDY_TICK_MS = 5000;
+  const STUDY_IDLE_MS = 120000;
+
+  let lastInteraction = Date.now();
+  let studyTimer = null;
+  let studyUnsaved = 0;
+
+  function studySeconds(day){
+    const all = (meta && meta.study) || {};
+    return all[day || todayStr()] || 0;
+  }
+
+  function goalMet(day){
+    return studySeconds(day) >= DAILY_GOAL_MIN * 60;
+  }
+
+  function addStudy(seconds){
+    if(!meta.study) meta.study = {};
+    const key = todayStr();
+    meta.study[key] = (meta.study[key] || 0) + seconds;
+    studyUnsaved += seconds;
+    // written every half minute rather than every tick: it is a counter,
+    // not something worth a disk write six times a minute
+    if(studyUnsaved >= 30){
+      studyUnsaved = 0;
+      saveMeta();
+      backupSoon();
+    }
+    paintStudyBar();
+  }
+
+  function studying(){
+    if(document.visibilityState !== 'visible') return false;
+    if(Date.now() - lastInteraction > STUDY_IDLE_MS) return false;
+    // a session is on screen when a card is
+    return !!document.querySelector('.card') || !!document.getElementById('recall-scrim');
+  }
+
+  function startStudyClock(){
+    if(studyTimer) return;
+    studyTimer = setInterval(()=>{
+      if(studying()) addStudy(STUDY_TICK_MS / 1000);
+    }, STUDY_TICK_MS);
+  }
+
+  ['pointerdown', 'keydown', 'touchstart'].forEach(ev=>
+    document.addEventListener(ev, ()=>{ lastInteraction = Date.now(); }, true));
+  window.addEventListener('pagehide', ()=>{
+    if(studyUnsaved){ studyUnsaved = 0; saveMeta(); }
+  });
+
+  function hhmm(seconds){
+    const m = Math.floor(seconds / 60);
+    return Math.floor(m / 60) + ':' + String(m % 60).padStart(2, '0');
+  }
+
+  function studyBarHtml(){
+    const done = studySeconds();
+    const goal = DAILY_GOAL_MIN * 60;
+    const pct = Math.min(100, Math.round((done / goal) * 100));
+    const met = done >= goal;
+    const left = Math.max(0, Math.ceil((goal - done) / 60));
+
+    let note;
+    if(met){
+      note = '<p class="studybar-note met"><b>Done for today.</b> Tomorrow brings '
+        + LEARNSET_SIZE + ' new words.</p>';
+    } else if(done === 0){
+      note = '<p class="studybar-note">Study <b>' + hhmm(goal) + '</b> today and tomorrow '
+        + 'brings ' + LEARNSET_SIZE + ' new words. Until then you keep the ones you have.</p>';
+    } else {
+      note = '<p class="studybar-note"><b>' + left + ' minute' + (left === 1 ? '' : 's')
+        + ' to go</b> to unlock tomorrow&rsquo;s ' + LEARNSET_SIZE + ' words.</p>';
+    }
+
+    return '<div class="studybar" id="studybar">'
+      + '<div class="studybar-line"><span>Studied today'
+        + (studying() ? ' <span class="studying">&middot; counting</span>' : '')
+        + '</span>'
+        + '<span><b class="'+(met?'met':'')+'">' + hhmm(done) + '</b> of ' + hhmm(goal) + '</span></div>'
+      + '<div class="studybar-track"><span class="'+(met?'met':'')+'" style="width:'+pct+'%"></span></div>'
+      + note
+      + '</div>';
+  }
+
+  // Repainted in place on every tick, so it never disturbs the page.
+  function paintStudyBar(){
+    const host = document.getElementById('studybar-host');
+    if(host) host.innerHTML = studyBarHtml();
+  }
+
   async function init(){
     loadProgress();
     loadMeta();
@@ -3743,6 +3892,7 @@
     // is drawn, so the day's set is built from the real picture.
     await restoreIfEmpty();
     renderHome();
+    startStudyClock();
     loadKeyState();   // fills the glossary row in once the server answers
     // Meets you at the door, once per opening of the app.
     maybeOpenRecall();
