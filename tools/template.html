@@ -331,6 +331,38 @@
   .scene-actions{ display:flex; gap:8px; margin:-3px 0 9px; }
   .scene-actions button{ flex:1; }
 
+  /* talking to it, and it talking back */
+  .chat-mic{
+    background:var(--panel); border:1px solid var(--rule); color:var(--text);
+    border-radius:9px; padding:0 15px; cursor:pointer; flex-shrink:0;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .chat-mic svg{ width:16px; height:16px; }
+  .chat-mic:hover{ border-color:var(--amber); }
+  .chat-mic.on{ background:var(--warn); border-color:var(--warn); color:var(--bg); }
+  .chat-mic:disabled{ opacity:.5; cursor:default; }
+  .chat-tools{ display:flex; align-items:center; gap:10px; margin-left:auto; }
+  .chat-toggle{
+    background:none; border:none; color:var(--text-soft); cursor:pointer;
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.08em;
+    text-transform:uppercase; display:inline-flex; align-items:center; gap:5px; padding:2px;
+  }
+  .chat-toggle svg{ width:13px; height:13px; }
+  .chat-toggle.on{ color:var(--good); }
+  .chat-head{ display:flex; align-items:baseline; gap:10px; }
+  .chat-heard{ font-size:.78rem; color:var(--amber); margin:0 4px 8px; font-style:italic; }
+
+  /* past conversations */
+  .past-row{
+    display:block; width:100%; text-align:left; background:var(--panel);
+    border:1px solid var(--rule); border-radius:10px; padding:11px 14px;
+    margin-bottom:7px; cursor:pointer; color:var(--text); font-family:var(--sans);
+  }
+  .past-row:hover{ border-color:var(--amber); }
+  .past-row b{ display:block; font-family:var(--cond); font-size:.98rem; }
+  .past-row span{ display:block; font-size:.76rem; color:var(--text-soft); margin-top:3px;
+    font-family:var(--mono); }
+
   /* the scenario chooser */
   .scene{
     display:block; width:100%; text-align:left; background:var(--panel);
@@ -919,6 +951,7 @@
   const MYLIST_MAX = 10;
   const SPEECH_KEY = 'wordlog_speech_scores';
   const LEARNSET_KEY = 'wordlog_learn_sets';
+  const CHATS_KEY = 'wordlog_chats';
   const LEARNSET_SIZE = 10;
   // Two from each of the five lists, which is what makes 10. Kept as its
   // own number so the arithmetic is stated rather than implied.
@@ -939,6 +972,7 @@
   let speechScores = {}; // word id -> best pronunciation score reached for that word's example sentence
   let coachResults = []; // this session's Speech Coach scores: {id, w, phrase, score}
   let learnSets = {}; // category -> {wordIds:[...], startedAt} -- a locked set worked until all are mastered
+  let chats = { current: null, past: [] }; // conversations, kept rather than thrown away
   let scRecognizing = false; // Speech Coach's mic state
   let scRecognizer = null;   // one recognizer, reused for every card
   let scToken = 0;           // bumped whenever a card is left or restarted
@@ -1173,6 +1207,26 @@
   }
   function saveLearnSets(){
     try{ localStorage.setItem(LEARNSET_KEY, JSON.stringify(learnSets)); }catch(e){}
+  }
+
+  // Conversations are worth keeping: leaving the page mid-sentence should
+  // not throw one away, and reading an old one back is its own practice.
+  const CHATS_KEPT = 20;
+  function loadChats(){
+    try{
+      const raw = localStorage.getItem(CHATS_KEY);
+      if(raw){
+        const got = JSON.parse(raw);
+        chats = { current: got.current || null, past: got.past || [] };
+      }
+    }catch(e){ chats = { current: null, past: [] }; }
+  }
+  function saveChats(){
+    try{
+      chats.past = (chats.past || []).slice(0, CHATS_KEPT);
+      localStorage.setItem(CHATS_KEY, JSON.stringify(chats));
+    }catch(e){}
+    backupSoon();
   }
 
   // Today's set. There is no topic to choose any more: every day the app
@@ -3144,7 +3198,8 @@
       speech: speechScores,
       myList: myList,
       custom: customWords,
-      learnSets: learnSets
+      learnSets: learnSets,
+      chats: chats
     };
   }
 
@@ -3204,6 +3259,7 @@
     speechScores = b.speech || {};
     myList = b.myList || [];
     customWords = b.custom || [];
+    if(b.chats) chats = { current: b.chats.current || null, past: b.chats.past || [] };
     learnSets = b.learnSets || {};
     if(!meta.streak) meta.streak = {current:0, longest:0, lastDate:null};
     if(!meta.history) meta.history = [];
@@ -4074,10 +4130,26 @@
       + '<div class="chat-words">'
         + words.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
       + '</div>'
+      + (chats.current && (chats.current.turns||[]).length
+          ? '<div class="section-label">Left unfinished</div>'
+            + '<button class="scene" id="chat-resume">'
+              + '<b>' + esc(chats.current.scenario.name) + '</b>'
+              + '<span>' + (chats.current.turns.length) + ' messages &middot; '
+              + (chats.current.used||[]).length + ' of ' + (chats.current.words||[]).length
+              + ' words used. Carry on where you stopped.</span></button>'
+          : '')
       + '<div class="section-label">Pick a situation</div>'
       + madeCardHtml()
       + SCENARIOS.map((sc,i)=>'<button class="scene" data-i="'+i+'">'
           + '<b>'+esc(sc.name)+'</b><span>'+esc(sc.blurb)+'</span></button>').join('')
+      + ((chats.past||[]).length
+          ? '<div class="section-label">Conversations you have had</div>'
+            + chats.past.slice(0, 8).map((c,i)=>'<button class="past-row" data-past="'+i+'">'
+                + '<b>'+esc(c.scenario.name)+'</b>'
+                + '<span>'+friendlyDate((c.endedAt||c.startedAt||'').slice(0,10))
+                + ' &middot; ' + (c.used||[]).length + ' of ' + (c.words||[]).length + ' words'
+                + ' &middot; ' + (c.turns||[]).length + ' messages</span></button>').join('')
+          : '')
       + '<button class="btn-secondary" id="chat-home" style="margin-top:14px;">&larr; Back to home</button>'
       + '</div>';
 
@@ -4090,13 +4162,116 @@
     if(another) another.addEventListener('click', makeScenario);
     const made = el('#scene-made');
     if(made) made.addEventListener('click', ()=>startChat(chatMade, words));
+    const resume = el('#chat-resume');
+    if(resume) resume.addEventListener('click', ()=>{ if(!resumeChat()) renderChatPicker(); });
+    root.querySelectorAll('.past-row').forEach(b=>{
+      b.addEventListener('click', ()=>renderPastChat(chats.past[+b.dataset.past]));
+    });
     el('#chat-home').addEventListener('click', renderHome);
   }
 
+  // --- Talking to it -------------------------------------------------
+  // The same recognizer the practice cards use, so it inherits the one
+  // permission and the guard against a late result from a turn you have
+  // already left. What you said goes in as your message: a conversation
+  // where you have to press send after speaking is not a conversation.
+  let chatListening = false;
+  let chatSpeaks = true;
+  try{ chatSpeaks = localStorage.getItem('wordlog_chat_voice') !== 'off'; }catch(e){}
+
+  function chatSay(text){
+    if(!chatSpeaks || !canSpeak || !text) return;
+    speak(text);
+  }
+
+  function stopChatListening(){
+    chatListening = false;
+    scStopListening();
+  }
+
+  async function chatListen(){
+    if(!canListen || !chat || chat.busy) return;
+    if(chatListening){ stopChatListening(); renderChat(); return; }
+
+    if(canSpeak) window.speechSynthesis.cancel();  // do not listen to itself
+    scStopListening();
+    const token = ++scToken;
+    chatListening = true;
+    chat.heard = '';
+    renderChat();
+
+    const ok = await ensureMic();
+    if(scToken !== token) return;
+    if(!ok){
+      chatListening = false;
+      chat.error = speechErrorMessage('not-allowed');
+      renderChat();
+      return;
+    }
+
+    const recognition = scGetRecognizer();
+    recognition.onresult = (e)=>{
+      if(scToken !== token) return;
+      chatListening = false;
+      const said = (e.results[0][0].transcript || '').trim();
+      if(!said){ renderChat(); return; }
+      const input = el('#chat-input');
+      if(input) input.value = said;
+      renderChat();
+      sendChat(false);
+    };
+    recognition.onerror = (e)=>{
+      if(scToken !== token) return;
+      const code = e.error || 'error';
+      if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+      chatListening = false;
+      chat.error = speechErrorMessage(code);
+      renderChat();
+    };
+    recognition.onend = ()=>{
+      if(scToken !== token) return;
+      if(chatListening){ chatListening = false; renderChat(); }
+    };
+    setTimeout(()=>{
+      if(scToken !== token) return;
+      try{ recognition.start(); }
+      catch(err){
+        try{ recognition.abort(); }catch(e2){}
+        scRecognizer = null;
+        chatListening = false;
+        chat.error = speechErrorMessage('error');
+        renderChat();
+      }
+    }, 250);
+  }
+
   function startChat(scenario, words){
-    chat = { scenario: scenario, words: words, used: [], turns: [], busy: true, error: '' };
+    chat = { scenario: scenario, words: words, used: [], turns: [],
+             startedAt: new Date().toISOString(), busy: true, error: '' };
+    rememberChat();
     renderChat();
     sendChat(true);
+  }
+
+  // Written after every turn, so closing the tab mid-conversation costs
+  // nothing. Only the conversation itself is kept -- not the busy flag or
+  // the error, which mean nothing once you come back to it.
+  function rememberChat(){
+    chats.current = chat ? {
+      scenario: chat.scenario, words: chat.words, used: chat.used,
+      turns: chat.turns, startedAt: chat.startedAt
+    } : null;
+    saveChats();
+  }
+
+  function resumeChat(){
+    const saved = chats.current;
+    if(!saved) return false;
+    chat = { scenario: saved.scenario, words: saved.words || [],
+             used: saved.used || [], turns: saved.turns || [],
+             startedAt: saved.startedAt, busy: false, error: '' };
+    renderChat();
+    return true;
   }
 
   function renderChat(){
@@ -4104,8 +4279,16 @@
     const done = chat.used.length, total = chat.words.length;
 
     root.innerHTML = '<div class="view"><div class="chat-wrap">'
-      + '<div class="eyebrow">' + esc(chat.scenario.name)
-        + ' &middot; ' + done + ' of ' + total + ' used</div>'
+      + '<div class="chat-head">'
+        + '<div class="eyebrow">' + esc(chat.scenario.name)
+          + ' &middot; ' + done + ' of ' + total + ' used</div>'
+        + '<div class="chat-tools">'
+          + (canSpeak
+              ? '<button class="chat-toggle'+(chatSpeaks?' on':'')+'" id="chat-voice">'
+                + ICON_SPEAKER + (chatSpeaks ? 'voice on' : 'voice off') + '</button>'
+              : '')
+        + '</div>'
+      + '</div>'
       + '<div class="chat-words">'
         + chat.words.map(w=>'<span class="chat-word'
             + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
@@ -4127,9 +4310,15 @@
         + (chat.busy ? '<p class="chat-thinking">typing&hellip;</p>' : '')
         + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
       + '</div>'
+      + (chatListening ? '<p class="chat-heard">listening&hellip; speak now</p>' : '')
       + '<div class="chat-ask">'
-        + '<input type="text" id="chat-input" placeholder="Write your reply in English..." '
-          + 'autocomplete="off"'+(chat.busy?' disabled':'')+'>'
+        + (canListen
+            ? '<button class="chat-mic'+(chatListening?' on':'')+'" id="chat-mic" '
+              + 'aria-label="Speak your reply"'+(chat.busy?' disabled':'')+'>'+ICON_MIC+'</button>'
+            : '')
+        + '<input type="text" id="chat-input" placeholder="'
+          + (canListen ? 'Write your reply, or tap the microphone' : 'Write your reply in English')
+          + '..." autocomplete="off"'+(chat.busy?' disabled':'')+'>'
         + '<button id="chat-send"'+(chat.busy?' disabled':'')+'>Send</button>'
       + '</div>'
       + '<button class="reset-link" id="chat-end" style="margin-top:10px;">'
@@ -4147,6 +4336,15 @@
     }
     const send = el('#chat-send');
     if(send) send.addEventListener('click', ()=>sendChat(false));
+    const mic = el('#chat-mic');
+    if(mic) mic.addEventListener('click', chatListen);
+    const voice = el('#chat-voice');
+    if(voice) voice.addEventListener('click', ()=>{
+      chatSpeaks = !chatSpeaks;
+      try{ localStorage.setItem('wordlog_chat_voice', chatSpeaks ? 'on' : 'off'); }catch(e){}
+      if(!chatSpeaks && canSpeak) window.speechSynthesis.cancel();
+      renderChat();
+    });
     el('#chat-end').addEventListener('click', endChat);
   }
 
@@ -4187,19 +4385,62 @@
           if(mine.who === 'you'){ mine.scored = fresh; mine.fix = out.correction || ''; }
         }
         chat.turns.push({ who:'them', text: out.reply });
+        chatSay(out.reply);
       }
     }catch(e){
       chat.busy = false;
       chat.error = 'Could not reach the app server.';
     }
+    rememberChat();
     renderChat();
   }
 
+  // An old conversation, read back. Not resumable -- it is finished, and
+  // reopening it to add a line would blur what you actually did that day.
+  function renderPastChat(c){
+    if(!c) return;
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">' + esc(c.scenario.name) + ' &middot; '
+        + friendlyDate((c.endedAt||c.startedAt||'').slice(0,10)) + '</div>'
+      + '<h1 class="title">'+(c.used||[]).length+' of '+(c.words||[]).length+' used</h1>'
+      + '<div class="chat-words">'
+        + (c.words||[]).map(w=>'<span class="chat-word'
+            + ((c.used||[]).indexOf(w) >= 0 ? ' used' : '')+'">'+esc(w)+'</span>').join('')
+      + '</div>'
+      + (c.turns||[]).map(t=>{
+          if(t.who === 'you'){
+            return '<div class="chat-turn you"><div class="chat-who">You</div>'
+              + '<div class="chat-bubble">'+esc(t.text)+'</div>'
+              + (t.scored && t.scored.length
+                  ? '<div class="chat-scored">+ '+t.scored.map(esc).join(', ')+'</div>' : '')
+              + (t.fix ? '<div class="chat-fix">'+esc(t.fix)+'</div>' : '')
+              + '</div>';
+          }
+          return '<div class="chat-turn them"><div class="chat-who">'+esc(c.scenario.name)+'</div>'
+            + '<div class="chat-bubble">'+esc(t.text)+'</div></div>';
+        }).join('')
+      + '<button class="btn-secondary" id="past-back" style="margin-top:18px;">'
+        + '&larr; Back to conversations</button>'
+      + '</div>';
+    el('#past-back').addEventListener('click', renderChatPicker);
+  }
+
   function endChat(){
+    stopChatListening();
+    if(canSpeak) window.speechSynthesis.cancel();
     const done = chat ? chat.used.length : 0;
     const total = chat ? chat.words.length : 0;
     const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
+    if(chat && chat.turns.length){
+      chats.past.unshift({
+        scenario: chat.scenario, words: chat.words, used: chat.used,
+        turns: chat.turns, startedAt: chat.startedAt,
+        endedAt: new Date().toISOString()
+      });
+    }
     chat = null;
+    chats.current = null;
+    saveChats();
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Conversation</div>'
       + '<h1 class="title">'+done+' of '+total+' used</h1>'
@@ -4229,6 +4470,7 @@
     loadMyList();
     loadSpeechScores();
     loadLearnSets();
+    loadChats();
     // If this browser has lost everything -- cleared site data, a new
     // profile, a new laptop -- take it back from the file before anything
     // is drawn, so the day's set is built from the real picture.
