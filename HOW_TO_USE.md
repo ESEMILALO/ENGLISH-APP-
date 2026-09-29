@@ -193,6 +193,54 @@ Time spent talking counts toward the day's hour.
 
 This uses the same Anthropic key as adding words.
 
+## Pictures
+
+Under the meaning, some words carry a photograph. Not all of them, and
+that is deliberate.
+
+Searching an image library for the word itself does not work: "recline"
+brings back a reclining Buddha, "supper" brings back the Leonardo,
+"essential" brings back a face scrub. So the meaning you already have
+does the choosing. Claude turns the word, its meaning and its example
+into a short, concrete search term, Wikimedia Commons is searched with
+it, and then Claude is shown the pictures that came back and asked which
+one, if any, would teach the right thing to somebody who did not know
+the word.
+
+Most of the time the answer is none, and then the word simply has no
+picture. "Brief" was refused with "no image shows short duration";
+"behave" with "needs caption text to convey meaning". A wrong picture is
+worse than no picture, so nothing is shown rather than something close.
+Abstract words, linking words and most phrasal verbs end up with none.
+Concrete ones -- *finch*, *binder*, *hailstones*, *hatching* -- come out
+well.
+
+They are photographs only. An old engraving of a severe-looking man fits
+"stern" perfectly and is still not what you want to learn from, so
+artwork is turned away twice: once in the search and again by the judge.
+
+The small grey line under a picture is who took it and the licence it is
+shared under, which is what those licences ask for in return.
+
+### Getting them, or getting them again
+
+    python tools\word_images.py
+
+It works through every word that does not have a picture yet, and keeps
+what it finds in `tools\word_images.json` with the files in
+`app\images\`. It is deliberately unhurried -- Commons is free and asks
+to be treated gently -- so the whole spreadsheet takes a few hours. Stop
+it whenever you like with Ctrl-C and run it again later; it picks up
+where it stopped and never fetches the same word twice.
+
+If one picture is wrong, ask for another:
+
+    python tools\word_images.py --redo Lawsuit
+
+It remembers the one you rejected and will not offer it again. Run
+`python tools\build_word_log.py` afterwards to put the changes in the
+app.
+
 ## Earning the day's words
 
 Ten new words are not handed over just because the date changed. They
@@ -241,9 +289,16 @@ adding words and editing meanings are all safe.
 
 ## What the server will hand out
 
-Only what is in `app/`: the page, its icons, its manifest and its
-service worker. The spreadsheet, the build scripts, the template and the
-backups are all outside that folder and are refused.
+Only what is in `app/`: the page, its icons, its manifest, its service
+worker and the word pictures in `app/images/`. The spreadsheet, the
+build scripts, the template and the backups are all outside that folder
+and are refused.
+
+The pictures are the one thing whose names are not known in advance, so
+they are checked rather than listed: an ordinary file name ending in
+.jpg or .png, and the finished path has to still be inside
+`app/images/`. A name that tries to climb out of it gets the same 404 as
+anything else.
 
 The one other thing it answers is your progress backup, at
 `/api/progress`. That is the only address it will accept a write on, and
