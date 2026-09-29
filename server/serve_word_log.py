@@ -213,6 +213,29 @@ class Handler(http.server.BaseHTTPRequestHandler):
             saved = write_progress(sent["data"])
         self._json({"savedAt": saved["savedAt"]})
 
+    def do_DELETE(self):
+        """Emptying the backup on purpose.
+
+        The guard exists to stop an app that has lost its storage wiping
+        the file by accident. Someone choosing Reset progress is not an
+        accident, so this way through is deliberate -- and the copy it
+        clears is parked first, because "cannot be undone" should still
+        leave something to undo it with.
+        """
+        if self.path.split("?", 1)[0] != API_PROGRESS:
+            self.send_error(501, "Not supported")
+            return
+        with PROGRESS_LOCK:
+            previous = read_progress()
+            kept = None
+            if count_words(previous.get("data")):
+                kept = keep_superseded(previous)
+                sys.stdout.write("  backup cleared on request -> %s\n" % kept.name)
+                sys.stdout.flush()
+            saved = write_progress({})
+        self._json({"savedAt": saved["savedAt"], "cleared": True,
+                    "keptAs": kept.name if kept else None})
+
     def do_HEAD(self):
         self.do_GET(head_only=True)
 

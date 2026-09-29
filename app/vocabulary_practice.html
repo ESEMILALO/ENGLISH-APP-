@@ -271,6 +271,37 @@
     }
   }
 
+  /* Today's ten, broken down by the stage each one has reached. */
+  .stage-row{ display:flex; gap:6px; margin:12px 0 0; }
+  .stage-pill{
+    flex:1; min-width:0; background:var(--panel); border:1px solid var(--rule);
+    border-radius:9px; padding:9px 8px; text-align:center;
+  }
+  .stage-pill b{
+    display:block; font-family:var(--mono); font-size:1.15rem; font-weight:600;
+    line-height:1.1; color:var(--text);
+  }
+  .stage-pill span{
+    display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--text-soft); margin-top:3px;
+  }
+  .stage-pill.done{ border-color:rgba(92,174,124,.45); }
+  .stage-pill.done b{ color:var(--good); }
+  .stage-pill.now{ border-color:var(--amber); }
+  .stage-pill.now b{ color:var(--amber); }
+  @media (max-width:430px){
+    .stage-pill{ padding:7px 4px; }
+    .stage-pill b{ font-size:1rem; }
+    .stage-pill span{ font-size:.5rem; letter-spacing:.03em; }
+  }
+
+  /* An empty block should point at what fills it, not just say it is empty. */
+  .empty-note{
+    background:var(--panel); border:1px dashed var(--rule); border-radius:10px;
+    padding:16px; color:var(--text-soft); font-size:.86rem; line-height:1.55;
+  }
+  .empty-note b{ color:var(--text); font-weight:600; }
+
   /* The calendar: which words you finished, and on which day. */
   .cal-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
   .cal-title{ font-family:var(--cond); font-weight:700; font-size:1.05rem; color:var(--text); }
@@ -302,6 +333,19 @@
   .cal-day.today{ border-color:var(--amber); color:var(--amber); }
   .cal-day.sel{ background:var(--good); color:var(--bg); border-color:var(--good); }
   .cal-count{ font-size:.56rem; opacity:.85; }
+  /* a day you practised on but finished nothing: worth a mark of its own,
+     or the calendar looks blank on days you actually worked */
+  .cal-day.sat{ border-color:rgba(150,160,166,.4); cursor:pointer; color:var(--text); }
+  .cal-day.sat:hover{ border-color:var(--text-soft); }
+  .cal-dot{ width:4px; height:4px; border-radius:50%; background:var(--text-soft); }
+  .cal-legend{
+    display:flex; gap:14px; flex-wrap:wrap; margin-top:10px;
+    font-size:.72rem; color:var(--text-soft);
+  }
+  .cal-legend span{ display:flex; align-items:center; gap:5px; }
+  .cal-key{ width:11px; height:11px; border-radius:3px; border:1px solid var(--rule); flex-shrink:0; }
+  .cal-key.fin{ background:rgba(92,174,124,.35); border-color:rgba(92,174,124,.45); }
+  .cal-key.prac{ border-color:rgba(150,160,166,.5); }
   .cal-list{ margin-top:12px; border-top:1px solid var(--rule); padding-top:10px; }
   .cal-list-head{
     font-family:var(--mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase;
@@ -1833,13 +1877,32 @@
     const stageList = canListen
       ? 'recognize, type it, sentence, say it'
       : 'recognize, type it, sentence';
+    // What today actually consists of: how many of the ten sit at each
+    // stage. The hero says how far through you are; this says what is
+    // waiting, which is the part you act on.
+    const stageCount = { recognize:0, typed:0, sentence:0, coach:0, done:0 };
+    today.forEach(w=>{
+      if(statusOf(w.id) === 'mastered'){ stageCount.done++; return; }
+      const st = learnStageFor(w);
+      if(stageCount[st] === undefined) stageCount.sentence++;
+      else stageCount[st]++;
+    });
+    const firstOpen = LEARN_ORDER.find(k=>stageCount[k] > 0);
+    const stagePills = LEARN_ORDER
+      .filter(k=> k !== 'coach' || canListen)
+      .map(k=>'<div class="stage-pill'+(k === firstOpen ? ' now' : '')+'">'
+        + '<b>'+stageCount[k]+'</b><span>'+LEARN_STAGES[k]+'</span></div>')
+      .join('')
+      + '<div class="stage-pill done"><b>'+stageCount.done+'</b><span>Done</span></div>';
+
     const heroHtml = '<button class="btn-hero" id="learn-set">'
       + (todayDone >= today.length
           ? 'Today is done &middot; practice again'
           : "Today&rsquo;s " + today.length + " words")
       + '<small>'+todayDone+' of '+today.length+' mastered &middot; '+stageList+'</small>'
       + '<div class="hero-bar"><span style="width:'+todayPct+'%"></span></div>'
-      + '</button>';
+      + '</button>'
+      + '<div class="stage-row">'+stagePills+'</div>';
 
     // The home reads straight down in the order the day happens: what to
     // practice now, how far you have got, then the words you have already
@@ -1866,8 +1929,10 @@
         + '<span class="band-hint"><b>'+stats.good+'</b> mastered so far</span></div>'
       + (fresh.length
           ? freshBlockHtml(fresh)
-          : '<p class="hint" style="margin:0 2px;">Nothing mastered yet. Words you finish will show up here, '
-            + 'one at a time, so they stay in your head.</p>')
+          : '<div class="empty-note">Once you finish a word it starts appearing here, '
+            + 'one at a time, changing on its own &mdash; so what you have learnt keeps '
+            + 'crossing your eyes instead of quietly fading.<br><br>'
+            + '<b>Finish today&rsquo;s '+LEARNSET_SIZE+' to fill it.</b></div>')
       + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
@@ -1900,7 +1965,14 @@
       + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
       + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
-      + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
+      + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">'
+        + (resetArmed ? 'Never mind, keep my progress' : 'Reset progress')+'</button>'
+      + (resetArmed
+          ? '<p class="hint" style="color:var(--warn); margin:8px 2px 0;">This clears every word, your streak and your history, '
+            + 'here and in the saved file. A copy of the file is kept in <b>progress/daily/</b> in case you change your mind.</p>'
+            + '<button class="btn-secondary" id="reset-confirm" style="margin-top:10px; border-color:var(--warn); color:var(--warn);">'
+              + 'Yes, clear everything</button>'
+          : '')
       + '</div>';
 
     const homeSearch = el('#home-search');
@@ -1935,9 +2007,24 @@
       });
     });
     el('#reset-progress').addEventListener('click', ()=>{
-      if(confirm('Clear all saved progress? This cannot be undone.')){
-        progress = {}; saveProgress(); renderHome();
+      resetArmed = !resetArmed;
+      renderHome();
+    });
+    const resetGo = el('#reset-confirm');
+    if(resetGo) resetGo.addEventListener('click', async ()=>{
+      progress = {}; meta.streak = {current:0, longest:0, lastDate:null};
+      meta.history = []; meta.passes = {};
+      speechScores = {}; learnSets = {};
+      saveProgressLocal(); saveMeta(); saveSpeechScores(); saveLearnSets();
+      // The file has to be told as well. Without this the app would read
+      // the old progress straight back on the next start, and the reset
+      // would look as though it had not happened.
+      if(backupAvailable()){
+        try{ await fetch(BACKUP_URL, { method:'DELETE' }); }catch(e){}
       }
+      resetArmed = false;
+      calYear = null; calPicked = null;
+      renderHome();
     });
   }
 
@@ -3092,12 +3179,27 @@
   // session that finished it. Close enough to be honest, and the only
   // thing that history offers.
   let calYear = null, calMonth = null, calPicked = null;
+  let resetArmed = false;   // Reset progress asks in the page, not in a popup
 
   function dayKey(iso){
     if(!iso) return null;
     const d = new Date(iso);
     if(isNaN(d.getTime())) return null;
     return todayStr(d);
+  }
+
+  // Days you practised on, from the session history, whether or not
+  // anything was finished. Without this the calendar reads as empty on
+  // days you actually sat down and worked.
+  function practisedByDay(){
+    const days = {};
+    (meta.history || []).forEach(h=>{
+      if(!h || !h.date) return;
+      const d = days[h.date] = days[h.date] || { sessions:0, cards:0 };
+      d.sessions++;
+      d.cards += (h.total || 0);
+    });
+    return days;
   }
 
   function masteredByDay(){
@@ -3114,7 +3216,8 @@
 
   function calendarHtml(){
     const days = masteredByDay();
-    const keys = Object.keys(days).sort();
+    const sat = practisedByDay();
+    const keys = Object.keys(days).concat(Object.keys(sat)).sort();
     const now = new Date();
     if(calYear === null){
       // open on the month of the most recent finished word, not on an
@@ -3140,38 +3243,58 @@
     for(let d=1; d<=daysInMonth; d++){
       const key = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       const got = days[key] ? days[key].length : 0;
+      const worked = sat[key];
       const cls = ['cal-day'];
       if(got) cls.push('has');
+      else if(worked) cls.push('sat');
       if(key === todayStr()) cls.push('today');
       if(key === calPicked) cls.push('sel');
       // stronger shading the more words landed that day
       const shade = got ? ' style="background:rgba(92,174,124,'+Math.min(.10 + got*0.10, .45)+');"' : '';
       cells += '<button class="'+cls.join(' ')+'"'+shade
-        + (got ? ' data-day="'+key+'"' : ' disabled')+'>'
+        + ((got || worked) ? ' data-day="'+key+'"' : ' disabled')+'>'
         + '<span>'+d+'</span>'
-        + (got ? '<span class="cal-count">'+got+'</span>' : '')
+        + (got ? '<span class="cal-count">'+got+'</span>'
+               : (worked ? '<span class="cal-dot"></span>' : ''))
         + '</button>';
     }
 
+    // friendlyDate says "Today" and "Yesterday", which do not take the
+    // "on" that a date does.
+    const when = key => (key === todayStr() || friendlyDate(key) === 'Yesterday')
+      ? friendlyDate(key).toLowerCase()
+      : 'on ' + friendlyDate(key);
+
     let below;
-    if(calPicked && days[calPicked]){
-      const list = days[calPicked].slice().sort((a,b)=>a.w.localeCompare(b.w));
+    const picked = calPicked && (days[calPicked] || sat[calPicked]) ? calPicked : null;
+    if(picked && days[picked]){
+      const list = days[picked].slice().sort((a,b)=>a.w.localeCompare(b.w));
+      const worked = sat[picked];
       below = '<div class="cal-list">'
-        // friendlyDate says "Today" and "Yesterday", which do not take
-        // the "on" that a date does.
         + '<div class="cal-list-head">'+list.length+' word'+(list.length===1?'':'s')
-          + ' finished '+(calPicked===todayStr() || friendlyDate(calPicked)==='Yesterday'
-              ? friendlyDate(calPicked).toLowerCase()
-              : 'on '+friendlyDate(calPicked))+'</div>'
+          + ' finished '+when(picked)
+          + (worked ? ' &middot; '+worked.cards+' cards' : '')+'</div>'
         + list.map(w=>'<div class="cal-word"><span>'+esc(w.w)+'</span>'
             + '<em>'+esc(CAT_ABBR[w.cat]||w.cat)+'</em></div>').join('')
         + '</div>';
+    } else if(picked){
+      const worked = sat[picked];
+      below = '<div class="cal-list">'
+        + '<div class="cal-list-head">'+friendlyDate(picked)+'</div>'
+        + '<p class="cal-empty">'+worked.cards+' card'+(worked.cards===1?'':'s')
+          + ' over '+worked.sessions+' session'+(worked.sessions===1?'':'s')
+          + ', and nothing crossed the line that day. That is still practice.</p>'
+        + '</div>';
     } else {
-      const total = keys.reduce((n,k)=>n+days[k].length, 0);
+      const total = Object.keys(days).reduce((n,k)=>n+days[k].length, 0);
+      const workedDays = Object.keys(sat).length;
       below = '<div class="cal-list"><p class="cal-empty">'
         + (total
-            ? 'Shaded days are days you finished words. Tap one to see which.'
-            : 'Nothing finished yet. As you master words they will appear here, on the day you got them.')
+            ? 'Tap a day to see what you finished on it.'
+            : (workedDays
+                ? 'You have practised on '+workedDays+' day'+(workedDays===1?'':'s')+'. '
+                  + 'A day turns green once a word is finished on it.'
+                : 'Nothing here yet. Days you practise get a dot, and days you finish a word turn green.'))
         + '</p></div>';
     }
 
@@ -3183,6 +3306,10 @@
         + '</span>'
       + '</div>'
       + '<div class="cal-grid">'+cells+'</div>'
+      + '<div class="cal-legend">'
+        + '<span><i class="cal-key fin"></i>finished words</span>'
+        + '<span><i class="cal-key prac"></i>practised</span>'
+      + '</div>'
       + below;
   }
 
