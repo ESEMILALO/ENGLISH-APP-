@@ -64,6 +64,62 @@ example: You said "I have 25 years" -- in English it is "I am 25 years old". \
 Leave it empty for small slips and for anything you understood fine."""
 
 
+SUGGEST = """You invent a situation for someone practising English.
+
+These are the words they have just learnt:
+%(words)s
+
+Invent one everyday situation in which most of those words would come up naturally in conversation -- not a lesson about them, a real situation where someone would happen to need them. Look at what the words have in common and build the situation around that. If they pull in different directions, pick the largest group and let the rest fit where they can.
+
+Return ONLY a JSON object, no other text:
+
+{"name": "three or four words, like 'At the hardware shop'",
+ "blurb": "one short line saying what is happening, addressed to them as 'You'",
+ "role": "instructions to whoever plays the other part: who they are, what they want, and what they should ask about. Two or three sentences, written to them as 'You are...'"}"""
+
+
+def suggest(words):
+    """A situation built around the words, rather than one off a list."""
+    key = api_key()
+    if not key:
+        return {"ok": False, "message": "Suggesting a situation needs an API key."}
+
+    body = json.dumps({
+        "model": MODEL,
+        # generous, because the budget covers the model's own working
+        # as well as the answer: too small and the reply comes back empty
+        "max_tokens": 2000,
+        "system": SUGGEST % {"words": "\n".join("- " + w for w in words)},
+        "messages": [{"role": "user", "content": "Invent the situation."}],
+    }).encode("utf-8")
+
+    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": API_VERSION,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=45) as res:
+            payload = json.loads(res.read().decode("utf-8"))
+    except Exception as e:
+        return {"ok": False, "message": "Could not think of one just now.",
+                "detail": str(e)[:160]}
+
+    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    try:
+        out = json.loads(text)
+    except Exception:
+        return {"ok": False, "message": "Could not think of one just now."}
+
+    if not out.get("name") or not out.get("role"):
+        return {"ok": False, "message": "Could not think of one just now."}
+    return {"ok": True, "name": out["name"].strip(),
+            "blurb": (out.get("blurb") or "").strip(),
+            "role": out["role"].strip()}
+
+
 def opening(scenario, words, name="the learner"):
     """The first thing the partner says, before the learner has spoken."""
     return ask([], scenario, words, name, first=True)
@@ -89,7 +145,7 @@ def ask(history, scenario, words, name="the learner", first=False):
 
     body = json.dumps({
         "model": MODEL,
-        "max_tokens": 700,
+        "max_tokens": 2000,
         "system": system,
         "messages": messages,
     }).encode("utf-8")

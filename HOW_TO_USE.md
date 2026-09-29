@@ -105,6 +105,15 @@ words in a conversation**. Pick a situation — a shop, an interview, a
 flat viewing, the doctor, an old friend — and someone plays that part
 while you talk to them.
 
+There is a sixth option above the fixed ones: **made for today's
+words**. It asks for a situation those particular ten would really come
+up in, rather than one off a list, and you can ask for another if you do
+not like it.
+
+If a word comes up in the conversation that you do not know, select it —
+the same *add to your glossary* button appears, and it goes into your
+spreadsheet like any other.
+
 Your ten words sit along the top and turn green as you use them. Only
 what **you** write counts: the partner is told not to use them itself,
 so each one has to come from you. Recognising a word is easy; producing

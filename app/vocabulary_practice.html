@@ -329,6 +329,18 @@
   .chat-ask button:disabled{ opacity:.55; cursor:default; }
   .chat-thinking{ font-size:.82rem; color:var(--text-soft); font-style:italic; margin:0 4px 12px; }
 
+  /* the one built from today's words, above the fixed list */
+  .scene-made{
+    border-left-color:var(--good); background:linear-gradient(180deg,#28313a,#232B31);
+  }
+  .scene-made .scene-tag{
+    display:inline-block; font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--good); margin-bottom:5px;
+  }
+  .scene-made[disabled]{ opacity:.7; cursor:default; }
+  .scene-actions{ display:flex; gap:8px; margin:-3px 0 9px; }
+  .scene-actions button{ flex:1; }
+
   /* the scenario chooser */
   .scene{
     display:block; width:100%; text-align:left; background:var(--panel);
@@ -3550,8 +3562,9 @@
   // The sentence the word came from, so the lookup can tell which sense
   // is meant -- "harness" on a dog is not "harness" on an engine.
   function selectionContext(node){
-    const card = node && node.closest ? node.closest('.card') : null;
-    const text = card ? card.innerText : '';
+    const host = node && node.closest
+      ? (node.closest('.card') || node.closest('.chat-bubble')) : null;
+    const text = host ? host.innerText : '';
     return text.replace(/\s+/g, ' ').trim().slice(0, 300);
   }
 
@@ -3562,10 +3575,13 @@
     if(!word){ clearGlossBubble(); return; }
 
     const range = sel.getRangeAt(0);
-    const host = range.commonAncestorContainer;
-    const node = host.nodeType === 1 ? host : host.parentElement;
-    // only inside a practice card: selecting the app's own labels is noise
-    if(!node || !node.closest || !node.closest('.card')){ clearGlossBubble(); return; }
+    const anchor = range.commonAncestorContainer;
+    const node = anchor.nodeType === 1 ? anchor : anchor.parentElement;
+    // Inside a practice card or something said in a conversation. Anywhere
+    // else -- the app's own labels and buttons -- would just be noise.
+    const within = node && node.closest
+      ? (node.closest('.card') || node.closest('.chat-bubble')) : null;
+    if(!within){ clearGlossBubble(); return; }
 
     const rect = range.getBoundingClientRect();
     if(!rect || (!rect.width && !rect.height)){ clearGlossBubble(); return; }
@@ -3921,6 +3937,49 @@
     return set.length > 0 && set.every(w=>statusOf(w.id)==='mastered');
   }
 
+  // Kept between renders so asking for another does not lose the last.
+  let chatMade = null;
+
+  function madeCardHtml(){
+    if(chatMade === 'thinking'){
+      return '<button class="scene scene-made" disabled>'
+        + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+        + '<b>Thinking of one&hellip;</b>'
+        + '<span>Looking for a situation these ten would really come up in.</span>'
+        + '</button>';
+    }
+    if(chatMade && chatMade.name){
+      return '<button class="scene scene-made" id="scene-made">'
+        + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+        + '<b>'+esc(chatMade.name)+'</b><span>'+esc(chatMade.blurb||'')+'</span></button>'
+        + '<div class="scene-actions">'
+          + '<button class="btn-secondary" id="scene-another">Think of another</button>'
+        + '</div>';
+    }
+    return '<button class="scene scene-made" id="scene-make">'
+      + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+      + '<b>Build one around these ten</b>'
+      + '<span>A situation where your words would actually come up, '
+      + 'rather than one off a list.</span></button>';
+  }
+
+  async function makeScenario(){
+    chatMade = 'thinking';
+    renderChatPicker();
+    try{
+      const out = await fetch('/api/scenario', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ words: chatWordsForToday() })
+      }).then(r=>r.json());
+      chatMade = out.ok ? out : null;
+      if(!out.ok) glossToast(esc(out.message || 'Could not think of one.'), 'bad', 6000);
+    }catch(e){
+      chatMade = null;
+      glossToast('Could not reach the app server.', 'bad', 6000);
+    }
+    renderChatPicker();
+  }
+
   function renderChatPicker(){
     const words = chatWordsForToday();
     root.innerHTML = '<div class="view">'
@@ -3933,14 +3992,21 @@
         + words.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
       + '</div>'
       + '<div class="section-label">Pick a situation</div>'
+      + madeCardHtml()
       + SCENARIOS.map((sc,i)=>'<button class="scene" data-i="'+i+'">'
           + '<b>'+esc(sc.name)+'</b><span>'+esc(sc.blurb)+'</span></button>').join('')
       + '<button class="btn-secondary" id="chat-home" style="margin-top:14px;">&larr; Back to home</button>'
       + '</div>';
 
-    root.querySelectorAll('.scene').forEach(b=>{
+    root.querySelectorAll('.scene[data-i]').forEach(b=>{
       b.addEventListener('click', ()=>startChat(SCENARIOS[+b.dataset.i], words));
     });
+    const make = el('#scene-make');
+    if(make) make.addEventListener('click', makeScenario);
+    const another = el('#scene-another');
+    if(another) another.addEventListener('click', makeScenario);
+    const made = el('#scene-made');
+    if(made) made.addEventListener('click', ()=>startChat(chatMade, words));
     el('#chat-home').addEventListener('click', renderHome);
   }
 

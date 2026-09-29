@@ -207,7 +207,8 @@ def _ask_once(word, context, key, timeout):
 
     body = json.dumps({
         "model": MODEL,
-        "max_tokens": 1024,
+        # room for the model's working as well as the entry itself
+        "max_tokens": 2000,
         "system": PROMPT,
         "messages": [{"role": "user", "content": user}],
     }).encode("utf-8")
