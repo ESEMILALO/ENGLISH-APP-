@@ -399,7 +399,23 @@
   }
   .talk-hint{ font-size:.86rem; color:var(--text-soft); line-height:1.5; max-width:22rem; }
   .talk-actions{ display:flex; gap:9px; flex-wrap:wrap; justify-content:center; }
+  .talk-actions button{ width:auto; margin:0; flex:0 1 auto; padding:9px 16px;
+    font-size:.84rem; }
   @media (prefers-reduced-motion:reduce){ .talk-orb.listening{ animation:none; } }
+
+  /* the line you asked to see, in the middle of talking */
+  .talk-line{
+    width:100%; max-width:34rem; background:var(--panel);
+    border:1px solid var(--rule); border-radius:12px; padding:13px 15px;
+    text-align:left;
+  }
+  .talk-line-who{
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--text-soft); margin-bottom:5px;
+  }
+  .talk-line p{ margin:0; font-size:.96rem; line-height:1.55; }
+  .talk-line .reset-link{ margin:9px 0 0; text-align:left; }
+  .talk-line .explain{ margin-top:10px; }
 
   /* past conversations */
   .past-item{ display:flex; gap:7px; align-items:stretch; margin-bottom:7px; }
@@ -4422,6 +4438,8 @@
   let chatVoiceOnly = false;   // talking, with nothing written down
   let chatPhase = 'idle';      // idle | listening | thinking | speaking
   let chatHeard = '';          // the last thing it caught, for when it mishears
+  let talkShown = false;       // the last line, shown because you asked for it
+  let talkGloss = null;        // and what it means, if you asked that too
   let chatSpeaks = true;
   try{ chatSpeaks = localStorage.getItem('wordlog_chat_voice') !== 'off'; }catch(e){}
 
@@ -4585,6 +4603,53 @@
   // Talking only: nothing is written down, the way a real conversation is.
   // One circle tells you whose turn it is, and the turn passes by itself --
   // it speaks, then listens again, so you never touch the screen.
+  function lastThemSaid(){
+    if(!chat) return '';
+    for(let i = chat.turns.length - 1; i >= 0; i--){
+      if(chat.turns[i].who === 'them') return chat.turns[i].text;
+    }
+    return '';
+  }
+
+  function talkGlossHtml(){
+    if(!talkGloss) return '';
+    if(talkGloss.state === 'asking'){
+      return '<div class="explain"><div class="explain-wait">asking&hellip;</div></div>';
+    }
+    if(talkGloss.state === 'error'){
+      return '<div class="explain"><div class="explain-note">'
+        + esc(talkGloss.message) + '</div></div>';
+    }
+    return '<div class="explain">'
+      + '<div>' + esc(talkGloss.meaning) + '</div>'
+      + (talkGloss.spanish ? '<div class="explain-es">' + esc(talkGloss.spanish) + '</div>' : '')
+      + (talkGloss.note ? '<div class="explain-note">' + esc(talkGloss.note) + '</div>' : '')
+      + '</div>';
+  }
+
+  // Seeing it written is the quickest way out of not having understood,
+  // and it is kept out of the way until asked for so the mode stays what
+  // it is meant to be.
+  function talkLineHtml(){
+    const said = lastThemSaid();
+    if(!said) return '';
+    return '<div class="talk-line">'
+      + '<div class="talk-line-who">' + esc(chat.scenario.name) + '</div>'
+      + '<p>' + esc(said) + '</p>'
+      + '<button class="reset-link" id="talk-mean">What does it mean? &rarr;</button>'
+      + talkGlossHtml()
+      + '</div>';
+  }
+
+  // Having finished a sentence, it takes the turn back to you. Said from
+  // one place so repeating a line behaves exactly like hearing it first.
+  function afterSpeaking(){
+    if(chatPhase !== 'speaking') return;   // something else took over
+    chatPhase = 'idle';
+    if(chatVoiceOnly && chat && !chat.busy) chatListen();
+    else renderChat();
+  }
+
   function talkViewHtml(){
     const STATE = {
       listening: ['your turn', 'Speak. It is listening.'],
@@ -4600,10 +4665,44 @@
       + '<div class="talk-state">'+STATE[phase][0]+'</div>'
       + '<p class="talk-hint">'+STATE[phase][1]+'</p>'
       + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
+      + (talkShown ? talkLineHtml() : '')
       + '<div class="talk-actions">'
+        + (lastThemSaid()
+            ? '<button class="btn-secondary" id="talk-what">'
+              + (talkShown ? 'Hide it' : 'What did it say?') + '</button>'
+              + '<button class="btn-secondary" id="talk-again">Say it again</button>'
+            : '')
         + '<button class="btn-secondary" id="talk-off">Show the conversation</button>'
       + '</div>'
       + '</div>';
+  }
+
+  // The same explanation the written conversation gives, for the whole
+  // line rather than a phrase picked out of it -- when you did not catch
+  // it by ear, you do not yet know which part lost you.
+  async function explainLastLine(){
+    const said = lastThemSaid();
+    if(!said || (talkGloss && talkGloss.state === 'asking')) return;
+    let before = '';
+    for(let i = chat.turns.length - 1; i >= 0; i--){
+      if(chat.turns[i].who === 'you'){ before = chat.turns[i].text; break; }
+    }
+    talkGloss = { state: 'asking' };
+    renderChat();
+    try{
+      const out = await fetch('/api/explain', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ phrase: said, context: chat.scenario.name
+          + (before ? '. You had just said: ' + before : '') })
+      }).then(r=>r.json());
+      talkGloss = out.ok
+        ? { state:'done', meaning: out.meaning || '', spanish: out.spanish || '',
+            note: out.note || '' }
+        : { state:'error', message: out.message || 'That did not work.' };
+    }catch(e){
+      talkGloss = { state:'error', message: 'Could not reach the app server.' };
+    }
+    renderChat();
   }
 
   function renderChat(){
@@ -4671,6 +4770,26 @@
       }
       chatListen();
     });
+    const what = el('#talk-what');
+    if(what) what.addEventListener('click', ()=>{
+      talkShown = !talkShown;
+      if(!talkShown) talkGloss = null;
+      renderChat();
+    });
+
+    const again = el('#talk-again');
+    if(again) again.addEventListener('click', ()=>{
+      const said = lastThemSaid();
+      if(!said) return;
+      stopChatListening();          // or it would hear itself repeating
+      chatPhase = 'speaking';
+      renderChat();
+      chatSay(said, afterSpeaking);
+    });
+
+    const mean = el('#talk-mean');
+    if(mean) mean.addEventListener('click', explainLastLine);
+
     const talkOff = el('#talk-off');
     if(talkOff) talkOff.addEventListener('click', ()=>{
       chatVoiceOnly = false;
@@ -4699,6 +4818,9 @@
       if(!text) return;
       chat.turns.push({ who:'you', text:text });
     }
+    // A new turn starts bare: what was shown belonged to the last one.
+    talkShown = false;
+    talkGloss = null;
     chat.busy = true;
     chat.error = '';
     chatPhase = 'thinking';
@@ -4732,12 +4854,7 @@
         // and when it has finished speaking it listens again. Anything
         // else would mean reaching for the screen every sentence.
         chatPhase = 'speaking';
-        chatSay(out.reply, ()=>{
-          if(chatPhase !== 'speaking') return;   // something else took over
-          chatPhase = 'idle';
-          if(chatVoiceOnly && chat && !chat.busy) chatListen();
-          else renderChat();
-        });
+        chatSay(out.reply, afterSpeaking);
       }
     }catch(e){
       chat.busy = false;

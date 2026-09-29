@@ -148,6 +148,17 @@ word that was said still there, so you can read over it afterwards.
 Nothing is written on screen while you talk, which is the point: it is
 the closest this gets to a person in front of you.
 
+**When you did not catch it, three buttons are under the circle.**
+*What did it say?* shows the last thing it said, written out, without
+leaving the mode. *Say it again* repeats it out loud and then goes back
+to listening. And on the line it shows, *What does it mean?* explains
+the whole sentence in English and in Spanish — the whole sentence,
+because when you miss something by ear you do not yet know which word
+lost you.
+
+What you asked to see stays until the next thing is said, and then the
+screen is bare again.
+
 **The voice can be changed.** Under *Everything else* on the home screen
 there is a **Voice** picker with a *Hear it* button. Left alone the app
 now takes the best one your machine offers rather than the plain Windows
