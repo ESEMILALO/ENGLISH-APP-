@@ -64,6 +64,28 @@ def read_progress():
         return {"savedAt": None, "data": {}}
 
 
+def keep_study(incoming, previous):
+    """Carry forward the larger figure for every day already recorded.
+
+    Time studied is the one number that can only be earned, so it must
+    never come back down. A browser that has been cleared, or is simply
+    behind, would otherwise write a smaller total over a real one and
+    quietly take the day's work with it.
+    """
+    old = ((previous or {}).get("meta") or {}).get("study") or {}
+    if not old:
+        return incoming
+    meta = incoming.setdefault("meta", {})
+    study = meta.setdefault("study", {})
+    for day, seconds in old.items():
+        try:
+            if float(seconds) > float(study.get(day, 0)):
+                study[day] = seconds
+        except (TypeError, ValueError):
+            continue
+    return incoming
+
+
 def count_words(data):
     p = (data or {}).get("progress")
     return len(p) if isinstance(p, dict) else 0
@@ -258,6 +280,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 self._json({"savedAt": previous.get("savedAt"),
                             "ignored": True, "reason": reason}, 409)
                 return
+            # whatever else this write says, it cannot shorten a day
+            sent["data"] = keep_study(sent["data"], previous.get("data"))
             if reason:
                 kept = keep_superseded(previous)
                 sys.stdout.write("  backup %s -> %s\n" % (reason, kept.name))

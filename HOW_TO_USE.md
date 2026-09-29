@@ -98,6 +98,24 @@ A dated copy of the spreadsheet is kept in `backups/` before every write,
 and a word already somewhere in the workbook is refused rather than
 duplicated.
 
+## Earning the day's words
+
+Ten new words are not handed over just because the date changed. They
+are earned: study **one hour** today and tomorrow brings ten more. Fall
+short and you keep the words you have, which is what you would want
+anyway — ten words you have not learnt are not helped by ten more
+landing on top of them.
+
+A bar under today's words shows how far along you are.
+
+The time is measured honestly. It counts only while a card is on screen,
+the window is focused, and you have touched something in the last two
+minutes: a card left open while you make dinner is not study.
+
+To change the hour, set `DAILY_GOAL_MIN` near the top of the study
+section in `tools/template.html` and rebuild. The sentences around it
+follow the number.
+
 ## Your progress
 
 It is kept in two places: in this browser, and as a plain file in

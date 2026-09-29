@@ -384,6 +384,7 @@
 
   .gloss-toast{
     position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:310;
+    cursor:pointer;
     background:var(--panel); color:var(--text); border:1px solid var(--rule);
     border-left:3px solid var(--amber); border-radius:10px; padding:12px 16px;
     font-size:.85rem; line-height:1.45; max-width:min(92vw, 430px);
@@ -392,6 +393,10 @@
   .gloss-toast.ok{ border-left-color:var(--good); }
   .gloss-toast.bad{ border-left-color:var(--warn); }
   .gloss-toast b{ color:var(--text); }
+  .gloss-toast:hover{ border-color:var(--text-soft); }
+  .gloss-toast .toast-close{
+    display:block; margin-top:7px; font-size:.72rem; color:var(--text-soft);
+  }
 
   /* Today's ten, broken down by the stage each one has reached. */
   .stage-row{ display:flex; gap:6px; margin:12px 0 0; }
@@ -2612,10 +2617,10 @@
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
           ? (goalMet(todayStr())
-              ? 'Today is done, and so are your '+Math.floor(DAILY_GOAL_MIN/60)+' hours. Tomorrow brings '
+              ? 'Today is done, and so is your '+goalWords()+'. Tomorrow brings '
                 + LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
               : 'These '+set.length+' are done. Keep practicing to finish today’s '
-                + Math.floor(DAILY_GOAL_MIN/60)+' hours — that is what brings '
+                + goalWords()+' — that is what brings '
                 + LEARNSET_SIZE+' new words tomorrow.')
           : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+CATEGORIES.length+' lists. '
             + 'The app picks the method for each one: '+stageList
@@ -3091,7 +3096,14 @@
 
   function adoptBackup(b){
     progress = b.progress || {};
+    // Study time is earned, so take whichever side has more for each day
+    // rather than letting one replace the other outright.
+    const mineStudy = (meta && meta.study) || {};
     meta = b.meta || meta;
+    if(!meta.study) meta.study = {};
+    Object.keys(mineStudy).forEach(day=>{
+      if((mineStudy[day] || 0) > (meta.study[day] || 0)) meta.study[day] = mineStudy[day];
+    });
     speechScores = b.speech || {};
     myList = b.myList || [];
     customWords = b.custom || [];
@@ -3418,13 +3430,16 @@
     });
   }
 
+  // A message about a word, over the page. It goes when you tap it, and
+  // by itself if you do not -- it should never be something to wait out.
   function glossToast(message, tone, ms){
     const old = document.getElementById('gloss-toast');
     if(old) old.remove();
     const el = document.createElement('div');
     el.id = 'gloss-toast';
     el.className = 'gloss-toast' + (tone ? ' ' + tone : '');
-    el.innerHTML = message;
+    el.innerHTML = message + '<span class="toast-close">Tap to dismiss</span>';
+    el.addEventListener('click', ()=>{ if(el.parentNode) el.remove(); });
     document.body.appendChild(el);
     if(ms) setTimeout(()=>{ if(el.parentNode) el.remove(); }, ms);
     return el;
@@ -3694,7 +3709,7 @@
   // counts only while a session is actually on screen, the window is
   // visible, and you have touched something in the last two minutes. A
   // card left open while you make dinner is not study.
-  const DAILY_GOAL_MIN = 120;
+  const DAILY_GOAL_MIN = 60;
   const STUDY_TICK_MS = 5000;
   const STUDY_IDLE_MS = 120000;
 
@@ -3745,6 +3760,16 @@
   window.addEventListener('pagehide', ()=>{
     if(studyUnsaved){ studyUnsaved = 0; saveMeta(); }
   });
+
+  // "1 hour", "2 hours", "90 minutes" -- so the goal can be changed
+  // without the sentences around it reading oddly.
+  function goalWords(){
+    if(DAILY_GOAL_MIN % 60 === 0){
+      const h = DAILY_GOAL_MIN / 60;
+      return h + ' hour' + (h === 1 ? '' : 's');
+    }
+    return DAILY_GOAL_MIN + ' minutes';
+  }
 
   function hhmm(seconds){
     const m = Math.floor(seconds / 60);
