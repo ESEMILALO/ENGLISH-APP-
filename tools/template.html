@@ -281,6 +281,25 @@
   }
   .gloss-bubble:hover{ filter:brightness(1.06); }
   .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  /* Setting up the glossary lookup: status, and somewhere to paste. */
+  .key-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem;
+    color:var(--text-soft); margin:14px 2px 0; }
+  .key-dot{ width:8px; height:8px; border-radius:50%; background:var(--warn); flex-shrink:0; }
+  .key-dot.on{ background:var(--good); }
+  .key-form{ display:flex; gap:8px; margin:10px 2px 0; flex-wrap:wrap; }
+  .key-form input{
+    flex:1; min-width:180px; background:var(--bg); border:1px solid var(--rule);
+    color:var(--text); border-radius:8px; padding:10px 12px;
+    font-family:var(--mono); font-size:.82rem;
+  }
+  .key-form input:focus{ outline:none; border-color:var(--amber); }
+  .key-form button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:8px;
+    padding:10px 18px; font-weight:700; font-size:.82rem; cursor:pointer;
+    font-family:var(--sans);
+  }
+  .key-form button:disabled{ opacity:.6; cursor:default; }
+
   .gloss-pick{
     position:absolute; z-index:300; transform:translate(-50%, -100%);
     background:var(--panel); border:1px solid var(--rule); border-radius:12px;
@@ -2004,6 +2023,7 @@
         + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
         + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
         + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
+        + '<div id="key-host">'+keyRowHtml()+'</div>'
       + '</div>'
       + '</details>';
 
@@ -2041,6 +2061,7 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
+    wireKeyRow();
     wireCalendar();
     wireFresh(fresh);
     startFresh(fresh);
@@ -3553,6 +3574,98 @@
   });
   document.addEventListener('scroll', clearGlossBubble, true);
 
+  // --- Setting up the lookup ---------------------------------------------
+  // Everything else about the glossary is automatic; this is the one thing
+  // that needs a human, so it asks for as little as possible: paste, press,
+  // done. The key is checked before it is saved, so a typo is caught now
+  // rather than the next time a word fails to be added.
+  let keyState = null;   // {hasKey, pending:[]}
+
+  async function loadKeyState(){
+    try{
+      keyState = await fetch('/api/glossary', {cache:'no-store'}).then(r=>r.json());
+    }catch(e){ keyState = null; }
+    paintKeyRow();
+  }
+
+  function keyRowHtml(){
+    if(!keyState) return '';
+    const waiting = (keyState.pending || []).length;
+    if(keyState.hasKey){
+      return '<div class="key-row"><span class="key-dot on"></span>'
+        + '<span>Word lookup is on. Select a word while practising to add it.</span>'
+        + (waiting
+            ? ' <button class="reset-link" id="key-fill" style="display:inline; width:auto; margin:0;">'
+              + 'Fill in the '+waiting+' word'+(waiting===1?'':'s')+' waiting &rarr;</button>'
+            : '')
+        + '</div>';
+    }
+    return '<div class="key-row"><span class="key-dot"></span>'
+      + '<span>Word lookup needs an Anthropic API key'
+      + (waiting ? ' &mdash; '+waiting+' word'+(waiting===1?'':'s')+' waiting' : '')
+      + '.</span></div>'
+      + '<div class="key-form">'
+        + '<input type="password" id="key-input" placeholder="paste your key here" '
+          + 'autocomplete="off" spellcheck="false">'
+        + '<button id="key-save">Save</button>'
+      + '</div>'
+      + '<p class="hint">From console.anthropic.com &rarr; API Keys. It is checked before '
+      + 'it is saved, kept in <b>server/anthropic_key.txt</b> on this laptop, and never '
+      + 'sent anywhere except to Anthropic.</p>';
+  }
+
+  function paintKeyRow(){
+    const host = document.getElementById('key-host');
+    if(!host) return;
+    host.innerHTML = keyRowHtml();
+    wireKeyRow();
+  }
+
+  function wireKeyRow(){
+    const save = document.getElementById('key-save');
+    const input = document.getElementById('key-input');
+    const fill = document.getElementById('key-fill');
+    const send = async ()=>{
+      const value = input ? input.value.trim() : '';
+      if(!value) return;
+      save.disabled = true; save.textContent = 'Checking\u2026';
+      try{
+        const out = await fetch('/api/key', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ key: value })
+        }).then(r=>r.json());
+        if(input) input.value = '';
+        if(out.ok){
+          glossToast('Key saved and working. Word lookup is on.', 'ok', 6000);
+          await loadKeyState();
+        } else {
+          glossToast(esc(out.message || 'That key was not accepted.'), 'bad', 7000);
+          save.disabled = false; save.textContent = 'Save';
+        }
+      }catch(e){
+        glossToast('Could not reach the app server.', 'bad', 6000);
+        save.disabled = false; save.textContent = 'Save';
+      }
+    };
+    if(save) save.addEventListener('click', send);
+    if(input) input.addEventListener('keydown', e=>{
+      if(e.key === 'Enter'){ e.preventDefault(); send(); }
+    });
+    if(fill) fill.addEventListener('click', async ()=>{
+      fill.disabled = true; fill.textContent = 'Filling them in\u2026';
+      try{
+        const out = await fetch('/api/glossary/pending', {method:'POST',
+          headers:{'Content-Type':'application/json'}, body:'{}'}).then(r=>r.json());
+        glossToast(esc(out.message || 'Done.')
+          + (out.added && out.added.length ? '<br>' + esc(out.added.join(', ')) : '')
+          + '<br><small>Refresh to practice them.</small>', 'ok', 9000);
+        await loadKeyState();
+      }catch(e){
+        glossToast('That did not work.', 'bad', 6000);
+      }
+    });
+  }
+
   async function init(){
     loadProgress();
     loadMeta();
@@ -3565,6 +3678,7 @@
     // is drawn, so the day's set is built from the real picture.
     await restoreIfEmpty();
     renderHome();
+    loadKeyState();   // fills the glossary row in once the server answers
     // Meets you at the door, once per opening of the app.
     maybeOpenRecall();
   }

@@ -70,15 +70,25 @@ app is rebuilt — refresh and you can practice it.
 The sentence it came from is sent with it, so the right sense is chosen:
 a harness on a dog is not a harness on an engine.
 
-**This needs an Anthropic API key.** Get one from console.anthropic.com
-and put it, on one line and nothing else, in:
+**This needs an Anthropic API key**, which you paste into the app once:
 
-```
-servernthropic_key.txt
-```
+1. console.anthropic.com → **API Keys** → *Create Key*, and copy it.
+2. In Word Log, open **Everything else** at the bottom of the home
+   screen. There is a line there saying the lookup needs a key, with a
+   box next to it.
+3. Paste, press **Save**.
 
-Then restart the app. Without a key nothing is lost — words are saved in
-`progress/pending-words.json` and filled in as soon as a key appears.
+The key is checked against the API before it is saved, so a typo is
+caught immediately rather than the next time a word quietly fails to be
+added. It is written to `server/anthropic_key.txt` on this laptop, never
+committed, and sent nowhere except to Anthropic. Nothing needs
+restarting.
+
+Keys do not expire — it keeps working until you delete it in the console.
+
+Without a key nothing is lost: words wait in
+`progress/pending-words.json`, the app says how many are waiting, and
+once a key is in there is a button to fill them all in at once.
 
 You choose which list it joins each time — the five topics are offered,
 with the one you picked last at the top, since a run of new words usually

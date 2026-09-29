@@ -49,6 +49,8 @@ KEEP_DAILY = 30
 PROGRESS_LOCK = threading.Lock()
 API_PROGRESS = "/api/progress"
 API_GLOSSARY = "/api/glossary"
+API_KEY_SET = "/api/key"
+API_PENDING = "/api/glossary/pending"
 
 
 def read_progress():
@@ -185,7 +187,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
         the workbook -- but the server threads requests, so the app stays
         responsive while it happens.
         """
-        if self.path.split("?", 1)[0] != API_GLOSSARY:
+        route = self.path.split("?", 1)[0]
+        if route not in (API_GLOSSARY, API_KEY_SET, API_PENDING):
             self.send_error(501, "Not supported")
             return
         try:
@@ -202,6 +205,21 @@ class Handler(http.server.BaseHTTPRequestHandler):
             return
 
         import glossary
+        if route == API_KEY_SET:
+            # The key itself is never echoed back, logged or stored anywhere
+            # but the file it belongs in.
+            result = glossary.save_key(sent.get("key", ""))
+            sys.stdout.write("  api key: %s\n" % result.get("message"))
+            sys.stdout.flush()
+            self._json(result, 200 if result.get("ok") else 400)
+            return
+        if route == API_PENDING:
+            result = glossary.fill_pending()
+            sys.stdout.write("  pending: %s\n" % result.get("message"))
+            sys.stdout.flush()
+            self._json(result, 200 if result.get("ok") else 409)
+            return
+
         result = glossary.add(sent.get("word", ""), sent.get("context", ""),
                               sent.get("sheet"))
         sys.stdout.write("  glossary: %s\n" % result.get("message", result))

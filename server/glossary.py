@@ -61,6 +61,41 @@ def api_key():
     return None
 
 
+def check_key(key, timeout=20):
+    """Is this key usable? Asked of the models list, which costs nothing.
+
+    Worth doing at the moment it is pasted: a typo found now is a
+    sentence on screen, and a typo found later is a word that silently
+    fails to be added.
+    """
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/models?limit=1",
+        headers={"x-api-key": key, "anthropic-version": API_VERSION})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as res:
+            return res.status == 200, None
+    except urllib.error.HTTPError as e:
+        if e.code in (401, 403):
+            return False, "that key was not accepted"
+        return False, "the check failed (HTTP %s)" % e.code
+    except Exception as e:
+        return False, "could not reach the API (%s)" % str(e)[:80]
+
+
+def save_key(key):
+    """Write the key, but only once it is known to work."""
+    key = (key or "").strip()
+    if not key:
+        return {"ok": False, "message": "no key given"}
+    if len(key) > 300 or "\n" in key:
+        return {"ok": False, "message": "that does not look like a key"}
+    ok, why = check_key(key)
+    if not ok:
+        return {"ok": False, "message": why}
+    KEY_FILE.write_text(key + "\n", encoding="utf-8")
+    return {"ok": True, "message": "key saved and working"}
+
+
 # --- the queue, for when there is no key yet --------------------------------
 
 def read_pending():
@@ -238,6 +273,23 @@ def rebuild():
     out = subprocess.run([sys.executable, str(ROOT / "tools" / "build_word_log.py")],
                          capture_output=True, text=True, cwd=str(ROOT), timeout=180)
     return out.returncode == 0
+
+
+def fill_pending(limit=25):
+    """Work through the words that were waiting for a key."""
+    if not api_key():
+        return {"ok": False, "message": "still no key"}
+    done, failed = [], []
+    for item in list(read_pending())[:limit]:
+        result = add(item.get("word", ""), item.get("context", ""), item.get("sheet"))
+        if result.get("added") or result.get("already"):
+            done.append(item.get("word"))
+            drop_pending(item.get("word", ""))
+        else:
+            failed.append({"word": item.get("word"), "why": result.get("message")})
+    return {"ok": True, "added": done, "failed": failed,
+            "left": len(read_pending()),
+            "message": "%d added, %d left" % (len(done), len(read_pending()))}
 
 
 def add(word, context="", sheet=None):
