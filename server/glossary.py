@@ -38,8 +38,8 @@ KEY_FILE = Path(__file__).resolve().parent / "anthropic_key.txt"
 PENDING = ROOT / "progress" / "pending-words.json"
 BACKUPS = ROOT / "backups"
 
-# New words join the general list, so the five topics stay as they are and
-# the daily set keeps its shape. Change this to put them elsewhere.
+# Where a word goes when nothing says otherwise. You are asked each time,
+# so this is only the fallback.
 TARGET_SHEET = "School vocabulary"
 
 API_URL = "https://api.anthropic.com/v1/messages"
@@ -79,11 +79,11 @@ def write_pending(items):
     tmp.replace(PENDING)
 
 
-def queue_word(word, context):
+def queue_word(word, context, sheet=None):
     items = read_pending()
     if any(i.get("word", "").lower() == word.lower() for i in items):
         return items, False
-    items.append({"word": word, "context": context,
+    items.append({"word": word, "context": context, "sheet": sheet or TARGET_SHEET,
                   "addedAt": datetime.datetime.now().isoformat(timespec="seconds")})
     write_pending(items)
     return items, True
@@ -169,6 +169,30 @@ def ask_claude(word, context, key, timeout=45):
 
 # --- writing it into the workbook ------------------------------------------
 
+def sheet_names():
+    import openpyxl
+    wb = openpyxl.load_workbook(WORKBOOK, read_only=True)
+    try:
+        return list(wb.sheetnames)
+    finally:
+        wb.close()
+
+
+def resolve_sheet(wanted):
+    """The sheet to write to, matched loosely.
+
+    The name comes back from the app, and a stray difference in case or
+    spacing should send the word to the right list rather than to the
+    fallback -- and must never be taken as a new sheet to create.
+    """
+    names = sheet_names()
+    if wanted:
+        for n in names:
+            if n.strip().lower() == str(wanted).strip().lower():
+                return n
+    return TARGET_SHEET if TARGET_SHEET in names else names[0]
+
+
 def already_there(word):
     import openpyxl
     wb = openpyxl.load_workbook(WORKBOOK, read_only=True)
@@ -184,7 +208,7 @@ def already_there(word):
     return None
 
 
-def append_row(entry):
+def append_row(entry, sheet=None):
     """Add the entry to the workbook, keeping a dated copy of it first."""
     import openpyxl
 
@@ -193,7 +217,7 @@ def append_row(entry):
     shutil.copy(WORKBOOK, BACKUPS / ("ENGLISH SCHOOL.pre-glossary-%s.xlsx" % stamp))
 
     wb = openpyxl.load_workbook(WORKBOOK)
-    ws = wb[TARGET_SHEET]
+    ws = wb[sheet or TARGET_SHEET]
     row = ws.max_row + 1
 
     ws.cell(row=row, column=1).value = entry["word"].strip()
@@ -216,13 +240,14 @@ def rebuild():
     return out.returncode == 0
 
 
-def add(word, context=""):
+def add(word, context="", sheet=None):
     """The whole job. Returns a dict the app can show the user."""
     word = (word or "").strip()
     if not word:
         return {"ok": False, "error": "no word given"}
     if len(word) > 60:
         return {"ok": False, "error": "that is too long to be a word"}
+    target = resolve_sheet(sheet)
 
     where = already_there(word)
     if where:
@@ -231,27 +256,27 @@ def add(word, context=""):
 
     key = api_key()
     if not key:
-        queue_word(word, context)
-        return {"ok": True, "queued": True,
+        queue_word(word, context, target)
+        return {"ok": True, "queued": True, "sheet": target,
                 "message": "“%s” is saved to fill in later — no API key yet." % word}
 
     try:
         entry = ask_claude(word, context, key)
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "replace")[:200]
-        queue_word(word, context)
+        queue_word(word, context, target)
         return {"ok": False, "queued": True,
                 "message": "Saved for later; the lookup failed (HTTP %s)." % e.code,
                 "detail": detail}
     except Exception as e:
-        queue_word(word, context)
+        queue_word(word, context, target)
         return {"ok": False, "queued": True,
                 "message": "Saved for later; the lookup failed.",
                 "detail": str(e)[:200]}
 
-    row = append_row(entry)
+    row = append_row(entry, target)
     drop_pending(word)
     rebuilt = rebuild()
-    return {"ok": True, "added": True, "row": row, "sheet": TARGET_SHEET,
+    return {"ok": True, "added": True, "row": row, "sheet": target,
             "rebuilt": rebuilt, "entry": entry,
-            "message": "“%s” added to %s." % (entry["word"], TARGET_SHEET)}
+            "message": "“%s” added to %s." % (entry["word"], target)}

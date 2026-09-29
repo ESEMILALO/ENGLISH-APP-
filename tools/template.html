@@ -281,6 +281,36 @@
   }
   .gloss-bubble:hover{ filter:brightness(1.06); }
   .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  .gloss-pick{
+    position:absolute; z-index:300; transform:translate(-50%, -100%);
+    background:var(--panel); border:1px solid var(--rule); border-radius:12px;
+    padding:12px; box-shadow:0 14px 34px rgba(0,0,0,.5); width:max-content;
+    max-width:min(86vw, 300px);
+  }
+  .gloss-pick-head{
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:9px;
+  }
+  .gloss-pick-head b{ color:var(--amber); letter-spacing:0; text-transform:none; font-size:.82rem; }
+  .gloss-pick button{
+    display:block; width:100%; text-align:left; background:var(--bg);
+    border:1px solid var(--rule); color:var(--text); border-radius:8px;
+    padding:9px 11px; margin-bottom:5px; cursor:pointer;
+    font-family:var(--sans); font-size:.84rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .gloss-pick button:hover{ border-color:var(--amber); background:var(--panel); }
+  .gloss-pick button.last{ border-color:rgba(227,154,58,.55); }
+  .gloss-pick button.last::after{
+    content:'last used'; float:right; font-family:var(--mono); font-size:.58rem;
+    color:var(--text-soft); letter-spacing:.05em; padding-top:2px;
+  }
+  .gloss-pick .gloss-cancel{
+    border:none; background:none; color:var(--text-soft); text-decoration:underline;
+    font-size:.78rem; padding:5px 2px 0; margin:0; text-align:center;
+  }
+  .gloss-pick .gloss-cancel:hover{ background:none; border:none; color:var(--text); }
+
   .gloss-toast{
     position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:310;
     background:var(--panel); color:var(--text); border:1px solid var(--rule);
@@ -3371,6 +3401,7 @@
   // The selection has to be a plausible word or short phrase, or every
   // stray drag across a sentence would pop a button up.
   let glossBubble = null;
+  const GLOSS_LAST = 'wordlog_last_glossary_topic';
 
   function plausibleWord(text){
     const t = (text || '').trim().replace(/\s+/g, ' ');
@@ -3381,6 +3412,59 @@
 
   function clearGlossBubble(){
     if(glossBubble){ glossBubble.remove(); glossBubble = null; }
+    const pick = document.getElementById('gloss-pick');
+    if(pick) pick.remove();
+  }
+
+  // Which list should the word join? Asked every time, with the one you
+  // chose last offered first -- a run of new words usually belongs
+  // together, and it saves re-reading five options each time.
+  function askWhichTopic(word, context, left, top){
+    clearGlossBubble();
+    let last = '';
+    try{ last = localStorage.getItem(GLOSS_LAST) || ''; }catch(e){}
+    const order = CATEGORIES.slice().sort((a,b)=>
+      (b === last ? 1 : 0) - (a === last ? 1 : 0));
+
+    const panel = document.createElement('div');
+    panel.id = 'gloss-pick';
+    panel.className = 'gloss-pick';
+    panel.style.left = left + 'px';
+    panel.style.top = top + 'px';
+    panel.innerHTML = '<div class="gloss-pick-head">Add <b>' + esc(word) + '</b> to</div>'
+      + order.map(c=>'<button data-sheet="'+esc(c)+'"'
+          + (c === last ? ' class="last"' : '')+'>'+esc(c)+'</button>').join('')
+      + '<button class="gloss-cancel">Never mind</button>';
+    panel.addEventListener('mousedown', e=>e.preventDefault());
+    document.body.appendChild(panel);
+
+    // The panel is much taller than the little bubble was, so opening it
+    // upwards runs it off the top whenever the word is near it. Measure,
+    // then flip below or nudge sideways if it does not fit.
+    const box = panel.getBoundingClientRect();
+    if(box.top < 8){
+      panel.style.transform = 'translate(-50%, 0)';
+      panel.style.top = (top + 26) + 'px';
+    }
+    const after = panel.getBoundingClientRect();
+    if(after.left < 8){
+      panel.style.left = (parseFloat(panel.style.left) + (8 - after.left)) + 'px';
+    } else if(after.right > window.innerWidth - 8){
+      panel.style.left = (parseFloat(panel.style.left) - (after.right - window.innerWidth + 8)) + 'px';
+    }
+
+    panel.querySelectorAll('button[data-sheet]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const sheet = b.dataset.sheet;
+        try{ localStorage.setItem(GLOSS_LAST, sheet); }catch(e){}
+        panel.remove();
+        addToGlossary(word, context, sheet);
+      });
+    });
+    panel.querySelector('.gloss-cancel').addEventListener('click', ()=>{
+      panel.remove();
+      const sel = window.getSelection(); if(sel) sel.removeAllRanges();
+    });
   }
 
   function glossToast(message, tone, ms){
@@ -3395,20 +3479,19 @@
     return el;
   }
 
-  async function addToGlossary(word, context, bubble){
-    if(bubble){ bubble.disabled = true; bubble.textContent = 'Looking up ' + word + '\u2026'; }
-    glossToast('Looking up <b>' + esc(word) + '</b>\u2026');
+  async function addToGlossary(word, context, sheet){
+    glossToast('Looking up <b>' + esc(word) + '</b> for ' + esc(sheet) + '\u2026');
     try{
       const res = await fetch('/api/glossary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ word: word, context: context || '' })
+        body: JSON.stringify({ word: word, context: context || '', sheet: sheet })
       });
       const out = await res.json();
       clearGlossBubble();
       if(out.added){
         const m = out.entry && out.entry.meanings && out.entry.meanings[0];
-        glossToast('<b>' + esc(out.entry.word) + '</b> added to your spreadsheet.'
+        glossToast('<b>' + esc(out.entry.word) + '</b> added to ' + esc(out.sheet) + '.'
           + (m ? '<br>' + esc(m.meaning) : '')
           + '<br><small>Refresh to practice it.</small>', 'ok', 9000);
       } else if(out.already){
@@ -3455,8 +3538,10 @@
     b.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
     b.style.top = (rect.top + window.scrollY - 8) + 'px';
     const context = selectionContext(node);
+    const left = rect.left + rect.width/2 + window.scrollX;
+    const top = rect.top + window.scrollY - 8;
     b.addEventListener('mousedown', e=>e.preventDefault());  // keep the selection
-    b.addEventListener('click', ()=>addToGlossary(word, context, b));
+    b.addEventListener('click', ()=>askWhichTopic(word, context, left, top));
     document.body.appendChild(b);
     glossBubble = b;
   }

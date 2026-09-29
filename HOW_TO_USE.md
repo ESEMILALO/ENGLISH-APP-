@@ -80,9 +80,13 @@ servernthropic_key.txt
 Then restart the app. Without a key nothing is lost — words are saved in
 `progress/pending-words.json` and filled in as soon as a key appears.
 
-New words join **School vocabulary**. A dated copy of the spreadsheet is
-kept in `backups/` before every write, and a word already somewhere in
-the sheet is refused rather than duplicated.
+You choose which list it joins each time — the five topics are offered,
+with the one you picked last at the top, since a run of new words usually
+belongs together.
+
+A dated copy of the spreadsheet is kept in `backups/` before every write,
+and a word already somewhere in the workbook is refused rather than
+duplicated.
 
 ## Your progress
 
