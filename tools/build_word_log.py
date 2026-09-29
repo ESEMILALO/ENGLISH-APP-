@@ -40,6 +40,8 @@ ROOT = TOOLS.parent
 FOLDER = ROOT                      # where the spreadsheet is looked for
 TEMPLATE = TOOLS / "template.html"
 OUTPUT = ROOT / "app" / "vocabulary_practice.html"
+IMAGE_MAP = TOOLS / "word_images.json"
+IMAGES = ROOT / "app" / "images"
 
 
 def find_spreadsheet():
@@ -149,6 +151,33 @@ def extract_words(path):
     return words, dupes
 
 
+def load_pictures(known):
+    """What word_images.py found, for the words that are still in the sheet.
+
+    Only the four things the page needs travel with it: the file, who to
+    credit, the licence, and where it came from. A word whose picture file
+    has since been deleted is left without one rather than showing a gap.
+    """
+    if not IMAGE_MAP.exists():
+        return {}
+    try:
+        found = json.loads(IMAGE_MAP.read_text(encoding="utf-8"))
+    except Exception:
+        print("  (tools/word_images.json is unreadable -- carrying on without pictures)")
+        return {}
+
+    out = {}
+    for word_id, row in found.items():
+        name = (row or {}).get("file")
+        if not name or word_id not in known:
+            continue
+        if not (IMAGES / name).exists():
+            continue
+        out[word_id] = {"file": name, "by": row.get("by", ""),
+                        "lic": row.get("lic", ""), "page": row.get("page", "")}
+    return out
+
+
 def main():
     spreadsheet = find_spreadsheet()
     if not TEMPLATE.exists():
@@ -177,6 +206,14 @@ def main():
     final = shell.replace(
         marker,
         "const WORDS = " + json.dumps(words, ensure_ascii=True) + ";"
+    )
+
+    pictures = load_pictures({w["id"] for w in words})
+    if pictures:
+        print(f"\n{len(pictures)} of them have a picture in app/images/.")
+    final = final.replace(
+        "const WORD_IMAGES = {};",
+        "const WORD_IMAGES = " + json.dumps(pictures, ensure_ascii=True) + ";"
     )
     OUTPUT.write_text(final, encoding="utf-8")
     print(f"\nDone. Wrote {OUTPUT.name} -- open it in your browser.")

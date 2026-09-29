@@ -24,6 +24,7 @@ import http.client
 import http.server
 import json
 import os
+import re
 import socketserver
 import sys
 import threading
@@ -173,7 +174,15 @@ TYPES = {
     ".js": "text/javascript; charset=utf-8",
     ".webmanifest": "application/manifest+json; charset=utf-8",
     ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
 }
+
+# The word pictures are the one place a name is not known in advance, so
+# the name is checked instead of listed: plain characters, one of two
+# extensions, and nothing that could climb out of app/images.
+IMAGES = FOLDER / "images"
+IMAGE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,80}\.(jpg|jpeg|png)$")
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -183,7 +192,16 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def _resolve(self):
         path = self.path.split("?", 1)[0].split("#", 1)[0]
         name = ALLOWED.get(path)
-        return (FOLDER / name) if name else None
+        if name:
+            return FOLDER / name
+        if path.startswith("/images/"):
+            leaf = path[len("/images/"):]
+            if "/" not in leaf and ".." not in leaf and IMAGE_NAME.match(leaf):
+                target = (IMAGES / leaf).resolve()
+                # resolved, so a link or a clever name cannot point outside
+                if str(target).startswith(str(IMAGES.resolve())):
+                    return target
+        return None
 
     def _send(self, body, ctype, extra=None):
         self.send_response(200)

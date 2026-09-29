@@ -352,6 +352,22 @@
   .chat-head{ display:flex; align-items:baseline; gap:10px; }
   .chat-heard{ font-size:.78rem; color:var(--amber); margin:0 4px 8px; font-style:italic; }
 
+  /* a picture of what the word means */
+  .word-pic{
+    margin:14px 0 0; padding:0; width:100%; display:flex;
+    flex-direction:column; align-items:center;
+  }
+  .word-pic img{
+    width:100%; max-width:300px; height:auto; border-radius:12px;
+    border:1px solid var(--rule); display:block; background:var(--panel);
+  }
+  .word-pic figcaption{
+    font-family:var(--mono); font-size:.56rem; letter-spacing:.04em;
+    color:var(--text-soft); opacity:.62; margin-top:6px; text-align:center;
+    max-width:300px; line-height:1.45;
+  }
+  .word-pic figcaption a{ color:inherit; }
+
   /* choosing the voice */
   .voice-row{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:10px 2px 0; }
   .voice-row label{
@@ -1002,6 +1018,10 @@
 <script>
 (function(){
   const WORDS = [];
+  // Filled in by build_word_log.py from tools/word_images.json. Only the
+  // words where a picture was found and judged to show the meaning are in
+  // here: a wrong picture teaches the wrong thing, so most words have none.
+  const WORD_IMAGES = {};
 
   const CATEGORIES = ['School vocabulary','504 Main words','504 Secondary','School books','Series'];
   const CAT_ABBR = {
@@ -2517,6 +2537,26 @@
     });
   }
 
+  // Shown under the meaning, never instead of it. The credit is required
+  // by the licence the picture is shared under, and is kept small.
+  function wordPicHtml(w){
+    const pic = WORD_IMAGES[w.id];
+    if(!pic || !pic.file) return '';
+    const credit = [pic.by, pic.lic].filter(Boolean).join(' \u00b7 ');
+    return '<figure class="word-pic">'
+      // Not lazy: a card shows one word, the picture is wanted now, and
+      // Chrome will not load a lazy image dropped straight into innerHTML.
+      + '<img src="images/' + esc(pic.file) + '" alt="' + esc(w.w) + '" '
+        + 'decoding="async">'
+      + (credit
+          ? '<figcaption>' + (pic.page
+              ? '<a href="' + esc(pic.page) + '" target="_blank" rel="noopener">'
+                + esc(credit) + '</a>'
+              : esc(credit)) + '</figcaption>'
+          : '')
+      + '</figure>';
+  }
+
   function renderMeanings(w){
     const rows = w.me.map((m,i)=>{
       const exampleHtml = m.e ? (
@@ -2629,7 +2669,7 @@
         + '</div>';
       const timingBar = '<div class="fast-bar-track"><div class="fast-bar-fill" id="fast-bar-fill"></div></div>';
       cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+timingBar
-        + (fastPhase==='back' ? renderMeanings(w) : '');
+        + (fastPhase==='back' ? renderMeanings(w) + wordPicHtml(w) : '');
       belowCard = '<div class="fast-controls">'
           + '<button class="fast-pause-btn" id="fast-pause" aria-label="'+(fastPaused?'Resume':'Pause')+'">'+(fastPaused?ICON_PLAY:ICON_PAUSE)+'</button>'
           + '<button class="fast-pause-btn" id="fast-skip" aria-label="Next word">'+ICON_SKIP+'</button>'
@@ -2643,7 +2683,8 @@
         cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+'<button class="btn-oncard" id="reveal-btn">Reveal meaning</button>';
         belowCard = '<p class="hint" style="text-align:center;">Press Enter</p>';
       } else {
-        cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow+renderMeanings(w);
+        cardBody = '<div class="card-word">'+esc(w.w)+'</div>'+pronRow
+          + renderMeanings(w) + wordPicHtml(w);
         belowCard = '<div class="rate-row">'
             + '<button class="tag-btn tag-warn" id="rate-warn">'+ICON_WRENCH+'Needs practice</button>'
             + '<button class="tag-btn tag-good" id="rate-good">'+ICON_CHECK+'Got it</button>'
