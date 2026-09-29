@@ -98,6 +98,26 @@ A dated copy of the spreadsheet is kept in `backups/` before every write,
 and a word already somewhere in the workbook is refused rather than
 duplicated.
 
+## Using the words for real
+
+Once the day's ten are all finished, a button appears: **use today's
+words in a conversation**. Pick a situation — a shop, an interview, a
+flat viewing, the doctor, an old friend — and someone plays that part
+while you talk to them.
+
+Your ten words sit along the top and turn green as you use them. Only
+what **you** write counts: the partner is told not to use them itself,
+so each one has to come from you. Recognising a word is easy; producing
+one in the middle of a conversation is the thing worth practising.
+
+It also corrects you, briefly and in character, when you make a real
+mistake — a conversation that lets everything past is pleasant and
+useless.
+
+Time spent talking counts toward the day's hour.
+
+This uses the same Anthropic key as adding words.
+
 ## Earning the day's words
 
 Ten new words are not handed over just because the date changed. They

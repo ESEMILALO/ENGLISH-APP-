@@ -51,6 +51,7 @@ API_PROGRESS = "/api/progress"
 API_GLOSSARY = "/api/glossary"
 API_KEY_SET = "/api/key"
 API_PENDING = "/api/glossary/pending"
+API_CHAT = "/api/chat"
 
 
 def read_progress():
@@ -210,7 +211,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         responsive while it happens.
         """
         route = self.path.split("?", 1)[0]
-        if route not in (API_GLOSSARY, API_KEY_SET, API_PENDING):
+        if route not in (API_GLOSSARY, API_KEY_SET, API_PENDING, API_CHAT):
             self.send_error(501, "Not supported")
             return
         try:
@@ -224,6 +225,18 @@ class Handler(http.server.BaseHTTPRequestHandler):
             sent = json.loads(self.rfile.read(length).decode("utf-8"))
         except Exception:
             self._json({"ok": False, "error": "bad json"}, 400)
+            return
+
+        if route == API_CHAT:
+            import chat
+            result = chat.ask(sent.get("history") or [],
+                              sent.get("scenario") or "",
+                              sent.get("words") or [],
+                              first=bool(sent.get("first")))
+            if result.get("ok") and result.get("used"):
+                sys.stdout.write("  chat: used %s\n" % ", ".join(result["used"]))
+                sys.stdout.flush()
+            self._json(result, 200 if result.get("ok") else 502)
             return
 
         import glossary

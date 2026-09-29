@@ -281,6 +281,66 @@
   }
   .gloss-bubble:hover{ filter:brightness(1.06); }
   .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  /* Conversation practice: the words you are learning, used for real. */
+  .chat-wrap{ display:flex; flex-direction:column; height:calc(100vh - 150px); min-height:380px; }
+  .chat-words{
+    display:flex; gap:6px; flex-wrap:wrap; padding-bottom:12px;
+    border-bottom:1px solid var(--rule); margin-bottom:12px;
+  }
+  .chat-word{
+    font-family:var(--mono); font-size:.72rem; padding:5px 9px; border-radius:20px;
+    border:1px solid var(--rule); color:var(--text-soft); background:var(--panel);
+    transition:all .25s ease;
+  }
+  .chat-word.used{
+    border-color:var(--good); color:var(--bg); background:var(--good); font-weight:600;
+  }
+  .chat-log{ flex:1; overflow-y:auto; padding:2px 2px 8px; }
+  .chat-turn{ margin-bottom:14px; max-width:82%; }
+  .chat-turn.them{ margin-right:auto; }
+  .chat-turn.you{ margin-left:auto; }
+  .chat-bubble{
+    padding:11px 14px; border-radius:14px; font-size:.92rem; line-height:1.5;
+  }
+  .them .chat-bubble{ background:var(--panel); border:1px solid var(--rule); border-bottom-left-radius:5px; }
+  .you .chat-bubble{ background:var(--amber); color:var(--amber-ink); border-bottom-right-radius:5px; }
+  .chat-who{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); margin:0 4px 4px;
+  }
+  .you .chat-who{ text-align:right; }
+  .chat-fix{
+    margin:6px 4px 0; font-size:.8rem; line-height:1.45; color:var(--warn);
+    border-left:2px solid var(--warn); padding-left:9px;
+  }
+  .chat-scored{
+    margin:6px 4px 0; font-size:.76rem; color:var(--good); font-family:var(--mono);
+  }
+  .chat-ask{ display:flex; gap:8px; padding-top:10px; border-top:1px solid var(--rule); }
+  .chat-ask input{
+    flex:1; background:var(--bg); border:1px solid var(--rule); color:var(--text);
+    border-radius:9px; padding:12px 14px; font-family:var(--sans); font-size:.95rem;
+  }
+  .chat-ask input:focus{ outline:none; border-color:var(--amber); }
+  .chat-ask button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:9px;
+    padding:12px 20px; font-weight:700; font-size:.86rem; cursor:pointer; font-family:var(--sans);
+  }
+  .chat-ask button:disabled{ opacity:.55; cursor:default; }
+  .chat-thinking{ font-size:.82rem; color:var(--text-soft); font-style:italic; margin:0 4px 12px; }
+
+  /* the scenario chooser */
+  .scene{
+    display:block; width:100%; text-align:left; background:var(--panel);
+    border:1px solid var(--rule); border-left:3px solid var(--amber);
+    border-radius:11px; padding:13px 15px; margin-bottom:9px; cursor:pointer;
+    font-family:var(--sans); color:var(--text);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .scene:hover{ border-color:var(--amber); background:#28313a; }
+  .scene b{ display:block; font-family:var(--cond); font-size:1.05rem; margin-bottom:3px; }
+  .scene span{ display:block; font-size:.82rem; color:var(--text-soft); line-height:1.45; }
+
   /* Today's two hours: what you have put in, and what it unlocks. */
   .studybar{ margin:14px 0 0; }
   .studybar-line{
@@ -2059,6 +2119,13 @@
       + heroHtml
       + '<div class="stage-row">'+stagePills+'</div>'
       + '<div id="studybar-host">'+studyBarHtml()+'</div>'
+      + (chatUnlocked()
+          ? '<button class="btn-primary" id="go-chat" style="margin-top:16px;">'
+            + 'Use today&rsquo;s words in a conversation &rarr;</button>'
+            + '<p class="hint">Someone plays a part and you talk to them. Only the words '
+            + 'you write yourself count.</p>'
+          : '<p class="hint" style="margin-top:16px;">Finish today&rsquo;s '+LEARNSET_SIZE
+            + ' and you can take them into a real conversation.</p>')
       + recallHtml(homeDue)
       + '</div>';
 
@@ -2123,6 +2190,8 @@
       + '</div>';
 
     wireAddWord();
+    const chatBtn = el('#go-chat');
+    if(chatBtn) chatBtn.addEventListener('click', renderChatPicker);
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
@@ -3744,8 +3813,10 @@
   function studying(){
     if(document.visibilityState !== 'visible') return false;
     if(Date.now() - lastInteraction > STUDY_IDLE_MS) return false;
-    // a session is on screen when a card is
-    return !!document.querySelector('.card') || !!document.getElementById('recall-scrim');
+    // a card, the check at the door, or a conversation: all of it is study
+    return !!document.querySelector('.card')
+        || !!document.getElementById('recall-scrim')
+        || !!document.querySelector('.chat-wrap');
   }
 
   function startStudyClock(){
@@ -3809,6 +3880,197 @@
   function paintStudyBar(){
     const host = document.getElementById('studybar-host');
     if(host) host.innerHTML = studyBarHtml();
+  }
+
+  // --- Using the words for real ------------------------------------------
+  //
+  // Unlocked by finishing the day's ten, because there is no point
+  // rehearsing words you have not learnt yet. Someone plays a part -- a
+  // shop assistant, a landlord, an interviewer -- and the conversation is
+  // built to need your words.
+  //
+  // Only what you write counts. The partner is told not to use the target
+  // words itself, so each one has to come from you, and they tick off as
+  // they do. Recognising a word is easy; producing one is the thing.
+  const SCENARIOS = [
+    { name:'At the shop',
+      blurb:'You are buying something and there is a problem with it.',
+      role:'You are a shop assistant. The customer has come in about something they bought that is not right. Be helpful but ask questions before agreeing to anything.' },
+    { name:'A job interview',
+      blurb:'You are being interviewed for a job you want.',
+      role:'You are interviewing this person for a job. Ask about their experience, how they handle difficulty, and why they want the work. Be friendly but not easy.' },
+    { name:'Renting a flat',
+      blurb:'You are seeing a flat and asking about it.',
+      role:'You are a landlord showing a flat. Answer questions about the place, the neighbours and the rules, and ask the viewer about themselves.' },
+    { name:'At the doctor',
+      blurb:'You are describing what is wrong.',
+      role:'You are a doctor seeing a patient. Ask what is wrong, how long it has been going on, and what makes it better or worse.' },
+    { name:'Catching up with a friend',
+      blurb:'You have not seen each other for months.',
+      role:'You are an old friend who has not seen them in months. Ask what they have been doing, tell them a little about yourself, and keep it light.' }
+  ];
+
+  let chat = null;   // { scenario, words, used:[], turns:[], busy, error }
+
+  function chatWordsForToday(){
+    return todaysSet().map(w=>w.w);
+  }
+
+  function chatUnlocked(){
+    const set = todaysSet();
+    return set.length > 0 && set.every(w=>statusOf(w.id)==='mastered');
+  }
+
+  function renderChatPicker(){
+    const words = chatWordsForToday();
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Conversation</div>'
+      + '<h1 class="title">Use them for real</h1>'
+      + '<p class="subtitle">Someone plays a part and you talk to them. Your '
+        + words.length + ' words are the ones the conversation is built to need &mdash; '
+        + 'and only the ones <em>you</em> write count.</p>'
+      + '<div class="chat-words">'
+        + words.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
+      + '</div>'
+      + '<div class="section-label">Pick a situation</div>'
+      + SCENARIOS.map((sc,i)=>'<button class="scene" data-i="'+i+'">'
+          + '<b>'+esc(sc.name)+'</b><span>'+esc(sc.blurb)+'</span></button>').join('')
+      + '<button class="btn-secondary" id="chat-home" style="margin-top:14px;">&larr; Back to home</button>'
+      + '</div>';
+
+    root.querySelectorAll('.scene').forEach(b=>{
+      b.addEventListener('click', ()=>startChat(SCENARIOS[+b.dataset.i], words));
+    });
+    el('#chat-home').addEventListener('click', renderHome);
+  }
+
+  function startChat(scenario, words){
+    chat = { scenario: scenario, words: words, used: [], turns: [], busy: true, error: '' };
+    renderChat();
+    sendChat(true);
+  }
+
+  function renderChat(){
+    if(!chat) return;
+    const done = chat.used.length, total = chat.words.length;
+
+    root.innerHTML = '<div class="view"><div class="chat-wrap">'
+      + '<div class="eyebrow">' + esc(chat.scenario.name)
+        + ' &middot; ' + done + ' of ' + total + ' used</div>'
+      + '<div class="chat-words">'
+        + chat.words.map(w=>'<span class="chat-word'
+            + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
+      + '</div>'
+      + '<div class="chat-log" id="chat-log">'
+        + chat.turns.map(t=>{
+            if(t.who === 'you'){
+              return '<div class="chat-turn you"><div class="chat-who">You</div>'
+                + '<div class="chat-bubble">'+esc(t.text)+'</div>'
+                + (t.scored && t.scored.length
+                    ? '<div class="chat-scored">+ '+t.scored.map(esc).join(', ')+'</div>' : '')
+                + (t.fix ? '<div class="chat-fix">'+esc(t.fix)+'</div>' : '')
+                + '</div>';
+            }
+            return '<div class="chat-turn them"><div class="chat-who">'
+              + esc(chat.scenario.name)+'</div>'
+              + '<div class="chat-bubble">'+esc(t.text)+'</div></div>';
+          }).join('')
+        + (chat.busy ? '<p class="chat-thinking">typing&hellip;</p>' : '')
+        + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
+      + '</div>'
+      + '<div class="chat-ask">'
+        + '<input type="text" id="chat-input" placeholder="Write your reply in English..." '
+          + 'autocomplete="off"'+(chat.busy?' disabled':'')+'>'
+        + '<button id="chat-send"'+(chat.busy?' disabled':'')+'>Send</button>'
+      + '</div>'
+      + '<button class="reset-link" id="chat-end" style="margin-top:10px;">'
+        + 'End the conversation &rarr;</button>'
+      + '</div></div>';
+
+    const log = el('#chat-log');
+    if(log) log.scrollTop = log.scrollHeight;
+    const input = el('#chat-input');
+    if(input && !chat.busy){
+      input.focus();
+      input.addEventListener('keydown', e=>{
+        if(e.key === 'Enter'){ e.preventDefault(); sendChat(false); }
+      });
+    }
+    const send = el('#chat-send');
+    if(send) send.addEventListener('click', ()=>sendChat(false));
+    el('#chat-end').addEventListener('click', endChat);
+  }
+
+  async function sendChat(first){
+    if(!chat || (chat.busy && !first)) return;
+    let text = '';
+    if(!first){
+      const input = el('#chat-input');
+      text = input ? input.value.trim() : '';
+      if(!text) return;
+      chat.turns.push({ who:'you', text:text });
+    }
+    chat.busy = true;
+    chat.error = '';
+    renderChat();
+
+    // only the real back-and-forth goes to the model, not the scoring notes
+    const history = chat.turns.map(t=>({
+      role: t.who === 'you' ? 'user' : 'assistant',
+      content: t.text
+    }));
+
+    try{
+      const out = await fetch('/api/chat', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ history: history, words: chat.words,
+                               scenario: chat.scenario.role, first: !!first })
+      }).then(r=>r.json());
+
+      chat.busy = false;
+      if(!out.ok){
+        chat.error = out.message || 'The reply did not arrive.';
+      } else {
+        const fresh = (out.used || []).filter(w=>chat.used.indexOf(w) < 0);
+        fresh.forEach(w=>chat.used.push(w));
+        if(!first && chat.turns.length){
+          const mine = chat.turns[chat.turns.length - 1];
+          if(mine.who === 'you'){ mine.scored = fresh; mine.fix = out.correction || ''; }
+        }
+        chat.turns.push({ who:'them', text: out.reply });
+      }
+    }catch(e){
+      chat.busy = false;
+      chat.error = 'Could not reach the app server.';
+    }
+    renderChat();
+  }
+
+  function endChat(){
+    const done = chat ? chat.used.length : 0;
+    const total = chat ? chat.words.length : 0;
+    const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
+    chat = null;
+    root.innerHTML = '<div class="view">'
+      + '<div class="eyebrow">Conversation</div>'
+      + '<h1 class="title">'+done+' of '+total+' used</h1>'
+      + '<p class="subtitle">'+(done === total
+          ? 'Every word, in a real conversation. That is the whole point of them.'
+          : (done
+              ? 'Good going. The ones that did not come up are worth another conversation.'
+              : 'Nothing came up this time. A different situation might suit these words better.'))
+        + '</p>'
+      + (missed.length
+          ? '<div class="section-label">Still to use</div>'
+            + '<div class="chat-words">'
+            + missed.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
+            + '</div>'
+          : '')
+      + '<button class="btn-primary" id="chat-again" style="margin-top:16px;">Another conversation &rarr;</button>'
+      + '<button class="btn-secondary" id="chat-home" style="margin-top:10px;">&larr; Back to home</button>'
+      + '</div>';
+    el('#chat-again').addEventListener('click', renderChatPicker);
+    el('#chat-home').addEventListener('click', renderHome);
   }
 
   async function init(){
