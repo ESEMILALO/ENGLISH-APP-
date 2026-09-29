@@ -262,6 +262,59 @@
     .fresh-tick span.run{ animation:none; width:100%; }
   }
 
+  /* Two blocks abreast where there is room, stacked where there is not. */
+  .home-pair{ display:block; }
+  @media (min-width:900px){
+    .home-pair{
+      display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:0 36px; align-items:start;
+    }
+  }
+
+  /* The calendar: which words you finished, and on which day. */
+  .cal-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+  .cal-title{ font-family:var(--cond); font-weight:700; font-size:1.05rem; color:var(--text); }
+  .cal-nav{ display:flex; gap:6px; }
+  .cal-nav button{
+    background:transparent; border:1px solid var(--rule); color:var(--text-soft);
+    width:28px; height:28px; border-radius:7px; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:.85rem; line-height:1;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .cal-nav button:hover{ border-color:var(--text-soft); color:var(--text); }
+  .cal-nav button:disabled{ opacity:.3; cursor:default; }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .cal-dow{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--text-soft); text-align:center; padding-bottom:4px;
+  }
+  .cal-day{
+    aspect-ratio:1; min-height:30px; border:1px solid transparent; border-radius:8px;
+    background:var(--bg); color:var(--text-soft); font-family:var(--mono); font-size:.76rem;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+    padding:0; cursor:default;
+  }
+  .cal-day.blank{ background:transparent; border-color:transparent; }
+  /* a day you finished words on, shaded by how many */
+  .cal-day.has{ color:var(--text); cursor:pointer; border-color:rgba(92,174,124,.35); }
+  .cal-day.has:hover{ border-color:var(--good); }
+  .cal-day.today{ border-color:var(--amber); color:var(--amber); }
+  .cal-day.sel{ background:var(--good); color:var(--bg); border-color:var(--good); }
+  .cal-count{ font-size:.56rem; opacity:.85; }
+  .cal-list{ margin-top:12px; border-top:1px solid var(--rule); padding-top:10px; }
+  .cal-list-head{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:7px;
+  }
+  .cal-word{
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+    font-size:.86rem; padding:5px 2px; border-bottom:1px solid rgba(58,70,80,.45);
+  }
+  .cal-word:last-child{ border-bottom:none; }
+  .cal-word em{ color:var(--text-soft); font-size:.74rem; font-family:var(--mono); font-style:normal; }
+  .cal-empty{ font-size:.82rem; color:var(--text-soft); line-height:1.5; }
+
   /* section headings, so the page reads as groups instead of one long run */
   .section-label{
     font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
@@ -1490,6 +1543,11 @@
       p.step = 0;
     }
     p.status = (p.step>=SRS_MASTER_STEP) ? 'mastered' : 'learning';
+    // The day a word was finished, so the calendar can show it. Cleared if
+    // it ever falls back out of mastered, so the date always refers to the
+    // time it actually stuck.
+    if(p.status === 'mastered'){ if(!p.masteredAt) p.masteredAt = new Date().toISOString(); }
+    else if(p.masteredAt){ delete p.masteredAt; }
     p.due = new Date(Date.now() + SRS_STEP_MINUTES[p.step]*60000).toISOString();
     p.lastSeen = new Date().toISOString();
     progress[w.id]=p;
@@ -1813,6 +1871,12 @@
       + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
+    const calHtml = '<div class="home-band">'
+      + '<div class="band-head"><span>Calendar</span>'
+        + '<span class="band-hint">what you finished, by day</span></div>'
+      + '<div id="cal-host">'+calendarHtml()+'</div>'
+      + '</div>';
+
     // Topics and the odds and ends live at the end, closed up, so the
     // screen is only what you need to do today.
     const moreHtml = '<details class="home-more">'
@@ -1832,9 +1896,8 @@
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
-      + todayHtml
-      + statsHtml
-      + freshHtml
+      + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
+      + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
       + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">Reset progress</button>'
@@ -1855,6 +1918,7 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
+    wireCalendar();
     wireFresh(fresh);
     startFresh(fresh);
     root.querySelectorAll('.cat-row').forEach(b=>{
@@ -2667,6 +2731,7 @@
       p.step = 2;
       p.status = 'learning';
       p.due = new Date(Date.now() + SRS_STEP_MINUTES[2]*60000).toISOString();
+      if(p.masteredAt) delete p.masteredAt; // it did not stick after all
     }
     p.lastSeen = new Date().toISOString();
     progress[w.id] = p;
@@ -3019,6 +3084,135 @@
                           headers: { 'Content-Type': 'application/json' } });
     }catch(e){}
   });
+
+  // --- Which words you finished, and when -------------------------------
+  //
+  // Words mastered before the app started recording the day are dated by
+  // the last time they were practised, which for a finished word is the
+  // session that finished it. Close enough to be honest, and the only
+  // thing that history offers.
+  let calYear = null, calMonth = null, calPicked = null;
+
+  function dayKey(iso){
+    if(!iso) return null;
+    const d = new Date(iso);
+    if(isNaN(d.getTime())) return null;
+    return todayStr(d);
+  }
+
+  function masteredByDay(){
+    const days = {};
+    WORDS.forEach(w=>{
+      const p = progress[w.id];
+      if(!p || statusOf(w.id) !== 'mastered') return;
+      const key = dayKey(p.masteredAt || p.lastSeen);
+      if(!key) return;
+      (days[key] = days[key] || []).push(w);
+    });
+    return days;
+  }
+
+  function calendarHtml(){
+    const days = masteredByDay();
+    const keys = Object.keys(days).sort();
+    const now = new Date();
+    if(calYear === null){
+      // open on the month of the most recent finished word, not on an
+      // empty month, so there is something to see straight away
+      const last = keys.length ? keys[keys.length-1] : todayStr();
+      const parts = last.split('-').map(Number);
+      calYear = parts[0]; calMonth = parts[1]-1;
+    }
+
+    const first = new Date(calYear, calMonth, 1);
+    const lead = first.getDay();
+    const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+    const monthName = first.toLocaleDateString('en-US', {month:'long', year:'numeric'});
+
+    // Back is always open -- looking at a month before you started is
+    // harmless, and refusing it strands you when everything you have is in
+    // one month. Forward stops at this month, since later is not history.
+    const atEnd = new Date(calYear, calMonth, 1) >= new Date(now.getFullYear(), now.getMonth(), 1);
+
+    let cells = ['S','M','T','W','T','F','S']
+      .map(d=>'<div class="cal-dow">'+d+'</div>').join('');
+    for(let i=0;i<lead;i++) cells += '<div class="cal-day blank"></div>';
+    for(let d=1; d<=daysInMonth; d++){
+      const key = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const got = days[key] ? days[key].length : 0;
+      const cls = ['cal-day'];
+      if(got) cls.push('has');
+      if(key === todayStr()) cls.push('today');
+      if(key === calPicked) cls.push('sel');
+      // stronger shading the more words landed that day
+      const shade = got ? ' style="background:rgba(92,174,124,'+Math.min(.10 + got*0.10, .45)+');"' : '';
+      cells += '<button class="'+cls.join(' ')+'"'+shade
+        + (got ? ' data-day="'+key+'"' : ' disabled')+'>'
+        + '<span>'+d+'</span>'
+        + (got ? '<span class="cal-count">'+got+'</span>' : '')
+        + '</button>';
+    }
+
+    let below;
+    if(calPicked && days[calPicked]){
+      const list = days[calPicked].slice().sort((a,b)=>a.w.localeCompare(b.w));
+      below = '<div class="cal-list">'
+        // friendlyDate says "Today" and "Yesterday", which do not take
+        // the "on" that a date does.
+        + '<div class="cal-list-head">'+list.length+' word'+(list.length===1?'':'s')
+          + ' finished '+(calPicked===todayStr() || friendlyDate(calPicked)==='Yesterday'
+              ? friendlyDate(calPicked).toLowerCase()
+              : 'on '+friendlyDate(calPicked))+'</div>'
+        + list.map(w=>'<div class="cal-word"><span>'+esc(w.w)+'</span>'
+            + '<em>'+esc(CAT_ABBR[w.cat]||w.cat)+'</em></div>').join('')
+        + '</div>';
+    } else {
+      const total = keys.reduce((n,k)=>n+days[k].length, 0);
+      below = '<div class="cal-list"><p class="cal-empty">'
+        + (total
+            ? 'Shaded days are days you finished words. Tap one to see which.'
+            : 'Nothing finished yet. As you master words they will appear here, on the day you got them.')
+        + '</p></div>';
+    }
+
+    return '<div class="cal-head">'
+        + '<span class="cal-title">'+monthName+'</span>'
+        + '<span class="cal-nav">'
+          + '<button id="cal-prev" aria-label="Previous month">&lsaquo;</button>'
+          + '<button id="cal-next"'+(atEnd?' disabled':'')+' aria-label="Next month">&rsaquo;</button>'
+        + '</span>'
+      + '</div>'
+      + '<div class="cal-grid">'+cells+'</div>'
+      + below;
+  }
+
+  // Repaints only the calendar, so changing month never disturbs the rest
+  // of the page or restarts the Keep them fresh rotation.
+  function paintCalendar(){
+    const host = document.getElementById('cal-host');
+    if(!host) return;
+    host.innerHTML = calendarHtml();
+    wireCalendar();
+  }
+
+  function wireCalendar(){
+    const prev = document.getElementById('cal-prev');
+    const next = document.getElementById('cal-next');
+    if(prev) prev.addEventListener('click', ()=>{
+      calMonth--; if(calMonth < 0){ calMonth = 11; calYear--; }
+      calPicked = null; paintCalendar();
+    });
+    if(next) next.addEventListener('click', ()=>{
+      calMonth++; if(calMonth > 11){ calMonth = 0; calYear++; }
+      calPicked = null; paintCalendar();
+    });
+    document.querySelectorAll('.cal-day[data-day]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        calPicked = (calPicked === b.dataset.day) ? null : b.dataset.day;
+        paintCalendar();
+      });
+    });
+  }
 
   async function init(){
     loadProgress();
