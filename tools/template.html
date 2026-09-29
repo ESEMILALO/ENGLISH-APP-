@@ -434,6 +434,69 @@
     font-size:.84rem; }
   @media (prefers-reduced-motion:reduce){ .talk-orb.listening{ animation:none; } }
 
+  /* how the conversation went */
+  .review{ margin-top:20px; text-align:left; }
+  .review-wait{ color:var(--text-soft); font-style:italic; font-size:.88rem; }
+  .review-say{ font-size:.98rem; line-height:1.6; margin:0 0 14px; }
+  .review-level{
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--text-soft); margin-bottom:12px;
+  }
+  .review-fix{
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--warn);
+    border-radius:10px; padding:11px 13px; margin-bottom:8px;
+  }
+  .review-said{ color:var(--text-soft); text-decoration:line-through;
+    text-decoration-color:var(--warn); font-size:.88rem; }
+  .review-better{ font-weight:700; font-size:.94rem; margin-top:3px; }
+  .review-why{ color:var(--text-soft); font-size:.8rem; margin-top:5px; line-height:1.45; }
+  .review-good{
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--good);
+    border-radius:10px; padding:10px 13px; margin-bottom:8px; font-size:.9rem;
+  }
+  .review-next{
+    background:rgba(212,160,74,.1); border:1px solid var(--amber-deep);
+    border-radius:10px; padding:12px 14px; margin-top:14px; font-size:.92rem;
+    line-height:1.5;
+  }
+  .review-next b{
+    display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--amber-deep); margin-bottom:5px;
+  }
+
+  /* a correction, next to the circle, while talking */
+  .talk-note{
+    position:absolute; left:calc(50% + 112px); top:50%;
+    transform:translateY(-50%); width:15rem; text-align:left;
+    background:var(--panel); border:1px solid var(--warn); border-left-width:3px;
+    border-radius:10px; padding:10px 12px; font-size:.84rem; line-height:1.45;
+    color:var(--text); box-shadow:0 8px 22px rgba(0,0,0,.4);
+    animation:noteIn .25s ease-out;
+  }
+  .talk-note.going{ animation:noteOut .5s ease-in forwards; }
+  .talk-note b{
+    display:block; font-family:var(--mono); font-size:.56rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--warn); margin-bottom:4px; font-weight:700;
+  }
+  @keyframes noteIn{
+    from{ opacity:0; transform:translate(-8px, -50%); }
+    to{ opacity:1; transform:translate(0, -50%); }
+  }
+  @keyframes noteOut{
+    from{ opacity:1; } to{ opacity:0; }
+  }
+  .talk-orb-wrap{ position:relative; display:flex; justify-content:center; width:100%; }
+  @media (max-width:760px){
+    .talk-note{
+      position:static; transform:none; width:100%; max-width:22rem;
+      margin-top:14px; animation:none;
+    }
+    .talk-orb-wrap{ flex-direction:column; align-items:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .talk-note, .talk-note.going{ animation:none; }
+  }
+
   /* the line you asked to see, in the middle of talking */
   .talk-line{
     width:100%; max-width:34rem; background:var(--panel);
@@ -1902,6 +1965,8 @@
 
   function scListen(w, phrase, token, isRetry){
     const recognition = scGetRecognizer();
+    recognition.continuous = false;      // one phrase, said once
+    recognition.interimResults = false;
 
     recognition.onresult = (e)=>{
       if(scToken !== token) return;
@@ -4558,6 +4623,18 @@
   let chatVoiceOnly = false;   // talking, with nothing written down
   let chatPhase = 'idle';      // idle | listening | thinking | speaking
   let chatHeard = '';          // the last thing it caught, for when it mishears
+  let chatNote = '';           // a correction, shown beside the circle
+  let chatNoteTimer = null;
+  let chatSilence = null;      // how long it has been quiet
+  let chatTurnClosed = false;  // this turn is over; a late result is not wanted
+
+  // How long a silence is allowed to be before it counts as the end of
+  // your turn. Learning a language means stopping mid-sentence to find a
+  // word, and the browser's own idea of a finished sentence is far too
+  // quick for that -- it would cut you off and answer half a thought.
+  const CHAT_PAUSE_MS = 4000;    // after you have said something
+  const CHAT_FIRST_MS = 15000;   // before you have said anything at all
+  const CHAT_MAX_MS = 90000;     // a whole turn, however long you take
   let talkShown = false;       // the last line, shown because you asked for it
   let talkGloss = null;        // and what it means, if you asked that too
   let chatSpeaks = true;
@@ -4570,6 +4647,8 @@
 
   function stopChatListening(){
     chatListening = false;
+    chatTurnClosed = true;
+    if(chatSilence){ clearTimeout(chatSilence); chatSilence = null; }
     if(chatPhase === 'listening') chatPhase = 'idle';
     scStopListening();
   }
@@ -4594,11 +4673,35 @@
       return;
     }
 
+    // Listening carries on through a pause. The browser's recognizer will
+    // still stop by itself -- there is no setting for "wait longer" -- so
+    // it is started again underneath, and a clock of our own decides when
+    // the turn is actually over.
     const recognition = scGetRecognizer();
-    recognition.onresult = (e)=>{
-      if(scToken !== token) return;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    let settled = '';        // what it has committed to
+    let pending = '';        // what it is still hearing
+    let restarts = 0;
+    chatTurnClosed = false;
+    const began = Date.now();
+
+    const quietFor = (ms)=>{
+      if(chatSilence) clearTimeout(chatSilence);
+      chatSilence = setTimeout(()=>{
+        if(scToken !== token) return;
+        closeTurn();
+      }, ms);
+    };
+
+    const closeTurn = ()=>{
+      if(chatTurnClosed || scToken !== token) return;
+      chatTurnClosed = true;
+      if(chatSilence){ clearTimeout(chatSilence); chatSilence = null; }
       chatListening = false;
-      const said = (e.results[0][0].transcript || '').trim();
+      try{ recognition.stop(); }catch(e){}
+      const said = (settled + ' ' + pending).replace(/\s+/g, ' ').trim();
       if(!said){
         chatPhase = 'idle';
         renderChat();
@@ -4607,21 +4710,53 @@
       chatHeard = said;
       sendChat(false, said);
     };
+
+    recognition.onresult = (e)=>{
+      if(scToken !== token || chatTurnClosed) return;
+      pending = '';
+      for(let i = e.resultIndex; i < e.results.length; i++){
+        const r = e.results[i];
+        const text = (r[0] && r[0].transcript) || '';
+        if(r.isFinal) settled += (settled ? ' ' : '') + text.trim();
+        else pending += text;
+      }
+      // Every word heard puts the clock back to the beginning, so a long
+      // sentence with three pauses in it is still one turn.
+      quietFor(CHAT_PAUSE_MS);
+    };
+
     recognition.onerror = (e)=>{
-      if(scToken !== token) return;
+      if(scToken !== token || chatTurnClosed) return;
       const code = e.error || 'error';
+      // Silence is not a failure here: it is someone thinking.
+      if(code === 'no-speech') return;
+      if(code === 'aborted') return;
       if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+      chatTurnClosed = true;
+      if(chatSilence){ clearTimeout(chatSilence); chatSilence = null; }
       chatListening = false;
       chat.error = speechErrorMessage(code);
       renderChat();
     };
+
     recognition.onend = ()=>{
-      if(scToken !== token) return;
-      if(chatListening){ chatListening = false; renderChat(); }
+      if(scToken !== token || chatTurnClosed) return;
+      if(!chatListening) return;
+      // It stopped on its own, which it does every few seconds of quiet.
+      // Start it again unless this has gone on long enough to be a fault.
+      if(restarts < 40 && Date.now() - began < CHAT_MAX_MS){
+        restarts++;
+        try{ recognition.start(); return; }catch(err){}
+      }
+      closeTurn();
     };
+
     setTimeout(()=>{
       if(scToken !== token) return;
-      try{ recognition.start(); }
+      try{
+        recognition.start();
+        quietFor(CHAT_FIRST_MS);
+      }
       catch(err){
         try{ recognition.abort(); }catch(e2){}
         scRecognizer = null;
@@ -4770,6 +4905,24 @@
     else renderChat();
   }
 
+  // Said wrong, told once. It appears beside the circle and takes itself
+  // away again, because in a conversation you are holding by ear a
+  // correction that stays on screen is just something else to ignore.
+  function showChatNote(text){
+    chatNote = (text || '').trim();
+    if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
+    if(!chatNote) return;
+    chatNoteTimer = setTimeout(()=>{
+      const note = document.querySelector('.talk-note');
+      if(note) note.classList.add('going');
+      chatNoteTimer = setTimeout(()=>{
+        chatNote = '';
+        chatNoteTimer = null;
+        if(chatVoiceOnly && chat) renderChat();
+      }, 500);
+    }, 9000);
+  }
+
   function talkViewHtml(){
     const STATE = {
       listening: ['your turn', 'Speak. It is listening.'],
@@ -4779,9 +4932,14 @@
     };
     const phase = STATE[chatPhase] ? chatPhase : 'idle';
     return '<div class="talk">'
-      + '<button class="talk-orb '+phase+'" id="talk-orb" '
-        + 'aria-label="'+STATE[phase][0]+'">'
-        + (phase === 'speaking' ? ICON_SPEAKER : ICON_MIC) + '</button>'
+      + '<div class="talk-orb-wrap">'
+        + '<button class="talk-orb '+phase+'" id="talk-orb" '
+          + 'aria-label="'+STATE[phase][0]+'">'
+          + (phase === 'speaking' ? ICON_SPEAKER : ICON_MIC) + '</button>'
+        + (chatNote
+            ? '<div class="talk-note"><b>say it like this</b>' + esc(chatNote) + '</div>'
+            : '')
+      + '</div>'
       + '<div class="talk-state">'+STATE[phase][0]+'</div>'
       + '<p class="talk-hint">'+STATE[phase][1]+'</p>'
       + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
@@ -4967,7 +5125,13 @@
         fresh.forEach(w=>chat.used.push(w));
         if(!first && chat.turns.length){
           const mine = chat.turns[chat.turns.length - 1];
-          if(mine.who === 'you'){ mine.scored = fresh; mine.fix = out.correction || ''; }
+          if(mine.who === 'you'){
+            mine.scored = fresh;
+            mine.fix = out.correction || '';
+            // Talking only, there is nowhere for it to be written down,
+            // so it is shown beside the circle for long enough to read.
+            if(chatVoiceOnly) showChatNote(out.correction || '');
+          }
         }
         chat.turns.push({ who:'them', text: out.reply });
         // In talking-only mode the turn carries on by itself: it speaks,
@@ -5008,6 +5172,14 @@
           return '<div class="chat-turn them"><div class="chat-who">'+esc(c.scenario.name)+'</div>'
             + '<div class="chat-bubble">'+esc(t.text)+'</div></div>';
         }).join('')
+      + '<div id="review-host">'
+        + (c.review
+            ? reviewHtml(c.review)
+            : ((c.turns || []).some(t=>t.who === 'you')
+                ? '<div class="review"><button class="btn-secondary" id="review-ask">'
+                  + 'How did I do?</button></div>'
+                : ''))
+      + '</div>'
       + '<div class="past-actions">'
         + '<button class="btn-primary" id="past-continue">Carry on with this one &rarr;</button>'
         + '<button class="btn-secondary" id="past-back">&larr; Back to conversations</button>'
@@ -5022,6 +5194,7 @@
           : '<button class="reset-link" id="past-delete" style="color:var(--warn);">'
             + 'Delete this conversation</button>')
       + '</div>';
+    wireReview(c, paintReview);
     el('#past-back').addEventListener('click', ()=>{ chatDeleting = null; renderChatPicker(); });
     el('#past-continue').addEventListener('click', ()=>{ chatDeleting = null; openChat(c); });
     const del = el('#past-delete');
@@ -5034,8 +5207,71 @@
     if(keep) keep.addEventListener('click', ()=>{ chatDeleting = null; renderPastChat(c); });
   }
 
+  // What a partner in character cannot tell you. Stopping to mark every
+  // slip would have wrecked the conversation, so it is done afterwards,
+  // over the whole thing at once.
+  function reviewHtml(r){
+    if(!r) return '';
+    if(r.state === 'asking'){
+      return '<div class="review"><div class="section-label">How it went</div>'
+        + '<p class="review-wait">Reading back over what you said&hellip;</p></div>';
+    }
+    if(r.state === 'error'){
+      return '<div class="review"><div class="section-label">How it went</div>'
+        + '<p class="review-wait">' + esc(r.message || 'That did not work.') + '</p>'
+        + '<button class="reset-link" id="review-retry">Try again &rarr;</button></div>';
+    }
+    return '<div class="review">'
+      + '<div class="section-label">How it went</div>'
+      + (r.summary ? '<p class="review-say">' + esc(r.summary) + '</p>' : '')
+      + (r.level ? '<div class="review-level">' + esc(r.level) + '</div>' : '')
+      + ((r.mistakes || []).length
+          ? '<div class="section-label">Say these differently</div>'
+            + r.mistakes.map(m=>'<div class="review-fix">'
+                + '<div class="review-said">' + esc(m.said) + '</div>'
+                + '<div class="review-better">' + esc(m.better) + '</div>'
+                + (m.why ? '<div class="review-why">' + esc(m.why) + '</div>' : '')
+              + '</div>').join('')
+          : '<p class="review-wait">Nothing worth correcting this time.</p>')
+      + ((r.strengths || []).length
+          ? '<div class="section-label">You did this well</div>'
+            + r.strengths.map(g=>'<div class="review-good">' + esc(g) + '</div>').join('')
+          : '')
+      + (r.next
+          ? '<div class="review-next"><b>next conversation</b>' + esc(r.next) + '</div>'
+          : '')
+      + '</div>';
+  }
+
+  // Kept with the conversation, so it is read back rather than asked for
+  // twice, and travels with the backup like everything else.
+  async function askReview(convo, paint){
+    if(!convo) return;
+    convo.review = { state: 'asking' };
+    paint();
+    try{
+      const out = await fetch('/api/review', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ turns: convo.turns || [],
+                               scenario: (convo.scenario || {}).name || '',
+                               words: convo.words || [],
+                               used: convo.used || [] })
+      }).then(r=>r.json());
+      convo.review = out.ok
+        ? { state:'done', summary: out.summary, level: out.level, next: out.next,
+            mistakes: out.mistakes || [], strengths: out.strengths || [] }
+        : { state:'error', message: out.message || 'That did not work.' };
+    }catch(e){
+      convo.review = { state:'error', message: 'Could not reach the app server.' };
+    }
+    saveChats();
+    paint();
+  }
+
   function endChat(){
     stopChatListening();
+    chatNote = '';
+    if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
     if(canSpeak) window.speechSynthesis.cancel();
     chatPhase = 'idle';
     chatHeard = '';
@@ -5043,17 +5279,24 @@
     const done = chat ? chat.used.length : 0;
     const total = chat ? chat.words.length : 0;
     const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
+    let parked = null;
     if(chat && chat.turns.length){
       chats.past = (chats.past || []).filter(c=>c.id !== chat.id);
-      chats.past.unshift({
+      parked = {
         id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
         turns: chat.turns, startedAt: chat.startedAt,
         endedAt: new Date().toISOString()
-      });
+      };
+      chats.past.unshift(parked);
     }
     chat = null;
     chats.current = null;
     saveChats();
+    // Every conversation gets looked over, without being asked for: the
+    // moment you have finished is the moment it is worth reading.
+    if(parked && (parked.turns || []).some(t=>t.who === 'you')){
+      askReview(parked, ()=>paintReview(parked));
+    }
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Conversation</div>'
       + '<h1 class="title">'+done+' of '+total+' used</h1>'
@@ -5069,11 +5312,29 @@
             + missed.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
             + '</div>'
           : '')
+      + '<div id="review-host">' + reviewHtml(parked && parked.review) + '</div>'
       + '<button class="btn-primary" id="chat-again" style="margin-top:16px;">Another conversation &rarr;</button>'
       + '<button class="btn-secondary" id="chat-home" style="margin-top:10px;">&larr; Back to home</button>'
       + '</div>';
     el('#chat-again').addEventListener('click', renderChatPicker);
     el('#chat-home').addEventListener('click', renderHome);
+    wireReview(parked, paintReview);
+  }
+
+  // Only this one block is repainted, so the screen does not jump while
+  // you are already reading the words you missed.
+  function paintReview(convo){
+    const host = document.getElementById('review-host');
+    if(!host) return;
+    host.innerHTML = reviewHtml(convo && convo.review);
+    wireReview(convo, paintReview);
+  }
+
+  function wireReview(convo, paint){
+    const retry = document.getElementById('review-retry');
+    if(retry) retry.addEventListener('click', ()=>askReview(convo, ()=>paint(convo)));
+    const ask = document.getElementById('review-ask');
+    if(ask) ask.addEventListener('click', ()=>askReview(convo, ()=>paint(convo)));
   }
 
   async function init(){

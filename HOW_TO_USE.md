@@ -164,6 +164,20 @@ word that was said still there, so you can read over it afterwards.
 Nothing is written on screen while you talk, which is the point: it is
 the closest this gets to a person in front of you.
 
+**It waits while you think.** A pause of up to four seconds is not the
+end of your turn, and the browser stopping to listen part-way through
+does not end it either -- it starts again underneath while your clock
+keeps running. Stop mid-sentence to find a word and it will still be
+there when you carry on. Fifteen seconds of complete silence before you
+have said anything hands the turn back, and a single turn can run a
+minute and a half.
+
+**A mistake is shown beside the circle.** If you say something the
+partner would fix, it appears next to the microphone under *say it like
+this* -- your words and the way to say them -- and takes itself away
+after nine seconds. It is there long enough to read and not long enough
+to become something you ignore.
+
 **When you did not catch it, three buttons are under the circle.**
 *What did it say?* shows the last thing it said, written out, without
 leaving the mode. *Say it again* repeats it out loud and then goes back
@@ -204,6 +218,27 @@ the page rather than a browser popup, so nothing goes on a mis-tap.
 
 The last twenty are saved to the same file as your progress, so losing
 the browser does not lose them.
+
+### How it went
+
+Every conversation is read back when you end it, without being asked
+for. A partner staying in character cannot stop to mark every slip
+without wrecking the conversation, so it is done afterwards, over the
+whole thing at once:
+
+- two sentences on how it went, spoken to you directly
+- where this conversation sits, like *"basic, struggling to move past
+  fixed short phrases"*
+- **say these differently** -- your own words struck through, the right
+  version under them, and the habit behind the mistake. *"I no can walk
+  good"* comes back as *"I can't walk well"*, with the reason: Spanish
+  *no puedo* word order carried over
+- what you genuinely did well, quoted, or nothing if there was nothing
+- one thing to work on next time. One, concrete enough to actually do
+
+It is kept with the conversation, so opening an old one shows the same
+feedback again without asking for it twice. Conversations from before
+this existed have a **How did I do?** button instead.
 
 Time spent talking counts toward the day's hour.
 

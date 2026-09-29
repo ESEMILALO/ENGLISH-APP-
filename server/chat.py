@@ -136,6 +136,113 @@ def explain(phrase, context=""):
             "note": (out.get("note") or "").strip()}
 
 
+REVIEW = """Someone learning English has just finished a spoken \
+conversation with you. Their first language is Spanish. Look back over \
+what THEY said -- not what you said -- and tell them how it went.
+
+Be honest and be specific. Quote their own words. A review that says \
+"good job, keep practising" is worth nothing to them.
+
+For "mistakes": the things actually worth fixing, worst first, at most \
+six. Each one is {"said": "<their words, quoted>", "better": "<the same \
+thing said correctly>", "why": "<one short line: the rule or habit \
+behind it>"}. Group a mistake they made three times into one entry and \
+say so in "why". Ignore anything that is only the speech recognition \
+mishearing them, and ignore missing punctuation -- they were speaking.
+
+For "strengths": at most three things they genuinely did well, quoted. \
+Not encouragement, evidence. If there is nothing, give an empty list.
+
+For "level": one short phrase on where this conversation sits, like \
+"confident but leaning on simple tenses".
+
+For "next": one thing to work on in the next conversation. One. \
+Concrete enough to actually do.
+
+For "summary": two sentences, spoken to them directly, on how it went.
+
+Return ONLY a JSON object, no other text:
+
+{"summary": "...", "level": "...", "next": "...",
+ "mistakes": [{"said": "...", "better": "...", "why": "..."}],
+ "strengths": ["..."]}"""
+
+
+def review(turns, scenario="", words=None, used=None):
+    """How that conversation went -- the part a partner in character
+    cannot give you, because stopping to mark every slip would have
+    wrecked the conversation itself."""
+    turns = turns or []
+    mine = [t for t in turns if (t or {}).get("who") == "you"]
+    if not mine:
+        return {"ok": False, "message": "There is nothing of yours to look at yet."}
+
+    key = api_key()
+    if not key:
+        return {"ok": False, "message": "Feedback needs an Anthropic API key."}
+
+    lines = []
+    for t in turns:
+        who = "THEM" if (t or {}).get("who") == "them" else "YOU"
+        text = str((t or {}).get("text") or "").strip()
+        if text:
+            lines.append("%s: %s" % (who, text))
+
+    user = "The situation: %s\n\n%s" % (scenario or "a conversation",
+                                        "\n".join(lines[-40:]))
+    if words:
+        missed = [w for w in words if w not in (used or [])]
+        user += "\n\nWords they were trying to use: %s" % ", ".join(words)
+        if missed:
+            user += "\nOnes they never used: %s" % ", ".join(missed)
+
+    body = json.dumps({
+        "model": MODEL,
+        "max_tokens": 3000,
+        "system": REVIEW,
+        "messages": [{"role": "user", "content": user}],
+    }).encode("utf-8")
+
+    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": API_VERSION,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=90) as res:
+            payload = json.loads(res.read().decode("utf-8"))
+    except Exception as e:
+        return {"ok": False, "message": "The feedback did not arrive.",
+                "detail": str(e)[:150]}
+
+    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    try:
+        out = json.loads(text)
+    except Exception:
+        return {"ok": True, "summary": text, "level": "", "next": "",
+                "mistakes": [], "strengths": []}
+
+    mistakes = []
+    for m in (out.get("mistakes") or [])[:6]:
+        if not isinstance(m, dict):
+            continue
+        said = str(m.get("said") or "").strip()
+        better = str(m.get("better") or "").strip()
+        if said and better:
+            mistakes.append({"said": said, "better": better,
+                             "why": str(m.get("why") or "").strip()})
+
+    return {"ok": True,
+            "summary": str(out.get("summary") or "").strip(),
+            "level": str(out.get("level") or "").strip(),
+            "next": str(out.get("next") or "").strip(),
+            "mistakes": mistakes,
+            "strengths": [str(x).strip() for x in (out.get("strengths") or [])[:3]
+                          if str(x).strip()]}
+
+
 TRANSLATE = """Give the Spanish for a piece of English. Nothing else.
 
 The person reading it speaks Spanish and is learning English. They have \
