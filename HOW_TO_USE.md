@@ -148,6 +148,19 @@ word that was said still there, so you can read over it afterwards.
 Nothing is written on screen while you talk, which is the point: it is
 the closest this gets to a person in front of you.
 
+**The voice can be changed.** Under *Everything else* on the home screen
+there is a **Voice** picker with a *Hear it* button. Left alone the app
+now takes the best one your machine offers rather than the plain Windows
+one Chrome reaches for by default — the ones marked *natural* are read
+over the internet and sound far more like a person. If the connection
+drops mid-sentence, a voice stored on the machine finishes it, so a
+conversation you are holding by ear never goes quiet on you.
+
+The same voice reads words, examples and the conversation. Single words
+are read a little slower than sentences, because a word is worth hearing
+carefully and a sentence read that slowly stops sounding like someone
+talking to you.
+
 **Conversations are kept, and they are yours.** Close the tab
 mid-sentence and the next time you open the conversation screen it
 offers to carry on where you stopped, with the words you had already
