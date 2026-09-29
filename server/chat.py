@@ -19,6 +19,7 @@ Needs the same Anthropic key as the glossary, in server/anthropic_key.txt.
 """
 
 import json
+import re
 import urllib.error
 import urllib.request
 
@@ -253,6 +254,21 @@ def ask(history, scenario, words, name="the learner", first=False):
         hit = lower.get(str(w).strip().lower())
         if hit and hit not in used:
             used.append(hit)
+
+    # The model sometimes overlooks a word that is plainly there. If the
+    # learner wrote it exactly as it stands on the list, it counts --
+    # nobody should have to argue with the tally about a word they used.
+    said = ""
+    for m in reversed(messages):
+        if m.get("role") == "user":
+            said = str(m.get("content") or "")
+            break
+    if said:
+        for w in words:
+            if w in used:
+                continue
+            if re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", said, re.I):
+                used.append(w)
 
     return {"ok": True,
             "reply": (out.get("reply") or "").strip(),

@@ -123,7 +123,8 @@ Both work on practice cards too, not only in the conversation.
 
 Your ten words sit along the top and turn green as you use them. Only
 what **you** write counts: the partner is told not to use them itself,
-so each one has to come from you. Recognising a word is easy; producing
+so each one has to come from you. A word you wrote exactly as it stands
+on the list always counts, whether or not the partner noticed it. Recognising a word is easy; producing
 one in the middle of a conversation is the thing worth practising.
 
 It also corrects you, briefly and in character, when you make a real
@@ -134,6 +135,18 @@ useless.
 and it goes in as your message — no need to press send afterwards. It
 reads its own replies out loud too; *voice on* in the corner turns that
 off if you would rather read.
+
+**Or talk to it and nothing else.** *talk only*, next to the voice
+switch, puts away the transcript and the typing box and leaves one
+circle. It listens, you speak, it answers out loud, and the moment it
+stops talking it is listening again — you never touch the screen. The
+circle tells you whose turn it is: orange while it listens to you, green
+while it is talking, and a tap on it interrupts and gives you the turn
+back. *Show the conversation* brings the written version back with every
+word that was said still there, so you can read over it afterwards.
+
+Nothing is written on screen while you talk, which is the point: it is
+the closest this gets to a person in front of you.
 
 **Conversations are kept, and they are yours.** Close the tab
 mid-sentence and the next time you open the conversation screen it

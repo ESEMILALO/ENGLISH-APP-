@@ -352,6 +352,36 @@
   .chat-head{ display:flex; align-items:baseline; gap:10px; }
   .chat-heard{ font-size:.78rem; color:var(--amber); margin:0 4px 8px; font-style:italic; }
 
+  /* talking only: no transcript, the way a conversation actually is */
+  .talk{
+    flex:1; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:22px; text-align:center; padding:20px 0;
+  }
+  .talk-orb{
+    width:168px; height:168px; border-radius:50%; border:2px solid var(--rule);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:var(--panel); transition:border-color .3s ease, background .3s ease;
+  }
+  .talk-orb svg{ width:46px; height:46px; color:var(--text-soft); }
+  .talk-orb.listening{ border-color:var(--warn); background:rgba(213,124,78,.14); }
+  .talk-orb.listening svg{ color:var(--warn); }
+  .talk-orb.listening{ animation:talkPulse 1.5s ease-in-out infinite; }
+  .talk-orb.speaking{ border-color:var(--good); background:rgba(92,174,124,.14); }
+  .talk-orb.speaking svg{ color:var(--good); }
+  .talk-orb.thinking{ border-color:var(--amber); }
+  .talk-orb.thinking svg{ color:var(--amber); }
+  @keyframes talkPulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(213,124,78,.35); }
+    50%{ box-shadow:0 0 0 18px rgba(213,124,78,0); }
+  }
+  .talk-state{
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--text-soft);
+  }
+  .talk-hint{ font-size:.86rem; color:var(--text-soft); line-height:1.5; max-width:22rem; }
+  .talk-actions{ display:flex; gap:9px; flex-wrap:wrap; justify-content:center; }
+  @media (prefers-reduced-motion:reduce){ .talk-orb.listening{ animation:none; } }
+
   /* past conversations */
   .past-item{ display:flex; gap:7px; align-items:stretch; margin-bottom:7px; }
   .past-item .past-row{ flex:1; margin-bottom:0; }
@@ -1528,14 +1558,25 @@
     return result;
   }
 
-  function speak(text){
-    if(!canSpeak) return;
+  // `then` runs once it has finished speaking -- which is what makes a
+  // hands-free conversation possible: listen again only after it has
+  // stopped talking, or it hears itself.
+  function speak(text, then){
+    if(!canSpeak){ if(then) then(); return; }
     try{
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'en-US'; u.rate = 0.92;
+      if(then){
+        let done = false;
+        const finish = ()=>{ if(!done){ done = true; then(); } };
+        u.onend = finish;
+        u.onerror = finish;
+        // a voice that never fires onend must not strand the conversation
+        setTimeout(finish, Math.min(30000, 2500 + text.length * 90));
+      }
       window.speechSynthesis.speak(u);
-    }catch(e){}
+    }catch(e){ if(then) then(); }
   }
 
   function escapeRegExp(s){
@@ -4235,16 +4276,20 @@
   // already left. What you said goes in as your message: a conversation
   // where you have to press send after speaking is not a conversation.
   let chatListening = false;
+  let chatVoiceOnly = false;   // talking, with nothing written down
+  let chatPhase = 'idle';      // idle | listening | thinking | speaking
+  let chatHeard = '';          // the last thing it caught, for when it mishears
   let chatSpeaks = true;
   try{ chatSpeaks = localStorage.getItem('wordlog_chat_voice') !== 'off'; }catch(e){}
 
-  function chatSay(text){
-    if(!chatSpeaks || !canSpeak || !text) return;
-    speak(text);
+  function chatSay(text, then){
+    if(!chatSpeaks || !canSpeak || !text){ if(then) then(); return; }
+    speak(text, then);
   }
 
   function stopChatListening(){
     chatListening = false;
+    if(chatPhase === 'listening') chatPhase = 'idle';
     scStopListening();
   }
 
@@ -4256,7 +4301,7 @@
     scStopListening();
     const token = ++scToken;
     chatListening = true;
-    chat.heard = '';
+    chatPhase = 'listening';
     renderChat();
 
     const ok = await ensureMic();
@@ -4273,11 +4318,13 @@
       if(scToken !== token) return;
       chatListening = false;
       const said = (e.results[0][0].transcript || '').trim();
-      if(!said){ renderChat(); return; }
-      const input = el('#chat-input');
-      if(input) input.value = said;
-      renderChat();
-      sendChat(false);
+      if(!said){
+        chatPhase = 'idle';
+        renderChat();
+        return;
+      }
+      chatHeard = said;
+      sendChat(false, said);
     };
     recognition.onerror = (e)=>{
       if(scToken !== token) return;
@@ -4306,6 +4353,8 @@
 
   function startChat(scenario, words){
     parkCurrentChat();
+    chatPhase = 'idle';
+    chatHeard = '';
     chat = { id: newChatId(), scenario: scenario, words: words, used: [], turns: [],
              startedAt: new Date().toISOString(), busy: true, error: '' };
     rememberChat();
@@ -4358,26 +4407,9 @@
     saveChats();
   }
 
-  function renderChat(){
-    if(!chat) return;
-    const done = chat.used.length, total = chat.words.length;
-
-    root.innerHTML = '<div class="view"><div class="chat-wrap">'
-      + '<div class="chat-head">'
-        + '<div class="eyebrow">' + esc(chat.scenario.name)
-          + ' &middot; ' + done + ' of ' + total + ' used</div>'
-        + '<div class="chat-tools">'
-          + (canSpeak
-              ? '<button class="chat-toggle'+(chatSpeaks?' on':'')+'" id="chat-voice">'
-                + ICON_SPEAKER + (chatSpeaks ? 'voice on' : 'voice off') + '</button>'
-              : '')
-        + '</div>'
-      + '</div>'
-      + '<div class="chat-words">'
-        + chat.words.map(w=>'<span class="chat-word'
-            + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
-      + '</div>'
-      + '<div class="chat-log" id="chat-log">'
+  // The written conversation: what was said, and a box to answer in.
+  function writtenChatHtml(){
+    return '<div class="chat-log" id="chat-log">'
         + chat.turns.map(t=>{
             if(t.who === 'you'){
               return '<div class="chat-turn you"><div class="chat-who">You</div>'
@@ -4404,7 +4436,56 @@
           + (canListen ? 'Write your reply, or tap the microphone' : 'Write your reply in English')
           + '..." autocomplete="off"'+(chat.busy?' disabled':'')+'>'
         + '<button id="chat-send"'+(chat.busy?' disabled':'')+'>Send</button>'
+      + '</div>';
+  }
+
+  // Talking only: nothing is written down, the way a real conversation is.
+  // One circle tells you whose turn it is, and the turn passes by itself --
+  // it speaks, then listens again, so you never touch the screen.
+  function talkViewHtml(){
+    const STATE = {
+      listening: ['your turn', 'Speak. It is listening.'],
+      thinking:  ['thinking', 'Working out what to say back.'],
+      speaking:  ['talking', 'It listens again the moment it stops.'],
+      idle:      ['tap to talk', 'Tap the circle and say something.']
+    };
+    const phase = STATE[chatPhase] ? chatPhase : 'idle';
+    return '<div class="talk">'
+      + '<button class="talk-orb '+phase+'" id="talk-orb" '
+        + 'aria-label="'+STATE[phase][0]+'">'
+        + (phase === 'speaking' ? ICON_SPEAKER : ICON_MIC) + '</button>'
+      + '<div class="talk-state">'+STATE[phase][0]+'</div>'
+      + '<p class="talk-hint">'+STATE[phase][1]+'</p>'
+      + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
+      + '<div class="talk-actions">'
+        + '<button class="btn-secondary" id="talk-off">Show the conversation</button>'
       + '</div>'
+      + '</div>';
+  }
+
+  function renderChat(){
+    if(!chat) return;
+    const done = chat.used.length, total = chat.words.length;
+
+    root.innerHTML = '<div class="view"><div class="chat-wrap">'
+      + '<div class="chat-head">'
+        + '<div class="eyebrow">' + esc(chat.scenario.name)
+          + ' &middot; ' + done + ' of ' + total + ' used</div>'
+        + '<div class="chat-tools">'
+          + (chatVoiceOnly || !canListen || !canSpeak
+              ? ''
+              : '<button class="chat-toggle" id="talk-on">'+ICON_MIC+'talk only</button>')
+          + (chatVoiceOnly || !canSpeak
+              ? ''
+              : '<button class="chat-toggle'+(chatSpeaks?' on':'')+'" id="chat-voice">'
+                + ICON_SPEAKER + (chatSpeaks ? 'voice on' : 'voice off') + '</button>')
+        + '</div>'
+      + '</div>'
+      + '<div class="chat-words">'
+        + chat.words.map(w=>'<span class="chat-word'
+            + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
+      + '</div>'
+      + (chatVoiceOnly ? talkViewHtml() : writtenChatHtml())
       + '<button class="reset-link" id="chat-end" style="margin-top:10px;">'
         + 'End the conversation &rarr;</button>'
       + '</div></div>';
@@ -4429,20 +4510,55 @@
       if(!chatSpeaks && canSpeak) window.speechSynthesis.cancel();
       renderChat();
     });
+
+    // talking only
+    const talkOn = el('#talk-on');
+    if(talkOn) talkOn.addEventListener('click', ()=>{
+      chatVoiceOnly = true;
+      chatSpeaks = true;            // the mode is nothing without a voice
+      try{ localStorage.setItem('wordlog_chat_voice', 'on'); }catch(e){}
+      renderChat();
+      chatListen();
+    });
+    const orb = el('#talk-orb');
+    if(orb) orb.addEventListener('click', ()=>{
+      if(chatPhase === 'speaking'){
+        if(canSpeak) window.speechSynthesis.cancel();
+        chatPhase = 'idle';
+      }
+      chatListen();
+    });
+    const talkOff = el('#talk-off');
+    if(talkOff) talkOff.addEventListener('click', ()=>{
+      chatVoiceOnly = false;
+      stopChatListening();
+      if(canSpeak) window.speechSynthesis.cancel();
+      chatPhase = 'idle';
+      renderChat();
+    });
+
     el('#chat-end').addEventListener('click', endChat);
   }
 
-  async function sendChat(first){
+  // `spoken` is passed straight in rather than left in the input box:
+  // renderChat rebuilds the page, so anything put in the box just before
+  // would be wiped before this could read it.
+  async function sendChat(first, spoken){
     if(!chat || (chat.busy && !first)) return;
     let text = '';
     if(!first){
-      const input = el('#chat-input');
-      text = input ? input.value.trim() : '';
+      if(spoken !== undefined && spoken !== null){
+        text = String(spoken).trim();
+      } else {
+        const input = el('#chat-input');
+        text = input ? input.value.trim() : '';
+      }
       if(!text) return;
       chat.turns.push({ who:'you', text:text });
     }
     chat.busy = true;
     chat.error = '';
+    chatPhase = 'thinking';
     renderChat();
 
     // only the real back-and-forth goes to the model, not the scoring notes
@@ -4469,7 +4585,16 @@
           if(mine.who === 'you'){ mine.scored = fresh; mine.fix = out.correction || ''; }
         }
         chat.turns.push({ who:'them', text: out.reply });
-        chatSay(out.reply);
+        // In talking-only mode the turn carries on by itself: it speaks,
+        // and when it has finished speaking it listens again. Anything
+        // else would mean reaching for the screen every sentence.
+        chatPhase = 'speaking';
+        chatSay(out.reply, ()=>{
+          if(chatPhase !== 'speaking') return;   // something else took over
+          chatPhase = 'idle';
+          if(chatVoiceOnly && chat && !chat.busy) chatListen();
+          else renderChat();
+        });
       }
     }catch(e){
       chat.busy = false;
@@ -4532,6 +4657,9 @@
   function endChat(){
     stopChatListening();
     if(canSpeak) window.speechSynthesis.cancel();
+    chatPhase = 'idle';
+    chatHeard = '';
+    chatVoiceOnly = false;   // the next conversation starts written unless asked
     const done = chat ? chat.used.length : 0;
     const total = chat ? chat.words.length : 0;
     const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
