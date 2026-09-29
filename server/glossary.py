@@ -27,6 +27,7 @@ THE FORMAT:
 import datetime
 import json
 import os
+import re
 import shutil
 import urllib.error
 import urllib.request
@@ -138,22 +139,24 @@ The columns, and real rows from the sheet so you can see the style:
 
 Word: Supper
 Pronunciation: super
-Meaning 1: Evening meal - Cena.
+Meaning 1: Evening meal — Cena.
 Example: We had soup for supper.
 Notes: More common in some regions than dinner.
 
 Word: Jot down
 Pronunciation: yat daun
-Meaning 1: Write quickly - Anotar.
+Meaning 1: Write quickly — Anotar.
 Example: Jot down the phone number.
-Notes: Regular verb. Base: jot down - Present: jots down - Past: jotted down - \
+Notes: Regular verb. Base: jot down — Present: jots down — Past: jotted down — \
 Past participle: jotted down. Separable: jot something down.
 
 Rules:
 - Pronunciation is respelled so a Spanish reader says it correctly. Not IPA. \
 Use Spanish spelling conventions, and mark the stressed syllable with an accent \
 where Spanish would (for example "super" becomes "super" with an accent on the u).
-- Each meaning reads "English gloss - Spanish." with an em dash and a final full stop.
+- Each meaning reads "English gloss — Spanish." The separator is the em dash
+  character shown in the examples above, not a hyphen, and the line ends in a
+  full stop.
 - Give a second and third meaning only if the word genuinely has distinct common \
 senses. Most words have one.
 - Every meaning gets its own natural example sentence that uses the word.
@@ -243,6 +246,19 @@ def already_there(word):
     return None
 
 
+def tidy(text):
+    """Make the separator match the rest of the sheet.
+
+    The spreadsheet puts an em dash between the English gloss and the
+    Spanish. A hyphen or en dash with spaces around it is that separator
+    written wrongly; a hyphen inside a word has no spaces round it and is
+    left alone.
+    """
+    if not text:
+        return text
+    return re.sub(r"\s+[-\u2013]\s+", " \u2014 ", str(text).strip())
+
+
 def append_row(entry, sheet=None):
     """Add the entry to the workbook, keeping a dated copy of it first."""
     import openpyxl
@@ -258,9 +274,9 @@ def append_row(entry, sheet=None):
     ws.cell(row=row, column=1).value = entry["word"].strip()
     ws.cell(row=row, column=2).value = (entry.get("pronunciation") or "").strip()
     for (m_col, e_col), sense in zip(MEANING_COLS, entry["meanings"][:3]):
-        ws.cell(row=row, column=m_col).value = (sense.get("meaning") or "").strip() or None
+        ws.cell(row=row, column=m_col).value = tidy(sense.get("meaning")) or None
         ws.cell(row=row, column=e_col).value = (sense.get("example") or "").strip() or None
-    ws.cell(row=row, column=NOTES_COL).value = (entry.get("notes") or "").strip() or None
+    ws.cell(row=row, column=NOTES_COL).value = tidy(entry.get("notes")) or None
 
     wb.save(WORKBOOK)
     return row
