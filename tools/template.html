@@ -281,6 +281,36 @@
   }
   .gloss-bubble:hover{ filter:brightness(1.06); }
   .gloss-bubble[disabled]{ opacity:.75; cursor:default; }
+  /* Adding a word by typing it, at the top where the search box was. */
+  .addword{
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--amber);
+    border-radius:12px; padding:14px 16px; margin-bottom:26px;
+  }
+  .addword-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--text-soft); margin-bottom:10px;
+  }
+  .addword-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .addword-row input{
+    flex:2; min-width:170px; background:var(--bg); border:1px solid var(--rule);
+    color:var(--text); border-radius:8px; padding:11px 13px;
+    font-family:var(--sans); font-size:.92rem;
+  }
+  .addword-row input:focus{ outline:none; border-color:var(--amber); }
+  .addword-row select{
+    flex:1; min-width:150px; background:var(--bg); border:1px solid var(--rule);
+    color:var(--text); border-radius:8px; padding:11px 10px;
+    font-family:var(--sans); font-size:.86rem;
+  }
+  .addword-row button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:8px;
+    padding:11px 22px; font-weight:700; font-size:.86rem; cursor:pointer;
+    font-family:var(--sans);
+  }
+  .addword-row button:disabled{ opacity:.6; cursor:default; }
+  .addword .hint{ margin-top:9px; }
+
   /* Setting up the glossary lookup: status, and somewhere to paste. */
   .key-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem;
     color:var(--text-soft); margin:14px 2px 0; }
@@ -2019,8 +2049,8 @@
       + '<div class="home-more-body">'
         + '<div class="section-label" style="margin-top:6px;">Work one topic</div>'
         + '<div class="cat-list">'+catRows+'</div>'
+        + '<button class="reset-link" id="search-words">Search a word or meaning &rarr;</button>'
         + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
-        + '<button class="reset-link" id="add-word">+ Add a new word &rarr;</button>'
         + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
         + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
         + '<div id="key-host">'+keyRowHtml()+'</div>'
@@ -2031,7 +2061,7 @@
       + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
-      + '<input type="text" class="field-input" id="home-search" placeholder="Search a word or meaning..." autocomplete="off" style="margin-bottom:18px;">'
+      + addWordBlockHtml()
       + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
       + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
       + moreHtml
@@ -2046,11 +2076,9 @@
           : '')
       + '</div>';
 
-    const homeSearch = el('#home-search');
-    homeSearch.addEventListener('input', ()=> renderSearch(homeSearch.value) );
-    homeSearch.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); renderSearch(homeSearch.value); } });
+    wireAddWord();
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
-    el('#add-word').addEventListener('click', renderAddWord);
+    el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
     // there you pick the topic, then keep practicing or start a new set.
     el('#learn-set').addEventListener('click', renderDailySet);
@@ -2456,56 +2484,6 @@
       });
     });
     el('#back-home').addEventListener('click', renderHome);
-  }
-
-  function renderAddWord(){
-    const catOptions = CATEGORIES.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
-    const meaningFields = [1,2,3].map(i=>
-      '<div class="field"><label class="field-label">Meaning '+i+(i===1?'':' (optional)')+'</label>'
-      + '<input type="text" class="field-input" id="new-m'+i+'" placeholder="Definition, translation, or synonym">'
-      + '<input type="text" class="field-input" id="new-e'+i+'" placeholder="Example sentence (optional)" style="margin-top:6px;">'
-      + '</div>'
-    ).join('');
-
-    root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">New word</div>'
-      + '<h1 class="title">Add a word</h1>'
-      + '<p class="subtitle">Same columns as your spreadsheet: word, pronunciation, up to three meanings with examples, and an optional note.</p>'
-      + '<div class="field"><label class="field-label">Word</label><input type="text" class="field-input" id="new-word" placeholder="e.g. Leftovers"></div>'
-      + '<div class="field"><label class="field-label">Pronunciation</label><input type="text" class="field-input" id="new-pron" placeholder="e.g. left-OH-vers"></div>'
-      + '<div class="field"><label class="field-label">Category</label><select class="field-input" id="new-cat">'+catOptions+'</select></div>'
-      + meaningFields
-      + '<div class="field"><label class="field-label">Note (optional)</label><input type="text" class="field-input" id="new-note" placeholder="Any extra note"></div>'
-      + '<p class="field-error" id="add-word-error"></p>'
-      + '<button class="btn-primary" id="save-word">Save word</button>'
-      + '<button class="btn-secondary" id="cancel-word">Cancel</button>'
-      + '</div>';
-
-    el('#new-word').focus();
-    el('#save-word').addEventListener('click', saveNewWord);
-    el('#cancel-word').addEventListener('click', renderHome);
-  }
-
-  function saveNewWord(){
-    const wordVal = el('#new-word').value.trim();
-    const pronVal = el('#new-pron').value.trim();
-    const catVal = el('#new-cat').value;
-    const meanings = [1,2,3].map(i=>({
-      m: el('#new-m'+i).value.trim(),
-      e: el('#new-e'+i).value.trim()
-    })).filter(m=>m.m);
-    const noteVal = el('#new-note').value.trim();
-    const errEl = el('#add-word-error');
-
-    if(!wordVal){ errEl.textContent = 'Enter the word itself first.'; return; }
-    if(meanings.length===0){ errEl.textContent = 'Add at least one meaning.'; return; }
-
-    const id = makeWordId(catVal, wordVal);
-    const entry = { id:id, cat:catVal, w:wordVal, p:pronVal, me:meanings, n:noteVal };
-    WORDS.push(entry);
-    customWords.push(entry);
-    saveCustomWords();
-    renderHome();
   }
 
   // Opened by tapping one of the home counters, so those numbers lead
@@ -3663,6 +3641,80 @@
       }catch(e){
         glossToast('That did not work.', 'bad', 6000);
       }
+    });
+  }
+
+  // --- Adding a word by typing it ----------------------------------------
+  // The same road as selecting one while practising: Claude writes the
+  // entry in the sheet's own style and the row is appended. Typing it is
+  // just the other door into that.
+  function addWordBlockHtml(){
+    let last = '';
+    try{ last = localStorage.getItem(GLOSS_LAST) || ''; }catch(e){}
+    const options = CATEGORIES.map(c=>
+      '<option value="'+esc(c)+'"'+(c===last?' selected':'')+'>'+esc(c)+'</option>').join('');
+    return '<div class="addword">'
+      + '<div class="addword-head"><span>Add a word</span>'
+        + '<span class="band-hint">looked up and written into your spreadsheet</span></div>'
+      + '<div class="addword-row">'
+        + '<input type="text" id="addword-input" placeholder="A word you want to learn\u2026" '
+          + 'autocomplete="off" autocapitalize="off" spellcheck="false">'
+        + '<select id="addword-topic">'+options+'</select>'
+        + '<button id="addword-go">Add</button>'
+      + '</div>'
+      + '<p class="hint" id="addword-note">Its pronunciation, meaning, example and notes are '
+        + 'written for you, in the same style as the rest of the sheet.</p>'
+      + '</div>';
+  }
+
+  async function submitNewWord(){
+    const input = el('#addword-input');
+    const topic = el('#addword-topic');
+    const go = el('#addword-go');
+    if(!input || !go) return;
+    const word = input.value.trim();
+    if(!word) { input.focus(); return; }
+
+    const sheet = topic ? topic.value : CATEGORIES[0];
+    try{ localStorage.setItem(GLOSS_LAST, sheet); }catch(e){}
+
+    go.disabled = true; go.textContent = 'Adding\u2026';
+    const note = el('#addword-note');
+    if(note) note.textContent = 'Looking up \u201c' + word + '\u201d for ' + sheet + '\u2026';
+
+    try{
+      const out = await fetch('/api/glossary', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ word: word, context: '', sheet: sheet })
+      }).then(r=>r.json());
+
+      if(out.added){
+        const m = out.entry && out.entry.meanings && out.entry.meanings[0];
+        input.value = '';
+        glossToast('<b>' + esc(out.entry.word) + '</b> added to ' + esc(out.sheet) + '.'
+          + (m ? '<br>' + esc(m.meaning) : '')
+          + '<br><small>Refresh to practice it.</small>', 'ok', 9000);
+      } else if(out.already){
+        glossToast(esc(out.message), 'ok', 6000);
+      } else if(out.queued){
+        glossToast(esc(out.message), 'bad', 8000);
+      } else {
+        glossToast(esc(out.message || 'That did not work.'), 'bad', 7000);
+      }
+    }catch(e){
+      glossToast('Could not reach the app server.', 'bad', 6000);
+    }
+    go.disabled = false; go.textContent = 'Add';
+    if(note) note.textContent = 'Its pronunciation, meaning, example and notes are written '
+      + 'for you, in the same style as the rest of the sheet.';
+  }
+
+  function wireAddWord(){
+    const go = el('#addword-go');
+    const input = el('#addword-input');
+    if(go) go.addEventListener('click', submitNewWord);
+    if(input) input.addEventListener('keydown', e=>{
+      if(e.key === 'Enter'){ e.preventDefault(); submitNewWord(); }
     });
   }
 
