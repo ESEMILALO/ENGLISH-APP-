@@ -231,19 +231,38 @@ def resolve_sheet(wanted):
     return TARGET_SHEET if TARGET_SHEET in names else names[0]
 
 
+def normalise(word):
+    """How a word is compared against the sheet.
+
+    "To strip", "strip" and "Strip" are all the same entry, so the
+    comparison ignores case and a leading "to ".
+    """
+    w = str(word or "").strip().lower()
+    if w.startswith("to "):
+        w = w[3:].strip()
+    return w
+
+
 def already_there(word):
+    """Where the word already lives, and what it says there.
+
+    Returns (sheet, meaning) or (None, None). The meaning comes back so
+    the app can show it: "already in Series" is a dead end, while seeing
+    the entry tells you at a glance whether it is really the word you
+    meant.
+    """
     import openpyxl
     wb = openpyxl.load_workbook(WORKBOOK, read_only=True)
-    target = word.strip().lower()
+    target = normalise(word)
     try:
         for sheet in wb.sheetnames:
             ws = wb[sheet]
-            for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
-                if row[0] and str(row[0]).strip().lower() == target:
-                    return sheet
+            for row in ws.iter_rows(min_row=2, max_col=3, values_only=True):
+                if row[0] and normalise(row[0]) == target:
+                    return sheet, (row[2] if len(row) > 2 else None)
     finally:
         wb.close()
-    return None
+    return None, None
 
 
 def tidy(text):
@@ -317,9 +336,10 @@ def add(word, context="", sheet=None):
         return {"ok": False, "error": "that is too long to be a word"}
     target = resolve_sheet(sheet)
 
-    where = already_there(word)
+    where, meaning = already_there(word)
     if where:
-        return {"ok": False, "already": True, "sheet": where,
+        return {"ok": False, "already": True, "sheet": where, "meaning": meaning,
+                "word": word,
                 "message": "“%s” is already in %s." % (word, where)}
 
     key = api_key()
@@ -341,6 +361,21 @@ def add(word, context="", sheet=None):
         return {"ok": False, "queued": True,
                 "message": "Saved for later; the lookup failed.",
                 "detail": str(e)[:200]}
+
+    # Look again with the word the lookup settled on. You may have typed
+    # "to strip" or "cubicles"; what comes back is "Strip" and "Cubicle",
+    # and that is the spelling that has to be checked, or the same word
+    # goes into the sheet twice under two names.
+    where, meaning = already_there(entry["word"])
+    if where:
+        drop_pending(word)
+        same = normalise(entry["word"]) == normalise(word)
+        return {"ok": False, "already": True, "sheet": where, "meaning": meaning,
+                "word": entry["word"],
+                "message": ("“%s” is already in %s." % (entry["word"], where))
+                if same else
+                ("“%s” is already in %s — you typed “%s”." %
+                 (entry["word"], where, word))}
 
     row = append_row(entry, target)
     drop_pending(word)

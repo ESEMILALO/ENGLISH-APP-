@@ -3494,7 +3494,11 @@
           + (m ? '<br>' + esc(m.meaning) : '')
           + '<br><small>Refresh to practice it.</small>', 'ok', 9000);
       } else if(out.already){
-        glossToast(esc(out.message), 'ok', 6000);
+        // Show what the sheet already says, so you can see whether it is
+        // really the same word rather than just being told "no".
+        glossToast(esc(out.message)
+          + (out.meaning ? '<br>' + esc(out.meaning) : '')
+          + '<br><small>Nothing was added.</small>', 'ok', 8000);
       } else if(out.queued){
         glossToast(esc(out.message) + '<br><small>It is waiting in '
           + 'progress/pending-words.json.</small>', 'bad', 9000);
@@ -3695,7 +3699,11 @@
           + (m ? '<br>' + esc(m.meaning) : '')
           + '<br><small>Refresh to practice it.</small>', 'ok', 9000);
       } else if(out.already){
-        glossToast(esc(out.message), 'ok', 6000);
+        // Show what the sheet already says, so you can see whether it is
+        // really the same word rather than just being told "no".
+        glossToast(esc(out.message)
+          + (out.meaning ? '<br>' + esc(out.meaning) : '')
+          + '<br><small>Nothing was added.</small>', 'ok', 8000);
       } else if(out.queued){
         glossToast(esc(out.message), 'bad', 8000);
       } else {
