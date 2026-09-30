@@ -2053,9 +2053,18 @@
     scResult = null;
   }
 
+  // There is one recognizer for the whole app, and either a practice card
+  // or a conversation may have it. Stopping has to mean stopping, whoever
+  // started it: the conversation listens continuously and starts itself
+  // again when the browser gives up, so a conversation left behind would
+  // otherwise keep the microphone and every card after it would fail with
+  // "already started".
   function scStopListening(){
-    scToken++; // anything still in flight belongs to a card we have left
-    if(scRecognizer && scRecognizing){
+    scToken++; // anything still in flight belongs to something we have left
+    if(chatSilence){ clearTimeout(chatSilence); chatSilence = null; }
+    chatTurnClosed = true;
+    chatListening = false;
+    if(scRecognizer){
       try{ scRecognizer.abort(); }catch(e){}
     }
     scRecognizing = false;
@@ -2543,6 +2552,7 @@
   }
 
   function renderHome(){
+    scStopListening();   // whatever was listening belongs to a screen we have left
     clearFreshTimer(); // this render replaces the block the old timer was painting
     const stats = computeStats(WORDS);
     const catRows = CATEGORIES.map(c=>{
@@ -4710,6 +4720,7 @@
   }
 
   function renderChatPicker(){
+    scStopListening();
     const words = chatWordsForToday();
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Conversation</div>'
@@ -4864,6 +4875,7 @@
     let settled = '';        // what it has committed to
     let pending = '';        // what it is still hearing
     let restarts = 0;
+    let lastStart = 0;
     chatTurnClosed = false;
     const began = Date.now();
 
@@ -4924,8 +4936,13 @@
       if(!chatListening) return;
       // It stopped on its own, which it does every few seconds of quiet.
       // Start it again unless this has gone on long enough to be a fault.
-      if(restarts < 40 && Date.now() - began < CHAT_MAX_MS){
+      // A recognizer that ends the instant it starts would otherwise spin
+      // here as fast as the machine allows, so there is a floor on how
+      // often this is willing to go round.
+      const now = Date.now();
+      if(restarts < 40 && now - began < CHAT_MAX_MS && now - lastStart > 400){
         restarts++;
+        lastStart = now;
         try{ recognition.start(); return; }catch(err){}
       }
       closeTurn();
@@ -4935,6 +4952,7 @@
       if(scToken !== token) return;
       try{
         recognition.start();
+        lastStart = Date.now();
         quietFor(CHAT_FIRST_MS);
       }
       catch(err){
