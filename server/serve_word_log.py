@@ -57,6 +57,9 @@ API_SCENARIO = "/api/scenario"
 API_EXPLAIN = "/api/explain"
 API_TRANSLATE = "/api/translate"
 API_REVIEW = "/api/review"
+API_SAY = "/api/say"
+API_IMAGINE = "/api/imagine"
+API_VOICES = "/api/voices"
 
 
 def read_progress():
@@ -235,7 +238,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         route = self.path.split("?", 1)[0]
         if route not in (API_GLOSSARY, API_KEY_SET, API_PENDING, API_CHAT,
                          API_SCENARIO, API_EXPLAIN, API_TRANSLATE,
-                         API_REVIEW):
+                         API_REVIEW, API_SAY, API_IMAGINE):
             self.send_error(501, "Not supported")
             return
         try:
@@ -249,6 +252,31 @@ class Handler(http.server.BaseHTTPRequestHandler):
             sent = json.loads(self.rfile.read(length).decode("utf-8"))
         except Exception:
             self._json({"ok": False, "error": "bad json"}, 400)
+            return
+
+        if route == API_SAY:
+            # Audio, not JSON -- the page plays what comes back, and falls
+            # back to the browser's own voice if this says no.
+            import say
+            audio, why = say.say(sent.get("text", ""), sent.get("voice", ""),
+                                 sent.get("rate", 0))
+            if audio is None:
+                self._json({"ok": False, "message": why or "no audio"}, 502)
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "audio/mpeg")
+            self.send_header("Content-Length", str(len(audio)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(audio)
+            return
+
+        if route == API_IMAGINE:
+            import chat
+            result = chat.imagine(sent.get("request", ""), sent.get("words") or [])
+            sys.stdout.write("  imagine: %s\n" % result.get("name", result.get("message")))
+            sys.stdout.flush()
+            self._json(result, 200 if result.get("ok") else 502)
             return
 
         if route == API_REVIEW:
@@ -385,6 +413,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.path.split("?", 1)[0] == API_PROGRESS:
             with PROGRESS_LOCK:
                 self._json(read_progress())
+            return
+        if self.path.split("?", 1)[0] == API_VOICES:
+            import say
+            self._json(say.voices())
             return
         if self.path.split("?", 1)[0] == API_GLOSSARY:
             # what is waiting, and whether it can be filled in yet

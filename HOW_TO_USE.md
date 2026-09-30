@@ -52,6 +52,14 @@ right-hand end of the address bar, or menu → *Cast, save and share* →
 *Install page as app*. You get a window with no address bar and an icon
 in the taskbar.
 
+## What it needs installed
+
+    pip install openpyxl edge-tts
+
+`openpyxl` reads the spreadsheet. `edge-tts` is what fetches the neural
+voices; without it the app falls back to the browser's own voices and
+everything else works exactly the same.
+
 ## The server
 
 It starts on its own at login, so the app is always ready. You only need
@@ -120,6 +128,18 @@ If what you selected is a single word, you also get the *add to your
 glossary* button, so it can go into your spreadsheet like any other.
 
 Both work on practice cards too, not only in the conversation.
+
+**Say "imagine we are..." and the conversation goes there.** At any
+point, typed or out loud: *"imagine we are at the airport and the
+airline has lost my bag"*. The situation you asked for is the one you
+get -- it fills in only what you left out, who the other person is and
+what they want, and it does not quietly redirect you towards the day's
+words. A line appears in the conversation saying where you now are, the
+partner starts again as somebody new, and everything said before stays
+on the page as a record without the new person having read it.
+
+It needs three words after "imagine" to count, so "imagine that" on its
+own is just something you said.
 
 **Selecting something now shows the Spanish straight away.** Highlight a
 word or a phrase, anywhere on a card or in the conversation, and the
@@ -190,12 +210,25 @@ What you asked to see stays until the next thing is said, and then the
 screen is bare again.
 
 **The voice can be changed.** Under *Everything else* on the home screen
-there is a **Voice** picker with a *Hear it* button. Left alone the app
-now takes the best one your machine offers rather than the plain Windows
-one Chrome reaches for by default — the ones marked *natural* are read
-over the internet and sound far more like a person. If the connection
-drops mid-sentence, a voice stored on the machine finishes it, so a
-conversation you are holding by ear never goes quiet on you.
+there is a **Voice** picker with a *Hear it* button, and it now has two
+groups in it.
+
+The **neural** ones -- Ava, Andrew, Emma, Brian, and two British voices --
+do not come from the browser at all. The app server fetches them, and
+they are a different thing to listen to: not a better robot, a person.
+One of them is what you get unless you choose otherwise. The first time
+a sentence is said it takes about a second to arrive; every time after
+that it is instant, because each clip is kept in `server/voice-cache`.
+
+Under them are the voices your browser offers, which is what the app used
+before.
+
+If the neural voice cannot be reached -- offline, the package missing,
+anything at all -- the browser voice finishes the sentence instead. That
+includes the awkward case where a clip arrives but never starts playing:
+after four seconds of nothing the app stops waiting and says it the old
+way, because a conversation you are holding by ear must never just go
+quiet.
 
 The same voice reads words, examples and the conversation. Single words
 are read a little slower than sentences, because a word is worth hearing
@@ -291,6 +324,14 @@ If one picture is wrong, ask for another:
 It remembers the one you rejected and will not offer it again. Run
 `python tools\build_word_log.py` afterwards to put the changes in the
 app.
+
+## The check at the door
+
+When you open the app it asks you about words you have already mastered,
+before it lets you at anything new. Type the word and press **Enter**;
+the answer appears, and **Enter** again moves to the next one. The whole
+run is keyboard-only -- you never have to reach for the mouse in the
+middle of it.
 
 ## Earning the day's words
 

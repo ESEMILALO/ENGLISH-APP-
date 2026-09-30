@@ -407,6 +407,7 @@
   "q": "warehouse pallets goods"
  },
  "504 Secondary::According": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Accordingly": {
@@ -425,24 +426,43 @@
  "504 Secondary::Aim": {
   "q": "archer aiming bow"
  },
+ "504 Secondary::All alone": {},
  "504 Secondary::Ancient": {
-  "q": "ancient temple"
+  "none": "No clear real photo of ancient ruins",
+  "q": "ancient temple",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Plan_of_Ancient_Greek_temple,_in_RDCA-ru.jpg",
+   "https://commons.wikimedia.org/wiki/File:Shiva_Temple_at_Tukura.jpg",
+   "https://commons.wikimedia.org/wiki/File:Tungnath_temple_taran.jpg"
+  ]
  },
  "504 Secondary::Anecdote": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Angered by": {
-  "q": "angry protesters"
+  "none": "No clear anger or cause shown",
+  "q": "angry protesters",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:New_Town_Plaza_protesters_under_angry_emotional_20150215.jpg"
+  ]
  },
  "504 Secondary::Appeal": {
+  "none": "nothing found",
   "q": "courtroom lawyer"
  },
  "504 Secondary::As the": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Autos": {
-  "q": "classic cars"
+  "by": "Retired electrician",
+  "file": "autos-711e884a83.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Moscow_car_show_2026-08-01_Range_Rover_Classic_08.jpg",
+  "q": "classic cars",
+  "title": "Moscow car show 2026-08-01 Range Rover Classic 08.jpg",
+  "why": "Clear photograph of a real car"
  },
  "504 Secondary::Award": {
   "none": "nothing found",
@@ -463,6 +483,7 @@
   "q": "step backward"
  },
  "504 Secondary::Barely visible": {
+  "none": "nothing found",
   "q": "faint distant silhouette"
  },
  "504 Secondary::Basement": {
@@ -483,33 +504,60 @@
   "q": "-"
  },
  "504 Secondary::Being": {
-  "q": "group of people"
+  "none": "Abstract concept, no photo conveys it",
+  "q": "group of people",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Group_of_people_in_front_of_fountain_and_stairs.png"
+  ]
  },
  "504 Secondary::Bench": {
   "q": "park bench"
  },
  "504 Secondary::Beyond": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Bible": {
-  "q": "bible book"
+  "by": "John Snyder",
+  "file": "bible-27f6a92640.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Book_of_Daniel.jpg",
+  "q": "bible book",
+  "title": "The Book of Daniel.jpg",
+  "why": "Photo of real open Bible pages"
  },
  "504 Secondary::Bill": {
   "q": "restaurant bill"
  },
  "504 Secondary::Blade": {
-  "q": "knife blade"
+  "by": "PUMA GmbH IP Solingen",
+  "file": "blade-3e1f2ad71e.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:7152863_-_PUMA_TEC_Universal-Anglermesser_863.png",
+  "q": "knife blade",
+  "title": "7152863 - PUMA TEC Universal-Anglermesser 863.png",
+  "why": "Shows sharp metal cutting blade clearly"
  },
  "504 Secondary::Blend in": {
+  "none": "nothing found",
   "q": "camouflaged animal rocks"
  },
+ "504 Secondary::Boatman": {},
  "504 Secondary::Bound": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Boundary": {
-  "q": "property fence"
+  "none": "None clearly show a boundary line",
+  "q": "property fence",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wroclaw_Ossolineum_od_ulGrodzkiej.jpg",
+   "https://commons.wikimedia.org/wiki/File:Spanish_barbed_wire_in_the_Philippines,_1899.jpg",
+   "https://commons.wikimedia.org/wiki/File:Upon_The_Yellow_(229504403).jpeg"
+  ]
  },
  "504 Secondary::Branches": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Breeding": {
@@ -522,9 +570,16 @@
   ]
  },
  "504 Secondary::Breezes": {
-  "q": "sea breeze"
+  "by": "Dae Wook Kim",
+  "file": "breezes-c5dafde73e.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sea_Breeze_(66705081).jpeg",
+  "q": "sea breeze",
+  "title": "Sea Breeze (66705081).jpeg",
+  "why": "Tree bending shows gentle wind"
  },
  "504 Secondary::Bright": {
+  "none": "nothing found",
   "q": "bright sunny room"
  },
  "504 Secondary::Bring out": {
@@ -541,31 +596,64 @@
   "q": "government office building"
  },
  "504 Secondary::Butcher": {
-  "q": "butcher shop"
+  "none": "No clear person selling meat shown",
+  "q": "butcher shop",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Pork_butcher%27s_shop_in_Barcelona.JPG",
+   "https://commons.wikimedia.org/wiki/File:Unmarked_butcher%27s_shop,_Buckley.JPG"
+  ]
  },
  "504 Secondary::Butler": {
-  "q": "butler serving"
+  "none": "Both images are handwritten letters, not",
+  "q": "butler serving",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Letter_to_Scot_Butler,_August_1st,_1862_-_DPLA_-_f563c35aed2aa73b46b70b29f8a373f5_(page_3).jpg",
+   "https://commons.wikimedia.org/wiki/File:Letter_to_Scot_Butler,_August_1st,_1862_-_DPLA_-_f563c35aed2aa73b46b70b29f8a373f5_(page_2).jpg"
+  ]
  },
  "504 Secondary::Butter": {
-  "q": "butter block"
+  "none": "These are patent documents, not photos",
+  "q": "butter block",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Churn._-_DPLA_-_774c255e566894acc5cb8caa20c7dac2_(page_1).jpg",
+   "https://commons.wikimedia.org/wiki/File:Churn._-_DPLA_-_774c255e566894acc5cb8caa20c7dac2_(page_2).jpg",
+   "https://commons.wikimedia.org/wiki/File:Churn._-_DPLA_-_774c255e566894acc5cb8caa20c7dac2_(page_3).jpg"
+  ]
  },
  "504 Secondary::By the use of tact": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Came in": {
-  "q": "person entering door"
+  "none": "No photo shows entering action",
+  "q": "person entering door",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:SGT_Morton_being_treated_for_injuries_in_Ramadi,_Iraq.jpg",
+   "https://commons.wikimedia.org/wiki/File:Burglar_Alarm_-_DPLA_-_2bdea33189e348a588073d761bcba805_(page_3).jpg",
+   "https://commons.wikimedia.org/wiki/File:Burglar_Alarm_-_DPLA_-_2bdea33189e348a588073d761bcba805_(page_1).jpg"
+  ]
  },
  "504 Secondary::Came over": {
+  "none": "nothing found",
   "q": "friend visiting home"
  },
  "504 Secondary::Captain": {
-  "q": "ship captain"
+  "none": "Shows ship only, no captain visible",
+  "q": "ship captain",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Navire_CAPTAIN_KARAM_en_mer.jpg"
+  ]
  },
  "504 Secondary::Carcass": {
-  "q": "animal carcass"
+  "none": "No clear animal carcass shown",
+  "q": "animal carcass",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Question_Mark_(25628557).jpeg",
+   "https://commons.wikimedia.org/wiki/File:Komodo_dragon_approaching_carcass_-_DPLA_-_125d4ea239a5071dae9187510893edf4.jpg"
+  ]
  },
  "504 Secondary::Careful": {
+  "none": "nothing found",
   "q": "careful cutting"
  },
  "504 Secondary::Carefully": {
@@ -580,6 +668,8 @@
    "https://commons.wikimedia.org/wiki/File:Alla_aytayotgan_ayol_1.png"
   ]
  },
+ "504 Secondary::Cemetery": {},
+ "504 Secondary::Cheat": {},
  "504 Secondary::Cheating": {
   "q": "cheating exam"
  },
@@ -597,13 +687,20 @@
   "q": "cleaning kitchen"
  },
  "504 Secondary::Cleverly": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Cleverness": {
   "q": "solving puzzle"
  },
  "504 Secondary::Climate": {
-  "q": "tropical landscape"
+  "none": "None clearly depict regional weather pat",
+  "q": "tropical landscape",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Tropical_Undergrowth_(109758263).jpeg",
+   "https://commons.wikimedia.org/wiki/File:(Garden_pond_at_Fairchild_Tropical_Botanic_Garden,_Florida)_-_DPLA_-_64abd7fabdfddbaacfc459c9832b813a.jpg",
+   "https://commons.wikimedia.org/wiki/File:(Zamia_cone_at_the_Fairchild_Tropical_Botanic_Garden,_Florida)_-_DPLA_-_887229313a6416b6735c7080db105a6f.jpg"
+  ]
  },
  "504 Secondary::Cloak": {
   "by": "Mardetanha",
@@ -618,10 +715,22 @@
   "q": "crowded houses close"
  },
  "504 Secondary::Closet": {
-  "q": "clothes closet"
+  "none": "None show clothes storage interior",
+  "q": "clothes closet",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Modern_Closet_Handle.jpg",
+   "https://commons.wikimedia.org/wiki/File:Virtual_Closet.jpg",
+   "https://commons.wikimedia.org/wiki/File:Linen_Closet.jpg"
+  ]
  },
  "504 Secondary::Coffin": {
-  "q": "coffin"
+  "by": "Reylinadottir1292",
+  "file": "coffin-ece9b11485.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:White_coffin_(1002926).jpg",
+  "q": "coffin",
+  "title": "White coffin (1002926).jpg",
+  "why": "Clear photo of real coffin"
  },
  "504 Secondary::Come down": {
   "q": "climbing down roof"
@@ -630,17 +739,35 @@
   "q": "person approaching edge"
  },
  "504 Secondary::Congress": {
-  "q": "capitol building"
+  "by": "Fir0002 at English Wikipedia",
+  "file": "congress-20b052299e.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:US_Capitol_Building_Front_New_edit.jpg",
+  "q": "capitol building",
+  "title": "US Capitol Building Front New edit.jpg",
+  "why": "Capitol building represents national Con"
  },
  "504 Secondary::Contest": {},
  "504 Secondary::Costly": {
+  "none": "nothing found",
   "q": "expensive car repair"
  },
  "504 Secondary::Costume": {
-  "q": "pirate costume"
+  "by": "Infrogmation",
+  "file": "costume-3f3bf45df5.jpg",
+  "lic": "CC BY 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:JaxSqMGD07PiratePhone.jpg",
+  "q": "pirate costume",
+  "title": "JaxSqMGD07PiratePhone.jpg",
+  "why": "Real photo of person wearing costume"
  },
  "504 Secondary::Cot": {
-  "q": "camp bed"
+  "none": "No picture shows a cot/small bed",
+  "q": "camp bed",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:PA_Cot-Portrait-Ferdinand_Mulnier-Archive.png",
+   "https://commons.wikimedia.org/wiki/File:Municipal_Waste_Follonica_2011_(202317611).jpeg"
+  ]
  },
  "504 Secondary::Covering": {
   "q": "floor covering"
@@ -662,22 +789,42 @@
   "q": "shouting person"
  },
  "504 Secondary::Cut through": {
-  "q": "walking through forest"
+  "by": "Kafziel (talk · contribs)",
+  "file": "cut-through-4390d86efd.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hikers_with_packs.jpg",
+  "q": "walking through forest",
+  "title": "Hikers with packs.jpg",
+  "why": "Hikers walking directly through forest p"
  },
  "504 Secondary::Darkness": {
-  "q": "dark room"
+  "none": "None clearly show pure darkness/absence ",
+  "q": "dark room",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:MuFo_J%C3%B3zefit%C3%B3w_ciemnia_fotograficzna.jpg",
+   "https://commons.wikimedia.org/wiki/File:Portable_Dark_Room._-_DPLA_-_426f647e2fdae8fadd061b96cc7b2a8e_(page_2).jpg",
+   "https://commons.wikimedia.org/wiki/File:Stasi_Dark_Room.JPG"
+  ]
  },
  "504 Secondary::Deadened": {
+  "none": "nothing found",
   "q": "numbing injection"
  },
  "504 Secondary::Dear": {
+  "none": "nothing found",
   "q": "close friends hugging"
  },
  "504 Secondary::Decent": {
   "q": "decent hotel room"
  },
  "504 Secondary::Dense fog": {
-  "q": "thick fog"
+  "by": "Andre Carrotflower",
+  "file": "dense-fog-9a6b8d3907.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Springtime_fog_in_downtown_Buffalo,_New_York,_March_2015.jpg",
+  "q": "thick fog",
+  "title": "Springtime fog in downtown Buffalo, New York, March 2015.jpg",
+  "why": "Thick fog obscuring buildings, limiting "
  },
  "504 Secondary::Densely": {
   "q": "densely packed crowd"
@@ -695,6 +842,7 @@
   "q": "dictator speech"
  },
  "504 Secondary::Dined": {
+  "none": "nothing found",
   "q": "couple dining restaurant"
  },
  "504 Secondary::Disappear": {
@@ -703,6 +851,7 @@
  "504 Secondary::Discover": {
   "q": "scientist new species"
  },
+ "504 Secondary::Dishonest": {},
  "504 Secondary::Disobey": {
   "none": "nothing found",
   "q": "disobedient child"
@@ -711,10 +860,22 @@
   "q": "argument dispute"
  },
  "504 Secondary::Doing away": {
-  "q": "shredding documents"
+  "none": "None clearly depict eliminating somethin",
+  "q": "shredding documents",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Shredded_Documents_of_US_Embassy.jpg",
+   "https://commons.wikimedia.org/wiki/File:Shredded_tires.JPG",
+   "https://commons.wikimedia.org/wiki/File:Shreds.png"
+  ]
  },
  "504 Secondary::Doing away with": {
-  "q": "shredding documents"
+  "none": "None depict eliminating or abolishing co",
+  "q": "shredding documents",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Shredded_Documents_of_US_Embassy.jpg",
+   "https://commons.wikimedia.org/wiki/File:Shredded_tires.JPG",
+   "https://commons.wikimedia.org/wiki/File:Shreds.png"
+  ]
  },
  "504 Secondary::Downwards": {
   "q": "downhill path"
@@ -740,34 +901,58 @@
   ]
  },
  "504 Secondary::Early spring": {
-  "q": "early spring flowers"
+  "none": "No image conveys early spring concept",
+  "q": "early spring flowers",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wild_flowers_of_New_England_Part_I,_Flowers_of_early_spring._Part_II,_Honeysuckle,_dogwood_and_saxifrage_families_-_DPLA_-_fc392a0c995695d18c2259ab01107e98_(page_7).jpg",
+   "https://commons.wikimedia.org/wiki/File:Wild_flowers_of_New_England_Part_I,_Flowers_of_early_spring._Part_II,_Honeysuckle,_dogwood_and_saxifrage_families_-_DPLA_-_fc392a0c995695d18c2259ab01107e98_(page_111).jpg",
+   "https://commons.wikimedia.org/wiki/File:Wild_flowers_of_New_England_Part_I,_Flowers_of_early_spring._Part_II,_Honeysuckle,_dogwood_and_saxifrage_families_-_DPLA_-_fc392a0c995695d18c2259ab01107e98_(page_98).jpg"
+  ]
  },
  "504 Secondary::Earn livings": {
   "q": "fishermen working boat"
  },
  "504 Secondary::Encyclopedia": {
+  "none": "nothing found",
   "q": "encyclopedia books"
  },
  "504 Secondary::Entered": {},
  "504 Secondary::Excessive": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Executive": {
-  "q": "business executive"
+  "by": "Vikrant - Quadria Capital",
+  "file": "executive-851d23ac5e.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Abrar_Mir_2023.jpg",
+  "q": "business executive",
+  "title": "Abrar Mir 2023.jpg",
+  "why": "Confident man in business suit"
  },
  "504 Secondary::Extravagant": {
   "q": "lavish wedding"
  },
  "504 Secondary::Eye out": {
-  "q": "person watching alert"
+  "none": "No one shown watching carefully",
+  "q": "person watching alert",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:US_Air_Force_Reserve_(USAFR)_Colonel_(COL)_Chip_Taylor_(left)_and_Major_(MAJ)_Mike_Vaught,_93rd_Fighter_Squadron,_outline_possible_alert_mission_scenarios,_in_support_of_Operation_S_-_DPLA_-_f72908778b2a7aa4a52d6fd08961f54c.jpeg"
+  ]
  },
  "504 Secondary::Eye out for": {
-  "q": "person watching bus stop"
+  "none": "Photo doesn't show watchful attention",
+  "q": "person watching bus stop",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:LOVE_FREQUENCY_528Hz.jpg"
+  ]
  },
  "504 Secondary::Eyesight": {
+  "none": "nothing found",
   "q": "eye chart"
  },
  "504 Secondary::FBI": {},
+ "504 Secondary::Facing the peril": {},
  "504 Secondary::Fall asleep": {
   "q": "person sleeping sofa"
  },
@@ -775,6 +960,7 @@
   "q": "farm stand"
  },
  "504 Secondary::Fate": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Faults": {
@@ -784,7 +970,11 @@
   "q": "person falling down"
  },
  "504 Secondary::Fell out": {
-  "q": "friends arguing"
+  "none": "Portrait unrelated to arguing or friends",
+  "q": "friends arguing",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:C._W._Cross_1893_Edit.jpg"
+  ]
  },
  "504 Secondary::Figuring": {
   "q": "woman calculating bills"
@@ -792,16 +982,28 @@
  "504 Secondary::Find out": {
   "q": "-"
  },
+ "504 Secondary::Fled": {},
  "504 Secondary::Flirting": {
+  "none": "nothing found",
   "q": "flirting couple"
  },
  "504 Secondary::Flour": {
-  "q": "flour powder"
+  "none": "No photo of actual flour shown",
+  "q": "flour powder",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:NIE_1905_Flour_-_modern_flour_mill.jpg",
+   "https://commons.wikimedia.org/wiki/File:Pampu.png"
+  ]
  },
  "504 Secondary::Fog": {
-  "q": "foggy road"
+  "none": "Shows cloudy sky, not ground-level fog",
+  "q": "foggy road",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Verrazano_Bridge_Bay_Ridge.jpg"
+  ]
  },
  "504 Secondary::Forced": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Forces": {
@@ -814,9 +1016,17 @@
   "q": "fortified city wall"
  },
  "504 Secondary::Frighten": {
-  "q": "scared child"
+  "none": "No real photograph shown",
+  "q": "scared child",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Scared_Stiff_(1926)_-_1.jpg",
+   "https://commons.wikimedia.org/wiki/File:0646-vector-orange-man-running-scared-01.jpg"
+  ]
  },
+ "504 Secondary::Frightened": {},
+ "504 Secondary::Frightening": {},
  "504 Secondary::Frightening someone out of something": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Gardener": {
@@ -829,24 +1039,39 @@
   "q": "family gathering"
  },
  "504 Secondary::Gathered": {
-  "q": "crowd gathered"
+  "by": "Sanromá, John B., 1900-1997",
+  "file": "gathered-55b0056803.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:A_crowd_of_people_gathered_by_buses_-_DPLA_-_f96b6c8c1fa2333cf114d38336b7739d.jpg",
+  "q": "crowd gathered",
+  "title": "A crowd of people gathered by buses - DPLA - f96b6c8c1fa2333cf114d38336b7739d.jpg",
+  "why": "Crowd gathered together in one place"
  },
  "504 Secondary::Germs": {
+  "none": "nothing found",
   "q": "bacteria microscope"
  },
  "504 Secondary::Gesture": {
+  "none": "nothing found",
   "q": "hand gesture"
  },
  "504 Secondary::Get away from": {
   "q": "escaping fire"
  },
  "504 Secondary::Get into": {
-  "q": "entering car"
+  "none": "No image shows entering something",
+  "q": "entering car",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:R68_Shuttle_Train_2922_entering_Botanic_Garden.png",
+   "https://commons.wikimedia.org/wiki/File:Used_Pennsylvania_Railroad_hopper_car_at_the_Ralston_Steel_Car_Company_-_DPLA_-_1f919aee74c545488c1bfd3bd24d38db.jpg",
+   "https://commons.wikimedia.org/wiki/File:Norfolk_%26_Western_Railroad_hopper_car_at_the_Ralston_Steel_Car_Company_-_DPLA_-_e727385a78697d64d4abcb695a212fd8.jpg"
+  ]
  },
  "504 Secondary::Get into#2": {
   "q": "person entering car"
  },
  "504 Secondary::Get mixed up": {
+  "none": "nothing found",
   "q": "confused expression"
  },
  "504 Secondary::Give up": {},
@@ -860,21 +1085,36 @@
   "q": "women gossiping"
  },
  "504 Secondary::Grant": {
-  "q": "judge signing document"
+  "none": "Old ledger scans, not depicting meaning",
+  "q": "judge signing document",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Josef_Maly_Matrika_N_1860.jpg",
+   "https://commons.wikimedia.org/wiki/File:Rudolf_Pecival_Matrika_N_1859.jpg"
+  ]
  },
  "504 Secondary::Grave": {
-  "q": "grave headstone"
+  "by": "CetoriaElise",
+  "file": "grave-4e92a7a045.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Headstone_of_Vivian_May_Allison.jpg",
+  "q": "grave headstone",
+  "title": "Headstone of Vivian May Allison.jpg",
+  "why": "Clear photo of grave in cemetery"
  },
+ "504 Secondary::Greatly": {},
  "504 Secondary::Hangings": {
   "q": "wall tapestry"
  },
+ "504 Secondary::He drew": {},
  "504 Secondary::Heated": {
   "q": "room radiator"
  },
  "504 Secondary::Hence": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::High-priced": {
+  "none": "nothing found",
   "q": "luxury furniture store"
  },
  "504 Secondary::Historians": {
@@ -899,65 +1139,127 @@
   ]
  },
  "504 Secondary::Ice skating": {
-  "q": "ice skating rink"
+  "none": "No clear skaters visible, just rinks/bui",
+  "q": "ice skating rink",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Meiji_Shrine_Outer_Garden_-_Ice_rink.jpg",
+   "https://commons.wikimedia.org/wiki/File:Ice_Rink_Split.jpg",
+   "https://commons.wikimedia.org/wiki/File:VDNKh_Ice_rink.jpg"
+  ]
  },
  "504 Secondary::Immoderate": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Improve": {
   "q": "student improving"
  },
+ "504 Secondary::In order to": {},
  "504 Secondary::Incredible": {
   "q": "-"
  },
  "504 Secondary::Invaluable": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Judicial": {
-  "q": "courtroom judge"
+  "by": "United States District Court for the Eastern District of Missouri",
+  "file": "judicial-238358b7a1.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Magistrate_courtroom,_Thomas_F._Eagleton_U.S._Courthouse_(2010).jpg",
+  "q": "courtroom judge",
+  "title": "Magistrate courtroom, Thomas F. Eagleton U.S. Courthouse (2010).jpg",
+  "why": "Courtroom photo shows judicial setting c"
  },
  "504 Secondary::Jury": {
-  "q": "courtroom jury"
+  "none": "Both are drawings, not photographs",
+  "q": "courtroom jury",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:NZ_High_Court_trial_courtroom_numbered.png",
+   "https://commons.wikimedia.org/wiki/File:Verdict_in_Halvor_J._Hagen_trial.jpg"
+  ]
  },
  "504 Secondary::Labor dispute": {
-  "q": "workers strike"
+  "none": "No image shows clear labor dispute",
+  "q": "workers strike",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Topeka_State_Journal_Editorial_cartoon_about_the_United_Mine_Workers_coal_strike_of_1919.jpg",
+   "https://commons.wikimedia.org/wiki/File:Workers_Mill_Bosses_Are_Trying_to_Electrocute.png",
+   "https://commons.wikimedia.org/wiki/File:Trolley_workers_strike_-_DPLA_-_c895d7025b741c62c3604439c6c0837f_(page_1).jpg"
+  ]
  },
  "504 Secondary::Lack": {
+  "none": "nothing found",
   "q": "empty wallet"
  },
  "504 Secondary::Lack of": {
+  "none": "nothing found",
   "q": "empty pantry"
  },
  "504 Secondary::Laid": {
-  "q": "book on table"
+  "none": "Patent diagrams, not real photographs",
+  "q": "book on table",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Combined_Rotatable_Table,_Book-Shelf,_and_Lamp-Support_-_DPLA_-_35c9874c9bbbfc8e304872cbda5b219c_(page_1).jpg",
+   "https://commons.wikimedia.org/wiki/File:Combined_Rotatable_Table,_Book-Shelf,_and_Lamp-Support_-_DPLA_-_35c9874c9bbbfc8e304872cbda5b219c_(page_3).jpg"
+  ]
  },
  "504 Secondary::Landlord": {},
  "504 Secondary::Landscape": {
-  "q": "mountain landscape"
+  "by": "Carlquist, Sherwin John, 1930-2021",
+  "file": "landscape-9f13c401f6.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:(Landscape_of_waterfall_emerging_from_a_vegetative_mountain_on_Kauai_Island,_United_States)_-_DPLA_-_759641c80aec24d682f7e56a56020555.jpg",
+  "q": "mountain landscape",
+  "title": "(Landscape of waterfall emerging from a vegetative mountain on Kauai Island, United States) - DPLA - 759641c80aec24d682f7e56a56020555.jpg",
+  "why": "Real photo showing mountains, forest, wa"
  },
  "504 Secondary::Lasted": {
   "q": "long meeting"
  },
  "504 Secondary::Lateness": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Later": {
   "q": "-"
  },
  "504 Secondary::Lay ahead": {
+  "none": "nothing to photograph",
   "q": "-"
  },
+ "504 Secondary::Lay down": {},
  "504 Secondary::Layers": {
-  "q": "layered cake"
+  "by": "Photographer: Nicko Margolies",
+  "file": "layers-8d054c9d12.jpg",
+  "lic": "CC BY 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:Layered_Chocolate_Cake.JPG",
+  "q": "layered cake",
+  "title": "Layered Chocolate Cake.JPG",
+  "why": "Cake shows visible stacked layers"
  },
  "504 Secondary::Layers of thin clothing": {
-  "q": "layered clothing"
+  "none": "Shows shop display, not layered worn clo",
+  "q": "layered clothing",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_moss_ball_damaged_by_birds_(Air_layering_of_Ulmus_pumila).jpg",
+   "https://commons.wikimedia.org/wiki/File:UNIQLO_clothing_2026-09-06_Camisoles_Philippines_3a.jpg",
+   "https://commons.wikimedia.org/wiki/File:UNIQLO_clothing_2026-09-06_Camisoles_Philippines.jpg"
+  ]
  },
+ "504 Secondary::Lean back": {},
  "504 Secondary::Least": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Legislative": {
-  "q": "parliament chamber"
+  "by": "David Cross - User: (WT-shared) Davidx at wts wikivoyage",
+  "file": "legislative-3fa0365113.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Parliament_Debating_Chamber.JPG",
+  "q": "parliament chamber",
+  "title": "Parliament Debating Chamber.JPG",
+  "why": "Real photo of legislative chamber"
  },
  "504 Secondary::Let out": {
   "none": "nothing found",
@@ -967,11 +1269,13 @@
   "q": "librarian library"
  },
  "504 Secondary::Lied": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Lights-out": {
   "q": "bedroom lights off"
  },
+ "504 Secondary::Little did I realize": {},
  "504 Secondary::Live happily ever after": {
   "q": "happy couple wedding"
  },
@@ -979,48 +1283,85 @@
   "q": "police investigation"
  },
  "504 Secondary::Loss": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Losses": {
   "q": "financial loss chart"
  },
  "504 Secondary::Loud tie": {
+  "none": "nothing found",
   "q": "colorful necktie"
  },
  "504 Secondary::Low-paid": {
-  "q": "low wage worker"
+  "none": "No image conveys low pay concept",
+  "q": "low wage worker",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:1892-03-30_anonym_Fotografie_Gruppenbild_Arbeiter_und_Beamte_(Angestellte)_der_Firma_Stute_%26_Blumenthal_in_Hannover-Linden.jpg",
+   "https://commons.wikimedia.org/wiki/File:Security_Building,_319_North_Fourth_Street._-_DPLA_-_7ffdbb4159e8c47345afadfdd3454197_(page_1).jpg"
+  ]
  },
  "504 Secondary::Low-paid workers": {
-  "q": "fast food worker"
+  "by": "Jimmy John's Franchise, LLC",
+  "file": "low-paid-workers-0d5defd1a6.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Jimmy_John_employees_having_fun_making_sandwiches.jpg",
+  "q": "fast food worker",
+  "title": "Jimmy John employees having fun making sandwiches.jpg",
+  "why": "Fast food workers, typical low-paid job"
  },
+ "504 Secondary::Maid": {},
  "504 Secondary::Major": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Major leagues": {
-  "q": "baseball stadium"
+  "by": "Xenocross",
+  "file": "major-leagues-be02a229eb.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Munhak_baseball_stadium_2012.png",
+  "q": "baseball stadium",
+  "title": "Munhak baseball stadium 2012.png",
+  "why": "Large packed stadium shows top-level pro"
  },
  "504 Secondary::Make better": {
   "q": "upward graph"
  },
  "504 Secondary::Make up": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Make up for": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Makeup": {
-  "q": "makeup cosmetics"
+  "by": "Kylee Fleek",
+  "file": "makeup-99769c0a5a.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kylee_Fleek_Rainbow_Splotch_Makeup_Look.jpg",
+  "q": "makeup cosmetics",
+  "title": "Kylee Fleek Rainbow Splotch Makeup Look.jpg",
+  "why": "Face shows colorful cosmetics makeup"
  },
  "504 Secondary::Making a living": {
   "q": "street vendor working"
  },
  "504 Secondary::March of Dimes": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Marched out": {
-  "q": "soldiers marching"
+  "by": "",
+  "file": "marched-out-c9011e663e.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Photograph_of_soldiers_marching_at_Bainbridge_Army_Airfield,_Bainbridge,_Georgia,_1944_June_15_-_DPLA_-_2e5a67853f7f25607c08f538cc8cd11e.jpeg",
+  "q": "soldiers marching",
+  "title": "Photograph of soldiers marching at Bainbridge Army Airfield, Bainbridge, Georgia, 1944 June 15 - DPLA - 2e5a67853f7f25607c08f538cc8cd11e.jpeg",
+  "why": "Photo shows soldiers marching out organi"
  },
  "504 Secondary::Margarine": {
+  "none": "nothing found",
   "q": "margarine tub"
  },
  "504 Secondary::Meaningless": {
@@ -1033,7 +1374,13 @@
   "q": "messy bedroom"
  },
  "504 Secondary::Mist": {
-  "q": "misty hills"
+  "by": "Fir0002 (talk) (Uploads)",
+  "file": "mist-85e1866180.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Misty_hill.jpg",
+  "q": "misty hills",
+  "title": "Misty hill.jpg",
+  "why": "Hill covered in light mist"
  },
  "504 Secondary::Mistaken": {
   "none": "nothing found",
@@ -1043,16 +1390,39 @@
   "q": "misty morning"
  },
  "504 Secondary::Mixture": {
-  "q": "mixing bowl"
+  "none": "None show combining different substances",
+  "q": "mixing bowl",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Kenwood_Chef_bowl_(4).JPG",
+   "https://commons.wikimedia.org/wiki/File:Kenwood_Chef_bowl_(2).JPG",
+   "https://commons.wikimedia.org/wiki/File:Mixing_Bowl_Cafe_Menu_-_DPLA_-_74681f2ff0d11d80a3de8d91ef61ec14_(page_2).jpg"
+  ]
  },
  "504 Secondary::Moisture": {
-  "q": "water droplets"
+  "by": "Jesse Marino",
+  "file": "moisture-6ee8bde456.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Little_Things_(4053900).jpeg",
+  "q": "water droplets",
+  "title": "The Little Things (4053900).jpeg",
+  "why": "Water droplets on leaf show moisture"
  },
  "504 Secondary::Moonlight": {
-  "q": "moonlight night"
+  "by": "Marsel Minga",
+  "file": "moonlight-a37b8fc459.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Mm00a_1406_Moonlight_(73684659).jpeg",
+  "q": "moonlight night",
+  "title": "Mm00a 1406 Moonlight (73684659).jpeg",
+  "why": "Shows moonlight reflecting on water"
  },
  "504 Secondary::Mourned": {
-  "q": "mourning funeral"
+  "none": "No image shows people expressing sadness",
+  "q": "mourning funeral",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Mourning_for_Lincoln%27s_Funeral,_1865._Southern_corner,_Main_Street,_Getty_Square._Courtesy_of_M._J._Witson.png",
+   "https://commons.wikimedia.org/wiki/File:Kevin_O%27Higgins_Funeral,_1927.jpg"
+  ]
  },
  "504 Secondary::Move off": {
   "q": "train departing"
@@ -1061,6 +1431,7 @@
   "q": "-"
  },
  "504 Secondary::Mud": {
+  "none": "nothing found",
   "q": "muddy boots"
  },
  "504 Secondary::Muddy": {
@@ -1068,7 +1439,13 @@
   "q": "muddy shoes"
  },
  "504 Secondary::Murder": {
-  "q": "crime scene"
+  "none": "None show act of murder",
+  "q": "crime scene",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:National_Crime_Scene_Cleanup_Logo.png",
+   "https://commons.wikimedia.org/wiki/File:Singapore_Police_Force_Crime_Scene_Investigation.jpg",
+   "https://commons.wikimedia.org/wiki/File:Tardy_Furniture_Building.jpeg"
+  ]
  },
  "504 Secondary::Nearby": {
   "none": "No image conveys concept of nearby",
@@ -1085,10 +1462,12 @@
   "q": "-"
  },
  "504 Secondary::No peril": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Not used to": {},
  "504 Secondary::Noted": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Nylon": {
@@ -1101,9 +1480,11 @@
   "q": "ocean floor"
  },
  "504 Secondary::Of a kind": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Oil paints": {
+  "none": "nothing found",
   "q": "oil paints tubes"
  },
  "504 Secondary::Omit": {
@@ -1111,6 +1492,7 @@
  },
  "504 Secondary::On account of hardship": {},
  "504 Secondary::On the contrary": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Outcome": {
@@ -1118,9 +1500,16 @@
  },
  "504 Secondary::Overcome": {},
  "504 Secondary::Passage": {
-  "q": "book page"
+  "none": "No image shows text passage concept",
+  "q": "book page",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Membership_book(%3F)_-_DPLA_-_062d3106b71a288109412061f50599fb_(page_23).jpg",
+   "https://commons.wikimedia.org/wiki/File:Lists_of_Inmates_-_Women_(Book_No._7,_page_235)_-_DPLA_-_34ff3b1a44eb6e72ecdbc02bdd6114e3.jpg",
+   "https://commons.wikimedia.org/wiki/File:Indian_Dreams_%E2%80%94_%D0%98%D0%BD%D0%B4%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B5_%D1%81%D0%BD%D1%8B_(cover_of_book).jpg"
+  ]
  },
  "504 Secondary::Passing mark": {
+  "none": "nothing found",
   "q": "exam grade paper"
  },
  "504 Secondary::Peaceful": {
@@ -1130,22 +1519,42 @@
   "q": "dog listening"
  },
  "504 Secondary::Perilous": {
+  "none": "nothing found",
   "q": "dangerous journey"
  },
  "504 Secondary::Plan for": {
   "q": "boarding up windows"
  },
+ "504 Secondary::Plot": {},
  "504 Secondary::Pointed": {
+  "none": "nothing found",
   "q": "sharp knife blade"
  },
  "504 Secondary::Precious": {
-  "q": "precious gemstone"
+  "by": "Olertis LLC",
+  "file": "precious-7e22bb42a8.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Olertis_Gemstone_Pendant_Necklace.jpg",
+  "q": "precious gemstone",
+  "title": "Olertis Gemstone Pendant Necklace.jpg",
+  "why": "Valuable jewelry being carefully handled"
  },
  "504 Secondary::Priceless": {
-  "q": "museum artifact"
+  "none": "None convey priceless value concept",
+  "q": "museum artifact",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:2025borjomi-museum--street-artifacts.jpeg",
+   "https://commons.wikimedia.org/wiki/File:Susquehannock_Artifacts_PA_State_Museum.JPG",
+   "https://commons.wikimedia.org/wiki/File:Museum_of_us.png"
+  ]
  },
  "504 Secondary::Publishers": {
-  "q": "publishing house"
+  "none": "No real photograph representing publishe",
+  "q": "publishing house",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Logo_Athar_Publishing_House_-_%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AF%D8%A7%D8%B1_%D9%86%D8%B4%D8%B1.png",
+   "https://commons.wikimedia.org/wiki/File:Logo_of_Skobelev_Committee_publishing_house.jpg"
+  ]
  },
  "504 Secondary::Puddle": {
   "by": "The original uploader was Paukrus at English Wikipedia.",
@@ -1157,12 +1566,20 @@
   "why": "Clear small pool of water"
  },
  "504 Secondary::Put out": {
-  "q": "extinguishing candle"
+  "none": "Patent documents, not photographs",
+  "q": "extinguishing candle",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Lantern._-_DPLA_-_332f2cc9db67e721952b199713237b22_(page_2).jpg",
+   "https://commons.wikimedia.org/wiki/File:Lantern._-_DPLA_-_332f2cc9db67e721952b199713237b22_(page_1).jpg",
+   "https://commons.wikimedia.org/wiki/File:Lantern._-_DPLA_-_332f2cc9db67e721952b199713237b22_(page_3).jpg"
+  ]
  },
  "504 Secondary::Quarrel": {
+  "none": "nothing found",
   "q": "couple arguing"
  },
  "504 Secondary::Quart lower": {
+  "none": "nothing found",
   "q": "measuring jug"
  },
  "504 Secondary::Railroad tracks": {
@@ -1172,13 +1589,25 @@
   "q": "rainy street"
  },
  "504 Secondary::Realized": {
+  "none": "nothing found",
   "q": "surprised realization"
  },
  "504 Secondary::Realizing": {
-  "q": "eureka moment"
+  "none": "No image shows realization or understand",
+  "q": "eureka moment",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Presidents_speech_to_1982_Graduating_class_of_Eureka_College_Eureka_Illinois_-_DPLA_-_53a268ad9be67b64fcdcbef3d552e9ef.jpg",
+   "https://commons.wikimedia.org/wiki/File:Nunavut-Eureka-2009Jul14-temperatures.png"
+  ]
  },
  "504 Secondary::Relatives": {
-  "q": "family members"
+  "by": "Rossi family",
+  "file": "relatives-88b5ee838e.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Rossi_family_members.jpg",
+  "q": "family members",
+  "title": "Rossi family members.jpg",
+  "why": "Clear modern family photo, no caption ne"
  },
  "504 Secondary::Remain": {
   "none": "Picture doesn't show staying in place",
@@ -1191,7 +1620,13 @@
   "q": "scientist in laboratory"
  },
  "504 Secondary::Retail": {
-  "q": "retail store"
+  "by": "Technodudes",
+  "file": "retail-56b795dcc4.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:People_counter_retail_store.jpg",
+  "q": "retail store",
+  "title": "People counter retail store.jpg",
+  "why": "Shows retail store selling goods directl"
  },
  "504 Secondary::Rid": {
   "q": "pest spray garden"
@@ -1200,12 +1635,14 @@
   "q": "rioters street"
  },
  "504 Secondary::Rise out": {
+  "none": "nothing found",
   "q": "smoke rising chimney"
  },
  "504 Secondary::Rise out of": {
   "q": "smoke rising chimney"
  },
  "504 Secondary::Road map": {
+  "none": "nothing found",
   "q": "road map"
  },
  "504 Secondary::Rose out of": {
@@ -1221,12 +1658,14 @@
   "q": "safety helmet"
  },
  "504 Secondary::Salesman": {
+  "none": "nothing found",
   "q": "car salesman"
  },
  "504 Secondary::Schemer": {
   "q": "-"
  },
  "504 Secondary::Scholarship": {
+  "none": "nothing found",
   "q": "scholarship certificate"
  },
  "504 Secondary::Search into": {
@@ -1239,7 +1678,13 @@
   "q": "peaceful village landscape"
  },
  "504 Secondary::Shack": {
-  "q": "small shack"
+  "by": "Timothy Adamec",
+  "file": "shack-1ac0937fd5.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Shack_(73402915).jpeg",
+  "q": "small shack",
+  "title": "The Shack (73402915).jpeg",
+  "why": "Small simple wooden building, clearly ru"
  },
  "504 Secondary::Shaker": {
   "q": "cocktail shaker"
@@ -1248,19 +1693,43 @@
   "q": "-"
  },
  "504 Secondary::Shaving": {
-  "q": "man shaving"
+  "none": "No photo shows shaving hair",
+  "q": "man shaving",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Slideruler.png",
+   "https://commons.wikimedia.org/wiki/File:HighEndSharpener.png",
+   "https://commons.wikimedia.org/wiki/File:Silver_Pencil_Sharpener.jpg"
+  ]
  },
  "504 Secondary::Shelter": {
   "q": "homeless shelter"
  },
  "504 Secondary::Shortening": {
-  "q": "vegetable shortening"
+  "none": "Not shortening; shows berry mixture bowl",
+  "q": "vegetable shortening",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Iced_Akutaq.jpg"
+  ]
  },
+ "504 Secondary::Sight": {},
+ "504 Secondary::Sinister-looking": {},
  "504 Secondary::Sinking ship": {
-  "q": "sinking ship"
+  "by": "Unknown authorUnknown author",
+  "file": "sinking-ship-900783ab9b.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:North_Pacific_(sidewheeler)_sinking_1903.jpg",
+  "q": "sinking ship",
+  "title": "North Pacific (sidewheeler) sinking 1903.jpg",
+  "why": "Boat clearly tilted, sinking into water"
  },
  "504 Secondary::Slaughter": {
-  "q": "slaughterhouse"
+  "by": "Dr. Temple Grandin",
+  "file": "slaughter-613b1f2e12.jpg",
+  "lic": "Attribution",
+  "page": "https://commons.wikimedia.org/wiki/File:Slaughterhouse.jpg",
+  "q": "slaughterhouse",
+  "title": "Slaughterhouse.jpg",
+  "why": "Shows worker slaughtering cattle in faci"
  },
  "504 Secondary::Sleet": {
   "q": "sleet on road"
@@ -1269,15 +1738,29 @@
   "q": "putting on shoes"
  },
  "504 Secondary::Slum": {
-  "q": "urban slum"
+  "by": "Milei.vencel",
+  "file": "slum-5a7e92b31b.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Slum_in_India.JPG",
+  "q": "urban slum",
+  "title": "Slum in India.JPG",
+  "why": "Dense makeshift shacks show overcrowded "
  },
  "504 Secondary::Slum area": {
+  "none": "nothing found",
   "q": "slum area"
  },
  "504 Secondary::Smooth": {
-  "q": "smooth stone"
+  "none": "No clear smooth surface shown",
+  "q": "smooth stone",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Bug%CA%BBdoy_maydalagich_(tosh_hovon).png",
+   "https://commons.wikimedia.org/wiki/File:(Pond_and_stones_from_Kikoku-tei_Villa,_Japan)_-_DPLA_-_def77a453611441ff9461f7f0a653c0a.jpg",
+   "https://commons.wikimedia.org/wiki/File:Qayroq.png"
+  ]
  },
  "504 Secondary::Smoothly": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Somehow": {
@@ -1292,11 +1775,24 @@
  "504 Secondary::Spacecraft": {
   "q": "spacecraft orbit"
  },
+ "504 Secondary::Spied": {},
  "504 Secondary::Spotlight": {
-  "q": "stage spotlight"
+  "none": "Picture 1 looks CGI, not real photo",
+  "q": "stage spotlight",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Spotlights_on_a_stage.png",
+   "https://commons.wikimedia.org/wiki/File:Lc3_2018_(263681503).jpeg",
+   "https://commons.wikimedia.org/wiki/File:Lc3_2018_(263681481).jpeg"
+  ]
  },
  "504 Secondary::Spotlight on": {
-  "q": "spotlight on person"
+  "none": "No image shows focused attention concept",
+  "q": "spotlight on person",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Transparent_Spotlight_Logo.png",
+   "https://commons.wikimedia.org/wiki/File:Vladimir_Lenin_on_the_front_page_of_Projector_(Spotlight)_issue_15_dated_15_Sep_1923.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Lee_children_are_in_the_media_spotlight_as_they_play_with_Lex_after_the_adoption.jpg"
+  ]
  },
  "504 Secondary::Spread": {
   "none": "Cactus photos don't show spreading",
@@ -1310,7 +1806,13 @@
   "q": "square shape"
  },
  "504 Secondary::Standing guard duty": {
-  "q": "soldier standing guard"
+  "by": "Hu Totya",
+  "file": "standing-guard-duty-6c9929d645.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Honor_Guard_at_ANC_2.jpg",
+  "q": "soldier standing guard",
+  "title": "Honor Guard at ANC 2.jpg",
+  "why": "Soldier in ceremonial guard uniform stan"
  },
  "504 Secondary::Steam": {
   "q": "steaming pot"
@@ -1318,30 +1820,65 @@
  "504 Secondary::Stream": {
   "q": "forest stream"
  },
+ "504 Secondary::Stretch out": {},
  "504 Secondary::Stuck in": {
-  "q": "traffic jam"
+  "none": "Shows traffic jam, not being trapped",
+  "q": "traffic jam",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Traffic_congestion_at_Laoag_Bypass_Road_(05-30-25).png",
+   "https://commons.wikimedia.org/wiki/File:Traffic-Jam.JPG",
+   "https://commons.wikimedia.org/wiki/File:Traffic_Jammed_(177039723).jpeg"
+  ]
  },
  "504 Secondary::Suffered": {
-  "q": "injured person"
+  "by": "Department of Defense. American Forces Information Service. Defense Visual Infor",
+  "file": "suffered-929dbe8902.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:US_Army_(USA)_Medical_Technicians_render_aid_to_Soldiers_injured_during_a_high-speed_car_accident_in_Baghdad,_Iraq._The_injured_Soldiers_will_be_airlifted_to_the_nearest_combat_supp_-_DPLA_-_8937a4efe2568880520ab4ac449f0c93.jpeg",
+  "q": "injured person",
+  "title": "US Army (USA) Medical Technicians render aid to Soldiers injured during a high-speed car accident in Baghdad, Iraq. The injured Soldiers will be airlifted to the nearest combat supp - DPLA - 8937a4efe2568880520ab4ac449f0c93.jpeg",
+  "why": "Injured man shows visible pain, sufferin"
  },
  "504 Secondary::Sunlight": {
   "q": "sunlight through window"
  },
  "504 Secondary::Sunshine": {
-  "q": "sunshine garden"
+  "none": "No image shows actual sunlight/warmth",
+  "q": "sunshine garden",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sunshine_Marketplace_entrance_in_Sunshine,_Victoria.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sunshine-foodcourt.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sunshine_Mosque.jpg"
+  ]
  },
  "504 Secondary::Swamp": {
   "q": "swamp wetland"
  },
  "504 Secondary::Swore": {},
  "504 Secondary::Sworn over": {
-  "q": "swearing oath"
+  "none": "Concept 'repeatedly' not shown, single e",
+  "q": "swearing oath",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Shane_Getson_2019_Swearing_in.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sunil_Harjani_swearing-in_(2019).jpg",
+   "https://commons.wikimedia.org/wiki/File:Lauren_Underwood_swearing-in_2_(2019).jpg"
+  ]
  },
  "504 Secondary::Tactfully": {
-  "q": "polite conversation"
+  "none": "Not a real-world photograph",
+  "q": "polite conversation",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jonathan_Swift_On_Psyche_1733.jpg"
+  ]
  },
  "504 Secondary::Tailoring": {
-  "q": "tailor sewing"
+  "none": "No photo shows actual clothes fitting pr",
+  "q": "tailor sewing",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sewing-gauge.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sewing_tools_-_Komi_-_Vorkuta_Local_Museum.jpg",
+   "https://commons.wikimedia.org/wiki/File:SewingClampsBedfordMuseum.JPG"
+  ]
  },
  "504 Secondary::Take on": {
   "q": "-"
@@ -1350,15 +1887,29 @@
   "q": "tax rate chart"
  },
  "504 Secondary::Telegram": {
-  "q": "old telegram"
+  "by": "Pseudonymous",
+  "file": "telegram-9b1952f05d.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Telegram_from_ex-Emperor_Wilhelm_II_of_Germany_to_Queen_Wilhelmina_of_the_Netherlands.jpg",
+  "q": "old telegram",
+  "title": "Telegram from ex-Emperor Wilhelm II of Germany to Queen Wilhelmina of the Netherlands.jpg",
+  "why": "Shows actual historical telegram documen"
  },
+ "504 Secondary::Television set": {},
  "504 Secondary::Tell beforehand": {
   "q": "-"
  },
  "504 Secondary::Teller": {
-  "q": "bank teller"
+  "none": "No photo of bank teller",
+  "q": "bank teller",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jahn-Teller_Distortion_Strength.jpg",
+   "https://commons.wikimedia.org/wiki/File:True_fortune_teller_-_Headpiece.png",
+   "https://commons.wikimedia.org/wiki/File:Octahedral_Jahn-Teller_Geometric_Distortion.png"
+  ]
  },
  "504 Secondary::Therefore": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Thickest": {
@@ -1368,6 +1919,7 @@
   "q": "thin paper"
  },
  "504 Secondary::Thoroughly": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Though": {
@@ -1390,10 +1942,21 @@
   "q": "fog clearing road"
  },
  "504 Secondary::Tight jacket": {
-  "q": "tight jacket"
+  "none": "No picture shows a tight-fitting jacket",
+  "q": "tight jacket",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jumper_wire.jpg",
+   "https://commons.wikimedia.org/wiki/File:Jolly_Jumper_2006.jpg"
+  ]
  },
  "504 Secondary::Tombstones": {
-  "q": "cemetery tombstones"
+  "by": "Zigzig20s",
+  "file": "tombstones-62593fb303.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tombstones_in_the_Perth_War_Cemetery.JPG",
+  "q": "cemetery tombstones",
+  "title": "Tombstones in the Perth War Cemetery.JPG",
+  "why": "Clear rows of grave markers visible"
  },
  "504 Secondary::Took an oath": {
   "by": "Scgetson",
@@ -1408,10 +1971,20 @@
   "q": "animal tracks snow"
  },
  "504 Secondary::Trapping": {
-  "q": "fish net"
+  "by": "Colleen Andrews; U.S. Fish and Wildlife Service source page states \"Media Usage ",
+  "file": "trapping-bce81a191e.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Lake_sturgeon_fingerlings_release_St._Lawrence_River_FEMRF_biologists.png",
+  "q": "fish net",
+  "title": "Lake sturgeon fingerlings release St. Lawrence River FEMRF biologists.png",
+  "why": "Net full of trapped crabs/creatures"
  },
  "504 Secondary::Treated": {
-  "q": "kind treatment"
+  "none": "Diagram unrelated to meaning, not photo",
+  "q": "kind treatment",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Interval_Definition.png"
+  ]
  },
  "504 Secondary::Treatment": {
   "none": "No image clearly shows medical care",
@@ -1429,7 +2002,12 @@
   "q": "con man"
  },
  "504 Secondary::Tried out": {
-  "q": "testing software laptop"
+  "none": "Screenshots don't show testing concept c",
+  "q": "testing software laptop",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Min_(web_browser)_1.5.1_tests_Acid3_screenshot.png",
+   "https://commons.wikimedia.org/wiki/File:Screenshot_of_LinuxConsole_Mate_Desktop.png"
+  ]
  },
  "504 Secondary::Trouble": {
   "q": "confused tourist map"
@@ -1438,6 +2016,7 @@
   "none": "nothing found",
   "q": "mechanic tuning engine"
  },
+ "504 Secondary::Uncovered": {},
  "504 Secondary::Unforgettable": {
   "q": "-"
  },
@@ -1455,10 +2034,22 @@
   "q": "smoke rising"
  },
  "504 Secondary::Used in": {
-  "q": "construction materials"
+  "none": "Abstract phrase, no photo conveys meanin",
+  "q": "construction materials",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Construction_materials_shop_in_X%C4%B1rdalan.jpg",
+   "https://commons.wikimedia.org/wiki/File:Libraria_Komb%C3%ABtare_e_Kosov%C3%ABs.jpg",
+   "https://commons.wikimedia.org/wiki/File:O_bg-remover-gen_2sRsOrYyOmLy8jFPjJytxT1TZ7W_01.png"
+  ]
  },
  "504 Secondary::Valuable": {
-  "q": "gold jewelry"
+  "none": "None clearly convey valuable meaning",
+  "q": "gold jewelry",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Silver-Gold_Cube_(3D_Render).png",
+   "https://commons.wikimedia.org/wiki/File:Vases_as_foot_and_gold_jewelry_from_antique_Budva.png",
+   "https://commons.wikimedia.org/wiki/File:Karat-Einpr%C3%A4gung.jpg"
+  ]
  },
  "504 Secondary::Vapor trail": {
   "q": "airplane vapor trail"
@@ -1475,20 +2066,24 @@
  "504 Secondary::Weather forecasters": {
   "q": "weather forecaster"
  },
+ "504 Secondary::Wicked": {},
  "504 Secondary::Widow": {
   "none": "nothing found",
   "q": "grieving widow"
  },
  "504 Secondary::Win over to": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Win over to do or believe": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Wipe out": {
   "q": "storm destroyed crops"
  },
  "504 Secondary::Withheld": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Witness": {

@@ -9,3 +9,6 @@ progress/
 
 # The Anthropic API key for filling in glossary words. Never committed.
 server/anthropic_key.txt
+
+# Voice clips, generated on demand and rebuilt whenever needed.
+server/voice-cache/

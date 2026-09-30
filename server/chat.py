@@ -315,6 +315,87 @@ def translate(phrase, context=""):
     return {"ok": True, "phrase": phrase, "es": es}
 
 
+IMAGINE = """Someone practising English has just said what they want to \
+talk about instead. Turn it into a situation for the other person to play.
+
+Take what they asked for and keep it. If they said a beach in Mexico with \
+a broken car, that is the situation -- do not improve it into something \
+else. Fill in only what they left out: who the other person is, why they \
+are both there, and what that person wants out of the conversation.
+
+They are learning these words, so where it costs nothing, set the scene \
+somewhere those words could come up. Where it would mean bending what \
+they asked for, leave the words alone. What they asked for wins.
+%(words)s
+
+The other person is not a teacher and not a helper. They are someone with \
+their own reason for being there.
+
+Return ONLY a JSON object, no other text:
+
+{"name": "three or four words, like 'A breakdown in Oaxaca'",
+ "blurb": "one short line saying what is happening, addressed to them as 'You'",
+ "role": "instructions to whoever plays the other part: who they are, what \
+they want, what they should ask about. Two or three sentences, written to \
+them as 'You are...'"}"""
+
+
+def imagine(request, words=None):
+    """They said "imagine we are..." -- build that, and hand it back.
+
+    The situation they ask for is the one they get. Steering it towards
+    the day's words would be taking the conversation off them, which is
+    the opposite of what asking for it was.
+    """
+    request = (request or "").strip()
+    if not request:
+        return {"ok": False, "message": "nothing to imagine"}
+    if len(request) > 500:
+        request = request[:500]
+
+    key = api_key()
+    if not key:
+        return {"ok": False, "message": "This needs an Anthropic API key."}
+
+    word_note = ""
+    if words:
+        word_note = "\n\nTheir words, for reference only:\n" + \
+                    "\n".join("- " + w for w in words)
+
+    body = json.dumps({
+        "model": MODEL,
+        "max_tokens": 2000,
+        "system": IMAGINE % {"words": word_note},
+        "messages": [{"role": "user", "content": request}],
+    }).encode("utf-8")
+
+    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        "anthropic-version": API_VERSION,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=60) as res:
+            payload = json.loads(res.read().decode("utf-8"))
+    except Exception as e:
+        return {"ok": False, "message": "That did not work.", "detail": str(e)[:140]}
+
+    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1].rsplit("```", 1)[0]
+    try:
+        out = json.loads(text)
+    except Exception:
+        return {"ok": False, "message": "That did not come back as a situation."}
+
+    name = (out.get("name") or "").strip()
+    role = (out.get("role") or "").strip()
+    if not name or not role:
+        return {"ok": False, "message": "That did not come back as a situation."}
+    return {"ok": True, "name": name, "role": role,
+            "blurb": (out.get("blurb") or "").strip()}
+
+
 SUGGEST = """You invent a situation for someone practising English.
 
 These are the words they have just learnt:

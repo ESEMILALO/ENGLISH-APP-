@@ -464,6 +464,20 @@
     text-transform:uppercase; color:var(--amber-deep); margin-bottom:5px;
   }
 
+  /* the moment the situation changes */
+  .scene-turn{
+    text-align:center; margin:16px 0 14px; padding:11px 14px;
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  }
+  .scene-turn b{
+    display:block; font-family:var(--cond); font-size:1rem; color:var(--text);
+  }
+  .scene-turn span{
+    display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--amber-deep); margin-bottom:4px;
+  }
+  .scene-turn em{ display:block; font-size:.84rem; color:var(--text-soft); margin-top:3px; }
+
   /* a correction, next to the circle, while talking */
   .talk-note{
     position:absolute; left:calc(50% + 112px); top:50%;
@@ -1744,6 +1758,7 @@
     if(!canSpeak) return;
     try{ voices = window.speechSynthesis.getVoices() || []; }catch(e){ voices = []; }
   }
+  loadServerVoices();
   if(canSpeak){
     loadVoices();
     window.speechSynthesis.addEventListener('voiceschanged', ()=>{
@@ -1762,11 +1777,138 @@
   // `then` runs once it has finished speaking -- which is what makes a
   // hands-free conversation possible: listen again only after it has
   // stopped talking, or it hears itself.
-  function speak(text, then){
+  // --- The better voice --------------------------------------------------
+  // The browser offers whatever Windows has, and the best of those still
+  // sounds like a machine. The app server can reach a set of neural
+  // voices instead and hand back an MP3. If it cannot -- offline, the
+  // package missing, anything -- the browser voice takes over mid-flight,
+  // because a conversation you are holding by ear must not go silent.
+  let serverVoices = [];        // what the server can do, if anything
+  let voiceAudio = null;        // the clip playing now
+  let speakToken = 0;           // so an old clip cannot start late
+
+  function serverVoiceId(){
+    if(!serverVoices.length) return '';
+    if(chosenVoiceName.indexOf('server:') === 0){
+      const want = chosenVoiceName.slice(7);
+      return serverVoices.some(v=>v.id === want) ? want : '';
+    }
+    // Nothing chosen yet: the better voice is the point of having it.
+    if(!chosenVoiceName) return serverVoices[0].id;
+    return '';
+  }
+
+  async function loadServerVoices(){
+    if(location.protocol !== 'http:' && location.protocol !== 'https:') return;
+    try{
+      const out = await fetch('/api/voices').then(r=>r.json());
+      if(out && out.ok && (out.voices || []).length){
+        serverVoices = out.voices;
+        const host = document.getElementById('voice-host');
+        if(host){ host.innerHTML = voiceRowHtml(); wireVoiceRow(); }
+      }
+    }catch(e){ /* the browser voice is already there */ }
+  }
+
+  function stopSpeaking(){
+    speakToken++;
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+    if(voiceAudio){
+      const going = voiceAudio;
+      voiceAudio = null;
+      try{ going.pause(); }catch(e){}
+      try{ URL.revokeObjectURL(going.src); }catch(e){}
+    }
+  }
+
+  // A single word is worth hearing slowly; a sentence said that slowly
+  // stops sounding like someone talking to you.
+  function slowly(text){
+    return String(text).trim().split(/\s+/).length <= 3;
+  }
+
+  async function sayFromServer(text, voiceId, then){
+    const mine = ++speakToken;
+    let res;
+    try{
+      res = await fetch('/api/say', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ text: text, voice: voiceId,
+                               rate: slowly(text) ? -15 : 0 })
+      });
+      if(!res.ok) throw new Error('no audio');
+    }catch(e){
+      if(mine !== speakToken) return;
+      browserSpeak(text, then);
+      return;
+    }
+    let url;
+    try{
+      const blob = await res.blob();
+      if(mine !== speakToken) return;
+      url = URL.createObjectURL(blob);
+    }catch(e){
+      if(mine !== speakToken) return;
+      browserSpeak(text, then);
+      return;
+    }
+
+    const audio = new Audio(url);
+    voiceAudio = audio;
+    let done = false, started = false, watchdog = null;
+
+    const tidy = ()=>{
+      if(watchdog){ clearTimeout(watchdog); watchdog = null; }
+      if(voiceAudio === audio) voiceAudio = null;
+      try{ URL.revokeObjectURL(url); }catch(e){}
+    };
+    const finish = ()=>{
+      if(done) return;
+      done = true;
+      tidy();
+      if(then) then();
+    };
+    // Hand the sentence to the browser voice instead. A clip that will not
+    // decode, will not reach a speaker, or simply never starts must not be
+    // the end of the conversation -- and a clip that never starts is the
+    // dangerous one, because it reports no error at all: it just sits
+    // there, and a turn waiting on it would wait for ever.
+    const bail = ()=>{
+      if(done) return;
+      done = true;
+      tidy();
+      try{ audio.pause(); }catch(e){}
+      if(mine !== speakToken) return;    // something else is speaking now
+      browserSpeak(text, then);
+    };
+
+    audio.addEventListener('playing', ()=>{
+      started = true;
+      if(watchdog){ clearTimeout(watchdog); watchdog = null; }
+    });
+    audio.onended = finish;
+    audio.onerror = bail;
+    watchdog = setTimeout(()=>{ if(!started) bail(); }, 4000);
+
+    try{
+      await audio.play();
+    }catch(e){
+      bail();
+    }
+  }
+
+  function browserSpeak(text, then){
     if(!canSpeak){ if(then) then(); return; }
     if(!voices.length) loadVoices();
     try{ window.speechSynthesis.cancel(); }catch(e){}
     say(text, bestVoice(), then, true);
+  }
+
+  function speak(text, then){
+    stopSpeaking();
+    const better = serverVoiceId();
+    if(better){ sayFromServer(text, better, then); return; }
+    browserSpeak(text, then);
   }
 
   // The natural voices are read over the internet, so a bad moment on the
@@ -3449,7 +3591,8 @@
           + (q.verdict ? 'Still yours' : 'Back into the rotation')+'</p>'
         + '<p class="recall-answer">'+esc(m.m||'')+(m.e ? '<br><em>&ldquo;'+esc(m.e)+'&rdquo;</em>' : '')+'</p>'
         + '<button class="btn-primary" id="recall-next">'
-          + (q.i+1 >= q.words.length ? 'See how you did' : 'Next word')+' &rarr;</button>';
+          + (q.i+1 >= q.words.length ? 'See how you did' : 'Next word')+' &rarr;</button>'
+        + '<p class="recall-how" style="margin-top:9px;">Press Enter</p>';
     } else {
       body = '<p class="recall-prompt">'+esc(m.m||'')+'</p>'
         + (m.e ? '<p class="recall-ex">&ldquo;'+esc(m.e.replace(new RegExp('\\b'+escapeRegExp(w.w)+'\\b','gi'), '\u2014\u2014\u2014'))+'&rdquo;</p>' : '')
@@ -3479,11 +3622,29 @@
       input.addEventListener('keydown', function(e){
         if(e.key === 'Enter'){
           e.preventDefault();
+          // Answering redraws the panel, "Next word" appears, and this
+          // same keypress would carry on up and press it. One key, one
+          // step: the press that answers stops here.
+          e.stopPropagation();
           recallAnswer(normalizeAnswer(input.value) === normalizeAnswer(w.w));
         }
       });
       input.focus();
     }
+
+    // Enter answers, and then Enter again moves on. Assigned rather than
+    // added, so redrawing the panel replaces this instead of stacking up
+    // another copy of it.
+    scrim.onkeydown = function(e){
+      if(e.key !== 'Enter') return;
+      const next = document.getElementById('recall-next');
+      if(next){ e.preventDefault(); next.click(); }
+    };
+
+    // Without this the key has nowhere to land once the typing box is
+    // gone, and the whole run would need the mouse again halfway through.
+    const next = document.getElementById('recall-next');
+    if(next) next.focus();
   }
 
   // --- Keeping your progress in a file -----------------------------------
@@ -4139,24 +4300,41 @@
   }
 
   function voiceRowHtml(){
-    if(!canSpeak) return '';
     const list = englishVoices();
-    if(!list.length) return '';
+    if(!canSpeak && !serverVoices.length) return '';
     const now = bestVoice();
+    const picked = serverVoiceId();
     return '<div class="voice-row">'
       + '<label for="voice-pick">Voice</label>'
       + '<select id="voice-pick">'
-        + list.slice().sort((a,b)=>voiceRank(b)-voiceRank(a))
-            .map(v=>'<option value="'+esc(v.name)+'"'
-              + (now && v.name === now.name ? ' selected' : '') + '>'
-              + esc(voiceLabel(v)) + '</option>').join('')
+        + (serverVoices.length
+            ? '<optgroup label="Neural &mdash; a person, not a machine">'
+              + serverVoices.map(v=>'<option value="server:'+esc(v.id)+'"'
+                  + (picked === v.id ? ' selected' : '') + '>'
+                  + esc(v.name) + ' &middot; ' + esc(v.note) + '</option>').join('')
+              + '</optgroup>'
+            : '')
+        + (list.length
+            ? '<optgroup label="From your browser">'
+              + list.slice().sort((a,b)=>voiceRank(b)-voiceRank(a))
+                  .map(v=>'<option value="'+esc(v.name)+'"'
+                    + (!picked && now && v.name === now.name ? ' selected' : '') + '>'
+                    + esc(voiceLabel(v)) + '</option>').join('')
+              + '</optgroup>'
+            : '')
       + '</select>'
       + '<button id="voice-try">Hear it</button>'
       + '</div>'
-      + '<p class="hint" style="margin:7px 2px 0;">The ones marked '
-      + '<em>natural</em> are read over the internet and sound much more '
-      + 'like a person. This is the voice for words, examples and the '
-      + 'conversation.</p>';
+      + '<p class="hint" style="margin:7px 2px 0;">'
+      + (serverVoices.length
+          ? 'The <em>neural</em> ones are a different thing to listen to &mdash; '
+            + 'they come from the app server, take a second the first time and '
+            + 'are instant after that. If the server cannot reach them, the '
+            + 'browser voice finishes the sentence rather than leaving you in '
+            + 'silence.'
+          : 'The ones marked <em>natural</em> are read over the internet and '
+            + 'sound much more like a person.')
+      + ' This is the voice for words, examples and the conversation.</p>';
   }
 
   function wireVoiceRow(){
@@ -4538,7 +4716,9 @@
       + '<h1 class="title">Use them for real</h1>'
       + '<p class="subtitle">Someone plays a part and you talk to them. Your '
         + words.length + ' words are the ones the conversation is built to need &mdash; '
-        + 'and only the ones <em>you</em> write count.</p>'
+        + 'and only the ones <em>you</em> write count. Once you are in, say '
+        + '<b>&ldquo;imagine we are&hellip;&rdquo;</b> at any point and the '
+        + 'conversation moves to wherever you said.</p>'
       + '<div class="chat-words">'
         + words.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
       + '</div>'
@@ -4657,7 +4837,7 @@
     if(!canListen || !chat || chat.busy) return;
     if(chatListening){ stopChatListening(); renderChat(); return; }
 
-    if(canSpeak) window.speechSynthesis.cancel();  // do not listen to itself
+    stopSpeaking();  // do not listen to itself
     scStopListening();
     const token = ++scToken;
     chatListening = true;
@@ -4772,7 +4952,7 @@
     chatPhase = 'idle';
     chatHeard = '';
     chat = { id: newChatId(), scenario: scenario, words: words, used: [], turns: [],
-             startedAt: new Date().toISOString(), busy: true, error: '' };
+             startedAt: new Date().toISOString(), sceneAt: 0, busy: true, error: '' };
     rememberChat();
     renderChat();
     sendChat(true);
@@ -4784,7 +4964,7 @@
   function rememberChat(){
     chats.current = chat ? {
       id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
-      turns: chat.turns, startedAt: chat.startedAt
+      turns: chat.turns, startedAt: chat.startedAt, sceneAt: chat.sceneAt || 0
     } : null;
     saveChats();
   }
@@ -4807,7 +4987,7 @@
     chat = { id: saved.id || newChatId(), scenario: saved.scenario,
              words: saved.words || [], used: saved.used || [],
              turns: saved.turns || [], startedAt: saved.startedAt,
-             busy: false, error: '' };
+             sceneAt: saved.sceneAt || 0, busy: false, error: '' };
     rememberChat();
     renderChat();
     return true;
@@ -4827,6 +5007,11 @@
   function writtenChatHtml(){
     return '<div class="chat-log" id="chat-log">'
         + chat.turns.map(t=>{
+            if(t.who === 'scene'){
+              return '<div class="scene-turn"><span>now imagine</span>'
+                + '<b>'+esc(t.text)+'</b>'
+                + (t.blurb ? '<em>'+esc(t.blurb)+'</em>' : '') + '</div>';
+            }
             if(t.who === 'you'){
               return '<div class="chat-turn you"><div class="chat-who">You</div>'
                 + '<div class="chat-bubble">'+esc(t.text)+'</div>'
@@ -4864,6 +5049,12 @@
       if(chat.turns[i].who === 'them') return chat.turns[i].text;
     }
     return '';
+  }
+
+  // A scene marker is not something anybody said, so it does not count
+  // as a turn when deciding whether there is a conversation to review.
+  function saidAnything(turns){
+    return (turns || []).some(t=>t.who === 'you');
   }
 
   function talkGlossHtml(){
@@ -5027,7 +5218,7 @@
     if(voice) voice.addEventListener('click', ()=>{
       chatSpeaks = !chatSpeaks;
       try{ localStorage.setItem('wordlog_chat_voice', chatSpeaks ? 'on' : 'off'); }catch(e){}
-      if(!chatSpeaks && canSpeak) window.speechSynthesis.cancel();
+      if(!chatSpeaks) stopSpeaking();
       renderChat();
     });
 
@@ -5043,7 +5234,7 @@
     const orb = el('#talk-orb');
     if(orb) orb.addEventListener('click', ()=>{
       if(chatPhase === 'speaking'){
-        if(canSpeak) window.speechSynthesis.cancel();
+        stopSpeaking();
         chatPhase = 'idle';
       }
       chatListen();
@@ -5072,7 +5263,7 @@
     if(talkOff) talkOff.addEventListener('click', ()=>{
       chatVoiceOnly = false;
       stopChatListening();
-      if(canSpeak) window.speechSynthesis.cancel();
+      stopSpeaking();
       chatPhase = 'idle';
       renderChat();
     });
@@ -5083,6 +5274,50 @@
   // `spoken` is passed straight in rather than left in the input box:
   // renderChat rebuilds the page, so anything put in the box just before
   // would be wiped before this could read it.
+  // "Imagine we are at the airport and I have lost my bag." Said out loud
+  // or typed, it is a request to be somewhere else, and the conversation
+  // should go there rather than treat it as a line of dialogue.
+  const IMAGINE_RE = /^(?:ok(?:ay)?[,.]?\s+)?(?:now[,.]?\s+)?(?:let'?s\s+|can\s+(?:we|you)\s+|i\s+want\s+(?:you\s+)?to\s+)?imagine\b[\s,:.-]*/i;
+
+  function askedToImagine(text){
+    const t = (text || '').trim();
+    if(!IMAGINE_RE.test(t)) return '';
+    const rest = t.replace(IMAGINE_RE, '').trim();
+    // "Imagine that." on its own is not a situation to build.
+    return rest.split(/\s+/).length >= 3 ? rest : '';
+  }
+
+  async function changeScene(request){
+    if(!chat || chat.busy) return;
+    chat.busy = true;
+    chat.error = '';
+    chatPhase = 'thinking';
+    renderChat();
+    let out;
+    try{
+      out = await fetch('/api/imagine', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ request: request, words: chat.words })
+      }).then(r=>r.json());
+    }catch(e){
+      out = { ok:false, message:'Could not reach the app server.' };
+    }
+    chat.busy = false;
+    if(!out || !out.ok){
+      chat.error = (out && out.message) || 'That did not work.';
+      chatPhase = 'idle';
+      renderChat();
+      return;
+    }
+    chat.scenario = { ok:true, name: out.name, blurb: out.blurb, role: out.role };
+    // The old conversation stays on the page as a record, but the partner
+    // starts clean: it is somebody else now, somewhere else.
+    chat.turns.push({ who:'scene', text: out.name, blurb: out.blurb });
+    chat.sceneAt = chat.turns.length;
+    rememberChat();
+    sendChat(true);
+  }
+
   async function sendChat(first, spoken){
     if(!chat || (chat.busy && !first)) return;
     let text = '';
@@ -5094,6 +5329,13 @@
         text = input ? input.value.trim() : '';
       }
       if(!text) return;
+      const wish = askedToImagine(text);
+      if(wish){
+        talkShown = false;
+        talkGloss = null;
+        changeScene(wish);
+        return;
+      }
       chat.turns.push({ who:'you', text:text });
     }
     // A new turn starts bare: what was shown belonged to the last one.
@@ -5104,11 +5346,13 @@
     chatPhase = 'thinking';
     renderChat();
 
-    // only the real back-and-forth goes to the model, not the scoring notes
-    const history = chat.turns.map(t=>({
-      role: t.who === 'you' ? 'user' : 'assistant',
-      content: t.text
-    }));
+    // Only the real back-and-forth goes to the model, not the scoring
+    // notes -- and only since the situation last changed, because the
+    // partner is now someone else and would be reading a stranger's lines.
+    const from = chat.sceneAt || 0;
+    const history = chat.turns.slice(from)
+      .filter(t=>t.who === 'you' || t.who === 'them')
+      .map(t=>({ role: t.who === 'you' ? 'user' : 'assistant', content: t.text }));
 
     try{
       const out = await fetch('/api/chat', {
@@ -5161,6 +5405,11 @@
             + ((c.used||[]).indexOf(w) >= 0 ? ' used' : '')+'">'+esc(w)+'</span>').join('')
       + '</div>'
       + (c.turns||[]).map(t=>{
+          if(t.who === 'scene'){
+            return '<div class="scene-turn"><span>now imagine</span>'
+              + '<b>'+esc(t.text)+'</b>'
+              + (t.blurb ? '<em>'+esc(t.blurb)+'</em>' : '') + '</div>';
+          }
           if(t.who === 'you'){
             return '<div class="chat-turn you"><div class="chat-who">You</div>'
               + '<div class="chat-bubble">'+esc(t.text)+'</div>'
@@ -5175,7 +5424,7 @@
       + '<div id="review-host">'
         + (c.review
             ? reviewHtml(c.review)
-            : ((c.turns || []).some(t=>t.who === 'you')
+            : (saidAnything(c.turns)
                 ? '<div class="review"><button class="btn-secondary" id="review-ask">'
                   + 'How did I do?</button></div>'
                 : ''))
@@ -5272,7 +5521,7 @@
     stopChatListening();
     chatNote = '';
     if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
-    if(canSpeak) window.speechSynthesis.cancel();
+    stopSpeaking();
     chatPhase = 'idle';
     chatHeard = '';
     chatVoiceOnly = false;   // the next conversation starts written unless asked
@@ -5284,7 +5533,7 @@
       chats.past = (chats.past || []).filter(c=>c.id !== chat.id);
       parked = {
         id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
-        turns: chat.turns, startedAt: chat.startedAt,
+        turns: chat.turns, startedAt: chat.startedAt, sceneAt: chat.sceneAt || 0,
         endedAt: new Date().toISOString()
       };
       chats.past.unshift(parked);
@@ -5294,7 +5543,7 @@
     saveChats();
     // Every conversation gets looked over, without being asked for: the
     // moment you have finished is the moment it is worth reading.
-    if(parked && (parked.turns || []).some(t=>t.who === 'you')){
+    if(parked && saidAnything(parked.turns)){
       askReview(parked, ()=>paintReview(parked));
     }
     root.innerHTML = '<div class="view">'
