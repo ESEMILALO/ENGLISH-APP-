@@ -28,7 +28,9 @@
    "https://commons.wikimedia.org/wiki/File:Women_students_gather_around_a_tree_outside_of_Lawrence_Hall,_St._Cloud_State_University,_St._Cloud,_Minnesota_-_DPLA_-_3155c52ec8fddc9a585ee5e79d4e3a87.jpg"
   ]
  },
- "504 Main words::Bachelor": {},
+ "504 Main words::Bachelor": {
+  "q": "single man"
+ },
  "504 Main words::Blend": {
   "none": "No image shows mixing substances togethe",
   "q": "blender mixing",
@@ -72,8 +74,12 @@
    "https://commons.wikimedia.org/wiki/File:Detailed_Tables_for_the_Quarterly_Report_of_Full-Time_Equivalent_State_Employees_for_the_Quarter_Ending_August_31,_1999_-_DPLA_-_5538802e33cc96c9be5012c1d12beaa4_(page_19).jpg"
   ]
  },
- "504 Main words::Conceal": {},
- "504 Main words::Corpse": {},
+ "504 Main words::Conceal": {
+  "q": "hiding object drawer"
+ },
+ "504 Main words::Corpse": {
+  "q": "dead body"
+ },
  "504 Main words::Data": {
   "none": "These are charts/diagrams, not real phot",
   "q": "data charts",
@@ -128,7 +134,9 @@
   "none": "nothing found",
   "q": "engineers designing blueprint"
  },
- "504 Main words::Dismal": {},
+ "504 Main words::Dismal": {
+  "q": "disappointed losing team"
+ },
  "504 Main words::Eliminate": {
   "none": "nothing found",
   "q": "crossing out list"
@@ -179,7 +187,9 @@
    "https://commons.wikimedia.org/wiki/File:1970_SPACE_ROCKET_ARCAS_WHITE_RAT_LAUNCH_CACHET_WALLOPS_ISLAND_VA_COVER.jpg"
   ]
  },
- "504 Main words::Frigid": {},
+ "504 Main words::Frigid": {
+  "q": "frozen landscape"
+ },
  "504 Main words::Gallant": {
   "none": "No image shows bravery or honor clearly",
   "q": "firefighter rescue",
@@ -196,7 +206,9 @@
   "none": "nothing found",
   "q": "humid tropical weather"
  },
- "504 Main words::Inhabit": {},
+ "504 Main words::Inhabit": {
+  "q": "birds on island"
+ },
  "504 Main words::Jealous": {
   "none": "nothing found",
   "q": "jealous couple"
@@ -229,7 +241,9 @@
   "title": "Overgrown garden.jpg",
   "why": "Overgrown, unkept house shows neglect"
  },
- "504 Main words::Numb": {},
+ "504 Main words::Numb": {
+  "q": "cold numb fingers"
+ },
  "504 Main words::Oath": {
   "by": "Scgetson",
   "file": "oath-15e946a490.jpg",
@@ -239,7 +253,9 @@
   "title": "Shane Getson 2019 Swearing in.jpg",
   "why": "Man raising hand, swearing oath"
  },
- "504 Main words::Peril": {},
+ "504 Main words::Peril": {
+  "q": "hikers in danger"
+ },
  "504 Main words::Persuade": {
   "none": "nothing found",
   "q": "convincing conversation"
@@ -269,8 +285,12 @@
    "https://commons.wikimedia.org/wiki/File:JMSDF_Criminal_Investigation_Command_logo.png"
   ]
  },
- "504 Main words::Qualify": {},
- "504 Main words::Recline": {},
+ "504 Main words::Qualify": {
+  "q": "scholarship acceptance letter"
+ },
+ "504 Main words::Recline": {
+  "q": "reclining chair"
+ },
  "504 Main words::Reform": {
   "none": "Contact sheets don't visually convey ref",
   "q": "government reform meeting",
@@ -296,7 +316,9 @@
   "title": "Venezuela Shortages 2014.png",
   "why": "Empty shelves show goods unavailable"
  },
- "504 Main words::Shriek": {},
+ "504 Main words::Shriek": {
+  "q": "woman screaming"
+ },
  "504 Main words::Sinister": {
   "none": "nothing found",
   "q": "sinister smile"
@@ -341,7 +363,9 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "504 Main words::Unaccustomed": {},
+ "504 Main words::Unaccustomed": {
+  "q": "-"
+ },
  "504 Main words::Undoubtedly": {
   "none": "nothing to photograph",
   "q": "-"
@@ -426,7 +450,9 @@
  "504 Secondary::Aim": {
   "q": "archer aiming bow"
  },
- "504 Secondary::All alone": {},
+ "504 Secondary::All alone": {
+  "q": "person sitting alone"
+ },
  "504 Secondary::Ancient": {
   "none": "No clear real photo of ancient ruins",
   "q": "ancient temple",
@@ -453,6 +479,9 @@
  },
  "504 Secondary::As the": {
   "none": "nothing to photograph",
+  "q": "-"
+ },
+ "504 Secondary::As time goes on": {
   "q": "-"
  },
  "504 Secondary::Autos": {
@@ -489,7 +518,9 @@
  "504 Secondary::Basement": {
   "q": "basement room"
  },
- "504 Secondary::Bear": {},
+ "504 Secondary::Bear": {
+  "q": "brown bear"
+ },
  "504 Secondary::Beard": {
   "q": "man beard"
  },
@@ -510,11 +541,17 @@
    "https://commons.wikimedia.org/wiki/File:Group_of_people_in_front_of_fountain_and_stairs.png"
   ]
  },
+ "504 Secondary::Belief": {
+  "q": "-"
+ },
  "504 Secondary::Bench": {
   "q": "park bench"
  },
  "504 Secondary::Beyond": {
   "none": "nothing to photograph",
+  "q": "-"
+ },
+ "504 Secondary::Beyond doubt": {
   "q": "-"
  },
  "504 Secondary::Bible": {
@@ -542,7 +579,9 @@
   "none": "nothing found",
   "q": "camouflaged animal rocks"
  },
- "504 Secondary::Boatman": {},
+ "504 Secondary::Boatman": {
+  "q": "boatman rowing boat"
+ },
  "504 Secondary::Bound": {
   "none": "nothing to photograph",
   "q": "-"
@@ -588,7 +627,9 @@
  "504 Secondary::Bring together": {
   "q": "people holding hands"
  },
- "504 Secondary::Broke in": {},
+ "504 Secondary::Broke in": {
+  "q": "burglar breaking window"
+ },
  "504 Secondary::Brought out": {
   "q": "sunlight on flowers"
  },
@@ -668,8 +709,15 @@
    "https://commons.wikimedia.org/wiki/File:Alla_aytayotgan_ayol_1.png"
   ]
  },
- "504 Secondary::Cemetery": {},
- "504 Secondary::Cheat": {},
+ "504 Secondary::Cemetery": {
+  "q": "cemetery gravestones"
+ },
+ "504 Secondary::Certainly": {
+  "q": "-"
+ },
+ "504 Secondary::Cheat": {
+  "q": "student cheating exam"
+ },
  "504 Secondary::Cheating": {
   "q": "cheating exam"
  },
@@ -747,7 +795,9 @@
   "title": "US Capitol Building Front New edit.jpg",
   "why": "Capitol building represents national Con"
  },
- "504 Secondary::Contest": {},
+ "504 Secondary::Contest": {
+  "q": "singing competition"
+ },
  "504 Secondary::Costly": {
   "none": "nothing found",
   "q": "expensive car repair"
@@ -772,6 +822,9 @@
  "504 Secondary::Covering": {
   "q": "floor covering"
  },
+ "504 Secondary::Crab": {
+  "q": "crab claws"
+ },
  "504 Secondary::Crossing": {
   "by": "Nikolay Loubet",
   "file": "crossing-522868f69c.jpg",
@@ -784,9 +837,15 @@
  "504 Secondary::Crowds": {
   "q": "crowd of people"
  },
+ "504 Secondary::Crumble": {
+  "q": "crumbling cookie"
+ },
  "504 Secondary::Curse": {
   "none": "nothing found",
   "q": "shouting person"
+ },
+ "504 Secondary::Customs": {
+  "q": "traditional festival costume"
  },
  "504 Secondary::Cut through": {
   "by": "Kafziel (talk · contribs)",
@@ -813,6 +872,9 @@
  "504 Secondary::Dear": {
   "none": "nothing found",
   "q": "close friends hugging"
+ },
+ "504 Secondary::Debaters": {
+  "q": "debate competition"
  },
  "504 Secondary::Decent": {
   "q": "decent hotel room"
@@ -851,7 +913,9 @@
  "504 Secondary::Discover": {
   "q": "scientist new species"
  },
- "504 Secondary::Dishonest": {},
+ "504 Secondary::Dishonest": {
+  "q": "-"
+ },
  "504 Secondary::Disobey": {
   "none": "nothing found",
   "q": "disobedient child"
@@ -916,7 +980,9 @@
   "none": "nothing found",
   "q": "encyclopedia books"
  },
- "504 Secondary::Entered": {},
+ "504 Secondary::Entered": {
+  "q": "person entering room"
+ },
  "504 Secondary::Excessive": {
   "none": "nothing to photograph",
   "q": "-"
@@ -929,6 +995,9 @@
   "q": "business executive",
   "title": "Abrar Mir 2023.jpg",
   "why": "Confident man in business suit"
+ },
+ "504 Secondary::Extend": {
+  "q": "extendable table"
  },
  "504 Secondary::Extravagant": {
   "q": "lavish wedding"
@@ -951,8 +1020,12 @@
   "none": "nothing found",
   "q": "eye chart"
  },
- "504 Secondary::FBI": {},
- "504 Secondary::Facing the peril": {},
+ "504 Secondary::FBI": {
+  "q": "FBI badge"
+ },
+ "504 Secondary::Facing the peril": {
+  "q": "facing danger"
+ },
  "504 Secondary::Fall asleep": {
   "q": "person sleeping sofa"
  },
@@ -962,6 +1035,9 @@
  "504 Secondary::Fate": {
   "none": "nothing to photograph",
   "q": "-"
+ },
+ "504 Secondary::Fault": {
+  "q": "broken machine part"
  },
  "504 Secondary::Faults": {
   "q": "building inspection"
@@ -982,7 +1058,12 @@
  "504 Secondary::Find out": {
   "q": "-"
  },
- "504 Secondary::Fled": {},
+ "504 Secondary::Fire": {
+  "q": "campfire flames"
+ },
+ "504 Secondary::Fled": {
+  "q": "family fleeing fire"
+ },
  "504 Secondary::Flirting": {
   "none": "nothing found",
   "q": "flirting couple"
@@ -1001,6 +1082,9 @@
   "seen": [
    "https://commons.wikimedia.org/wiki/File:Verrazano_Bridge_Bay_Ridge.jpg"
   ]
+ },
+ "504 Secondary::Folk": {
+  "q": "crowd of people"
  },
  "504 Secondary::Forced": {
   "none": "nothing to photograph",
@@ -1023,8 +1107,12 @@
    "https://commons.wikimedia.org/wiki/File:0646-vector-orange-man-running-scared-01.jpg"
   ]
  },
- "504 Secondary::Frightened": {},
- "504 Secondary::Frightening": {},
+ "504 Secondary::Frightened": {
+  "q": "frightened child"
+ },
+ "504 Secondary::Frightening": {
+  "q": "scary thunderstorm"
+ },
  "504 Secondary::Frightening someone out of something": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1074,7 +1162,12 @@
   "none": "nothing found",
   "q": "confused expression"
  },
- "504 Secondary::Give up": {},
+ "504 Secondary::Give up": {
+  "q": "exhausted runner stopping"
+ },
+ "504 Secondary::Go into": {
+  "q": "entering kitchen"
+ },
  "504 Secondary::Go over": {
   "q": "reviewing notes"
  },
@@ -1101,11 +1194,18 @@
   "title": "Headstone of Vivian May Allison.jpg",
   "why": "Clear photo of grave in cemetery"
  },
- "504 Secondary::Greatly": {},
+ "504 Secondary::Greatly": {
+  "q": "-"
+ },
+ "504 Secondary::Handed down": {
+  "q": "family heirloom"
+ },
  "504 Secondary::Hangings": {
   "q": "wall tapestry"
  },
- "504 Secondary::He drew": {},
+ "504 Secondary::He drew": {
+  "q": "man drawing picture"
+ },
  "504 Secondary::Heated": {
   "q": "room radiator"
  },
@@ -1204,7 +1304,9 @@
    "https://commons.wikimedia.org/wiki/File:Combined_Rotatable_Table,_Book-Shelf,_and_Lamp-Support_-_DPLA_-_35c9874c9bbbfc8e304872cbda5b219c_(page_3).jpg"
   ]
  },
- "504 Secondary::Landlord": {},
+ "504 Secondary::Landlord": {
+  "q": "property owner"
+ },
  "504 Secondary::Landscape": {
   "by": "Carlquist, Sherwin John, 1930-2021",
   "file": "landscape-9f13c401f6.jpg",
@@ -1228,7 +1330,9 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "504 Secondary::Lay down": {},
+ "504 Secondary::Lay down": {
+  "q": "placing baby down"
+ },
  "504 Secondary::Layers": {
   "by": "Photographer: Nicko Margolies",
   "file": "layers-8d054c9d12.jpg",
@@ -1247,7 +1351,9 @@
    "https://commons.wikimedia.org/wiki/File:UNIQLO_clothing_2026-09-06_Camisoles_Philippines.jpg"
   ]
  },
- "504 Secondary::Lean back": {},
+ "504 Secondary::Lean back": {
+  "q": "leaning back chair"
+ },
  "504 Secondary::Least": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1282,6 +1388,9 @@
  "504 Secondary::Look into": {
   "q": "police investigation"
  },
+ "504 Secondary::Looked down": {
+  "q": "person looking down"
+ },
  "504 Secondary::Loss": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1292,6 +1401,9 @@
  "504 Secondary::Loud tie": {
   "none": "nothing found",
   "q": "colorful necktie"
+ },
+ "504 Secondary::Low-minded": {
+  "q": "-"
  },
  "504 Secondary::Low-paid": {
   "none": "No image conveys low pay concept",
@@ -1310,7 +1422,9 @@
   "title": "Jimmy John employees having fun making sandwiches.jpg",
   "why": "Fast food workers, typical low-paid job"
  },
- "504 Secondary::Maid": {},
+ "504 Secondary::Maid": {
+  "q": "maid cleaning room"
+ },
  "504 Secondary::Major": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1372,6 +1486,12 @@
  },
  "504 Secondary::Messy": {
   "q": "messy bedroom"
+ },
+ "504 Secondary::Miniskirts": {
+  "q": "woman miniskirt"
+ },
+ "504 Secondary::Mislead": {
+  "q": "misleading advertisement"
  },
  "504 Secondary::Mist": {
   "by": "Fir0002 (talk) (Uploads)",
@@ -1465,7 +1585,9 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "504 Secondary::Not used to": {},
+ "504 Secondary::Not used to": {
+  "q": "-"
+ },
  "504 Secondary::Noted": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1490,7 +1612,9 @@
  "504 Secondary::Omit": {
   "q": "-"
  },
- "504 Secondary::On account of hardship": {},
+ "504 Secondary::On account of hardship": {
+  "q": "-"
+ },
  "504 Secondary::On the contrary": {
   "none": "nothing to photograph",
   "q": "-"
@@ -1498,7 +1622,9 @@
  "504 Secondary::Outcome": {
   "q": "test result"
  },
- "504 Secondary::Overcome": {},
+ "504 Secondary::Overcome": {
+  "q": "hurdle race"
+ },
  "504 Secondary::Passage": {
   "none": "No image shows text passage concept",
   "q": "book page",
@@ -1522,13 +1648,24 @@
   "none": "nothing found",
   "q": "dangerous journey"
  },
+ "504 Secondary::Pilgrims": {
+  "q": "pilgrims walking shrine"
+ },
+ "504 Secondary::Pipes": {
+  "q": "water pipes"
+ },
  "504 Secondary::Plan for": {
   "q": "boarding up windows"
  },
- "504 Secondary::Plot": {},
+ "504 Secondary::Plot": {
+  "q": "storyboard sketch"
+ },
  "504 Secondary::Pointed": {
   "none": "nothing found",
   "q": "sharp knife blade"
+ },
+ "504 Secondary::Polished": {
+  "q": "polished wood table"
  },
  "504 Secondary::Precious": {
   "by": "Olertis LLC",
@@ -1599,6 +1736,12 @@
    "https://commons.wikimedia.org/wiki/File:Presidents_speech_to_1982_Graduating_class_of_Eureka_College_Eureka_Illinois_-_DPLA_-_53a268ad9be67b64fcdcbef3d552e9ef.jpg",
    "https://commons.wikimedia.org/wiki/File:Nunavut-Eureka-2009Jul14-temperatures.png"
   ]
+ },
+ "504 Secondary::Regain": {
+  "q": "-"
+ },
+ "504 Secondary::Regarding": {
+  "q": "-"
  },
  "504 Secondary::Relatives": {
   "by": "Rossi family",
@@ -1711,8 +1854,12 @@
    "https://commons.wikimedia.org/wiki/File:Iced_Akutaq.jpg"
   ]
  },
- "504 Secondary::Sight": {},
- "504 Secondary::Sinister-looking": {},
+ "504 Secondary::Sight": {
+  "q": "human eye closeup"
+ },
+ "504 Secondary::Sinister-looking": {
+  "q": "sinister looking man"
+ },
  "504 Secondary::Sinking ship": {
   "by": "Unknown authorUnknown author",
   "file": "sinking-ship-900783ab9b.jpg",
@@ -1775,7 +1922,9 @@
  "504 Secondary::Spacecraft": {
   "q": "spacecraft orbit"
  },
- "504 Secondary::Spied": {},
+ "504 Secondary::Spied": {
+  "q": "person spying binoculars"
+ },
  "504 Secondary::Spotlight": {
   "none": "Picture 1 looks CGI, not real photo",
   "q": "stage spotlight",
@@ -1817,10 +1966,15 @@
  "504 Secondary::Steam": {
   "q": "steaming pot"
  },
+ "504 Secondary::Steering": {
+  "q": "steering wheel"
+ },
  "504 Secondary::Stream": {
   "q": "forest stream"
  },
- "504 Secondary::Stretch out": {},
+ "504 Secondary::Stretch out": {
+  "q": "stretching on sofa"
+ },
  "504 Secondary::Stuck in": {
   "none": "Shows traffic jam, not being trapped",
   "q": "traffic jam",
@@ -1854,7 +2008,9 @@
  "504 Secondary::Swamp": {
   "q": "swamp wetland"
  },
- "504 Secondary::Swore": {},
+ "504 Secondary::Swore": {
+  "q": "courtroom oath"
+ },
  "504 Secondary::Sworn over": {
   "none": "Concept 'repeatedly' not shown, single e",
   "q": "swearing oath",
@@ -1895,7 +2051,9 @@
   "title": "Telegram from ex-Emperor Wilhelm II of Germany to Queen Wilhelmina of the Netherlands.jpg",
   "why": "Shows actual historical telegram documen"
  },
- "504 Secondary::Television set": {},
+ "504 Secondary::Television set": {
+  "q": "television set"
+ },
  "504 Secondary::Tell beforehand": {
   "q": "-"
  },
@@ -1907,6 +2065,9 @@
    "https://commons.wikimedia.org/wiki/File:True_fortune_teller_-_Headpiece.png",
    "https://commons.wikimedia.org/wiki/File:Octahedral_Jahn-Teller_Geometric_Distortion.png"
   ]
+ },
+ "504 Secondary::That which is wrong": {
+  "q": "-"
  },
  "504 Secondary::Therefore": {
   "none": "nothing to photograph",
@@ -2016,11 +2177,15 @@
   "none": "nothing found",
   "q": "mechanic tuning engine"
  },
- "504 Secondary::Uncovered": {},
+ "504 Secondary::Uncovered": {
+  "q": "uncovered food plate"
+ },
  "504 Secondary::Unforgettable": {
   "q": "-"
  },
- "504 Secondary::Unless": {},
+ "504 Secondary::Unless": {
+  "q": "-"
+ },
  "504 Secondary::Upbringing": {
   "by": "Amolnaik3k",
   "file": "upbringing-50002d8cdc.jpg",
@@ -2041,6 +2206,9 @@
    "https://commons.wikimedia.org/wiki/File:Libraria_Komb%C3%ABtare_e_Kosov%C3%ABs.jpg",
    "https://commons.wikimedia.org/wiki/File:O_bg-remover-gen_2sRsOrYyOmLy8jFPjJytxT1TZ7W_01.png"
   ]
+ },
+ "504 Secondary::Vacate": {
+  "q": "empty hotel room"
  },
  "504 Secondary::Valuable": {
   "none": "None clearly convey valuable meaning",
@@ -2066,7 +2234,9 @@
  "504 Secondary::Weather forecasters": {
   "q": "weather forecaster"
  },
- "504 Secondary::Wicked": {},
+ "504 Secondary::Wicked": {
+  "q": "evil king"
+ },
  "504 Secondary::Widow": {
   "none": "nothing found",
   "q": "grieving widow"
@@ -2296,7 +2466,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Achieved": {},
+ "School vocabulary::Achieved": {
+  "by": "Chris Wilson, Chrisbw at en.Wikipedia",
+  "file": "achieved-3dc983e85b.jpg",
+  "lic": "CC BY-SA 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:PeachtreeRoadRace2006FinishLine.jpg",
+  "q": "finish line celebration",
+  "title": "PeachtreeRoadRace2006FinishLine.jpg",
+  "why": "Runners crossing finish line, goal achie"
+ },
  "School vocabulary::Admonish": {
   "none": "nothing found",
   "q": "teacher admonishing class"
@@ -2308,7 +2486,10 @@
    "https://commons.wikimedia.org/wiki/File:U.A.R._logo_2020.png"
   ]
  },
- "School vocabulary::Aged": {},
+ "School vocabulary::Aged": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Although": {
   "none": "nothing to photograph",
   "q": "-"
@@ -2339,7 +2520,10 @@
    "https://commons.wikimedia.org/wiki/File:5-10_Ann_Wexler;_11-18_Press_Announcement_on_Beef_and_Cotton_Dust_-_DPLA_-_66151ce7cb2d66077d1a1d0243409922.jpg"
   ]
  },
- "School vocabulary::Anointing": {},
+ "School vocabulary::Anointing": {
+  "none": "nothing found",
+  "q": "anointing ceremony"
+ },
  "School vocabulary::Appear": {
   "by": "Sireesha Kandimalla",
   "file": "appear-61eb644088.jpg",
@@ -2348,6 +2532,15 @@
   "q": "rainbow appearing",
   "title": "Light Rainbow.jpg",
   "why": "Rainbow appearing visibly in sky"
+ },
+ "School vocabulary::Appetite": {
+  "by": "U.S. Army Natick Soldier RD&E Center",
+  "file": "appetite-1ecd9c5e00.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Warfighters_Eating_MCW_in_Arctic_(1).png",
+  "q": "person eating meal",
+  "title": "Warfighters Eating MCW in Arctic (1).png",
+  "why": "Person eating food, shows desire"
  },
  "School vocabulary::Appomattox": {
   "none": "nothing found",
@@ -2369,6 +2562,9 @@
    "https://commons.wikimedia.org/wiki/File:My_office_book_shelf.jpg"
   ]
  },
+ "School vocabulary::Ashes": {
+  "q": "campfire ashes"
+ },
  "School vocabulary::Assert": {
   "none": "nothing found",
   "q": "confident speaker"
@@ -2382,7 +2578,10 @@
   "title": "Helvetia Goldunzen 999.9 (cropped).jpg",
   "why": "Coins show valuable owned wealth"
  },
- "School vocabulary::Aware": {},
+ "School vocabulary::Aware": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Back down": {
   "none": "nothing to photograph",
   "q": "-"
@@ -2503,7 +2702,10 @@
    "https://commons.wikimedia.org/wiki/File:Modern_Husbands_(1919)_-_Ad_2.jpg"
   ]
  },
- "School vocabulary::Because of": {},
+ "School vocabulary::Because of": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Beef": {
   "by": "Dmz2000",
   "file": "beef-e1e16244fc.jpg",
@@ -2763,6 +2965,9 @@
   "title": "The Joint Chiefs salute as Armed Forces body bearers carry the casket of former President Gerald R. Ford following his state funeral at the National Cathedral in Washington, D.C., J - DPLA - c810a684ec0807d2c0cbd1c42a02542b.jpeg",
   "why": "Shows flag-draped casket carried by hono"
  },
+ "School vocabulary::Cast": {
+  "q": "casting fishing line"
+ },
  "School vocabulary::Catch somebody red-handed": {
   "none": "nothing found",
   "q": "police catching thief"
@@ -2776,7 +2981,15 @@
   "title": "Photograph of cattle grazing, 1916 July 2 - DPLA - 01aa7503f377e21d202e4512b26a8a3c.jpg",
   "why": "Shows real cows in field"
  },
- "School vocabulary::Cellar": {},
+ "School vocabulary::Cellar": {
+  "by": "Cruz Liljegren",
+  "file": "cellar-17f091491f.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Roman_Sign_Maison_Drouhin_(157453869).jpeg",
+  "q": "storage cellar",
+  "title": "Roman Sign Maison Drouhin (157453869).jpeg",
+  "why": "Underground room with storage barrels"
+ },
  "School vocabulary::Chide": {
   "none": "nothing found",
   "q": "gentle scolding"
@@ -3064,7 +3277,15 @@
    "https://commons.wikimedia.org/wiki/File:Bull_statuette,_bronze_-_Museo_Egizio,_Turin_C_820_p01.jpg"
   ]
  },
- "School vocabulary::Donate": {},
+ "School vocabulary::Donate": {
+  "by": "User:Tdmalone",
+  "file": "donate-901ff5d639.jpg",
+  "lic": "CC BY-SA 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:Smith_Family_clothing_bin.jpg",
+  "q": "donation box clothes",
+  "title": "Smith Family clothing bin.jpg",
+  "why": "Clothing donation bins with bags, real p"
+ },
  "School vocabulary::Dove": {
   "by": "Richard Crossley",
   "file": "dove-a911e7687f.jpg",
@@ -3107,7 +3328,10 @@
   "none": "nothing found",
   "q": "couple eloping"
  },
- "School vocabulary::Embryonic": {},
+ "School vocabulary::Embryonic": {
+  "none": "nothing found",
+  "q": "embryo microscope"
+ },
  "School vocabulary::Encourage": {
   "none": "Certificate image, not showing encourage",
   "q": "teacher encouraging student",
@@ -3137,7 +3361,10 @@
   "title": "Tension ring.JPG",
   "why": "Diamond ring symbolizes engagement to ma"
  },
- "School vocabulary::Enzymes": {},
+ "School vocabulary::Enzymes": {
+  "none": "nothing found",
+  "q": "enzyme molecule model"
+ },
  "School vocabulary::Escalator": {
   "by": "Прес-служба Правительства Москвы",
   "file": "escalator-250233dc05.jpg",
@@ -3154,6 +3381,15 @@
  "School vocabulary::Exploded view": {
   "none": "nothing found",
   "q": "exploded engine diagram"
+ },
+ "School vocabulary::Far end": {
+  "none": "No photo shows distant end concept",
+  "q": "end of table",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Preston_North_End_FC_League_Performance_1889-2008.PNG",
+   "https://commons.wikimedia.org/wiki/File:Rudny%C3%A1nszky_mansion._R_21._Armchair_(Italy,_18th_c);_Card_table_(Italy,_cca_1790),_Sette_(Budapest,_19th_c)._-_Budapest.JPG",
+   "https://commons.wikimedia.org/wiki/File:Preston_Northend_FC_League_Performance_1889-2008.PNG"
+  ]
  },
  "School vocabulary::Fast": {
   "by": "Richard Giles",
@@ -3180,8 +3416,14 @@
   "title": "(Traditional Japanese building behind bamboo fence and foliage in Kenrokuen Garden, Japan) - DPLA - 8fd81b00ba5434862a18a61f4cae9ce4.jpg",
   "why": "Shows real bamboo fence around house"
  },
- "School vocabulary::Fetus": {},
- "School vocabulary::Figurative": {},
+ "School vocabulary::Fetus": {
+  "none": "nothing found",
+  "q": "ultrasound fetus"
+ },
+ "School vocabulary::Figurative": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Finch": {
   "by": "MichaelMaggs – Edited (sharpened, down-sampled, contrast corrected, noise remove",
   "file": "finch-15b1b79187.jpg",
@@ -3198,6 +3440,15 @@
  "School vocabulary::Fireworks": {
   "none": "nothing found",
   "q": "fireworks display"
+ },
+ "School vocabulary::Fisherman": {
+  "by": "EstherJacobs1",
+  "file": "fisherman-38bdfc7c37.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Salt_Life_Fishing_Charters_kob,_crop.png",
+  "q": "fisherman fishing",
+  "title": "Salt Life Fishing Charters kob, crop.png",
+  "why": "Real men holding fish with fishing rod"
  },
  "School vocabulary::Flabbergasted": {
   "none": "No photo shows genuine surprise clearly",
@@ -3217,7 +3468,15 @@
   "title": "North Corktown, Detroit, apartment building.JPG",
   "why": "Clear apartment building, real photograp"
  },
- "School vocabulary::Flowerpot": {},
+ "School vocabulary::Flowerpot": {
+  "none": "No flowerpot images shown",
+  "q": "flower pot",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_Planter_(1917)_-_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Planter_(1917)_-_1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Thomas_Affleck_(planter)_01.jpg"
+  ]
+ },
  "School vocabulary::Food": {
   "none": "No actual food shown, only bowls",
   "q": "plate of food",
@@ -3263,6 +3522,15 @@
    "https://commons.wikimedia.org/wiki/File:Unnamed_(2).png"
   ]
  },
+ "School vocabulary::Fuzzy": {
+  "by": "Terry Lucas",
+  "file": "fuzzy-fdde1a11be.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Purple_Lunch_(93160459).jpeg",
+  "q": "blurry photo",
+  "title": "Purple Lunch (93160459).jpeg",
+  "why": "Background flowers appear blurry, unclea"
+ },
  "School vocabulary::Gambling": {
   "by": "Xemenendura",
   "file": "gambling-c78ecef304.jpg",
@@ -3292,6 +3560,10 @@
  "School vocabulary::Give birth": {
   "none": "nothing found",
   "q": "childbirth"
+ },
+ "School vocabulary::Go down": {
+  "none": "nothing to photograph",
+  "q": "-"
  },
  "School vocabulary::Good": {
   "none": "No image conveys general quality concept",
@@ -3326,6 +3598,10 @@
   "seen": [
    "https://commons.wikimedia.org/wiki/File:Greenhouse_visible_and_infrared_light.png"
   ]
+ },
+ "School vocabulary::Grouch": {
+  "none": "nothing found",
+  "q": "grumpy man"
  },
  "School vocabulary::Hail": {
   "by": "Shixart1985",
@@ -3369,6 +3645,9 @@
   "none": "nothing found",
   "q": "warning sign"
  },
+ "School vocabulary::Harmoniously": {
+  "q": "buildings blending together"
+ },
  "School vocabulary::Harness": {
   "by": "Rhode Island Collection, Providence Public Library",
   "file": "harness-0cf80e787e.jpg",
@@ -3382,7 +3661,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Harvest": {},
+ "School vocabulary::Harvest": {
+  "by": "",
+  "file": "harvest-a941465f41.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Wheat_threshing_near_Garfield,_Washington,_circa_1900_-_DPLA_-_16a9b770735226da853422e5a48af5be.jpg",
+  "q": "harvesting wheat",
+  "title": "Wheat threshing near Garfield, Washington, circa 1900 - DPLA - 16a9b770735226da853422e5a48af5be.jpg",
+  "why": "Shows people harvesting grain field"
+ },
  "School vocabulary::Hassle": {
   "none": "nothing found",
   "q": "crowded parking lot"
@@ -3413,6 +3700,16 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "School vocabulary::Head": {
+  "q": "human head"
+ },
+ "School vocabulary::Head down": {
+  "q": "-"
+ },
+ "School vocabulary::Heads up": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Heirloom": {
   "none": "nothing found",
   "q": "heirloom jewelry"
@@ -3438,6 +3735,15 @@
   "q": "gun holster",
   "title": "Gun Holster with United States Flag.png",
   "why": "Clear photo of gun holster"
+ },
+ "School vocabulary::Hook": {
+  "by": "Tom Allen",
+  "file": "hook-28fc50dbc5.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Shakertown_Bedroom_2005-05-27.jpeg",
+  "q": "coat hook",
+  "title": "Shakertown Bedroom 2005-05-27.jpeg",
+  "why": "Wall hooks visible for hanging items"
  },
  "School vocabulary::Hot-air balloon": {
   "by": "No machine-readable author provided. Mtruch assumed (based on copyright claims).",
@@ -3554,7 +3860,10 @@
    "https://commons.wikimedia.org/wiki/File:Jolly_Jumper_2006.jpg"
   ]
  },
- "School vocabulary::Know": {},
+ "School vocabulary::Know": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Kueve": {
   "none": "nothing to photograph",
   "q": "-"
@@ -3572,6 +3881,10 @@
   "none": "nothing found",
   "q": "courtroom hearing"
  },
+ "School vocabulary::Leaps and bounds": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Leash": {
   "by": "Kristina.averina",
   "file": "leash-443b726c21.jpg",
@@ -3588,6 +3901,10 @@
    "https://commons.wikimedia.org/wiki/File:DHLTU_LECTURE_HALL_FRONT_VIEW.jpg",
    "https://commons.wikimedia.org/wiki/File:Iitg_lecture_halls.jpg"
   ]
+ },
+ "School vocabulary::Lightly": {
+  "none": "nothing found",
+  "q": "gentle push door"
  },
  "School vocabulary::Likelihood": {
   "none": "nothing to photograph",
@@ -3644,11 +3961,23 @@
   "none": "nothing found",
   "q": "noisy crowd"
  },
+ "School vocabulary::Lure": {
+  "none": "nothing found",
+  "q": "money temptation"
+ },
  "School vocabulary::Make the water still": {
   "none": "nothing found",
   "q": "calm water"
  },
- "School vocabulary::Makeup": {},
+ "School vocabulary::Makeup": {
+  "by": "Kylee Fleek",
+  "file": "makeup-c49d8f06da.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kylee_Fleek_Rainbow_Splotch_Makeup_Look.jpg",
+  "q": "cosmetics makeup",
+  "title": "Kylee Fleek Rainbow Splotch Makeup Look.jpg",
+  "why": "Shows face wearing colorful makeup"
+ },
  "School vocabulary::Male purse": {
   "by": "EinDao",
   "file": "male-purse-67b9f0e913.jpg",
@@ -3684,6 +4013,10 @@
   "q": "mesh fabric",
   "title": "Mesh Fabric Texture DTXR-FB-1.jpg",
   "why": "Shows woven material with small holes"
+ },
+ "School vocabulary::Mess out": {
+  "none": "nothing to photograph",
+  "q": "-"
  },
  "School vocabulary::Meters": {
   "none": "Museum display or disassembled device, u",
@@ -3797,6 +4130,9 @@
    "https://commons.wikimedia.org/wiki/File:Train_arriving_AFR_Jhuci_Station.jpg"
   ]
  },
+ "School vocabulary::Onto": {
+  "q": "-"
+ },
  "School vocabulary::Outer space": {
   "by": "United States Space Force",
   "file": "outer-space-dbb28353ab.jpg",
@@ -3852,7 +4188,15 @@
    "https://commons.wikimedia.org/wiki/File:PlagueDoctor_Better_Resopution_3-4.png"
   ]
  },
- "School vocabulary::Plains": {},
+ "School vocabulary::Plains": {
+  "by": "Garst, Warren, 1922-2016, photographer",
+  "file": "plains-18a40803d6.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Two_oribi_standing_in_grass_-_DPLA_-_0eb16ddba6beaf3802c0af602b8d2a74.jpg",
+  "q": "grassy plains",
+  "title": "Two oribi standing in grass - DPLA - 0eb16ddba6beaf3802c0af602b8d2a74.jpg",
+  "why": "Shows large flat open grassland area"
+ },
  "School vocabulary::Planted": {
   "none": "Shows seedling, not planting action",
   "q": "planting seedling",
@@ -3892,6 +4236,10 @@
  "School vocabulary::Poke": {
   "none": "nothing found",
   "q": "finger poking button"
+ },
+ "School vocabulary::Poke around": {
+  "none": "nothing found",
+  "q": "browsing bookstore"
  },
  "School vocabulary::Police dog": {
   "none": "No clear police dog visible",
@@ -3947,6 +4295,9 @@
   "title": "Porsche-gearbox-cutaway.jpg",
   "why": "Real photo of transmission gears/powertr"
  },
+ "School vocabulary::Practice run": {
+  "q": "rehearsal practice"
+ },
  "School vocabulary::Praised": {
   "none": "nothing found",
   "q": "teacher praising student"
@@ -3978,9 +4329,16 @@
    "https://commons.wikimedia.org/wiki/File:Officer_of_the_United_States_Army_Criminal_Investigation_Command_in_a_helicopter_while_on_duty.png"
   ]
  },
+ "School vocabulary::Proper": {
+  "q": "toolbox tools"
+ },
  "School vocabulary::Prove": {
   "none": "nothing found",
   "q": "presenting evidence"
+ },
+ "School vocabulary::Provoke": {
+  "none": "nothing found",
+  "q": "teasing dog"
  },
  "School vocabulary::Pull out": {
   "none": "nothing found",
@@ -4065,7 +4423,14 @@
   "title": "Person Reading Marathi Wikipedia Brouchre At Book Exhibition.jpg",
   "why": "Person actively reading a paper"
  },
- "School vocabulary::Realize": {},
+ "School vocabulary::Realize": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
+ "School vocabulary::Recall": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Redundancies": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4138,7 +4503,10 @@
   "title": "Puente Colorao, Morovis, Puerto Rico (2).jpg",
   "why": "Shows a real road for vehicles"
  },
- "School vocabulary::Roamed": {},
+ "School vocabulary::Roamed": {
+  "none": "nothing found",
+  "q": "wandering city streets"
+ },
  "School vocabulary::Rods": {
   "by": "Whoisjohngalt",
   "file": "rods-809207c2b4.jpg",
@@ -4156,6 +4524,13 @@
    "https://commons.wikimedia.org/wiki/File:Symbiosis_in_Root_Nodules.png",
    "https://commons.wikimedia.org/wiki/File:Root_neoplasm_01.jpg"
   ]
+ },
+ "School vocabulary::Roundabout": {
+  "q": "traffic roundabout"
+ },
+ "School vocabulary::Rounded": {
+  "none": "nothing found",
+  "q": "rounded chair edges"
  },
  "School vocabulary::Row": {
   "none": "No image shows a line/row",
@@ -4221,6 +4596,15 @@
   "none": "nothing found",
   "q": "teacher scolding student"
  },
+ "School vocabulary::Seize": {
+  "none": "No real photo shows seizing action",
+  "q": "grabbing arm",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Helping_hand_logo.png",
+   "https://commons.wikimedia.org/wiki/File:A_Helping_Hand_-_DPLA_-_46042b328e2936ca3c61a422a7c05d19.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_helping_hand,_1911-01_-_DPLA_-_e0348487a606122c9f2d468d9e087839_(page_14).jpg"
+  ]
+ },
  "School vocabulary::Seldom": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4235,6 +4619,10 @@
   "why": "Woman serving beer, providing food/drink"
  },
  "School vocabulary::Service dog": {},
+ "School vocabulary::Set up": {
+  "none": "nothing found",
+  "q": "setting up projector"
+ },
  "School vocabulary::Settle": {
   "none": "nothing found",
   "q": "handshake agreement"
@@ -4295,6 +4683,9 @@
   "title": "North Pacific (sidewheeler) sinking 1903.jpg",
   "why": "Boat visibly going under water"
  },
+ "School vocabulary::Snap": {
+  "q": "broken fishing rod"
+ },
  "School vocabulary::Snatch": {
   "none": "nothing found",
   "q": "purse snatching"
@@ -4312,6 +4703,13 @@
    "https://commons.wikimedia.org/wiki/File:Les_chevaliers_de_la_belle-%C3%A9toile._-_Suzanne_-_DPLA_-_3c86a98650ed6ea1958c03007ac3f3b2.jpg"
   ]
  },
+ "School vocabulary::Sort out": {
+  "none": "Screenshot diagram, not real-world photo",
+  "q": "messy desk",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Messydesk-node-ui.png"
+  ]
+ },
  "School vocabulary::Spin": {
   "none": "Static spinning wheels, not turning quic",
   "q": "spinning wheel",
@@ -4321,8 +4719,19 @@
    "https://commons.wikimedia.org/wiki/File:Spinning_mill_or_wheel.JPG"
   ]
  },
- "School vocabulary::Split ends": {},
- "School vocabulary::Split off": {},
+ "School vocabulary::Split ends": {
+  "by": "RealGatba",
+  "file": "split-ends-889f756dbc.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Trichoptilosis.jpg",
+  "q": "split hair ends",
+  "title": "Trichoptilosis.jpg",
+  "why": "Clear close-up of frayed hair ends"
+ },
+ "School vocabulary::Split off": {
+  "none": "nothing found",
+  "q": "breakaway group walking"
+ },
  "School vocabulary::Sprout": {
   "by": "Bagusnyamuk",
   "file": "sprout-a4d68b1ffd.jpg",
@@ -4331,6 +4740,15 @@
   "q": "seed sprouting",
   "title": "Seedball sprouted.jpg",
   "why": "Seedlings sprouting from soil, visible g"
+ },
+ "School vocabulary::Stable": {
+  "none": "No clear photo of horse stable",
+  "q": "horse stable",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Horse_Stable.JPG",
+   "https://commons.wikimedia.org/wiki/File:WADSWORTH_STABLE,_LEBANON,_CT.jpg",
+   "https://commons.wikimedia.org/wiki/File:Plan_of_Stable_for_100_Horse,_Fort_Lyon,_Colorado_-_DPLA_-_4882abf68c3c6528956d80188efdbbf0.jpg"
+  ]
  },
  "School vocabulary::Stamps": {
   "none": "nothing found",
@@ -4369,6 +4787,17 @@
    "https://commons.wikimedia.org/wiki/File:Man_with_stern_expression_in_profile_to_left_MET_DP823768.jpg"
   ]
  },
+ "School vocabulary::Stick out": {
+  "q": "sticking out ears"
+ },
+ "School vocabulary::Sting": {
+  "none": "nothing found",
+  "q": "insect sting mark"
+ },
+ "School vocabulary::Straight": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Stretches across": {
   "by": "Iveta Drábková",
   "file": "stretches-across-bbb1cacc00.jpg",
@@ -4391,7 +4820,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Stye (orzuelo)": {},
+ "School vocabulary::Stye (orzuelo)": {
+  "none": "No picture shows actual stye",
+  "q": "eyelid stye",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Warm_compress.jpg",
+   "https://commons.wikimedia.org/wiki/File:Steyr_puch_-_650_t-back.png",
+   "https://commons.wikimedia.org/wiki/File:Weekly_staff_conference_at_Services_of_Supply_headquarters.jpg"
+  ]
+ },
  "School vocabulary::Sue": {
   "none": "No real photograph of lawsuit",
   "q": "courtroom trial",
@@ -4418,6 +4855,10 @@
   "q": "soldier surrendering",
   "title": "US GI capturing German Illy Sep1944.jpeg",
   "why": "Soldier raising hands, giving up"
+ },
+ "School vocabulary::Sweetcorn": {
+  "none": "nothing found",
+  "q": "sweetcorn kernels"
  },
  "School vocabulary::Synonyms": {
   "none": "No real photo depicting synonyms concept",
@@ -4521,7 +4962,15 @@
   "title": "Anvil shaped cumulus panorama edit.jpg",
   "why": "Shows large towering storm cloud clearly"
  },
- "School vocabulary::Tides": {},
+ "School vocabulary::Tides": {
+  "none": "All are diagrams, not photographs",
+  "q": "ocean tide",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Vacuum_Tide_Gauge_hydrographicalsu00whar_0489.jpg",
+   "https://commons.wikimedia.org/wiki/File:Tide_Graphic.PNG",
+   "https://commons.wikimedia.org/wiki/File:Tide_diagram.png"
+  ]
+ },
  "School vocabulary::Tight": {
   "none": "nothing found",
   "q": "tight shoes"
@@ -4618,6 +5067,10 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "School vocabulary::Uneven": {
+  "none": "nothing found",
+  "q": "uneven sidewalk"
+ },
  "School vocabulary::Union": {
   "by": "San Diego Air & Space Museum Archives",
   "file": "union-70370dd348.jpg",
@@ -4661,6 +5114,13 @@
   "q": "rats mice",
   "title": "Mice Treatment.jpg",
   "why": "Photo of rats, common vermin"
+ },
+ "School vocabulary::Vet": {
+  "none": "Old photo of soldier, not vet",
+  "q": "veterinarian with horse",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Le_capitaine-v%C3%A9t%C3%A9rinaire_Bucher_de_Chauvign%C3%A9.png"
+  ]
  },
  "School vocabulary::Vice": {
   "none": "None depict immoral habits/vice",
@@ -4707,7 +5167,13 @@
    "https://commons.wikimedia.org/wiki/File:JammyPack.jpg"
   ]
  },
- "School vocabulary::Water-based paint": {},
+ "School vocabulary::Water-based paint": {
+  "none": "Color swatches, not real photo",
+  "q": "water-based paint",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Watercolor_modern_palette.png"
+  ]
+ },
  "School vocabulary::Weeds": {
   "none": "nothing found",
   "q": "garden weeds"
@@ -4766,7 +5232,18 @@
    "https://commons.wikimedia.org/wiki/File:Syrphid_Fly_on_a_Grape_Hyacinth.jpg"
   ]
  },
- "School vocabulary::Wine cellar": {},
+ "School vocabulary::Wine cellar": {
+  "by": "Dmytro Petishkin",
+  "file": "wine-cellar-b2f742b4f5.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Barn_and_Wine_Cellar_in_Uzhhorod_04.jpg",
+  "q": "wine cellar",
+  "title": "Barn and Wine Cellar in Uzhhorod 04.jpg",
+  "why": "Underground cellar room storing wine bar"
+ },
+ "School vocabulary::Wing it": {
+  "q": "speaking without notes"
+ },
  "School vocabulary::Withdraw": {
   "none": "nothing found",
   "q": "withdrawing cash atm"
@@ -4828,6 +5305,10 @@
   "q": "ball of yarn",
   "title": "Yarn hank and ball.png",
   "why": "Shows ball of yarn thread clearly"
+ },
+ "School vocabulary::You're all set": {
+  "none": "nothing to photograph",
+  "q": "-"
  },
  "School vocabulary::Youngest": {
   "none": "No clear photo showing youngest concept",
@@ -4948,6 +5429,9 @@
  "Series::Bloom": {
   "q": "blooming rose"
  },
+ "Series::Blow up": {
+  "q": "explosion"
+ },
  "Series::Blunt": {
   "q": "blunt knife"
  },
@@ -4965,6 +5449,9 @@
  },
  "Series::Bow": {
   "q": "bow and arrow"
+ },
+ "Series::Braid": {
+  "q": "braiding hair"
  },
  "Series::Break out": {
   "q": "house fire"
@@ -5245,6 +5732,9 @@
  "Series::Excruciating": {
   "q": "man grimacing pain"
  },
+ "Series::Exhale": {
+  "q": "person exhaling breath"
+ },
  "Series::Expense": {
   "q": "receipt stack"
  },
@@ -5256,6 +5746,12 @@
  },
  "Series::Faith": {
   "q": "-"
+ },
+ "Series::Fall through": {
+  "q": "-"
+ },
+ "Series::Feast your eyes": {
+  "q": "admiring view"
  },
  "Series::Fill out": {
   "q": "filling form"
@@ -5269,14 +5765,29 @@
  "Series::Fit into": {
   "q": "shoes fitting box"
  },
+ "Series::Flawless": {
+  "q": "-"
+ },
  "Series::Flee": {
   "q": "people fleeing fire"
+ },
+ "Series::Flossing": {
+  "q": "dental floss"
  },
  "Series::Foil": {
   "q": "aluminum foil"
  },
  "Series::Font": {
   "q": "font samples"
+ },
+ "Series::Foreshadow": {
+  "q": "-"
+ },
+ "Series::Freak out": {
+  "q": "scared person screaming"
+ },
+ "Series::Freaked out": {
+  "q": "scared frightened person"
  },
  "Series::From scratch": {
   "q": "baking ingredients kitchen"
@@ -5305,29 +5816,68 @@
  "Series::Get by": {
   "q": "-"
  },
+ "Series::Get down": {
+  "q": "person crouching down"
+ },
+ "Series::Get out": {
+  "q": "person leaving room"
+ },
  "Series::Get out of": {
   "q": "child avoiding chores"
+ },
+ "Series::Get swelling down": {
+  "q": "icing swollen ankle"
  },
  "Series::Give out": {
   "q": "teacher distributing papers"
  },
+ "Series::Give up on": {
+  "q": "-"
+ },
+ "Series::Glimpse": {
+  "q": "peeking through curtain"
+ },
  "Series::Gnaw": {
   "q": "dog gnawing bone"
  },
+ "Series::Go downhill": {
+  "q": "-"
+ },
  "Series::Godly": {
+  "q": "-"
+ },
+ "Series::Grab": {
+  "q": "hand grabbing object"
+ },
+ "Series::Grim": {
   "q": "-"
  },
  "Series::Gross": {
   "q": "spoiled food"
  },
+ "Series::Grounded": {
+  "q": "-"
+ },
+ "Series::Gullible": {
+  "q": "scam victim"
+ },
  "Series::Hallway": {
   "q": "building hallway"
+ },
+ "Series::Hand down": {
+  "q": "heirloom watch"
  },
  "Series::Hang on": {
   "q": "hand stop gesture"
  },
+ "Series::Hate someone's guts": {
+  "q": "angry glare"
+ },
  "Series::Have to": {
   "q": "-"
+ },
+ "Series::Head out": {
+  "q": "person leaving door"
  },
  "Series::Healthy": {
   "q": "fit person exercising"
@@ -5362,6 +5912,9 @@
  "Series::Hold up": {
   "q": "traffic jam"
  },
+ "Series::Homeless": {
+  "q": "homeless person street"
+ },
  "Series::Hooker": {
   "q": "sex worker"
  },
@@ -5370,6 +5923,9 @@
  },
  "Series::Household": {
   "q": "family at home"
+ },
+ "Series::Housekeeper": {
+  "q": "housekeeper cleaning room"
  },
  "Series::How'd you get by": {
   "q": "-"
@@ -5392,6 +5948,15 @@
  "Series::Hustle": {
   "q": "people rushing"
  },
+ "Series::Hype": {
+  "q": "-"
+ },
+ "Series::I might as well keep on": {
+  "q": "-"
+ },
+ "Series::I want in": {
+  "q": "-"
+ },
  "Series::I'm mad at": {
   "q": "angry face"
  },
@@ -5413,11 +5978,17 @@
  "Series::Insight": {
   "q": "-"
  },
+ "Series::Intimacy": {
+  "q": "couple embracing closely"
+ },
  "Series::Invest": {
   "q": "stock investment chart"
  },
  "Series::Isolated": {
   "q": "isolated village"
+ },
+ "Series::It turns out": {
+  "q": "-"
  },
  "Series::Jar": {
   "q": "glass jar"
@@ -5442,6 +6013,12 @@
  },
  "Series::Kidnapping": {
   "q": "police crime scene"
+ },
+ "Series::Kind of busy": {
+  "q": "-"
+ },
+ "Series::Kinetic": {
+  "q": "spinning top"
  },
  "Series::Kneel": {
   "q": "man kneeling"
@@ -5479,6 +6056,9 @@
  "Series::Log": {
   "q": "wood log"
  },
+ "Series::Longer than": {
+  "q": "comparing rope lengths"
+ },
  "Series::Look forward to": {
   "q": "-"
  },
@@ -5509,6 +6089,9 @@
  "Series::Mangle": {
   "q": "mangled metal"
  },
+ "Series::Mapping": {
+  "q": "drawing map"
+ },
  "Series::Maze": {
   "q": "garden maze"
  },
@@ -5532,6 +6115,12 @@
  },
  "Series::Mock": {
   "q": "kids teasing"
+ },
+ "Series::Muffled": {
+  "q": "muffled voice"
+ },
+ "Series::My grown son": {
+  "q": "adult son"
  },
  "Series::Nasty": {
   "q": "sneering face"
@@ -5698,6 +6287,9 @@
  "Series::Roger that": {
   "q": "-"
  },
+ "Series::Roofied": {
+  "q": "spiked drink"
+ },
  "Series::Rope": {
   "q": "coiled rope"
  },
@@ -5724,6 +6316,9 @@
  },
  "Series::Scam": {
   "q": "scam email"
+ },
+ "Series::Schlepped over": {
+  "q": "carrying heavy boxes"
  },
  "Series::Scope": {
   "q": "-"
@@ -5770,11 +6365,20 @@
  "Series::Shoplifting": {
   "q": "shoplifter hiding item"
  },
+ "Series::Show off": {
+  "q": "showing off"
+ },
  "Series::Show up": {
   "q": "person arriving late"
  },
+ "Series::Showed up": {
+  "q": "person arriving"
+ },
  "Series::Showrunner": {
   "q": "director on set"
+ },
+ "Series::Shrine": {
+  "q": "mountain shrine"
  },
  "Series::Shy": {
   "q": "shy child"
@@ -5806,6 +6410,9 @@
  "Series::Sparkle": {
   "q": "sparkling stars"
  },
+ "Series::Spoiled": {
+  "q": "spoiled child toys"
+ },
  "Series::Spoiler": {
   "q": "spoiler alert sign"
  },
@@ -5814,6 +6421,9 @@
  },
  "Series::Sprawling": {
   "q": "sprawling city"
+ },
+ "Series::Spring water": {
+  "q": "natural spring"
  },
  "Series::Sprinkler": {
   "q": "lawn sprinkler"
@@ -5890,6 +6500,9 @@
  "Series::Swelling": {
   "q": "swollen ankle"
  },
+ "Series::Swelling down": {
+  "q": "swollen ankle"
+ },
  "Series::Swot": {
   "q": "studying hard"
  },
@@ -5920,6 +6533,9 @@
  "Series::Tearjerker": {
   "q": "crying at movie"
  },
+ "Series::Tell off": {
+  "q": "scolding child"
+ },
  "Series::Tend": {
   "q": "-"
  },
@@ -5938,11 +6554,17 @@
  "Series::Think": {
   "q": "person thinking"
  },
+ "Series::This is nuts": {
+  "q": "-"
+ },
  "Series::Thoughtful": {
   "q": "person giving gift"
  },
  "Series::Thread": {
   "q": "spool of thread"
+ },
+ "Series::Throw away": {
+  "q": "throwing trash"
  },
  "Series::Throw out": {
   "q": "throwing away trash"
@@ -6066,6 +6688,9 @@
  },
  "Series::Wealthy": {
   "q": "wealthy family mansion"
+ },
+ "Series::What are you up to?": {
+  "q": "-"
  },
  "Series::What brings you here": {
   "q": "-"

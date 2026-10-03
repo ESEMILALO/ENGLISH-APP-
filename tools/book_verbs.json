@@ -1,0 +1,2108 @@
+[
+ {
+  "page": 1,
+  "verb": "Wake Up",
+  "meaning": "to stop sleeping",
+  "example": "I wake up at 6:30 every morning."
+ },
+ {
+  "page": 1,
+  "verb": "Get Up",
+  "meaning": "to get out of bed",
+  "example": "She got up and opened the window"
+ },
+ {
+  "page": 1,
+  "verb": "Put On",
+  "meaning": "to wear clothes or accessories",
+  "example": "He put on his jacket."
+ },
+ {
+  "page": 2,
+  "verb": "Take Off",
+  "meaning": "to remove clothes or accessories",
+  "example": "She took off her shoes."
+ },
+ {
+  "page": 2,
+  "verb": "Sit Down",
+  "meaning": "to move into a sitting position",
+  "example": "After a long walk I sat down to rest"
+ },
+ {
+  "page": 2,
+  "verb": "Stand Up",
+  "meaning": "to rise to your feet",
+  "example": "He stood up from his chair."
+ },
+ {
+  "page": 3,
+  "verb": "Go Out",
+  "meaning": "to leave home",
+  "example": "We went out last night."
+ },
+ {
+  "page": 3,
+  "verb": "Come Back",
+  "meaning": "to return",
+  "example": "I'll come back later."
+ },
+ {
+  "page": 3,
+  "verb": "Go Back",
+  "meaning": "to return to a place",
+  "example": "She went back home."
+ },
+ {
+  "page": 4,
+  "verb": "Pick Up",
+  "meaning": "to collect something",
+  "example": "I picked up my package."
+ },
+ {
+  "page": 4,
+  "verb": "Drop Off",
+  "meaning": "To leave someone at a place",
+  "example": "My dad dropped me off at school."
+ },
+ {
+  "page": 4,
+  "verb": "Turn On",
+  "meaning": "to start a device",
+  "example": "Jack Turned on the TV."
+ },
+ {
+  "page": 5,
+  "verb": "Turn Off",
+  "meaning": "to stop a device",
+  "example": "Turn off the lights."
+ },
+ {
+  "page": 5,
+  "verb": "Put Away",
+  "meaning": "to put something in its place",
+  "example": "Put away your toys."
+ },
+ {
+  "page": 5,
+  "verb": "Clean Up",
+  "meaning": "to make a place tidy",
+  "example": "Let's clean up the room."
+ },
+ {
+  "page": 6,
+  "verb": "Wash Up",
+  "meaning": "To wash your hands and face",
+  "example": "Go wash up before dinner."
+ },
+ {
+  "page": 6,
+  "verb": "Look After",
+  "meaning": "to take care of someone",
+  "example": "She looks after her brother."
+ },
+ {
+  "page": 6,
+  "verb": "Eat Out",
+  "meaning": "to eat at a restaurant",
+  "example": "We ate out yesterday."
+ },
+ {
+  "page": 7,
+  "verb": "Run Out Of",
+  "meaning": "To have no more of something",
+  "example": "We ran out of milk."
+ },
+ {
+  "page": 7,
+  "verb": "Look For",
+  "meaning": "to search for something",
+  "example": "I'm looking for my keys."
+ },
+ {
+  "page": 7,
+  "verb": "Find Out",
+  "meaning": "to discover something",
+  "example": "I found out the answer."
+ },
+ {
+  "page": 8,
+  "verb": "Check Out",
+  "meaning": "To look at something",
+  "example": "Check out my new bike"
+ },
+ {
+  "page": 8,
+  "verb": "Come In",
+  "meaning": "to enter a room or a place",
+  "example": "Come in and sit down."
+ },
+ {
+  "page": 8,
+  "verb": "Go Away",
+  "meaning": "To leave",
+  "example": "Please go away."
+ },
+ {
+  "page": 9,
+  "verb": "Hang Up",
+  "meaning": "to end a phone call",
+  "example": "She hung up suddenly."
+ },
+ {
+  "page": 9,
+  "verb": "Pick Out",
+  "meaning": "to choose something",
+  "example": "She picked out a new dress."
+ },
+ {
+  "page": 9,
+  "verb": "Throw Away",
+  "meaning": "To get rid of something",
+  "example": "Throw away the old newspaper."
+ },
+ {
+  "page": 10,
+  "verb": "Fill Up",
+  "meaning": "to make something full",
+  "example": "She is filling up the bottle."
+ },
+ {
+  "page": 10,
+  "verb": "Carry On",
+  "meaning": "to continue",
+  "example": "Carry on with your work."
+ },
+ {
+  "page": 10,
+  "verb": "Set Up",
+  "meaning": "to prepare something",
+  "example": "We set up the table for dinner."
+ },
+ {
+  "page": 11,
+  "verb": "Put Together",
+  "meaning": "to assemble something",
+  "example": "We put together a new shelf."
+ },
+ {
+  "page": 11,
+  "verb": "Call Back",
+  "meaning": "to return a phone call",
+  "example": "I'll call you back later."
+ },
+ {
+  "page": 11,
+  "verb": "Slow Down",
+  "meaning": "to move more slowly",
+  "example": "Slow down when driving."
+ },
+ {
+  "page": 12,
+  "verb": "Hurry Up",
+  "meaning": "to do something faster",
+  "example": "Hurry up or we'll be late."
+ },
+ {
+  "page": 12,
+  "verb": "Lie Down",
+  "meaning": "to lie on a bed or sofa",
+  "example": "I'm tired, so I'm going to lie down."
+ },
+ {
+  "page": 12,
+  "verb": "Get Dressed",
+  "meaning": "to put on your clothes",
+  "example": "The children got dressed quickly."
+ },
+ {
+  "page": 13,
+  "verb": "Go To Bed",
+  "meaning": "to go to sleep",
+  "example": "I go to bed at 11 p.m."
+ },
+ {
+  "page": 13,
+  "verb": "Stay In",
+  "meaning": "to stay at home",
+  "example": "I am staying in tonight."
+ },
+ {
+  "page": 13,
+  "verb": "Sleep In",
+  "meaning": "to sleep later than usual",
+  "example": "I slept in this morning."
+ },
+ {
+  "page": 14,
+  "verb": "Get In",
+  "meaning": "To enter a car",
+  "example": "Get in the car."
+ },
+ {
+  "page": 14,
+  "verb": "Get Out",
+  "meaning": "to leave a place",
+  "example": "Get out of my room."
+ },
+ {
+  "page": 14,
+  "verb": "Take Out",
+  "meaning": "to remove something",
+  "example": "Take out the trash."
+ },
+ {
+  "page": 15,
+  "verb": "Try On",
+  "meaning": "to put on clothes to see if they fit",
+  "example": "She tried on the dress."
+ },
+ {
+  "page": 15,
+  "verb": "Put Back",
+  "meaning": "to return something to its place",
+  "example": "Put the book back on the shelf."
+ },
+ {
+  "page": 15,
+  "verb": "Put down",
+  "meaning": "to place something on a surface",
+  "example": "She put down her bag."
+ },
+ {
+  "page": 17,
+  "verb": "Get on",
+  "meaning": "enter a bus, train, or plane",
+  "example": "He got on the bus."
+ },
+ {
+  "page": 17,
+  "verb": "Get off",
+  "meaning": "leave a bus, train, or plane",
+  "example": "She got off the train."
+ },
+ {
+  "page": 17,
+  "verb": "Come over",
+  "meaning": "to visit someone at home",
+  "example": "Come over tonight."
+ },
+ {
+  "page": 18,
+  "verb": "Come along",
+  "meaning": "to go with someone",
+  "example": "Come along with us."
+ },
+ {
+  "page": 18,
+  "verb": "Walk away",
+  "meaning": "to leave by walking",
+  "example": "He walked away."
+ },
+ {
+  "page": 18,
+  "verb": "Walk by",
+  "meaning": "pass something or someone while walking",
+  "example": "She walked by the store."
+ },
+ {
+  "page": 19,
+  "verb": "Run away",
+  "meaning": "escape by running",
+  "example": "The boy ran away."
+ },
+ {
+  "page": 19,
+  "verb": "Run into",
+  "meaning": "to meet someone unexpectedly",
+  "example": "I ran into my friend at the mall."
+ },
+ {
+  "page": 19,
+  "verb": "Move in",
+  "meaning": "to start living in a new place",
+  "example": "They moved in last week."
+ },
+ {
+  "page": 20,
+  "verb": "Move out",
+  "meaning": "to live a place you live in",
+  "example": "She moved out yesterday."
+ },
+ {
+  "page": 20,
+  "verb": "Head out",
+  "meaning": "to leave and go somewhere",
+  "example": "We headed out early."
+ },
+ {
+  "page": 20,
+  "verb": "Set off",
+  "meaning": "to start a journey",
+  "example": "They set off at dawn."
+ },
+ {
+  "page": 21,
+  "verb": "Pull over",
+  "meaning": "to stop at the side of the road",
+  "example": "The driver pulled over."
+ },
+ {
+  "page": 21,
+  "verb": "Turn around",
+  "meaning": "to face the opposite direction",
+  "example": "He turned around."
+ },
+ {
+  "page": 21,
+  "verb": "Pass by",
+  "meaning": "to go past a place without stopping",
+  "example": "We passed by the museum."
+ },
+ {
+  "page": 22,
+  "verb": "Drive away",
+  "meaning": "to leave a place in a vehicle",
+  "example": "She drove away from the house."
+ },
+ {
+  "page": 22,
+  "verb": "Drive off",
+  "meaning": "to leave quickly in a vehicle",
+  "example": "He drove off quickly."
+ },
+ {
+  "page": 22,
+  "verb": "Go through",
+  "meaning": "travel through a place",
+  "example": "We went through the tunnel."
+ },
+ {
+  "page": 23,
+  "verb": "Step in",
+  "meaning": "to enter a place",
+  "example": "She stepped in quietly."
+ },
+ {
+  "page": 23,
+  "verb": "Step out",
+  "meaning": "leave a place for a short time",
+  "example": "He stepped out for a minute."
+ },
+ {
+  "page": 23,
+  "verb": "Move along",
+  "meaning": "to continue moving forward",
+  "example": "The crowd moved along the street."
+ },
+ {
+  "page": 24,
+  "verb": "Go around",
+  "meaning": "to travel or move around a place",
+  "example": "We went around the city."
+ },
+ {
+  "page": 24,
+  "verb": "Go across",
+  "meaning": "to move from one side to another",
+  "example": "They went across the bridge."
+ },
+ {
+  "page": 24,
+  "verb": "Cross over",
+  "meaning": "to move from one side to another",
+  "example": "We crossed over the road."
+ },
+ {
+  "page": 25,
+  "verb": "Travel around",
+  "meaning": "to visit many different places",
+  "example": "They traveled around Europe."
+ },
+ {
+  "page": 25,
+  "verb": "Keep up",
+  "meaning": "to stay at the same speed",
+  "example": "Keep up with group."
+ },
+ {
+  "page": 25,
+  "verb": "Catch up",
+  "meaning": "to reach someone ahead of you",
+  "example": "He caught up with us."
+ },
+ {
+  "page": 26,
+  "verb": "Follow along",
+  "meaning": "to go behind someone",
+  "example": "The children followed along."
+ },
+ {
+  "page": 26,
+  "verb": "Drop by",
+  "meaning": "to visit someone for a short time",
+  "example": "We dropped by after work."
+ },
+ {
+  "page": 26,
+  "verb": "Go down",
+  "meaning": "to move to a lower place",
+  "example": "We went down the stairs."
+ },
+ {
+  "page": 27,
+  "verb": "Go up",
+  "meaning": "move to a higher place",
+  "example": "We went up the hill."
+ },
+ {
+  "page": 27,
+  "verb": "Go past",
+  "meaning": "to move beyond something while going forward",
+  "example": "We went past library."
+ },
+ {
+  "page": 27,
+  "verb": "Go out",
+  "meaning": "to leave a building or home",
+  "example": "we went out last night."
+ },
+ {
+  "page": 28,
+  "verb": "Go in",
+  "meaning": "to enter a building",
+  "example": "She went in the house."
+ },
+ {
+  "page": 28,
+  "verb": "Head back",
+  "meaning": "to return to a previous place",
+  "example": "He headed back home."
+ },
+ {
+  "page": 28,
+  "verb": "Move on",
+  "meaning": "to continue to another place",
+  "example": "After the park, we moved on to the museum."
+ },
+ {
+  "page": 30,
+  "verb": "Write down",
+  "meaning": "to note something on paper",
+  "example": "I wrote down the homework."
+ },
+ {
+  "page": 30,
+  "verb": "Look up",
+  "meaning": "to search for information",
+  "example": "She looked up the word in the dictionary."
+ },
+ {
+  "page": 30,
+  "verb": "Find out",
+  "meaning": "to discover information",
+  "example": "He found out the answer."
+ },
+ {
+  "page": 31,
+  "verb": "Figure out",
+  "meaning": "to understand or solve something",
+  "example": "We figured out the problem."
+ },
+ {
+  "page": 31,
+  "verb": "Hand in",
+  "meaning": "to submit work or an assignment",
+  "example": "I handed in my assignment."
+ },
+ {
+  "page": 31,
+  "verb": "Turn in",
+  "meaning": "to submit work or an assignment",
+  "example": "She turned in her report."
+ },
+ {
+  "page": 32,
+  "verb": "Fill in",
+  "meaning": "to complete missing information",
+  "example": "Fill in your name on the form."
+ },
+ {
+  "page": 32,
+  "verb": "Fill out",
+  "meaning": "to complete a form",
+  "example": "He filled out the application form."
+ },
+ {
+  "page": 32,
+  "verb": "Go over",
+  "meaning": "to review or check something carefully",
+  "example": "We went over the notes before the text."
+ },
+ {
+  "page": 33,
+  "verb": "Read over",
+  "meaning": "to read again and check",
+  "example": "She read over her essay before submitting it."
+ },
+ {
+  "page": 33,
+  "verb": "Work on",
+  "meaning": "to spend time doing or improving something",
+  "example": "I am working on my project."
+ },
+ {
+  "page": 33,
+  "verb": "Keep on",
+  "meaning": "to continue doing something",
+  "example": "Keep on practicing English."
+ },
+ {
+  "page": 34,
+  "verb": "Catch up on",
+  "meaning": "to do something you did not have time to do earlier",
+  "example": "I need to catch up on my homework."
+ },
+ {
+  "page": 34,
+  "verb": "Keep up with",
+  "meaning": "to stay at the same pace as others",
+  "example": "She keeps up with the class easily."
+ },
+ {
+  "page": 34,
+  "verb": "Point out",
+  "meaning": "to show or mention something important",
+  "example": "The teacher pointed out the mistake."
+ },
+ {
+  "page": 35,
+  "verb": "Bring up",
+  "meaning": "to introduce a topic",
+  "example": "He brought up an interesting question in class."
+ },
+ {
+  "page": 35,
+  "verb": "Follow up",
+  "meaning": "to take action after something",
+  "example": "The manager followed up with the team after meeting."
+ },
+ {
+  "page": 35,
+  "verb": "Take down",
+  "meaning": "to write information",
+  "example": "She took down the instructions."
+ },
+ {
+  "page": 36,
+  "verb": "Leave out",
+  "meaning": "to not include something",
+  "example": "Don't leave out any details."
+ },
+ {
+  "page": 36,
+  "verb": "Cut out",
+  "meaning": "to remove something",
+  "example": "Cut out the unnecessary words from your essay."
+ },
+ {
+  "page": 36,
+  "verb": "Put off",
+  "meaning": "to delay something",
+  "example": "They put off the meeting until next week."
+ },
+ {
+  "page": 37,
+  "verb": "Sort out",
+  "meaning": "to organize or solve something",
+  "example": "He sorted out his files before the meeting."
+ },
+ {
+  "page": 37,
+  "verb": "Back up",
+  "meaning": "to make a copy of data or files",
+  "example": "Back up your files regularly."
+ },
+ {
+  "page": 37,
+  "verb": "Check over",
+  "meaning": "to review carefully",
+  "example": "Check over your answers before submitting."
+ },
+ {
+  "page": 38,
+  "verb": "Think over",
+  "meaning": "to think carefully about something",
+  "example": "Think over the idea before deciding."
+ },
+ {
+  "page": 38,
+  "verb": "Deal with",
+  "meaning": "to handle a task or problem",
+  "example": "She deals with customer complaints."
+ },
+ {
+  "page": 38,
+  "verb": "Focus on",
+  "meaning": "To pay attention to something important",
+  "example": "Focus on your homework."
+ },
+ {
+  "page": 39,
+  "verb": "Sum up",
+  "meaning": "to give a short summary",
+  "example": "The teacher summed up the lesson."
+ },
+ {
+  "page": 39,
+  "verb": "Look Through",
+  "meaning": "to read or examine something quickly",
+  "example": "She looked through her notes before the test."
+ },
+ {
+  "page": 39,
+  "verb": "Write up",
+  "meaning": "to write a complete report or document",
+  "example": "He wrote up the report yesterday."
+ },
+ {
+  "page": 41,
+  "verb": "Speak up",
+  "meaning": "to speak louder",
+  "example": "Please speak up."
+ },
+ {
+  "page": 41,
+  "verb": "Get back to",
+  "meaning": "to reply later",
+  "example": "I'll get back to you tomorrow."
+ },
+ {
+  "page": 41,
+  "verb": "Talk over",
+  "meaning": "to discuss something carefully",
+  "example": "Let's talk over the plan."
+ },
+ {
+  "page": 42,
+  "verb": "Ask for",
+  "meaning": "to request something",
+  "example": "She asked for help."
+ },
+ {
+  "page": 42,
+  "verb": "Reply to",
+  "meaning": "to answer a message or question",
+  "example": "He replied to my email."
+ },
+ {
+  "page": 42,
+  "verb": "Get through",
+  "meaning": "to successfully contact someone",
+  "example": "I finally got through to her."
+ },
+ {
+  "page": 43,
+  "verb": "Call off",
+  "meaning": "to cancel something",
+  "example": "They called off the meeting."
+ },
+ {
+  "page": 43,
+  "verb": "Reach out",
+  "meaning": "to contact someone",
+  "example": "She reached out to a friend."
+ },
+ {
+  "page": 43,
+  "verb": "Listen in",
+  "meaning": "to listen to a conversation without being invited",
+  "example": "He listened in on the conversation."
+ },
+ {
+  "page": 44,
+  "verb": "Read out",
+  "meaning": "to read something aloud",
+  "example": "The teacher read out the names."
+ },
+ {
+  "page": 44,
+  "verb": "Pass on",
+  "meaning": "to give information to another person",
+  "example": "Please pass on the message."
+ },
+ {
+  "page": 44,
+  "verb": "Tell apart",
+  "meaning": "To recognize the difference between things",
+  "example": "I can't tell the twins apart."
+ },
+ {
+  "page": 45,
+  "verb": "Write back",
+  "meaning": "to reply in writing",
+  "example": "She wrote back immediately."
+ },
+ {
+  "page": 45,
+  "verb": "Call on",
+  "meaning": "to ask someone to speak or answer",
+  "example": "The teacher called on Tom."
+ },
+ {
+  "page": 45,
+  "verb": "Check in",
+  "meaning": "to report your arrival or status",
+  "example": "I checked in at the hotel."
+ },
+ {
+  "page": 46,
+  "verb": "Hear from",
+  "meaning": "to receive a message from someone",
+  "example": "I haven't heard from him yet."
+ },
+ {
+  "page": 46,
+  "verb": "Send back",
+  "meaning": "to return something",
+  "example": "She sent back the package."
+ },
+ {
+  "page": 46,
+  "verb": "Speak out",
+  "meaning": "to express an opinion openly and publicly",
+  "example": "He spoke out against  bullying."
+ },
+ {
+  "page": 47,
+  "verb": "Talk back",
+  "meaning": "to answer rudely",
+  "example": "Don't talk back to your parents."
+ },
+ {
+  "page": 47,
+  "verb": "Put through",
+  "meaning": "to connect a phone call",
+  "example": "The receptionist put me through to the manager."
+ },
+ {
+  "page": 47,
+  "verb": "Ring back",
+  "meaning": "to call someone again",
+  "example": "I'll ring you back later."
+ },
+ {
+  "page": 48,
+  "verb": "Call around",
+  "meaning": "to call several people",
+  "example": "He called around for information."
+ },
+ {
+  "page": 48,
+  "verb": "Ask around",
+  "meaning": "to ask several people",
+  "example": "She asked around for advice."
+ },
+ {
+  "page": 48,
+  "verb": "Fill in",
+  "meaning": "to give missing information",
+  "example": "Please fill me in on the details."
+ },
+ {
+  "page": 49,
+  "verb": "Talk to",
+  "meaning": "to speak with someone",
+  "example": "I talked to my teacher."
+ },
+ {
+  "page": 49,
+  "verb": "Chat with",
+  "meaning": "to talk with someone in a friendly way",
+  "example": "I chatted with my neighbor."
+ },
+ {
+  "page": 49,
+  "verb": "Get across",
+  "meaning": "to communicate an idea successfully",
+  "example": "She got her point across clearly."
+ },
+ {
+  "page": 50,
+  "verb": "Check with",
+  "meaning": "to ask someone for confirmation",
+  "example": "Check with your teacher first."
+ },
+ {
+  "page": 50,
+  "verb": "Get in touch with",
+  "meaning": "to contact someone",
+  "example": "I got in touch with an old friend"
+ },
+ {
+  "page": 50,
+  "verb": "Pass around",
+  "meaning": "to share something with several people",
+  "example": "The teacher passed around the worksheets."
+ },
+ {
+  "page": 52,
+  "verb": "Log in",
+  "meaning": "To enter an account or system",
+  "example": "Tom logged in to his email account."
+ },
+ {
+  "page": 52,
+  "verb": "Log out",
+  "meaning": "To exit an account or system",
+  "example": "Sarah logged out before leaving."
+ },
+ {
+  "page": 52,
+  "verb": "Sign up",
+  "meaning": "To register for a service",
+  "example": "Emma signed up for an online course."
+ },
+ {
+  "page": 53,
+  "verb": "Sign in",
+  "meaning": "To enter an account",
+  "example": "Jack signed in to the website."
+ },
+ {
+  "page": 53,
+  "verb": "Sign out",
+  "meaning": "To leave an account",
+  "example": "Lisa signed out of her account."
+ },
+ {
+  "page": 53,
+  "verb": "Set up",
+  "meaning": "To install or prepare a device",
+  "example": "Alex set up his new computer."
+ },
+ {
+  "page": 54,
+  "verb": "Back up",
+  "meaning": "To make a copy of data",
+  "example": "Mia backed up her photos."
+ },
+ {
+  "page": 54,
+  "verb": "Plug in",
+  "meaning": "To connect a device to power",
+  "example": "Alex plugged in his laptop charger."
+ },
+ {
+  "page": 54,
+  "verb": "Unplug",
+  "meaning": "To disconnect a device from power",
+  "example": "Dad unplugged the printer."
+ },
+ {
+  "page": 55,
+  "verb": "Turn on",
+  "meaning": "To start a device",
+  "example": "Tom turned on his tablet."
+ },
+ {
+  "page": 55,
+  "verb": "Turn off",
+  "meaning": "To stop a device",
+  "example": "Emma turned off her phone."
+ },
+ {
+  "page": 55,
+  "verb": "Shut down",
+  "meaning": "To turn off completely",
+  "example": "Ben shut down his computer."
+ },
+ {
+  "page": 56,
+  "verb": "Start up",
+  "meaning": "To begin operating",
+  "example": "The computer started up quickly."
+ },
+ {
+  "page": 56,
+  "verb": "Boot up",
+  "meaning": "To start a computer system",
+  "example": "My laptop booted up in seconds."
+ },
+ {
+  "page": 56,
+  "verb": "Load up",
+  "meaning": "To open or load a program",
+  "example": "Jack loaded up a game."
+ },
+ {
+  "page": 57,
+  "verb": "Click on",
+  "meaning": "To press or select something on a screen",
+  "example": "Emma clicked on the icon."
+ },
+ {
+  "page": 57,
+  "verb": "Scroll down",
+  "meaning": "To move down a page or screen to see more content",
+  "example": "Alex scrolled down the webpage."
+ },
+ {
+  "page": 57,
+  "verb": "Scroll up",
+  "meaning": "To move up a page or screen to see earlier content",
+  "example": "Mia scrolled up to the top."
+ },
+ {
+  "page": 58,
+  "verb": "Zoom in",
+  "meaning": "To make something appear larger",
+  "example": "Tom zoomed in on the photo."
+ },
+ {
+  "page": 58,
+  "verb": "Zoom out",
+  "meaning": "To make something appear smaller",
+  "example": "Emma zoomed out on the map."
+ },
+ {
+  "page": 58,
+  "verb": "Go online",
+  "meaning": "To connect to the internet",
+  "example": "Ben went online to check emails."
+ },
+ {
+  "page": 59,
+  "verb": "Go offline",
+  "meaning": "To disconnect from the internet",
+  "example": "The website went offline suddenly."
+ },
+ {
+  "page": 59,
+  "verb": "Opt out",
+  "meaning": "To choose not to participate in something",
+  "example": "Tom opted out of marketing emails."
+ },
+ {
+  "page": 59,
+  "verb": "Log onto",
+  "meaning": "To access a computer network",
+  "example": "Sarah logged onto the company network."
+ },
+ {
+  "page": 60,
+  "verb": "Send out",
+  "meaning": "To distribute electronically to many people",
+  "example": "The company sent out a newsletter."
+ },
+ {
+  "page": 60,
+  "verb": "Type in",
+  "meaning": "To enter information using a keyboard",
+  "example": "Emma typed in her password."
+ },
+ {
+  "page": 60,
+  "verb": "Print out",
+  "meaning": "To produce a paper copy",
+  "example": "Sarah printed out her ticket."
+ },
+ {
+  "page": 61,
+  "verb": "Look up",
+  "meaning": "To search for information",
+  "example": "Tom looked up a word online."
+ },
+ {
+  "page": 61,
+  "verb": "Browse through",
+  "meaning": "To look through websites or files",
+  "example": "Emma browsed through some websites."
+ },
+ {
+  "page": 61,
+  "verb": "Pop up",
+  "meaning": "To appear suddenly on a screen",
+  "example": "An ad popped up on the screen."
+ },
+ {
+  "page": 62,
+  "verb": "Cut off",
+  "meaning": "To stop a connection suddenly",
+  "example": "The internet was cut off during the meeting."
+ },
+ {
+  "page": 62,
+  "verb": "Freeze up",
+  "meaning": "To stop responding temporarily",
+  "example": "My computer froze up while I was working."
+ },
+ {
+  "page": 62,
+  "verb": "Log back in",
+  "meaning": "To sign in again to an account or system",
+  "example": "Tom logged back in after restarting his computer."
+ },
+ {
+  "page": 63,
+  "verb": "Swipe through",
+  "meaning": "To move through content by swiping on a screen",
+  "example": "Emma swiped through the photos on her phone."
+ },
+ {
+  "page": 63,
+  "verb": "Link up",
+  "meaning": "To connect devices or systems",
+  "example": "Alex linked up his phone to TV."
+ },
+ {
+  "page": 63,
+  "verb": "Opt in",
+  "meaning": "To choose to participate in or receive something",
+  "example": "Sarah opted in to receive email notifications."
+ },
+ {
+  "page": 65,
+  "verb": "Pay for",
+  "meaning": "To give money in exchange for something",
+  "example": "Emma paid for the groceries."
+ },
+ {
+  "page": 65,
+  "verb": "Pay back",
+  "meaning": "To return borrowed money",
+  "example": "Tom paid back the money he borrowed."
+ },
+ {
+  "page": 65,
+  "verb": "Pay off",
+  "meaning": "To finish paying a debt",
+  "example": "Sarah paid off her loan."
+ },
+ {
+  "page": 66,
+  "verb": "Save up",
+  "meaning": "To save money for something",
+  "example": "Jack is saving up for a new phone."
+ },
+ {
+  "page": 66,
+  "verb": "Spend on",
+  "meaning": "To use money to buy something",
+  "example": "Emma spent money on a new dress."
+ },
+ {
+  "page": 66,
+  "verb": "Run out of",
+  "meaning": "To have no money left",
+  "example": "Tom ran out of cash."
+ },
+ {
+  "page": 67,
+  "verb": "Cut back on",
+  "meaning": "To reduce spending on something",
+  "example": "Sarah cut back on eating out."
+ },
+ {
+  "page": 67,
+  "verb": "Live on",
+  "meaning": "To survive using only a certain amount of money",
+  "example": "Ben lives on a small salary."
+ },
+ {
+  "page": 67,
+  "verb": "Put aside",
+  "meaning": "To save money for future use",
+  "example": "Emma put aside some money for her vacation."
+ },
+ {
+  "page": 68,
+  "verb": "Put away",
+  "meaning": "To save money regularly",
+  "example": "Tom puts away money every month."
+ },
+ {
+  "page": 68,
+  "verb": "Take out",
+  "meaning": "To withdraw money from a bank",
+  "example": "Sarah took out some cash from the bank."
+ },
+ {
+  "page": 68,
+  "verb": "Hand over",
+  "meaning": "To give money or something to someone",
+  "example": "Tom handed over the cash to the cashier."
+ },
+ {
+  "page": 69,
+  "verb": "Give back",
+  "meaning": "To return something to its owner",
+  "example": "Emma gave back the sweater."
+ },
+ {
+  "page": 69,
+  "verb": "Pick up",
+  "meaning": "To buy something casually",
+  "example": "He picked up a new shirt."
+ },
+ {
+  "page": 69,
+  "verb": "Try on",
+  "meaning": "To put on clothes to see if they fit",
+  "example": "She tried on a jacket."
+ },
+ {
+  "page": 70,
+  "verb": "Take back",
+  "meaning": "To return an item to a store",
+  "example": "Emma took back the sweater because it was too small"
+ },
+ {
+  "page": 70,
+  "verb": "Send back",
+  "meaning": "To return an item by mail or delivery service",
+  "example": "Sarah sent back the dress she ordered online."
+ },
+ {
+  "page": 70,
+  "verb": "Check out",
+  "meaning": "To pay for items before leaving a store",
+  "example": "Alex checked out and left the store"
+ },
+ {
+  "page": 71,
+  "verb": "Sell out",
+  "meaning": "To sell all available items",
+  "example": "The store sold out of the new phones."
+ },
+ {
+  "page": 71,
+  "verb": "Buy up",
+  "meaning": "To buy all or most of something available",
+  "example": "Customers bought up all the discounted laptops."
+ },
+ {
+  "page": 71,
+  "verb": "Shop around",
+  "meaning": "To compare prices or products before buying",
+  "example": "Emma shopped around before buying a new laptop"
+ },
+ {
+  "page": 72,
+  "verb": "Stock up on",
+  "meaning": "To buy a large amount of something for future use",
+  "example": "Alex stocked up on groceries at the supermarket"
+ },
+ {
+  "page": 72,
+  "verb": "Queue up",
+  "meaning": "To wait in a line",
+  "example": "Customers queued up outside the store."
+ },
+ {
+  "page": 72,
+  "verb": "Line up",
+  "meaning": "To stand in a line",
+  "example": "Shoppers lined up at the checkout counter."
+ },
+ {
+  "page": 73,
+  "verb": "Give away",
+  "meaning": "To give something for free",
+  "example": "The store gave away free samples."
+ },
+ {
+  "page": 73,
+  "verb": "Mark down",
+  "meaning": "To reduce the price of something",
+  "example": "The store marked down all winter clothes."
+ },
+ {
+  "page": 73,
+  "verb": "Trade in",
+  "meaning": "To exchange an old item for a new one at a lower price",
+  "example": "Tom traded in his old phone for a new one."
+ },
+ {
+  "page": 74,
+  "verb": "Sell off",
+  "meaning": "To sell something quickly, often at a lower price",
+  "example": "The store sold off its summer clothes at the end of the season."
+ },
+ {
+  "page": 74,
+  "verb": "Mark up",
+  "meaning": "To increase the price of something",
+  "example": "The store marked up the handbags."
+ },
+ {
+  "page": 74,
+  "verb": "Ring up",
+  "meaning": "To total a customer's purchases",
+  "example": "The cashier rang up the items."
+ },
+ {
+  "page": 75,
+  "verb": "Pay in",
+  "meaning": "To deposit money into an account",
+  "example": "Emma paid in some cash at the bank."
+ },
+ {
+  "page": 75,
+  "verb": "Put down",
+  "meaning": "To pay part of the price in advance",
+  "example": "Tom put down a deposit on a car."
+ },
+ {
+  "page": 75,
+  "verb": "Snap up",
+  "meaning": "To buy something quickly before it's gone",
+  "example": "Emma snapped up the last pair of shoes."
+ },
+ {
+  "page": 76,
+  "verb": "Go through",
+  "meaning": "To spend all of something",
+  "example": "Tom went through his savings in a month."
+ },
+ {
+  "page": 76,
+  "verb": "Splash out",
+  "meaning": "To spend a lot of money on something special",
+  "example": "Tom splashed out on a new gaming laptop."
+ },
+ {
+  "page": 76,
+  "verb": "Come to",
+  "meaning": "To reach a total amount",
+  "example": "The bill came to $50."
+ },
+ {
+  "page": 78,
+  "verb": "Work out",
+  "meaning": "To do physical exercise to stay fit",
+  "example": "Tom works out at the gym."
+ },
+ {
+  "page": 78,
+  "verb": "Warm up",
+  "meaning": "To prepare your body before exercise",
+  "example": "Sarah warmed up before running."
+ },
+ {
+  "page": 78,
+  "verb": "Cool down",
+  "meaning": "To relax your body after exercise",
+  "example": "Jack cooled down after his workout."
+ },
+ {
+  "page": 79,
+  "verb": "Stretch out",
+  "meaning": "To stretch your muscles and body",
+  "example": "Emma stretched out before workout."
+ },
+ {
+  "page": 79,
+  "verb": "Build up",
+  "meaning": "To gradually increase strength",
+  "example": "Tom built up his strength."
+ },
+ {
+  "page": 79,
+  "verb": "Burn off",
+  "meaning": "To use energy through exercise",
+  "example": "Sarah burned off extra calories."
+ },
+ {
+  "page": 80,
+  "verb": "Slim down",
+  "meaning": "To lose weight and become thinner",
+  "example": "Jack slimmed down after exercising."
+ },
+ {
+  "page": 80,
+  "verb": "Shape up",
+  "meaning": "To improve your fitness and health",
+  "example": "Emma shaped up for the race."
+ },
+ {
+  "page": 80,
+  "verb": "Tone up",
+  "meaning": "To make your muscles firmer",
+  "example": "Tom toned up his arms."
+ },
+ {
+  "page": 81,
+  "verb": "Bulk up",
+  "meaning": "To gain muscle and become bigger",
+  "example": "Jack bulked up at the gym."
+ },
+ {
+  "page": 81,
+  "verb": "Cut down on",
+  "meaning": "To reduce something unhealthy",
+  "example": "Sarah cut down on sugar."
+ },
+ {
+  "page": 81,
+  "verb": "Give up",
+  "meaning": "To stop doing something unhealthy",
+  "example": "Tom gave up smoking."
+ },
+ {
+  "page": 82,
+  "verb": "Keep up",
+  "meaning": "To continue doing something regularly",
+  "example": "Emma kept up her training."
+ },
+ {
+  "page": 82,
+  "verb": "Stick to",
+  "meaning": "To continue following a plan",
+  "example": "Jack stuck to his diet."
+ },
+ {
+  "page": 82,
+  "verb": "Take up",
+  "meaning": "To start a new activity or sport",
+  "example": "Sarah took up swimming."
+ },
+ {
+  "page": 83,
+  "verb": "Get into",
+  "meaning": "To become interested in an activity",
+  "example": "Tom got into cycling."
+ },
+ {
+  "page": 83,
+  "verb": "Come down with",
+  "meaning": "To become sick",
+  "example": "Emma came down with a cold."
+ },
+ {
+  "page": 83,
+  "verb": "Get over",
+  "meaning": "To recover from an illness",
+  "example": "Tom got over the flu quickly."
+ },
+ {
+  "page": 84,
+  "verb": "Fight off",
+  "meaning": "To resist or overcome an illness",
+  "example": "Sarah fought off the infection."
+ },
+ {
+  "page": 84,
+  "verb": "Pass out",
+  "meaning": "To lose consciousness",
+  "example": "Jack passed out during the race."
+ },
+ {
+  "page": 84,
+  "verb": "Throw up",
+  "meaning": "To vomit",
+  "example": "Tom threw up after eating bad food."
+ },
+ {
+  "page": 85,
+  "verb": "Break out",
+  "meaning": "To suddenly develop a skin problem",
+  "example": "Emma broke out in a rash."
+ },
+ {
+  "page": 85,
+  "verb": "Wear out",
+  "meaning": "To become very tired",
+  "example": "Sarah wore herself out at the gym."
+ },
+ {
+  "page": 85,
+  "verb": "Pick up",
+  "meaning": "To catch an illness",
+  "example": "Jack picked up a cold at school."
+ },
+ {
+  "page": 86,
+  "verb": "Recover from",
+  "meaning": "To become healthy again after illness or injury",
+  "example": "Emma recovered from her injury."
+ },
+ {
+  "page": 86,
+  "verb": "Slow down",
+  "meaning": "To reduce speed or activity",
+  "example": "Tom slowed down after feeling tired."
+ },
+ {
+  "page": 86,
+  "verb": "Speed up",
+  "meaning": "To move or exercise faster",
+  "example": "Sarah sped up during the race."
+ },
+ {
+  "page": 87,
+  "verb": "Ease off",
+  "meaning": "To reduce effort or intensity",
+  "example": "Jack eased off after the pain started."
+ },
+ {
+  "page": 87,
+  "verb": "Cut out",
+  "meaning": "To completely stop eating or using something unhealthy",
+  "example": "Emma cut out junk food."
+ },
+ {
+  "page": 87,
+  "verb": "Fill up on",
+  "meaning": "To eat enough food to feel full",
+  "example": "Sarah filled up on fruit."
+ },
+ {
+  "page": 88,
+  "verb": "Check up on",
+  "meaning": "To examine someone's health",
+  "example": "The doctor checked up on the patient."
+ },
+ {
+  "page": 88,
+  "verb": "Keep off",
+  "meaning": "To avoid eating or using something",
+  "example": "Sarah kept off chocolate for a month."
+ },
+ {
+  "page": 88,
+  "verb": "Bounce back",
+  "meaning": "To recover quickly after illness or injury",
+  "example": "Jack bounced back after the injury."
+ },
+ {
+  "page": 89,
+  "verb": "Sit up",
+  "meaning": "To move into a sitting position",
+  "example": "Tom sat up slowly after resting."
+ },
+ {
+  "page": 89,
+  "verb": "Put on",
+  "meaning": "To gain weight",
+  "example": "Jack put on weight over the winter."
+ },
+ {
+  "page": 89,
+  "verb": "Work off",
+  "meaning": "To get rid of something through exercise",
+  "example": "Sarah worked off stress at the gym."
+ },
+ {
+  "page": 91,
+  "verb": "Grow up",
+  "meaning": "To become an adult",
+  "example": "Jack grew up in a small town."
+ },
+ {
+  "page": 91,
+  "verb": "Bring up",
+  "meaning": "To raise a child",
+  "example": "Sarah brought up three children."
+ },
+ {
+  "page": 91,
+  "verb": "Take after",
+  "meaning": "To look or act like a family member",
+  "example": "Emma takes after her mother."
+ },
+ {
+  "page": 92,
+  "verb": "Look up to",
+  "meaning": "To admire and respect someone",
+  "example": "Tom looks up to his father."
+ },
+ {
+  "page": 92,
+  "verb": "Get along with",
+  "meaning": "To have a good relationship with someone",
+  "example": "Lisa gets along with her sister."
+ },
+ {
+  "page": 92,
+  "verb": "Help out",
+  "meaning": "To help someone with a task",
+  "example": "Jack helped out with the housework."
+ },
+ {
+  "page": 93,
+  "verb": "Come over",
+  "meaning": "To visit someone's home",
+  "example": "Sarah came over for dinner."
+ },
+ {
+  "page": 93,
+  "verb": "Drop by",
+  "meaning": "To make a short visit",
+  "example": "Tom dropped by after work."
+ },
+ {
+  "page": 93,
+  "verb": "Stay over",
+  "meaning": "To spend the night at someone's home",
+  "example": "Emma stayed over at her aunt's house."
+ },
+ {
+  "page": 94,
+  "verb": "Eat up",
+  "meaning": "To finish all your food",
+  "example": "Tom ate up his dinner."
+ },
+ {
+  "page": 94,
+  "verb": "Clear away",
+  "meaning": "To remove things after a meal",
+  "example": "Emma cleared away the dishes."
+ },
+ {
+  "page": 94,
+  "verb": "Fix up",
+  "meaning": "To repair or improve something",
+  "example": "Jack fixed up his old house."
+ },
+ {
+  "page": 95,
+  "verb": "Sort out",
+  "meaning": "To organize or solve something",
+  "example": "Tom sorted out her room."
+ },
+ {
+  "page": 95,
+  "verb": "Fall out",
+  "meaning": "To have an argument",
+  "example": "Jack fell out with his brother."
+ },
+ {
+  "page": 95,
+  "verb": "Make up",
+  "meaning": "To become friends again after an argument",
+  "example": "Sarah made up with her sister."
+ },
+ {
+  "page": 96,
+  "verb": "Grow apart",
+  "meaning": "To become less close over time",
+  "example": "The brothers grew apart after college."
+ },
+ {
+  "page": 96,
+  "verb": "Get together",
+  "meaning": "To meet and spend time together",
+  "example": "The family got together on Sunday."
+ },
+ {
+  "page": 96,
+  "verb": "Look out for",
+  "meaning": "To protect or care about someone",
+  "example": "Jack looks out for his little sister."
+ },
+ {
+  "page": 97,
+  "verb": "Hand down",
+  "meaning": "To give something to a younger family member",
+  "example": "Grandpa handed down his watch to his grandson."
+ },
+ {
+  "page": 97,
+  "verb": "Pass on",
+  "meaning": "To pass something to another person",
+  "example": "Emma passed on her old books to her cousin."
+ },
+ {
+  "page": 97,
+  "verb": "Leave behind",
+  "meaning": "To leave something and not take it with you",
+  "example": "Tom left his bag behind."
+ },
+ {
+  "page": 98,
+  "verb": "Settle down",
+  "meaning": "To start a stable family life",
+  "example": "Jack settled down and started a family."
+ },
+ {
+  "page": 98,
+  "verb": "Grow closer",
+  "meaning": "To become more connected",
+  "example": "The sisters grew closer over time."
+ },
+ {
+  "page": 98,
+  "verb": "Gather around",
+  "meaning": "To come together in a group",
+  "example": "The family gathered around the table."
+ },
+ {
+  "page": 99,
+  "verb": "Take in",
+  "meaning": "To provide a home for someone or an animal",
+  "example": "The family took in a stray dog."
+ },
+ {
+  "page": 99,
+  "verb": "Grow out of",
+  "meaning": "To become too old for something",
+  "example": "Jack grew out of his old toys."
+ },
+ {
+  "page": 99,
+  "verb": "Move away",
+  "meaning": "To leave home and live elsewhere",
+  "example": "Sarah moved away after college."
+ },
+ {
+  "page": 100,
+  "verb": "Drop in on",
+  "meaning": "To visit someone unexpectedly",
+  "example": "Tom dropped in on his aunt."
+ },
+ {
+  "page": 100,
+  "verb": "Come by",
+  "meaning": "To visit someone",
+  "example": "My grandparents came by for lunch."
+ },
+ {
+  "page": 100,
+  "verb": "Look in on",
+  "meaning": "To visit briefly to check on someone",
+  "example": "Emma looked in on her grandmother."
+ },
+ {
+  "page": 101,
+  "verb": "Join in",
+  "meaning": "To take part in a family activity",
+  "example": "Jack joined in the family game."
+ },
+ {
+  "page": 101,
+  "verb": "Take over",
+  "meaning": "To take responsibility for something",
+  "example": "Tom took over the household duties."
+ },
+ {
+  "page": 101,
+  "verb": "Pitch in",
+  "meaning": "To help with a shared task",
+  "example": "Everyone pitched in to clean the house."
+ },
+ {
+  "page": 103,
+  "verb": "Cheer Up",
+  "meaning": "To become happier",
+  "example": "Emma cheered up after hearing the good news."
+ },
+ {
+  "page": 103,
+  "verb": "Calm Down",
+  "meaning": "To become less upset or angry",
+  "example": "Tom calmed down after a few minutes."
+ },
+ {
+  "page": 103,
+  "verb": "Brighten Up",
+  "meaning": "To become happier or more cheerful",
+  "example": "Sarah brightened up when she saw her friends."
+ },
+ {
+  "page": 104,
+  "verb": "Open Up",
+  "meaning": "To share your feelings with someone",
+  "example": "Jack opened up to his best friend."
+ },
+ {
+  "page": 104,
+  "verb": "Bottle Up",
+  "meaning": "To keep your feelings inside",
+  "example": "Emma bottled up her emotions."
+ },
+ {
+  "page": 104,
+  "verb": "Let Out",
+  "meaning": "To express a strong emotion",
+  "example": "Tom let out a sigh of relief."
+ },
+ {
+  "page": 105,
+  "verb": "Break Down",
+  "meaning": "To lose control of your emotions",
+  "example": "Sarah broke down in tears."
+ },
+ {
+  "page": 105,
+  "verb": "Hold Back",
+  "meaning": "To stop yourself from showing emotion",
+  "example": "Jack held back his tears."
+ },
+ {
+  "page": 105,
+  "verb": "Move On",
+  "meaning": "To continue with life after something difficult",
+  "example": "Tom moved on after the breakup."
+ },
+ {
+  "page": 106,
+  "verb": "Bring Down",
+  "meaning": "To make someone feel sad",
+  "example": "The bad news brought him down."
+ },
+ {
+  "page": 106,
+  "verb": "Fall Apart",
+  "meaning": "To become emotionally upset",
+  "example": "Jack fell apart after the loss."
+ },
+ {
+  "page": 106,
+  "verb": "Look Forward To",
+  "meaning": "To feel excited about something in the future",
+  "example": "Sarah looks forward to her vacation."
+ },
+ {
+  "page": 107,
+  "verb": "Feel Up To",
+  "meaning": "To feel able to do something",
+  "example": "Tom didn't feel up to going out."
+ },
+ {
+  "page": 107,
+  "verb": "Wear Down",
+  "meaning": "To make someone feel tired or stressed",
+  "example": "The long week wore him down."
+ },
+ {
+  "page": 107,
+  "verb": "Ease Up",
+  "meaning": "To become less worried or tense",
+  "example": "Sarah eased up after the test."
+ },
+ {
+  "page": 108,
+  "verb": "Freak Out",
+  "meaning": "To become very upset or scared",
+  "example": "Tom freaked out when he lost his phone."
+ },
+ {
+  "page": 108,
+  "verb": "Snap Out Of",
+  "meaning": "To stop feeling sad, upset, or worried",
+  "example": "Emma snapped out of her bad mood."
+ },
+ {
+  "page": 108,
+  "verb": "Lighten Up",
+  "meaning": "To become less serious or worried",
+  "example": "Jack lightened up after hearing the joke."
+ },
+ {
+  "page": 109,
+  "verb": "Warm Up To",
+  "meaning": "To gradually start liking someone",
+  "example": "Sarah warmed up to her new neighbor."
+ },
+ {
+  "page": 109,
+  "verb": "Lean On",
+  "meaning": "To depend on someone for emotional support",
+  "example": "Emma leaned on her sister."
+ },
+ {
+  "page": 109,
+  "verb": "Well Up",
+  "meaning": "To fill with tears or strong emotion",
+  "example": "Tears welled up in her eyes."
+ },
+ {
+  "page": 110,
+  "verb": "Come Around",
+  "meaning": "To change your opinion or attitude",
+  "example": "Tom came around after talking to her."
+ },
+ {
+  "page": 110,
+  "verb": "Dwell On",
+  "meaning": "To keep thinking about something upsetting",
+  "example": "Emma dwelled on her mistake."
+ },
+ {
+  "page": 110,
+  "verb": "Shake Off",
+  "meaning": "To stop feeling something unpleasant",
+  "example": "Tom shook off his worries."
+ },
+ {
+  "page": 111,
+  "verb": "Get Through",
+  "meaning": "To successfully deal with something difficult",
+  "example": "Sarah got through a hard time."
+ },
+ {
+  "page": 111,
+  "verb": "Hang On To",
+  "meaning": "To keep a feeling or memory",
+  "example": "Emma hung on to her childhood memories."
+ },
+ {
+  "page": 111,
+  "verb": "Sink In",
+  "meaning": "To be fully understood emotionally",
+  "example": "The news finally sank in."
+ },
+ {
+  "page": 112,
+  "verb": "Live Through",
+  "meaning": "To experience something difficult",
+  "example": "Tom lived through a stressful year."
+ },
+ {
+  "page": 112,
+  "verb": "Look Down On",
+  "meaning": "To think you are better than someone",
+  "example": "Jack looked down on his classmates."
+ },
+ {
+  "page": 112,
+  "verb": "Beat Yourself Up",
+  "meaning": "To criticize yourself too much",
+  "example": "Emma beat herself up over the mistake."
+ },
+ {
+  "page": 113,
+  "verb": "Miss Out On",
+  "meaning": "To feel disappointed about not experiencing something",
+  "example": "Tom missed out on the trip."
+ },
+ {
+  "page": 113,
+  "verb": "Break Into",
+  "meaning": "To suddenly show an emotion",
+  "example": "Emma broke into laughter."
+ },
+ {
+  "page": 113,
+  "verb": "Get Carried Away",
+  "meaning": "To become too excited or emotional",
+  "example": "Tom got carried away during the celebration."
+ },
+ {
+  "page": 114,
+  "verb": "Bottle Out",
+  "meaning": "To lose courage and back out",
+  "example": "Jack bottled out of giving the speech."
+ },
+ {
+  "page": 114,
+  "verb": "Fight Back",
+  "meaning": "To stop yourself from showing emotion",
+  "example": "Sarah fought back her tears."
+ },
+ {
+  "page": 114,
+  "verb": "Clam Up",
+  "meaning": "To suddenly stop talking",
+  "example": "Tom clammed up during the interview."
+ },
+ {
+  "page": 116,
+  "verb": "Bring About",
+  "meaning": "To cause something to happen",
+  "example": "The new rule brought about positive changes."
+ },
+ {
+  "page": 116,
+  "verb": "Carry Out",
+  "meaning": "To complete a task or plan",
+  "example": "The students carried out the project successfully."
+ },
+ {
+  "page": 116,
+  "verb": "Come Up With",
+  "meaning": "To think of an idea or solution",
+  "example": "Sarah came up with a clever idea."
+ },
+ {
+  "page": 117,
+  "verb": "Turn Out",
+  "meaning": "To happen or develop in a particular way",
+  "example": "The party turned out great."
+ },
+ {
+  "page": 117,
+  "verb": "Get Away With",
+  "meaning": "To avoid punishment for something",
+  "example": "Jack got away with breaking the rules."
+ },
+ {
+  "page": 117,
+  "verb": "End Up",
+  "meaning": "To finally reach a situation or place",
+  "example": "We ended up at a small café."
+ },
+ {
+  "page": 118,
+  "verb": "Put Up With",
+  "meaning": "To tolerate something unpleasant",
+  "example": "Sarah put up with the loud noise."
+ },
+ {
+  "page": 118,
+  "verb": "Back Out",
+  "meaning": "To withdraw from an agreement or plan",
+  "example": "Jack backed out of the deal."
+ },
+ {
+  "page": 118,
+  "verb": "Come Across",
+  "meaning": "To find something by chance",
+  "example": "Tom came across an old letter."
+ },
+ {
+  "page": 119,
+  "verb": "Break Into",
+  "meaning": "To enter a place illegally",
+  "example": "A thief broke into the house."
+ },
+ {
+  "page": 119,
+  "verb": "Bring On",
+  "meaning": "To cause something to start",
+  "example": "Stress brought on a headache."
+ },
+ {
+  "page": 119,
+  "verb": "Come Up Against",
+  "meaning": "To face a difficulty or challenge",
+  "example": "The team came up against many problems."
+ },
+ {
+  "page": 120,
+  "verb": "Drop Out",
+  "meaning": "To leave a course or program before finishing",
+  "example": "Jack dropped out of college."
+ },
+ {
+  "page": 120,
+  "verb": "Get By",
+  "meaning": "To manage with limited money or resources",
+  "example": "Tom gets by on a small salary."
+ },
+ {
+  "page": 120,
+  "verb": "Get Over With",
+  "meaning": "To finish something unpleasant",
+  "example": "Emma got the exam over with quickly."
+ },
+ {
+  "page": 121,
+  "verb": "Pull Off",
+  "meaning": "To succeed in doing something difficult",
+  "example": "Sarah pulled off a great performance."
+ },
+ {
+  "page": 121,
+  "verb": "Show Up",
+  "meaning": "To arrive or appear",
+  "example": "Tom showed up late."
+ },
+ {
+  "page": 121,
+  "verb": "Turn Down",
+  "meaning": "To refuse an offer or request",
+  "example": "Emma turned down the job offer."
+ },
+ {
+  "page": 122,
+  "verb": "Turn Up",
+  "meaning": "To appear or be found unexpectedly",
+  "example": "My keys turned up yesterday."
+ },
+ {
+  "page": 122,
+  "verb": "Wind Up",
+  "meaning": "To finally end in a situation",
+  "example": "Sarah wound up becoming a teacher."
+ },
+ {
+  "page": 122,
+  "verb": "Work Through",
+  "meaning": "To deal with a problem step by step",
+  "example": "Sarah worked through her difficulties."
+ },
+ {
+  "page": 123,
+  "verb": "Write Off",
+  "meaning": "To consider something a loss",
+  "example": "The company wrote off the damaged equipment."
+ },
+ {
+  "page": 123,
+  "verb": "Pass Up",
+  "meaning": "To miss an opportunity by not taking it",
+  "example": "Tom passed up a great offer."
+ },
+ {
+  "page": 123,
+  "verb": "Follow Through",
+  "meaning": "To complete what you started",
+  "example": "Emma followed through on her promise."
+ },
+ {
+  "page": 124,
+  "verb": "Take On",
+  "meaning": "To accept responsibility or work",
+  "example": "Jack took on a new project."
+ },
+ {
+  "page": 124,
+  "verb": "Let Down",
+  "meaning": "To disappoint someone",
+  "example": "Sarah let her team down."
+ },
+ {
+  "page": 124,
+  "verb": "Hold Up",
+  "meaning": "To delay something",
+  "example": "Traffic held us up."
+ },
+ {
+  "page": 125,
+  "verb": "Call For",
+  "meaning": "To require something",
+  "example": "The situation called for quick action."
+ },
+ {
+  "page": 125,
+  "verb": "Look Into",
+  "meaning": "To investigate something",
+  "example": "The manager looked into the issue."
+ },
+ {
+  "page": 125,
+  "verb": "Rule Out",
+  "meaning": "To eliminate a possibility",
+  "example": "The doctor ruled out an infection."
+ },
+ {
+  "page": 126,
+  "verb": "Put Down To",
+  "meaning": "To explain something as caused by",
+  "example": "Tom put his success down to practice."
+ },
+ {
+  "page": 126,
+  "verb": "See Through",
+  "meaning": "To recognize the truth about something",
+  "example": "Emma saw through the excuse."
+ },
+ {
+  "page": 126,
+  "verb": "Stand Up For",
+  "meaning": "To defend someone or something",
+  "example": "Jack stood up for his friend."
+ }
+]

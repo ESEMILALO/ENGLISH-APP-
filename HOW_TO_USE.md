@@ -277,6 +277,32 @@ Time spent talking counts toward the day's hour.
 
 This uses the same Anthropic key as adding words.
 
+## Adding a book of words at once
+
+Photograph or screenshot the pages, put them in one folder, and:
+
+    python tools\read_book.py "C:\Users\Eduar\OneDrive\Pictures\libro"
+    python tools\add_book_words.py --sheet "School vocabulary"
+    python tools\build_word_log.py
+
+The first reads the pages and writes what it finds to
+`tools\book_verbs.json` -- the word, the meaning and the example, exactly
+as the book prints them. It trims the black bars off a phone screenshot
+by itself, ignores covers and contents pages, and remembers which pages
+it has read, so stopping it and running it again carries on rather than
+starting the book over.
+
+The second turns those into rows in your sheet: the Spanish, a
+pronunciation you can say, and the verb's forms in the notes, in the same
+style as every other row. **The book's own meaning and example are kept**
+-- it is dressing them for the sheet, not inventing better ones.
+
+Anything already in your workbook is left where it is and reported, so a
+book that overlaps the lists you already have does not fill the sheet
+with second copies. Add `--dry-run` to see what it would write without
+writing it, and `--limit 10` to try a few first. A copy of the workbook
+goes into `backups\` before anything is added.
+
 ## Pictures
 
 Under the meaning, some words carry a photograph. Not all of them, and
