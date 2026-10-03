@@ -34,6 +34,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+import model
+
 ROOT = Path(__file__).resolve().parent.parent
 WORKBOOK = ROOT / "ENGLISH SCHOOL.xlsx"
 KEY_FILE = Path(__file__).resolve().parent / "anthropic_key.txt"
@@ -53,14 +55,23 @@ NOTES_COL = 9
 
 
 def api_key():
-    key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
-    if key:
-        return key
-    if KEY_FILE.exists():
-        key = KEY_FILE.read_text(encoding="utf-8").strip()
-        if key:
-            return key
-    return None
+    """Any key at all, whichever service it belongs to.
+
+    Everything that used to ask for the Anthropic key is really asking
+    "can we look things up?", and the free Gemini key answers that just
+    as well.
+    """
+    return model.anthropic_key() or model.gemini_key()
+
+
+def which_service(key):
+    """Whose key is this? They do not look alike.
+
+    Anthropic's begin sk-ant. Anything else is treated as Google's,
+    because that is the free one and therefore the one most likely to be
+    getting pasted.
+    """
+    return "anthropic" if (key or "").strip().startswith("sk-ant") else "gemini"
 
 
 def check_key(key, timeout=20):
@@ -70,6 +81,8 @@ def check_key(key, timeout=20):
     sentence on screen, and a typo found later is a word that silently
     fails to be added.
     """
+    if which_service(key) == "gemini":
+        return model.check_gemini(key, timeout)
     req = urllib.request.Request(
         "https://api.anthropic.com/v1/models?limit=1",
         headers={"x-api-key": key, "anthropic-version": API_VERSION})
@@ -94,6 +107,14 @@ def save_key(key):
     ok, why = check_key(key)
     if not ok:
         return {"ok": False, "message": why}
+    if which_service(key) == "gemini":
+        model.GEMINI_KEY.write_text(key + "\n", encoding="utf-8")
+        try:
+            model.GEMINI_MODEL_FILE.unlink()      # choose the model afresh
+        except OSError:
+            pass
+        return {"ok": True,
+                "message": "Google key saved and working. Nothing costs anything now."}
     KEY_FILE.write_text(key + "\n", encoding="utf-8")
     return {"ok": True, "message": "key saved and working"}
 
@@ -205,24 +226,9 @@ def _ask_once(word, context, key, timeout):
     if context:
         user += "\n\nIt appeared in this sentence, which may disambiguate it:\n" + context
 
-    body = json.dumps({
-        "model": MODEL,
-        # room for the model's working as well as the entry itself
-        "max_tokens": 2000,
-        "system": PROMPT,
-        "messages": [{"role": "user", "content": user}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
-    with urllib.request.urlopen(req, timeout=timeout) as res:
-        payload = json.loads(res.read().decode("utf-8"))
-
-    text = "".join(part.get("text", "") for part in payload.get("content", []))
-    text = text.strip()
+    # Room for the model's own working as well as the entry itself.
+    text = model.ask(PROMPT, [{"role": "user", "content": user}],
+                     max_tokens=2000, timeout=timeout).strip()
     # Be forgiving about a fenced block, even though the prompt asks for none.
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]

@@ -4424,7 +4424,7 @@
         + '</div>';
     }
     return '<div class="key-row"><span class="key-dot"></span>'
-      + '<span>Word lookup needs an Anthropic API key'
+      + '<span>The conversation, the translations and word lookup need a key'
       + (waiting ? ' &mdash; '+waiting+' word'+(waiting===1?'':'s')+' waiting' : '')
       + '.</span></div>'
       + '<div class="key-form">'
@@ -4432,9 +4432,14 @@
           + 'autocomplete="off" spellcheck="false">'
         + '<button id="key-save">Save</button>'
       + '</div>'
-      + '<p class="hint">From console.anthropic.com &rarr; API Keys. It is checked before '
-      + 'it is saved, kept in <b>server/anthropic_key.txt</b> on this laptop, and never '
-      + 'sent anywhere except to Anthropic.</p>';
+      + '<p class="hint"><b>The free one is Google\u2019s.</b> Go to '
+      + '<b>aistudio.google.com/apikey</b>, sign in, and press '
+      + '<em>Create API key</em> &mdash; there is no card and no payment, and the '
+      + 'daily allowance is far more than you will use. Paste it above.<br><br>'
+      + 'An Anthropic key from console.anthropic.com works too, and is used in '
+      + 'preference only if there is no Google one. Either way the key is checked '
+      + 'before it is saved, kept in a file on this laptop, and sent nowhere '
+      + 'except to the service it belongs to.</p>';
   }
 
   function paintKeyRow(){

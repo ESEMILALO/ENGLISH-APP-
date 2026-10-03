@@ -454,6 +454,7 @@
   "q": "person headache"
  },
  "504 Secondary::Aim": {
+  "none": "nothing found",
   "q": "archer aiming bow"
  },
  "504 Secondary::All alone": {
@@ -488,6 +489,7 @@
   "q": "-"
  },
  "504 Secondary::As time goes on": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Autos": {
@@ -551,6 +553,7 @@
   ]
  },
  "504 Secondary::Belief": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Bench": {
@@ -561,6 +564,7 @@
   "q": "-"
  },
  "504 Secondary::Beyond doubt": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Bible": {
@@ -725,6 +729,7 @@
   "q": "cemetery gravestones"
  },
  "504 Secondary::Certainly": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Cheat": {
@@ -855,6 +860,7 @@
   "q": "crowd of people"
  },
  "504 Secondary::Crumble": {
+  "none": "nothing found",
   "q": "crumbling cookie"
  },
  "504 Secondary::Curse": {
@@ -895,6 +901,7 @@
   "q": "debate competition"
  },
  "504 Secondary::Decent": {
+  "none": "nothing found",
   "q": "decent hotel room"
  },
  "504 Secondary::Dense fog": {
@@ -907,6 +914,7 @@
   "why": "Thick fog obscuring buildings, limiting "
  },
  "504 Secondary::Densely": {
+  "none": "nothing found",
   "q": "densely packed crowd"
  },
  "504 Secondary::Desert": {
@@ -929,6 +937,7 @@
   "q": "sun behind clouds"
  },
  "504 Secondary::Discover": {
+  "none": "nothing found",
   "q": "scientist new species"
  },
  "504 Secondary::Dishonest": {
@@ -995,6 +1004,7 @@
   ]
  },
  "504 Secondary::Earn livings": {
+  "none": "nothing found",
   "q": "fishermen working boat"
  },
  "504 Secondary::Encyclopedia": {
@@ -1083,9 +1093,11 @@
   "q": "woman calculating bills"
  },
  "504 Secondary::Find out": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Fire": {
+  "none": "nothing found",
   "q": "campfire flames"
  },
  "504 Secondary::Fled": {
@@ -1119,6 +1131,7 @@
   "q": "-"
  },
  "504 Secondary::Forces": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Foretell": {
@@ -1252,15 +1265,18 @@
   "q": "luxury furniture store"
  },
  "504 Secondary::Historians": {
+  "none": "nothing found",
   "q": "historian examining documents"
  },
  "504 Secondary::Hoop": {
   "q": "toy hoop"
  },
  "504 Secondary::However": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Hunger": {
+  "none": "nothing found",
   "q": "hungry child"
  },
  "504 Secondary::Hurt in": {
@@ -1416,6 +1432,7 @@
   "q": "-"
  },
  "504 Secondary::Lights-out": {
+  "none": "nothing found",
   "q": "bedroom lights off"
  },
  "504 Secondary::Little did I realize": {},
@@ -1440,6 +1457,7 @@
   "q": "colorful necktie"
  },
  "504 Secondary::Low-minded": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Low-paid": {
@@ -1497,6 +1515,7 @@
   "why": "Face shows colorful cosmetics makeup"
  },
  "504 Secondary::Making a living": {
+  "none": "nothing found",
   "q": "street vendor working"
  },
  "504 Secondary::March of Dimes": {
@@ -1517,18 +1536,22 @@
   "q": "margarine tub"
  },
  "504 Secondary::Meaningless": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Mercy": {
+  "none": "nothing found",
   "q": "prisoner begging mercy"
  },
  "504 Secondary::Messy": {
+  "none": "nothing found",
   "q": "messy bedroom"
  },
  "504 Secondary::Miniskirts": {
   "q": "woman miniskirt"
  },
  "504 Secondary::Mislead": {
+  "none": "nothing found",
   "q": "misleading advertisement"
  },
  "504 Secondary::Mist": {
@@ -1587,6 +1610,7 @@
   "q": "train departing"
  },
  "504 Secondary::Much more": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Mud": {
@@ -1615,9 +1639,11 @@
   ]
  },
  "504 Secondary::Nearer to": {
+  "none": "nothing found",
   "q": "moving chair closer"
  },
  "504 Secondary::No one": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::No peril": {
@@ -1692,6 +1718,7 @@
   "q": "dangerous journey"
  },
  "504 Secondary::Pilgrims": {
+  "none": "nothing found",
   "q": "pilgrims walking shrine"
  },
  "504 Secondary::Pipes": {
@@ -1782,9 +1809,11 @@
   ]
  },
  "504 Secondary::Regain": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Regarding": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Relatives": {
@@ -1881,6 +1910,7 @@
   "q": "cocktail shaker"
  },
  "504 Secondary::Shape up": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Shaving": {
@@ -2092,6 +2122,7 @@
   ]
  },
  "504 Secondary::Take on": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Tax rates": {
@@ -2123,6 +2154,7 @@
   ]
  },
  "504 Secondary::That which is wrong": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Therefore": {
@@ -2231,6 +2263,7 @@
   ]
  },
  "504 Secondary::Trouble": {
+  "none": "nothing found",
   "q": "confused tourist map"
  },
  "504 Secondary::Tune up": {

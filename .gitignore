@@ -12,3 +12,7 @@ server/anthropic_key.txt
 
 # Voice clips, generated on demand and rebuilt whenever needed.
 server/voice-cache/
+
+# The free Google key, same rule as the other one: never committed.
+server/gemini_key.txt
+server/gemini_model.txt

@@ -23,7 +23,8 @@ import re
 import urllib.error
 import urllib.request
 
-from glossary import API_VERSION, api_key
+import model
+from glossary import api_key
 
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-sonnet-5"
@@ -94,6 +95,9 @@ def why_it_failed(err, doing="That"):
     useless, and sends you looking for a bug in the app when the real
     answer is that the account has run out of money.
     """
+    if isinstance(err, model.ModelError):
+        return str(err)
+
     detail = ""
     code = None
     if isinstance(err, urllib.error.HTTPError):
@@ -132,34 +136,19 @@ def explain(phrase, context=""):
     if len(phrase) > 300:
         return {"ok": False, "message": "that is too long to explain in one go"}
 
-    key = api_key()
-    if not key:
-        return {"ok": False, "message": "Explaining needs an Anthropic API key."}
+    if not model.have_key():
+        return {"ok": False, "message": "Explaining needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
     user = "They did not understand: " + phrase
     if context:
         user += "\n\nIt appeared here, which may matter:\n" + context
 
-    body = json.dumps({
-        "model": MODEL,
-        "max_tokens": 1500,
-        "system": EXPLAIN,
-        "messages": [{"role": "user", "content": user}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
     try:
-        with urllib.request.urlopen(req, timeout=45) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(EXPLAIN, [{"role": "user", "content": user}],
+                         max_tokens=1500, timeout=45)
     except Exception as e:
         return {"ok": False, "message": why_it_failed(e, "The explanation"),
                 "detail": str(e)[:160]}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
@@ -214,9 +203,8 @@ def review(turns, scenario="", words=None, used=None):
     if not mine:
         return {"ok": False, "message": "There is nothing of yours to look at yet."}
 
-    key = api_key()
-    if not key:
-        return {"ok": False, "message": "Feedback needs an Anthropic API key."}
+    if not model.have_key():
+        return {"ok": False, "message": "Feedback needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
     lines = []
     for t in turns:
@@ -233,26 +221,12 @@ def review(turns, scenario="", words=None, used=None):
         if missed:
             user += "\nOnes they never used: %s" % ", ".join(missed)
 
-    body = json.dumps({
-        "model": MODEL,
-        "max_tokens": 3000,
-        "system": REVIEW,
-        "messages": [{"role": "user", "content": user}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
     try:
-        with urllib.request.urlopen(req, timeout=90) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(REVIEW, [{"role": "user", "content": user}],
+                         max_tokens=3000, timeout=90)
     except Exception as e:
         return {"ok": False, "message": why_it_failed(e, "The feedback"),
                 "detail": str(e)[:150]}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
@@ -311,38 +285,22 @@ def translate(phrase, context=""):
     if len(phrase) > 300:
         return {"ok": False, "message": "too long"}
 
-    key = api_key()
-    if not key:
-        return {"ok": False, "message": "Translating needs an Anthropic API key."}
+    if not model.have_key():
+        return {"ok": False, "message": "Translating needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card.",
+                "brief": "Translating needs a key."}
 
     user = phrase
     if context:
         user += "\n\n(from: " + context[:300] + ")"
 
-    body = json.dumps({
-        "model": MODEL,
-        # Its own working counts against this, not just the answer, so a
-        # budget that looks generous for one line is the right size.
-        "max_tokens": 800,
-        "system": TRANSLATE,
-        "messages": [{"role": "user", "content": user}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
     try:
-        with urllib.request.urlopen(req, timeout=25) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(TRANSLATE, [{"role": "user", "content": user}],
+                         max_tokens=800, timeout=25)
     except Exception as e:
         why = why_it_failed(e, "The translation")
         return {"ok": False, "message": why,
                 "brief": why.split(". ")[0].rstrip(".") + ".",
                 "detail": str(e)[:120]}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
@@ -393,35 +351,20 @@ def imagine(request, words=None):
     if len(request) > 500:
         request = request[:500]
 
-    key = api_key()
-    if not key:
-        return {"ok": False, "message": "This needs an Anthropic API key."}
+    if not model.have_key():
+        return {"ok": False, "message": "This needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
     word_note = ""
     if words:
         word_note = "\n\nTheir words, for reference only:\n" + \
                     "\n".join("- " + w for w in words)
 
-    body = json.dumps({
-        "model": MODEL,
-        "max_tokens": 2000,
-        "system": IMAGINE % {"words": word_note},
-        "messages": [{"role": "user", "content": request}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
     try:
-        with urllib.request.urlopen(req, timeout=60) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(IMAGINE % {"words": word_note}, [{"role": "user", "content": request}],
+                         max_tokens=2000, timeout=60)
     except Exception as e:
         return {"ok": False, "message": why_it_failed(e, "That"),
                 "detail": str(e)[:140]}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
@@ -453,32 +396,15 @@ Return ONLY a JSON object, no other text:
 
 def suggest(words):
     """A situation built around the words, rather than one off a list."""
-    key = api_key()
-    if not key:
-        return {"ok": False, "message": "Suggesting a situation needs an API key."}
+    if not model.have_key():
+        return {"ok": False, "message": "Suggesting a situation needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
-    body = json.dumps({
-        "model": MODEL,
-        # generous, because the budget covers the model's own working
-        # as well as the answer: too small and the reply comes back empty
-        "max_tokens": 2000,
-        "system": SUGGEST % {"words": "\n".join("- " + w for w in words)},
-        "messages": [{"role": "user", "content": "Invent the situation."}],
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
     try:
-        with urllib.request.urlopen(req, timeout=45) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(SUGGEST % {"words": "\n".join("- " + w for w in words)}, [{"role": "user", "content": "Invent the situation."}],
+                         max_tokens=2000, timeout=45)
     except Exception as e:
         return {"ok": False, "message": why_it_failed(e, "Inventing a situation"),
                 "detail": str(e)[:160]}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:
@@ -500,10 +426,9 @@ def opening(scenario, words, name="the learner"):
 
 def ask(history, scenario, words, name="the learner", first=False):
     """One turn. history is [{role, content}, ...] of the real conversation."""
-    key = api_key()
-    if not key:
+    if not model.have_key():
         return {"ok": False, "error": "no key",
-                "message": "Conversation practice needs an Anthropic API key."}
+                "message": "Conversation practice needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
     system = SYSTEM % {
         "name": name,
@@ -516,30 +441,15 @@ def ask(history, scenario, words, name="the learner", first=False):
         messages = [{"role": "user",
                      "content": "Start the conversation. Say the first thing."}]
 
-    body = json.dumps({
-        "model": MODEL,
-        "max_tokens": 2000,
-        "system": system,
-        "messages": messages,
-    }).encode("utf-8")
-
-    req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": API_VERSION,
-    })
-
     try:
-        with urllib.request.urlopen(req, timeout=60) as res:
-            payload = json.loads(res.read().decode("utf-8"))
+        text = model.ask(system, messages,
+                         max_tokens=2000, timeout=60)
     except urllib.error.HTTPError as e:
         return {"ok": False, "error": "http %s" % e.code,
                 "message": why_it_failed(e, "The reply")}
     except Exception as e:
         return {"ok": False, "error": str(e)[:120],
                 "message": why_it_failed(e, "The reply")}
-
-    text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1].rsplit("```", 1)[0]
     try:

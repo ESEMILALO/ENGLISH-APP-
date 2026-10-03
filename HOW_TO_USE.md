@@ -52,6 +52,29 @@ right-hand end of the address bar, or menu → *Cast, save and share* →
 *Install page as app*. You get a window with no address bar and an icon
 in the taskbar.
 
+## The key, and why it costs nothing
+
+Four things in the app ask a model a question: the conversation, the
+translation that appears when you select something, **Explain it**, and
+the feedback at the end of a conversation. Adding a word does too.
+
+**The free one is Google's.** Go to **aistudio.google.com/apikey**, sign
+in with a Google account, press *Create API key*, and copy it. There is
+no card and no payment. The free allowance is about fifteen hundred
+requests a day, and a long day of studying uses a few dozen.
+
+Paste it into the box under *Everything else* on the home screen, or put
+it straight in `server\gemini_key.txt`. It is checked before it is
+saved.
+
+An Anthropic key still works and goes in `server\anthropic_key.txt`. If
+both are there the Google one is used, because that is the one that is
+free.
+
+With no key at all, everything that does not need one carries on exactly
+as before: the cards, the recall check, your progress, the pictures
+already fetched, and the voice.
+
 ## What it needs installed
 
     pip install openpyxl edge-tts
