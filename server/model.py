@@ -28,6 +28,7 @@ HERE = Path(__file__).resolve().parent
 ANTHROPIC_KEY = HERE / "anthropic_key.txt"
 GEMINI_KEY = HERE / "gemini_key.txt"
 GEMINI_MODEL_FILE = HERE / "gemini_model.txt"
+PROBLEM_FILE = HERE / "last_problem.txt"
 
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_MODEL = "claude-sonnet-5"
@@ -229,10 +230,62 @@ def _ask_anthropic(system, messages, max_tokens, timeout):
 # here is why" in the place where you would fix it, instead of failing
 # quietly in six different corners.
 LAST_PROBLEM = None
+_ASKED_ONCE = False
+
+
+def _remember(problem):
+    """Across restarts too, or the app forgets every time it is started.
+
+    Restarting the server does not put credit on an account, and an app
+    that cheerfully reports "all fine" until the next thing fails is how
+    somebody ends up hunting for a box that is not being shown.
+    """
+    global LAST_PROBLEM
+    LAST_PROBLEM = problem
+    try:
+        if problem:
+            PROBLEM_FILE.write_text(problem, encoding="utf-8")
+        elif PROBLEM_FILE.exists():
+            PROBLEM_FILE.unlink()
+    except OSError:
+        pass
 
 
 def last_problem():
+    global LAST_PROBLEM
+    if LAST_PROBLEM is None and PROBLEM_FILE.exists():
+        try:
+            LAST_PROBLEM = PROBLEM_FILE.read_text(encoding="utf-8").strip() or None
+        except OSError:
+            pass
     return LAST_PROBLEM
+
+
+def health():
+    """Is there a key, and can it actually answer?
+
+    A key file proves nothing: the one here is real, correctly spelled,
+    and out of money. So the first time anybody asks, the question is put
+    to the service itself -- one word, a fraction of a penny if it works
+    at all -- and the answer is kept.
+    """
+    global _ASKED_ONCE
+    if provider() is None:
+        return False, None
+    known = last_problem()
+    if known:
+        return False, known
+    if _ASKED_ONCE:
+        return True, None
+    _ASKED_ONCE = True
+    try:
+        ask("Answer with one word: ok",
+            [{"role": "user", "content": "ok"}], max_tokens=300, timeout=20)
+    except ModelError as e:
+        return False, str(e)
+    except Exception:
+        return True, None          # a network blip is not a broken key
+    return True, None
 
 
 def ask(system, messages, max_tokens=2000, timeout=60):
@@ -240,18 +293,17 @@ def ask(system, messages, max_tokens=2000, timeout=60):
     global LAST_PROBLEM
     which = provider()
     if which is None:
-        LAST_PROBLEM = ("This needs a key. The free one is from Google AI "
-                        "Studio and takes two minutes.")
-        raise ModelError(LAST_PROBLEM)
+        raise ModelError("This needs a key. The free one is from Google AI "
+                         "Studio and takes two minutes.")
     try:
         if which == "gemini":
             text = _ask_gemini(system, messages, max_tokens, timeout)
         else:
             text = _ask_anthropic(system, messages, max_tokens, timeout)
     except ModelError as e:
-        LAST_PROBLEM = str(e)
+        _remember(str(e))
         raise
-    LAST_PROBLEM = None
+    _remember(None)
     return text
 
 
@@ -279,11 +331,12 @@ def check_gemini(key, timeout=20):
 
 
 def save_gemini(key):
-    global LAST_PROBLEM
+    global _ASKED_ONCE
     ok, why = check_gemini(key)
     if not ok:
         return False, why
-    LAST_PROBLEM = None
+    _remember(None)
+    _ASKED_ONCE = False
     GEMINI_KEY.write_text(key.strip(), encoding="utf-8")
     try:
         GEMINI_MODEL_FILE.unlink()        # find the best one again

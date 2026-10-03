@@ -430,10 +430,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
             # what is waiting, and whether it can be filled in yet
             import glossary
             import model
+            works, problem = model.health()
             self._json({"pending": glossary.read_pending(),
-                        "hasKey": bool(glossary.api_key()),
+                        "hasKey": bool(glossary.api_key()) and works,
                         "provider": model.provider(),
-                        "problem": model.last_problem()})
+                        "problem": problem})
             return
         target = self._resolve()
         if target is None:

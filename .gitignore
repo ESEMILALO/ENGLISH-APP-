@@ -16,3 +16,4 @@ server/voice-cache/
 # The free Google key, same rule as the other one: never committed.
 server/gemini_key.txt
 server/gemini_model.txt
+server/last_problem.txt

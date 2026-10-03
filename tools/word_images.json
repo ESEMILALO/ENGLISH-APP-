@@ -2387,6 +2387,7 @@
   "q": "arab man"
  },
  "School books::Away from": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Beak": {
@@ -2498,6 +2499,7 @@
   "q": "palm trees"
  },
  "School books::Pass out": {
+  "none": "nothing found",
   "q": "person fainting"
  },
  "School books::Petroleum": {
@@ -5684,6 +5686,7 @@
   "q": "handshake agreement"
  },
  "Series::Come up": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Come up#2": {
@@ -5819,6 +5822,7 @@
   "q": "bored audience lecture"
  },
  "Series::Dump": {
+  "none": "nothing found",
   "q": "discarding furniture"
  },
  "Series::Dusk": {
@@ -5843,6 +5847,7 @@
   "q": "handing over keys"
  },
  "Series::Envy": {
+  "none": "nothing found",
   "q": "envious look"
  },
  "Series::Equity": {
@@ -5858,6 +5863,7 @@
   "q": "man grimacing pain"
  },
  "Series::Exhale": {
+  "none": "nothing found",
   "q": "person exhaling breath"
  },
  "Series::Expense": {
@@ -5909,9 +5915,11 @@
   "q": "-"
  },
  "Series::Freak out": {
+  "none": "nothing found",
   "q": "scared person screaming"
  },
  "Series::Freaked out": {
+  "none": "nothing found",
   "q": "scared frightened person"
  },
  "Series::From scratch": {
@@ -5957,6 +5965,7 @@
   "q": "teacher distributing papers"
  },
  "Series::Give up on": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Glimpse": {
@@ -6050,6 +6059,7 @@
   "q": "family at home"
  },
  "Series::Housekeeper": {
+  "none": "nothing found",
   "q": "housekeeper cleaning room"
  },
  "Series::How'd you get by": {
@@ -6074,6 +6084,7 @@
   "q": "people rushing"
  },
  "Series::Hype": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::I might as well keep on": {
@@ -6104,6 +6115,7 @@
   "q": "-"
  },
  "Series::Intimacy": {
+  "none": "nothing found",
   "q": "couple embracing closely"
  },
  "Series::Invest": {
@@ -6113,6 +6125,7 @@
   "q": "isolated village"
  },
  "Series::It turns out": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Jar": {
@@ -6242,6 +6255,7 @@
   "q": "kids teasing"
  },
  "Series::Muffled": {
+  "none": "nothing found",
   "q": "muffled voice"
  },
  "Series::My grown son": {
@@ -6251,6 +6265,7 @@
   "q": "sneering face"
  },
  "Series::Naughty": {
+  "none": "nothing found",
   "q": "mischievous child"
  },
  "Series::Nest": {
@@ -6269,6 +6284,7 @@
   "q": "-"
  },
  "Series::Otherwise": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Out of": {
@@ -6398,6 +6414,7 @@
   "q": "solving puzzle"
  },
  "Series::Restraining": {
+  "none": "nothing found",
   "q": "police restraining person"
  },
  "Series::Restraint": {
@@ -6422,6 +6439,7 @@
   "q": "hand rubbing surface"
  },
  "Series::Ruining": {
+  "none": "nothing found",
   "q": "rain ruining picnic"
  },
  "Series::Run out of": {
@@ -6572,6 +6590,7 @@
   "q": "new teacher classroom"
  },
  "Series::Steady": {
+  "none": "nothing found",
   "q": "steady pace running"
  },
  "Series::Stoic": {
@@ -6623,6 +6642,7 @@
   "q": "courtroom oath"
  },
  "Series::Swelling": {
+  "none": "nothing found",
   "q": "swollen ankle"
  },
  "Series::Swelling down": {
@@ -6764,6 +6784,7 @@
   "q": "man cheating"
  },
  "Series::Unlike": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Unload": {

@@ -109,7 +109,8 @@ def save_key(key):
         return {"ok": False, "message": why}
     # A key that works means the old complaint is no longer true, and
     # leaving it set would keep the banner up over a working key.
-    model.LAST_PROBLEM = None
+    model._remember(None)
+    model._ASKED_ONCE = False
     if which_service(key) == "gemini":
         model.GEMINI_KEY.write_text(key + "\n", encoding="utf-8")
         try:
