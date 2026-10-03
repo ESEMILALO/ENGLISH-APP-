@@ -4290,7 +4290,8 @@
       if(mine !== glossAsk || !slot.isConnected) return;
       slot.innerHTML = out.ok
         ? esc(out.es)
-        : '<span class="gloss-es-wait">' + esc(out.message || 'no translation') + '</span>';
+        : '<span class="gloss-es-wait">'
+          + esc(out.brief || out.message || 'no translation') + '</span>';
     }catch(e){
       if(mine !== glossAsk || !slot.isConnected) return;
       slot.innerHTML = '<span class="gloss-es-wait">the app server did not answer</span>';

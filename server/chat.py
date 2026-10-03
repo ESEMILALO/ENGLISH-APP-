@@ -86,6 +86,43 @@ Return ONLY a JSON object, no other text:
  "note": "when it is used or why it is put that way, or empty"}"""
 
 
+def why_it_failed(err, doing="That"):
+    """Turn whatever went wrong into something worth reading.
+
+    The API says why it refused, in the body of the response, and
+    throwing that away leaves "HTTP 400" on screen -- which is true,
+    useless, and sends you looking for a bug in the app when the real
+    answer is that the account has run out of money.
+    """
+    detail = ""
+    code = None
+    if isinstance(err, urllib.error.HTTPError):
+        code = err.code
+        try:
+            body = json.loads(err.read().decode("utf-8", "replace"))
+            detail = str((body.get("error") or {}).get("message") or "")
+        except Exception:
+            detail = ""
+
+    low = detail.lower()
+    if "credit balance" in low or "billing" in low or "quota" in low:
+        return ("Your Anthropic credit has run out, so there is nothing to "
+                "answer with. Add credit at console.anthropic.com and this "
+                "works again straight away -- nothing has been lost.")
+    if code in (401, 403):
+        return ("The API key was not accepted. Check the key in "
+                "server/anthropic_key.txt.")
+    if code == 429:
+        return "Too many requests just now. Wait a moment and try again."
+    if code in (500, 502, 503, 504, 529):
+        return "The model is busy or down for a moment. Try again shortly."
+    if detail:
+        return detail[:200]
+    if code:
+        return "%s did not work (HTTP %s)." % (doing, code)
+    return "%s did not work: the app server could not be reached." % doing
+
+
 def explain(phrase, context=""):
     """What does that mean? Asked of something they read, not something
     they wrote, so there is nothing to correct -- only to make clear."""
@@ -119,7 +156,7 @@ def explain(phrase, context=""):
         with urllib.request.urlopen(req, timeout=45) as res:
             payload = json.loads(res.read().decode("utf-8"))
     except Exception as e:
-        return {"ok": False, "message": "The explanation did not arrive.",
+        return {"ok": False, "message": why_it_failed(e, "The explanation"),
                 "detail": str(e)[:160]}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
@@ -212,7 +249,7 @@ def review(turns, scenario="", words=None, used=None):
         with urllib.request.urlopen(req, timeout=90) as res:
             payload = json.loads(res.read().decode("utf-8"))
     except Exception as e:
-        return {"ok": False, "message": "The feedback did not arrive.",
+        return {"ok": False, "message": why_it_failed(e, "The feedback"),
                 "detail": str(e)[:150]}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
@@ -300,7 +337,10 @@ def translate(phrase, context=""):
         with urllib.request.urlopen(req, timeout=25) as res:
             payload = json.loads(res.read().decode("utf-8"))
     except Exception as e:
-        return {"ok": False, "message": "no answer", "detail": str(e)[:120]}
+        why = why_it_failed(e, "The translation")
+        return {"ok": False, "message": why,
+                "brief": why.split(". ")[0].rstrip(".") + ".",
+                "detail": str(e)[:120]}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
@@ -378,7 +418,8 @@ def imagine(request, words=None):
         with urllib.request.urlopen(req, timeout=60) as res:
             payload = json.loads(res.read().decode("utf-8"))
     except Exception as e:
-        return {"ok": False, "message": "That did not work.", "detail": str(e)[:140]}
+        return {"ok": False, "message": why_it_failed(e, "That"),
+                "detail": str(e)[:140]}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):
@@ -434,7 +475,7 @@ def suggest(words):
         with urllib.request.urlopen(req, timeout=45) as res:
             payload = json.loads(res.read().decode("utf-8"))
     except Exception as e:
-        return {"ok": False, "message": "Could not think of one just now.",
+        return {"ok": False, "message": why_it_failed(e, "Inventing a situation"),
                 "detail": str(e)[:160]}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
@@ -493,10 +534,10 @@ def ask(history, scenario, words, name="the learner", first=False):
             payload = json.loads(res.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         return {"ok": False, "error": "http %s" % e.code,
-                "message": "The reply did not arrive (HTTP %s)." % e.code}
+                "message": why_it_failed(e, "The reply")}
     except Exception as e:
         return {"ok": False, "error": str(e)[:120],
-                "message": "The reply did not arrive."}
+                "message": why_it_failed(e, "The reply")}
 
     text = "".join(p.get("text", "") for p in payload.get("content", [])).strip()
     if text.startswith("```"):

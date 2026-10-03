@@ -381,8 +381,18 @@ def add(word, context="", sheet=None):
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "replace")[:200]
         queue_word(word, context, target)
+        low = detail.lower()
+        if "credit balance" in low or "billing" in low or "quota" in low:
+            why = ("Your Anthropic credit has run out, so the meaning could not "
+                   "be written. The word is saved and will be filled in as soon "
+                   "as there is credit.")
+        elif e.code in (401, 403):
+            why = ("The API key was not accepted. The word is saved and will be "
+                   "filled in once the key works.")
+        else:
+            why = "Saved for later; the lookup failed (HTTP %s)." % e.code
         return {"ok": False, "queued": True,
-                "message": "Saved for later; the lookup failed (HTTP %s)." % e.code,
+                "message": why,
                 "detail": detail}
     except Exception as e:
         queue_word(word, context, target)

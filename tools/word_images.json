@@ -450,6 +450,7 @@
   "q": "protest march"
  },
  "504 Secondary::Aggravate": {
+  "none": "nothing found",
   "q": "person headache"
  },
  "504 Secondary::Aim": {
@@ -520,6 +521,7 @@
   "none": "nothing found",
   "q": "faint distant silhouette"
  },
+ "504 Secondary::Baseball batters": {},
  "504 Secondary::Basement": {
   "q": "basement room"
  },
@@ -529,6 +531,7 @@
  "504 Secondary::Beard": {
   "q": "man beard"
  },
+ "504 Secondary::Beau": {},
  "504 Secondary::Beau#2": {
   "q": "couple arm arm"
  },
@@ -537,6 +540,7 @@
   "q": "person jogging"
  },
  "504 Secondary::Beforehand": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Being": {
@@ -588,6 +592,7 @@
   "none": "nothing found",
   "q": "boatman rowing boat"
  },
+ "504 Secondary::Borders": {},
  "504 Secondary::Bound": {
   "none": "nothing to photograph",
   "q": "-"
@@ -768,6 +773,7 @@
   "why": "Man wearing loose outer cloak garment"
  },
  "504 Secondary::Closely packed together": {
+  "none": "nothing found",
   "q": "crowded houses close"
  },
  "504 Secondary::Closet": {
@@ -789,11 +795,13 @@
   "why": "Clear photo of real coffin"
  },
  "504 Secondary::Come down": {
+  "none": "nothing found",
   "q": "climbing down roof"
  },
  "504 Secondary::Come near": {
   "q": "person approaching edge"
  },
+ "504 Secondary::Complain": {},
  "504 Secondary::Congress": {
   "by": "Fir0002 at English Wikipedia",
   "file": "congress-20b052299e.jpg",
@@ -806,6 +814,7 @@
  "504 Secondary::Contest": {
   "q": "singing competition"
  },
+ "504 Secondary::Convincing": {},
  "504 Secondary::Costly": {
   "none": "nothing found",
   "q": "expensive car repair"
@@ -864,6 +873,7 @@
   "title": "Hikers with packs.jpg",
   "why": "Hikers walking directly through forest p"
  },
+ "504 Secondary::Damp": {},
  "504 Secondary::Darkness": {
   "none": "None clearly show pure darkness/absence ",
   "q": "dark room",
@@ -951,6 +961,7 @@
   ]
  },
  "504 Secondary::Downwards": {
+  "none": "nothing found",
   "q": "downhill path"
  },
  "504 Secondary::Dragnet": {
@@ -963,6 +974,7 @@
   "q": "water droplets"
  },
  "504 Secondary::Dropped": {
+  "none": "nothing found",
   "q": "dropped keys"
  },
  "504 Secondary::Eager": {
@@ -1039,6 +1051,7 @@
   "q": "facing danger"
  },
  "504 Secondary::Fall asleep": {
+  "none": "nothing found",
   "q": "person sleeping sofa"
  },
  "504 Secondary::Farm stand": {
@@ -1055,6 +1068,7 @@
   "q": "building inspection"
  },
  "504 Secondary::Fell down": {
+  "none": "nothing found",
   "q": "person falling down"
  },
  "504 Secondary::Fell out": {
@@ -1065,6 +1079,7 @@
   ]
  },
  "504 Secondary::Figuring": {
+  "none": "nothing found",
   "q": "woman calculating bills"
  },
  "504 Secondary::Find out": {
@@ -1121,6 +1136,7 @@
   ]
  },
  "504 Secondary::Frightened": {
+  "none": "nothing found",
   "q": "frightened child"
  },
  "504 Secondary::Frightening": {
@@ -1180,6 +1196,7 @@
   "none": "nothing found",
   "q": "exhausted runner stopping"
  },
+ "504 Secondary::Go around": {},
  "504 Secondary::Go into": {
   "q": "entering kitchen"
  },
@@ -1210,6 +1227,7 @@
   "why": "Clear photo of grave in cemetery"
  },
  "504 Secondary::Greatly": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Handed down": {
@@ -1272,6 +1290,7 @@
  },
  "504 Secondary::In order to": {},
  "504 Secondary::Incredible": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Invaluable": {
@@ -1340,6 +1359,7 @@
   "q": "-"
  },
  "504 Secondary::Later": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Lay ahead": {
@@ -1374,6 +1394,7 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "504 Secondary::Leftovers": {},
  "504 Secondary::Legislative": {
   "by": "David Cross - User: (WT-shared) Davidx at wts wikivoyage",
   "file": "legislative-3fa0365113.jpg",
@@ -1535,6 +1556,7 @@
    "https://commons.wikimedia.org/wiki/File:Mixing_Bowl_Cafe_Menu_-_DPLA_-_74681f2ff0d11d80a3de8d91ef61ec14_(page_2).jpg"
   ]
  },
+ "504 Secondary::Moist": {},
  "504 Secondary::Moisture": {
   "by": "Jesse Marino",
   "file": "moisture-6ee8bde456.jpg",
@@ -1611,6 +1633,7 @@
   "q": "-"
  },
  "504 Secondary::Nylon": {
+  "none": "nothing found",
   "q": "nylon fabric"
  },
  "504 Secondary::Nylon strings": {
@@ -1628,6 +1651,7 @@
   "q": "oil paints tubes"
  },
  "504 Secondary::Omit": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::On account of hardship": {
@@ -1792,6 +1816,7 @@
   "why": "Shows retail store selling goods directl"
  },
  "504 Secondary::Rid": {
+  "none": "nothing found",
   "q": "pest spray garden"
  },
  "504 Secondary::Rioters": {
@@ -1802,6 +1827,7 @@
   "q": "smoke rising chimney"
  },
  "504 Secondary::Rise out of": {
+  "none": "nothing found",
   "q": "smoke rising chimney"
  },
  "504 Secondary::Road map": {
@@ -1809,6 +1835,7 @@
   "q": "road map"
  },
  "504 Secondary::Rose out of": {
+  "none": "nothing found",
   "q": "steam rising pot"
  },
  "504 Secondary::Row": {
@@ -1825,6 +1852,7 @@
   "q": "car salesman"
  },
  "504 Secondary::Schemer": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Scholarship": {
@@ -1875,6 +1903,7 @@
   ]
  },
  "504 Secondary::Sight": {
+  "none": "nothing found",
   "q": "human eye closeup"
  },
  "504 Secondary::Sinister-looking": {
@@ -1932,12 +1961,15 @@
   "q": "-"
  },
  "504 Secondary::Somehow": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Somewhat": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Sooner": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Spacecraft": {
@@ -1975,6 +2007,7 @@
  "504 Secondary::Square": {
   "q": "square shape"
  },
+ "504 Secondary::Staircase": {},
  "504 Secondary::Standing guard duty": {
   "by": "Hu Totya",
   "file": "standing-guard-duty-6c9929d645.jpg",
@@ -2077,6 +2110,7 @@
   "q": "television set"
  },
  "504 Secondary::Tell beforehand": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Teller": {
@@ -2106,6 +2140,7 @@
   "q": "-"
  },
  "504 Secondary::Though": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Thoughtfulness": {
@@ -2119,9 +2154,11 @@
   "q": "city skyline"
  },
  "504 Secondary::Thus": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Thus clearing": {
+  "none": "nothing found",
   "q": "fog clearing road"
  },
  "504 Secondary::Tight jacket": {
@@ -2151,6 +2188,7 @@
   "why": "Man raising hand, taking oath"
  },
  "504 Secondary::Tracks": {
+  "none": "nothing found",
   "q": "animal tracks snow"
  },
  "504 Secondary::Trapping": {
@@ -2204,6 +2242,7 @@
   "q": "uncovered food plate"
  },
  "504 Secondary::Unforgettable": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Unless": {
@@ -2244,12 +2283,14 @@
   ]
  },
  "504 Secondary::Vapor trail": {
+  "none": "nothing found",
   "q": "airplane vapor trail"
  },
  "504 Secondary::Walk someone through": {
   "q": "teaching demonstration"
  },
  "504 Secondary::Wand": {
+  "none": "nothing found",
   "q": "magic wand"
  },
  "504 Secondary::Waved": {
@@ -2274,6 +2315,7 @@
   "q": "-"
  },
  "504 Secondary::Wipe out": {
+  "none": "nothing found",
   "q": "storm destroyed crops"
  },
  "504 Secondary::Withheld": {
