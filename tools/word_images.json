@@ -444,6 +444,7 @@
   "q": "-"
  },
  "504 Secondary::Acts": {
+  "none": "nothing found",
   "q": "act of kindness"
  },
  "504 Secondary::Against": {
@@ -517,6 +518,7 @@
   "q": "evidence documents"
  },
  "504 Secondary::Backward": {
+  "none": "nothing found",
   "q": "step backward"
  },
  "504 Secondary::Barely visible": {
@@ -740,6 +742,7 @@
   "q": "cheating exam"
  },
  "504 Secondary::Checkup": {
+  "none": "nothing found",
   "q": "dental checkup"
  },
  "504 Secondary::Chorus": {
@@ -1217,6 +1220,7 @@
   "q": "reviewing notes"
  },
  "504 Secondary::Go straight": {
+  "none": "nothing found",
   "q": "walking directly"
  },
  "504 Secondary::Gossip": {
@@ -1450,6 +1454,7 @@
   "q": "-"
  },
  "504 Secondary::Losses": {
+  "none": "nothing found",
   "q": "financial loss chart"
  },
  "504 Secondary::Loud tie": {
@@ -2126,6 +2131,7 @@
   "q": "-"
  },
  "504 Secondary::Tax rates": {
+  "none": "nothing found",
   "q": "tax rate chart"
  },
  "504 Secondary::Telegram": {
@@ -2364,6 +2370,7 @@
   ]
  },
  "School books::Above": {
+  "none": "nothing found",
   "q": "lamp above table"
  },
  "School books::Alive": {
@@ -2373,6 +2380,7 @@
   "q": "world map"
  },
  "School books::Almost nothing but": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Arab": {
@@ -2385,9 +2393,11 @@
   "q": "bird beak"
  },
  "School books::Beg your pardon": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Breath": {
+  "none": "nothing found",
   "q": "visible breath cold"
  },
  "School books::Breathe": {
@@ -2403,9 +2413,11 @@
   "q": "carrying box"
  },
  "School books::Carry away": {
+  "none": "nothing found",
   "q": "river carrying branches"
  },
  "School books::Carry up": {
+  "none": "nothing found",
   "q": "carrying bags upstairs"
  },
  "School books::Climb": {
@@ -2460,6 +2472,7 @@
   "q": "insects on leaf"
  },
  "School books::Instead of": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Keep away": {
@@ -2478,6 +2491,7 @@
   "q": "gas flame"
  },
  "School books::Move into": {
+  "none": "nothing found",
   "q": "moving boxes apartment"
  },
  "School books::Palm trees": {
@@ -2496,12 +2510,14 @@
   "q": "poisonous mushroom"
  },
  "School books::Probably": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Rug": {
   "q": "floor rug"
  },
  "School books::Run away": {
+  "none": "nothing found",
   "q": "prisoner running away"
  },
  "School books::Run into": {
@@ -2520,6 +2536,7 @@
   "q": "glass sparkling water"
  },
  "School books::Stay away": {
+  "none": "nothing found",
   "q": "warning sign fire"
  },
  "School books::Stone": {
@@ -2532,6 +2549,7 @@
   "q": "dog tail"
  },
  "School books::Tapes": {
+  "none": "nothing found",
   "q": "ribbon tape roll"
  },
  "School books::Thick": {
@@ -2541,9 +2559,11 @@
   "q": "tightening screw"
  },
  "School books::Took it to other parts": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School books::Toward": {
+  "none": "nothing found",
   "q": "walking toward door"
  },
  "School books::Tropics": {
@@ -2559,6 +2579,7 @@
   "q": "water hyacinth"
  },
  "School books::Wrote about it almost": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Accept something with good grace": {

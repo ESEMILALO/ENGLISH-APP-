@@ -429,8 +429,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.path.split("?", 1)[0] == API_GLOSSARY:
             # what is waiting, and whether it can be filled in yet
             import glossary
+            import model
             self._json({"pending": glossary.read_pending(),
-                        "hasKey": bool(glossary.api_key())})
+                        "hasKey": bool(glossary.api_key()),
+                        "provider": model.provider(),
+                        "problem": model.last_problem()})
             return
         target = self._resolve()
         if target is None:

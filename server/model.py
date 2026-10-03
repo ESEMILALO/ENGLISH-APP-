@@ -223,16 +223,36 @@ def _ask_anthropic(system, messages, max_tokens, timeout):
     return "".join(p.get("text", "") for p in out.get("content", [])).strip()
 
 
+# Having a key file and having a key that works are different things,
+# and the difference is invisible until something is asked. So the last
+# answer is remembered: the app can then say "the key stopped working,
+# here is why" in the place where you would fix it, instead of failing
+# quietly in six different corners.
+LAST_PROBLEM = None
+
+
+def last_problem():
+    return LAST_PROBLEM
+
+
 def ask(system, messages, max_tokens=2000, timeout=60):
     """One question, one answer, from whichever service has a key."""
+    global LAST_PROBLEM
     which = provider()
     if which is None:
-        raise ModelError(
-            "This needs a key. The free one is from Google AI Studio -- paste "
-            "it into server/gemini_key.txt and nothing else has to change.")
-    if which == "gemini":
-        return _ask_gemini(system, messages, max_tokens, timeout)
-    return _ask_anthropic(system, messages, max_tokens, timeout)
+        LAST_PROBLEM = ("This needs a key. The free one is from Google AI "
+                        "Studio and takes two minutes.")
+        raise ModelError(LAST_PROBLEM)
+    try:
+        if which == "gemini":
+            text = _ask_gemini(system, messages, max_tokens, timeout)
+        else:
+            text = _ask_anthropic(system, messages, max_tokens, timeout)
+    except ModelError as e:
+        LAST_PROBLEM = str(e)
+        raise
+    LAST_PROBLEM = None
+    return text
 
 
 # --------------------------------------------------------- checking keys --
@@ -259,9 +279,11 @@ def check_gemini(key, timeout=20):
 
 
 def save_gemini(key):
+    global LAST_PROBLEM
     ok, why = check_gemini(key)
     if not ok:
         return False, why
+    LAST_PROBLEM = None
     GEMINI_KEY.write_text(key.strip(), encoding="utf-8")
     try:
         GEMINI_MODEL_FILE.unlink()        # find the best one again

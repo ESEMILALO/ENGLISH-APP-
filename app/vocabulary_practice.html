@@ -383,6 +383,18 @@
   }
   .word-pic figcaption a{ color:inherit; }
 
+  /* the key, when there is not one: this belongs in front of you */
+  .key-banner{
+    border:1px solid var(--amber-deep); background:rgba(212,160,74,.09);
+    border-radius:14px; padding:15px 17px; margin:0 0 18px;
+  }
+  .key-banner .key-row{ margin-bottom:9px; }
+  .key-banner .hint{ margin-top:9px; }
+  .key-banner-head{
+    font-family:var(--cond); font-size:1.05rem; color:var(--text);
+    margin:0 0 7px;
+  }
+
   /* choosing the voice */
   .voice-row{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:10px 2px 0; }
   .voice-row label{
@@ -2711,7 +2723,7 @@
         + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
         + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
         + '<div id="voice-host">'+voiceRowHtml()+'</div>'
-        + '<div id="key-host">'+keyRowHtml()+'</div>'
+        + (keyNeeded() ? '' : '<div id="key-host">'+keyRowHtml()+'</div>')
       + '</div>'
       + '</details>';
 
@@ -2720,6 +2732,20 @@
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + addWordBlockHtml()
+      + (keyNeeded()
+          ? '<div id="key-host" class="key-banner">'
+            + '<p class="key-banner-head">'
+            + ((keyState && keyState.problem)
+                ? 'The conversation and the translations have stopped working.'
+                : 'The conversation and the translations are switched off '
+                  + 'until there is a key.')
+            + '</p>'
+            + ((keyState && keyState.problem)
+                ? '<p class="hint" style="margin:0 0 10px;">'
+                  + esc(keyState.problem) + '</p>'
+                : '')
+            + keyRowHtml(true) + '</div>'
+          : '')
       + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
       + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
       + moreHtml
@@ -4411,10 +4437,17 @@
     });
   }
 
-  function keyRowHtml(){
+  // A key file that cannot answer is no better than no key file, and
+  // the difference only shows when something is asked.
+  function keyNeeded(){
+    if(!keyState) return false;
+    return !keyState.hasKey || !!keyState.problem;
+  }
+
+  function keyRowHtml(forced){
     if(!keyState) return '';
     const waiting = (keyState.pending || []).length;
-    if(keyState.hasKey){
+    if(keyState.hasKey && !forced){
       return '<div class="key-row"><span class="key-dot on"></span>'
         + '<span>Word lookup is on. Select a word while practising to add it.</span>'
         + (waiting
@@ -4444,6 +4477,15 @@
 
   function paintKeyRow(){
     const host = document.getElementById('key-host');
+    // The server answers after the page is drawn, and the box belongs in
+    // a different place depending on that answer. Draw the page again
+    // rather than leave it tucked away where it will not be found.
+    const onHome = !!document.getElementById('learn-set');
+    const wantBanner = keyNeeded();
+    if(onHome && wantBanner !== !!(host && host.classList.contains('key-banner'))){
+      renderHome();
+      return;
+    }
     if(!host) return;
     host.innerHTML = keyRowHtml();
     wireKeyRow();
