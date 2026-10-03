@@ -20,6 +20,7 @@ Keys live beside this file and are never committed:
 
 import json
 import os
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -35,14 +36,65 @@ ANTHROPIC_MODEL = "claude-sonnet-5"
 ANTHROPIC_VERSION = "2023-06-01"
 
 GEMINI_ROOT = "https://generativelanguage.googleapis.com/v1beta"
-# Best first. Whichever answers is remembered, so a model being renamed
-# costs one failed request rather than every request after it.
-GEMINI_MODELS = [
-    "gemini-2.5-flash",
-    "gemini-2.0-flash",
-    "gemini-flash-latest",
-    "gemini-1.5-flash",
-]
+
+# Which model to use is not a thing to write down in here. Google retires
+# names and adds better ones, and a list typed today is wrong within
+# months -- two of the three names this started with had already been
+# withdrawn by the time a key was pasted in. So the key is asked what it
+# can actually use, and the best of those is taken.
+#
+# Wanted: a Flash model, because those are the fast ones the free
+# allowance is generous with. Not the ones built for something else --
+# speech, images, embeddings -- however new they are.
+GEMINI_SKIP = ("tts", "image", "embedding", "aqa", "vision", "audio",
+               "thinking", "learnlm", "gemma", "omni", "live", "native")
+
+
+def _rank_gemini(name):
+    """Higher is better. Newest Flash, full fat, properly released."""
+    import re
+    lowered = name.lower()
+    if any(word in lowered for word in GEMINI_SKIP):
+        return None
+    if "flash" not in lowered and "pro" not in lowered:
+        return None
+
+    version = 0.0
+    found = re.search(r"gemini-(\d+(?:\.\d+)?)", lowered)
+    if found:
+        try:
+            version = float(found.group(1))
+        except ValueError:
+            version = 0.0
+    elif "latest" in lowered:
+        version = 1.0          # better than nothing, worse than a number
+
+    score = version * 10
+    if "flash" in lowered:
+        score += 5             # what the free allowance is for
+    if "lite" in lowered:
+        score -= 3             # cheaper, and it shows in the Spanish
+    if "preview" in lowered or "exp" in lowered:
+        score -= 2             # works today, may not tomorrow
+    return score
+
+
+def gemini_models(key, timeout=20):
+    """Everything this key can generate with, best first."""
+    url = "%s/models?key=%s&pageSize=200" % (GEMINI_ROOT, key)
+    with urllib.request.urlopen(urllib.request.Request(url), timeout=timeout) as res:
+        out = json.loads(res.read().decode("utf-8"))
+
+    ranked = []
+    for m in out.get("models") or []:
+        if "generateContent" not in (m.get("supportedGenerationMethods") or []):
+            continue
+        name = (m.get("name") or "").replace("models/", "")
+        score = _rank_gemini(name)
+        if score is not None:
+            ranked.append((score, name))
+    ranked.sort(reverse=True)
+    return [name for _, name in ranked]
 
 
 class ModelError(Exception):
@@ -146,6 +198,33 @@ def _parts_to_gemini(content):
     return parts or [{"text": ""}]
 
 
+_GEMINI_CHOICES = []          # what this key can use, asked once per run
+
+
+def _gemini_candidates(key):
+    """The models to try, best first, with the remembered one leading."""
+    global _GEMINI_CHOICES
+    if not _GEMINI_CHOICES:
+        try:
+            _GEMINI_CHOICES = gemini_models(key)[:5]
+        except Exception as e:
+            raise ModelError("Could not ask Google which models are "
+                             "available: %s" % str(e)[:100])
+    remembered = None
+    if GEMINI_MODEL_FILE.exists():
+        try:
+            remembered = GEMINI_MODEL_FILE.read_text(encoding="utf-8").strip() or None
+        except OSError:
+            remembered = None
+    order = list(_GEMINI_CHOICES)
+    if remembered and remembered in order:
+        order.remove(remembered)
+        order.insert(0, remembered)
+    elif remembered:
+        order.insert(0, remembered)
+    return order, remembered
+
+
 def _ask_gemini(system, messages, max_tokens, timeout):
     key = gemini_key()
     contents = []
@@ -160,26 +239,49 @@ def _ask_gemini(system, messages, max_tokens, timeout):
     if system:
         body["system_instruction"] = {"parts": [{"text": system}]}
 
-    remembered = None
-    if GEMINI_MODEL_FILE.exists():
-        remembered = GEMINI_MODEL_FILE.read_text(encoding="utf-8").strip() or None
-    candidates = ([remembered] if remembered else []) + \
-                 [m for m in GEMINI_MODELS if m != remembered]
+    candidates, remembered = _gemini_candidates(key)
+    if not candidates:
+        raise ModelError("This key cannot use any model that answers questions.")
 
     last = None
     for name in candidates:
         url = "%s/models/%s:generateContent?key=%s" % (GEMINI_ROOT, name, key)
-        try:
-            out = _post(url, body, {"content-type": "application/json"}, timeout)
-        except urllib.error.HTTPError as e:
-            problem = _explain_http(e, "gemini")
-            # Only a missing model is worth trying the next name for.
-            if e.code == 404:
-                last = problem
-                continue
-            raise problem
-        except Exception as e:
-            raise ModelError("Could not reach Gemini: %s" % str(e)[:120])
+        out = None
+
+        # Busy is not broken. The free tier is shared with everybody else
+        # using it, and a spike passes in seconds -- so wait, twice, and
+        # only then go and ask a different model. Giving up here would
+        # put "Gemini is busy" on screen while four other models that
+        # would have answered sat unused.
+        for attempt in range(3):
+            try:
+                out = _post(url, body, {"content-type": "application/json"}, timeout)
+                break
+            except urllib.error.HTTPError as e:
+                problem = _explain_http(e, "gemini")
+                if e.code == 404:
+                    try:
+                        GEMINI_MODEL_FILE.unlink()
+                    except OSError:
+                        pass
+                    last = problem
+                    break
+                if e.code in (429, 500, 502, 503, 504):
+                    last = problem
+                    if attempt < 2:
+                        time.sleep(1.5 * (attempt + 1))
+                        continue
+                    break          # this model is not having it; try another
+                raise problem      # a bad key or a bad request is ours to fix
+            except Exception as e:
+                last = ModelError("Could not reach Gemini: %s" % str(e)[:120])
+                if attempt < 2:
+                    time.sleep(1.5 * (attempt + 1))
+                    continue
+                break
+
+        if out is None:
+            continue
 
         if name != remembered:
             try:
@@ -194,10 +296,9 @@ def _ask_gemini(system, messages, max_tokens, timeout):
                 return text
             if candidate.get("finishReason") == "MAX_TOKENS":
                 raise ModelError(
-                    "The answer was cut off before it started. This is a bug "
-                    "worth reporting: the room given for the reply was too "
-                    "small.")
-        raise ModelError("Gemini answered with nothing at all.")
+                    "The answer was cut off before it started, which means the "
+                    "room given for the reply was too small.")
+        last = ModelError("%s answered with nothing at all." % name)
 
     raise last or ModelError("No Gemini model would answer.")
 
