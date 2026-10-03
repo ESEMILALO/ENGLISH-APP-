@@ -103,10 +103,17 @@ def count_words(data):
 def guard(incoming):
     """Decide whether a write may replace what is already stored.
 
-    A browser that has lost its storage looks exactly like a browser with
-    nothing to say, and its first save would otherwise wipe the very file
-    kept to rescue it. So the file never shrinks to nothing, and any write
-    that drops words is kept alongside the copy it replaced.
+    The app is open at more than one address -- the laptop, the installed
+    app, a phone over the network -- and each of those is a separate
+    browser store writing to this one file. A browser that has not caught
+    up looks exactly like a browser that has lost everything, and letting
+    it save would hand its stale copy to all the others.
+
+    Words are only ever added, outside of an explicit reset, which comes
+    through DELETE and not through here. So a write offering fewer words
+    than are already stored is a browser that is behind, and it is
+    refused: the app is told, and keeps its own copy until it adopts this
+    one. Nothing is replaced, so nothing needs parking.
 
     Returns (allowed, reason, previous).
     """
@@ -117,7 +124,8 @@ def guard(incoming):
     if had and now == 0:
         return False, "refused: %d words stored, nothing offered" % had, previous
     if had and now < had:
-        return True, "shrinking: %d -> %d, previous kept" % (had, now), previous
+        return False, ("refused: %d words stored, %d offered -- that browser "
+                       "is behind" % (had, now)), previous
     return True, None, previous
 
 

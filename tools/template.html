@@ -1239,8 +1239,14 @@
     }catch(e){}
   }
 
+  // The stored flag is a shortcut, never the answer. Choosing "Allow this
+  // time" in Chrome works perfectly for that visit and leaves no standing
+  // grant, so the flag can say yes while the browser says prompt -- and
+  // then the app skips the asking, starts the recognizer anyway, and the
+  // microphone fails for no visible reason. So the browser is asked first
+  // whenever it can be asked, and the flag only decides anything when
+  // there is nothing better to go on.
   function ensureMic(){
-    if(micGranted) return Promise.resolve(true);
     if(micRequest) return micRequest;
     const media = navigator.mediaDevices;
     if(!media || !media.getUserMedia){
@@ -1253,8 +1259,13 @@
       : Promise.resolve(null);
     micRequest = asked
       .then(status=>{
-        // Already allowed from a previous visit: no prompt at all.
-        if(status && status.state === 'granted') return null;
+        const state = status && status.state;
+        if(state === 'granted'){ setMicGranted(true); return null; }
+        if(state === 'denied'){ setMicGranted(false); throw new Error('denied'); }
+        // 'prompt' means there is no standing grant, whatever we remember.
+        if(state === 'prompt') setMicGranted(false);
+        // No Permissions API to consult: the remembered flag is all there is.
+        if(!status && micGranted) return null;
         return media.getUserMedia({audio:true});
       })
       .then(stream=>{
@@ -1512,11 +1523,17 @@
   }
 
   // Whether today brings new words. The first set is free; after that
-  // they are earned by yesterday's two hours.
+  // they are earned by an hour's work on the ten you already have.
+  //
+  // The hour is counted from the day those ten arrived, not from
+  // midnight. Forty minutes on Monday and twenty-five on Tuesday is an
+  // hour of studying these words, and Tuesday morning should not throw
+  // Monday away -- the date changing is not a reason to have earnt less
+  // than you did.
   function newWordsUnlocked(){
     if(!dailySetDay()) return true;
     if(dailySetDay() === todayStr()) return true;
-    return goalMet(yesterdayStr());
+    return bankSeconds() >= DAILY_GOAL_MIN * 60;
   }
 
   // The set to work on right now. The date changing is not enough on its
@@ -1977,7 +1994,7 @@
   }
 
   function speechErrorMessage(code){
-    if(code==='not-allowed' || code==='service-not-allowed') return 'Microphone blocked. Tap the padlock in the address bar, set Microphone to Allow, then reload -- it will not ask again after that.';
+    if(code==='not-allowed' || code==='service-not-allowed') return 'The microphone was not allowed. If Chrome asked and you chose "Allow this time", it forgets as soon as you close the tab -- open the padlock in the address bar and set Microphone to Allow to be asked only once.';
     if(code==='no-speech') return 'Did not catch that -- tap the mic and try again.';
     if(code==='audio-capture') return 'No microphone found on this device.';
     return 'Could not use the microphone right now. Try again, or switch to Type it.';
@@ -3235,12 +3252,12 @@
       + '<div class="eyebrow">Today &middot; '+new Date().toLocaleDateString('en-US',{weekday:'long', month:'short', day:'numeric'})+'</div>'
       + '<h1 class="title">'+mastered.length+' of '+set.length+' mastered</h1>'
       + '<p class="subtitle">'+(complete
-          ? (goalMet(todayStr())
-              ? 'Today is done, and so is your '+goalWords()+'. Tomorrow brings '
+          ? (bankSeconds() >= DAILY_GOAL_MIN * 60
+              ? 'These are done, and so is your '+goalWords()+' on them. Tomorrow brings '
                 + LEARNSET_SIZE+' more, and anything you leave unfinished carries over.'
-              : 'These '+set.length+' are done. Keep practicing to finish today’s '
-                + goalWords()+' — that is what brings '
-                + LEARNSET_SIZE+' new words tomorrow.')
+              : 'These '+set.length+' are done. Keep practicing to finish the '
+                + goalWords()+' on them — that is what brings '
+                + LEARNSET_SIZE+' new words. The time adds up across days.')
           : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+CATEGORIES.length+' lists. '
             + 'The app picks the method for each one: '+stageList
             + '. A word is only mastered once you have said it out loud.')+'</p>'
@@ -3706,9 +3723,13 @@
         body: JSON.stringify({ data: everythingLocal() })
       });
       if(res.status === 409){
-        // the file holds more than this copy does; it is right, not us
-        backupState = 'error';
-        backupNote = 'The saved copy in your folder is ahead of this one, so it was left alone.';
+        // The file holds more than this browser does, so it is right and
+        // this is not. Saying so is not enough: left like that, this
+        // browser stays behind for ever, showing you fewer words than you
+        // have and refusing every save. So it offers to take the file.
+        backupState = 'behind';
+        backupNote = 'Your folder has more progress than this browser does '
+          + '\u2014 you have been using the app at another address.';
         paintBackupLine();
         return false;
       }
@@ -3788,6 +3809,12 @@
       return '<div class="backup-line" id="backup-line"><span class="backup-dot"></span>'
         + 'Opened as a file, so nothing is being backed up.</div>';
     }
+    if(backupState === 'behind'){
+      return '<div class="backup-line" id="backup-line">'
+        + '<span class="backup-dot bad"></span><span>' + esc(backupNote) + '</span>'
+        + '<button id="backup-adopt">Use the saved copy</button>'
+        + '</div>';
+    }
     const cls = backupState === 'busy' ? 'busy'
       : (backupState === 'error' ? 'bad' : 'on');
     const label = backupState === 'busy' ? 'Saving&hellip;'
@@ -3801,6 +3828,29 @@
   function wireBackupLine(){
     const b = document.getElementById('backup-now');
     if(b) b.addEventListener('click', ()=>{ backupNow(); });
+    const adopt = document.getElementById('backup-adopt');
+    if(adopt) adopt.addEventListener('click', async ()=>{
+      backupState = 'busy';
+      paintBackupLine();
+      try{
+        const saved = await fetch(BACKUP_URL, { cache: 'no-store' }).then(r=>r.json());
+        const data = saved && saved.data;
+        if(!data || !data.progress || !Object.keys(data.progress).length){
+          backupState = 'error';
+          backupNote = 'The saved copy could not be read.';
+          paintBackupLine();
+          return;
+        }
+        adoptBackup(data);
+        backupState = 'restored';
+        backupNote = 'This browser now has everything from your folder.';
+        renderHome();
+      }catch(e){
+        backupState = 'error';
+        backupNote = 'Could not read the saved copy.';
+        paintBackupLine();
+      }
+    });
   }
 
   // Repaints only this line, so a save finishing never disturbs the page.
@@ -4549,6 +4599,21 @@
     return studySeconds(day) >= DAILY_GOAL_MIN * 60;
   }
 
+  // Everything studied since the current ten words were given. Each day
+  // is still recorded on its own -- the calendar and the history are
+  // unchanged -- this only decides when the next ten are earnt, and it
+  // does that by adding the days up rather than watching one of them.
+  function bankSeconds(){
+    const from = dailySetDay();
+    if(!from) return studySeconds();
+    const all = (meta && meta.study) || {};
+    let total = 0;
+    Object.keys(all).forEach(day=>{
+      if(day >= from) total += all[day] || 0;   // 'YYYY-MM-DD' sorts as text
+    });
+    return total;
+  }
+
   function addStudy(seconds){
     if(!meta.study) meta.study = {};
     const key = todayStr();
@@ -4602,27 +4667,35 @@
   }
 
   function studyBarHtml(){
-    const done = studySeconds();
+    const done = bankSeconds();          // since these ten words arrived
+    const today = studySeconds();
+    const earlier = Math.max(0, done - today);
     const goal = DAILY_GOAL_MIN * 60;
     const pct = Math.min(100, Math.round((done / goal) * 100));
     const met = done >= goal;
     const left = Math.max(0, Math.ceil((goal - done) / 60));
+    const carried = earlier > 59
+      ? ' <span class="studying">&middot; ' + hhmm(earlier) + ' carried over</span>'
+      : '';
 
     let note;
     if(met){
-      note = '<p class="studybar-note met"><b>Done for today.</b> Tomorrow brings '
-        + LEARNSET_SIZE + ' new words.</p>';
+      note = '<p class="studybar-note met"><b>These ten are paid for.</b> '
+        + LEARNSET_SIZE + ' new words are waiting for you tomorrow.</p>';
     } else if(done === 0){
-      note = '<p class="studybar-note">Study <b>' + hhmm(goal) + '</b> today and tomorrow '
-        + 'brings ' + LEARNSET_SIZE + ' new words. Until then you keep the ones you have.</p>';
+      note = '<p class="studybar-note">Study <b>' + hhmm(goal) + '</b> on these ten and '
+        + LEARNSET_SIZE + ' new words follow. It does not have to be in one day &mdash; '
+        + 'the time adds up until you get there.</p>';
     } else {
       note = '<p class="studybar-note"><b>' + left + ' minute' + (left === 1 ? '' : 's')
-        + ' to go</b> to unlock tomorrow&rsquo;s ' + LEARNSET_SIZE + ' words.</p>';
+        + ' to go</b> for the next ' + LEARNSET_SIZE + ' words'
+        + (earlier > 59 ? ', counting the time you have already put in.' : '.') + '</p>';
     }
 
     return '<div class="studybar" id="studybar">'
-      + '<div class="studybar-line"><span>Studied today'
+      + '<div class="studybar-line"><span>Studied'
         + (studying() ? ' <span class="studying">&middot; counting</span>' : '')
+        + carried
         + '</span>'
         + '<span><b class="'+(met?'met':'')+'">' + hhmm(done) + '</b> of ' + hhmm(goal) + '</span></div>'
       + '<div class="studybar-track"><span class="'+(met?'met':'')+'" style="width:'+pct+'%"></span></div>'
@@ -4630,7 +4703,6 @@
       + '</div>';
   }
 
-  // Repainted in place on every tick, so it never disturbs the page.
   function paintStudyBar(){
     const host = document.getElementById('studybar-host');
     if(host) host.innerHTML = studyBarHtml();
@@ -4853,6 +4925,9 @@
     const token = ++scToken;
     chatListening = true;
     chatPhase = 'listening';
+    // Whatever went wrong last time is not true any more; leaving it on
+    // screen while it listens happily is just confusing.
+    chat.error = '';
     renderChat();
 
     const ok = await ensureMic();
