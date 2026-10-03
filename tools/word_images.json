@@ -75,6 +75,7 @@
   ]
  },
  "504 Main words::Conceal": {
+  "none": "nothing found",
   "q": "hiding object drawer"
  },
  "504 Main words::Corpse": {
@@ -135,6 +136,7 @@
   "q": "engineers designing blueprint"
  },
  "504 Main words::Dismal": {
+  "none": "nothing found",
   "q": "disappointed losing team"
  },
  "504 Main words::Eliminate": {
@@ -242,6 +244,7 @@
   "why": "Overgrown, unkept house shows neglect"
  },
  "504 Main words::Numb": {
+  "none": "nothing found",
   "q": "cold numb fingers"
  },
  "504 Main words::Oath": {
@@ -286,6 +289,7 @@
   ]
  },
  "504 Main words::Qualify": {
+  "none": "nothing found",
   "q": "scholarship acceptance letter"
  },
  "504 Main words::Recline": {
@@ -364,6 +368,7 @@
   "q": "-"
  },
  "504 Main words::Unaccustomed": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Main words::Undoubtedly": {
@@ -580,6 +585,7 @@
   "q": "camouflaged animal rocks"
  },
  "504 Secondary::Boatman": {
+  "none": "nothing found",
   "q": "boatman rowing boat"
  },
  "504 Secondary::Bound": {
@@ -628,6 +634,7 @@
   "q": "people holding hands"
  },
  "504 Secondary::Broke in": {
+  "none": "nothing found",
   "q": "burglar breaking window"
  },
  "504 Secondary::Brought out": {
@@ -716,6 +723,7 @@
   "q": "-"
  },
  "504 Secondary::Cheat": {
+  "none": "nothing found",
   "q": "student cheating exam"
  },
  "504 Secondary::Cheating": {
@@ -914,6 +922,7 @@
   "q": "scientist new species"
  },
  "504 Secondary::Dishonest": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Disobey": {
@@ -981,6 +990,7 @@
   "q": "encyclopedia books"
  },
  "504 Secondary::Entered": {
+  "none": "nothing found",
   "q": "person entering room"
  },
  "504 Secondary::Excessive": {
@@ -1021,9 +1031,11 @@
   "q": "eye chart"
  },
  "504 Secondary::FBI": {
+  "none": "nothing found",
   "q": "FBI badge"
  },
  "504 Secondary::Facing the peril": {
+  "none": "nothing found",
   "q": "facing danger"
  },
  "504 Secondary::Fall asleep": {
@@ -1062,6 +1074,7 @@
   "q": "campfire flames"
  },
  "504 Secondary::Fled": {
+  "none": "nothing found",
   "q": "family fleeing fire"
  },
  "504 Secondary::Flirting": {
@@ -1111,6 +1124,7 @@
   "q": "frightened child"
  },
  "504 Secondary::Frightening": {
+  "none": "nothing found",
   "q": "scary thunderstorm"
  },
  "504 Secondary::Frightening someone out of something": {
@@ -1163,6 +1177,7 @@
   "q": "confused expression"
  },
  "504 Secondary::Give up": {
+  "none": "nothing found",
   "q": "exhausted runner stopping"
  },
  "504 Secondary::Go into": {
@@ -1204,6 +1219,7 @@
   "q": "wall tapestry"
  },
  "504 Secondary::He drew": {
+  "none": "nothing found",
   "q": "man drawing picture"
  },
  "504 Secondary::Heated": {
@@ -1423,6 +1439,7 @@
   "why": "Fast food workers, typical low-paid job"
  },
  "504 Secondary::Maid": {
+  "none": "nothing found",
   "q": "maid cleaning room"
  },
  "504 Secondary::Major": {
@@ -1586,6 +1603,7 @@
   "q": "-"
  },
  "504 Secondary::Not used to": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Noted": {
@@ -1613,6 +1631,7 @@
   "q": "-"
  },
  "504 Secondary::On account of hardship": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::On the contrary": {
@@ -1658,6 +1677,7 @@
   "q": "boarding up windows"
  },
  "504 Secondary::Plot": {
+  "none": "nothing found",
   "q": "storyboard sketch"
  },
  "504 Secondary::Pointed": {
@@ -1858,6 +1878,7 @@
   "q": "human eye closeup"
  },
  "504 Secondary::Sinister-looking": {
+  "none": "nothing found",
   "q": "sinister looking man"
  },
  "504 Secondary::Sinking ship": {
@@ -1973,6 +1994,7 @@
   "q": "forest stream"
  },
  "504 Secondary::Stretch out": {
+  "none": "nothing found",
   "q": "stretching on sofa"
  },
  "504 Secondary::Stuck in": {
@@ -2178,12 +2200,14 @@
   "q": "mechanic tuning engine"
  },
  "504 Secondary::Uncovered": {
+  "none": "nothing found",
   "q": "uncovered food plate"
  },
  "504 Secondary::Unforgettable": {
   "q": "-"
  },
  "504 Secondary::Unless": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "504 Secondary::Upbringing": {
@@ -2563,6 +2587,7 @@
   ]
  },
  "School vocabulary::Ashes": {
+  "none": "nothing found",
   "q": "campfire ashes"
  },
  "School vocabulary::Assert": {
@@ -3704,6 +3729,7 @@
   "q": "human head"
  },
  "School vocabulary::Head down": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Heads up": {
@@ -4131,6 +4157,7 @@
   ]
  },
  "School vocabulary::Onto": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Outer space": {
@@ -4330,6 +4357,7 @@
   ]
  },
  "School vocabulary::Proper": {
+  "none": "nothing found",
   "q": "toolbox tools"
  },
  "School vocabulary::Prove": {
@@ -4684,6 +4712,7 @@
   "why": "Boat visibly going under water"
  },
  "School vocabulary::Snap": {
+  "none": "nothing found",
   "q": "broken fishing rod"
  },
  "School vocabulary::Snatch": {
