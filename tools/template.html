@@ -2772,6 +2772,10 @@
       + heroHtml
       + '<div class="stage-row">'+stagePills+'</div>'
       + '<div id="studybar-host">'+studyBarHtml()+'</div>'
+      + (masteredWords().length >= 4
+          ? '<button class="btn-secondary" id="go-practice" style="margin-top:10px;">'
+            + 'Practice talking &middot; any time &rarr;</button>'
+          : '')
       + (chatUnlocked()
           ? '<button class="btn-primary" id="go-chat" style="margin-top:16px;">'
             + 'Use today&rsquo;s words in a conversation &rarr;</button>'
@@ -2859,7 +2863,13 @@
 
     wireAddWord();
     const chatBtn = el('#go-chat');
-    if(chatBtn) chatBtn.addEventListener('click', renderChatPicker);
+    if(chatBtn) chatBtn.addEventListener('click', ()=>{ chatFree = false; renderChatPicker(); });
+    const practiceBtn = el('#go-practice');
+    if(practiceBtn) practiceBtn.addEventListener('click', ()=>{
+      chatFree = true;
+      chatPracticeList = null;     // a fresh ten each time he comes here
+      renderChatPicker();
+    });
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
@@ -5239,6 +5249,48 @@
     return todaysSet().map(w=>w.w);
   }
 
+  // The day's conversation is earned. This one is not: it is for turning
+  // up at nine at night wanting to talk, and it uses words already
+  // mastered, which is the other half of keeping them -- a word you can
+  // recognise on a card and cannot reach for in a sentence is not yours
+  // yet.
+  const PRACTICE_SIZE = 10;
+
+  function masteredWords(){
+    return WORDS.filter(w=>statusOf(w.id) === 'mastered');
+  }
+
+  // Held once chosen. The picker redraws itself whenever a situation is
+  // built, and shuffling again each time meant the situation was invented
+  // for one set of words and the conversation then ran on another.
+  let chatPracticeList = null;
+
+  function chatPracticeWords(){
+    if(chatPracticeList) return chatPracticeList;
+    const mastered = masteredWords();
+    if(!mastered.length) return [];
+    // Longest since it was last seen goes first, so a conversation
+    // reaches for the ones quietly going cold rather than the same ten
+    // every night.
+    const aged = mastered.slice().sort((a,b)=>{
+      const pa = progress[a.id] || {}, pb = progress[b.id] || {};
+      const ta = pa.lastSeen ? new Date(pa.lastSeen).getTime() : 0;
+      const tb = pb.lastSeen ? new Date(pb.lastSeen).getTime() : 0;
+      return ta - tb;
+    });
+    // a little room at the top so it is not identical every time
+    const pool = aged.slice(0, Math.max(PRACTICE_SIZE, Math.min(aged.length, PRACTICE_SIZE * 2)));
+    for(let i = pool.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+    }
+    chatPracticeList = pool.slice(0, PRACTICE_SIZE).map(w=>w.w);
+    return chatPracticeList;
+  }
+
+  // Which conversation screen we are on: the day's words, or practice.
+  let chatFree = false;
+
   function chatUnlocked(){
     const set = todaysSet();
     return set.length > 0 && set.every(w=>statusOf(w.id)==='mastered');
@@ -5251,24 +5303,25 @@
   function madeCardHtml(){
     if(chatMade === 'thinking'){
       return '<button class="scene scene-made" disabled>'
-        + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+        + '<span class="scene-tag">' + (chatFree ? 'Made for these ten' : 'Made for today&rsquo;s words') + '</span>'
         + '<b>Thinking of one&hellip;</b>'
         + '<span>Looking for a situation these ten would really come up in.</span>'
         + '</button>';
     }
     if(chatMade && chatMade.name){
       return '<button class="scene scene-made" id="scene-made">'
-        + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+        + '<span class="scene-tag">' + (chatFree ? 'Made for these ten' : 'Made for today&rsquo;s words') + '</span>'
         + '<b>'+esc(chatMade.name)+'</b><span>'+esc(chatMade.blurb||'')+'</span></button>'
         + '<div class="scene-actions">'
           + '<button class="btn-secondary" id="scene-another">Think of another</button>'
         + '</div>';
     }
     return '<button class="scene scene-made" id="scene-make">'
-      + '<span class="scene-tag">Made for today&rsquo;s words</span>'
+      + '<span class="scene-tag">' + (chatFree ? 'Made for these ten' : 'Made for today&rsquo;s words') + '</span>'
       + '<b>Build one around these ten</b>'
-      + '<span>A situation where your words would actually come up, '
-      + 'rather than one off a list.</span></button>';
+      + '<span>A situation where '
+      + (chatFree ? 'these words' : 'your words')
+      + ' would actually come up, rather than one off a list.</span></button>';
   }
 
   async function makeScenario(){
@@ -5290,15 +5343,21 @@
 
   function renderChatPicker(){
     scStopListening();
-    const words = chatWordsForToday();
+    const words = chatFree ? chatPracticeWords() : chatWordsForToday();
     root.innerHTML = '<div class="view">'
-      + '<div class="eyebrow">Conversation</div>'
-      + '<h1 class="title">Use them for real</h1>'
-      + '<p class="subtitle">Someone plays a part and you talk to them. Your '
-        + words.length + ' words are the ones the conversation is built to need &mdash; '
-        + 'and only the ones <em>you</em> write count. Once you are in, say '
-        + '<b>&ldquo;imagine we are&hellip;&rdquo;</b> at any point and the '
-        + 'conversation moves to wherever you said.</p>'
+      + '<div class="eyebrow">'
+        + (chatFree ? 'Practice &middot; any time' : 'Conversation') + '</div>'
+      + '<h1 class="title">'
+        + (chatFree ? 'Keep them in your mouth' : 'Use them for real') + '</h1>'
+      + '<p class="subtitle">Someone plays a part and you talk to them. '
+        + (chatFree
+            ? 'These ' + words.length + ' are words you have already mastered, '
+              + 'the ones longest since you last saw them. Nothing here is '
+              + 'marked or counted &mdash; it is practice, for whenever you want it.'
+            : 'Your ' + words.length + ' words are the ones the conversation is '
+              + 'built to need &mdash; and only the ones <em>you</em> write count.')
+        + ' Once you are in, say <b>&ldquo;imagine we are&hellip;&rdquo;</b> at any '
+        + 'point and the conversation moves to wherever you said.</p>'
       + '<div class="chat-words">'
         + words.map(w=>'<span class="chat-word">'+esc(w)+'</span>').join('')
       + '</div>'

@@ -152,6 +152,22 @@ glossary* button, so it can go into your spreadsheet like any other.
 
 Both work on practice cards too, not only in the conversation.
 
+### Practice talking, any time
+
+The conversation above is earned: it opens when the day's ten are
+mastered. **Practice talking** does not wait for anything. It is on the
+home screen whenever you have four words or more behind you, and it is
+the same partner, the same situations, the same corrections.
+
+The difference is the words. It takes ten you have **already mastered** --
+the ones longest since you last saw them -- because a word you can
+recognise on a card and cannot reach for in a sentence is not really
+yours yet. Nothing in it is marked or counted toward the day's hour. It
+is practice.
+
+A fresh ten each time you come to it, and they stay the same ten for as
+long as you are in there.
+
 **Say "imagine we are..." and the conversation goes there.** At any
 point, typed or out loud: *"imagine we are at the airport and the
 airline has lost my bag"*. The situation you asked for is the one you
