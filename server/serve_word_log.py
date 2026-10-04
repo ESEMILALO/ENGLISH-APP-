@@ -321,7 +321,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
             result = chat.ask(sent.get("history") or [],
                               sent.get("scenario") or "",
                               sent.get("words") or [],
-                              first=bool(sent.get("first")))
+                              first=bool(sent.get("first")),
+                              practice=bool(sent.get("practice")))
             if result.get("ok") and result.get("used"):
                 sys.stdout.write("  chat: used %s\n" % ", ".join(result["used"]))
                 sys.stdout.flush()

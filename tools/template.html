@@ -490,6 +490,25 @@
   }
   .scene-turn em{ display:block; font-size:.84rem; color:var(--text-soft); margin-top:3px; }
 
+  /* a word worth reaching for, while talking freely */
+  .nudge{
+    display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;
+    border:1px solid var(--amber-deep); background:rgba(212,160,74,.09);
+    border-radius:11px; padding:10px 13px; margin-top:10px;
+  }
+  .nudge-tag{
+    font-family:var(--mono); font-size:.56rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--amber-deep);
+  }
+  .nudge-word{ font-family:var(--cond); font-size:1.1rem; color:var(--text); }
+  .nudge-why{ color:var(--text-soft); font-size:.82rem; flex:1; min-width:9rem; }
+  .nudge.done{ border-color:var(--good); background:rgba(92,174,124,.1); }
+  .nudge.done .nudge-tag{ color:var(--good); }
+  .nudge-count{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--text-soft);
+  }
+
   /* the bit you have to do before the conversation carries on */
   .drill{
     border:1px solid var(--warn); background:rgba(213,124,78,.08);
@@ -3055,6 +3074,20 @@
   // mistakes stop the conversation -- something merely phrased oddly is
   // worth knowing and not worth being held up by.
 
+  // Shown while talking freely: one word, and where it would fit. Not a
+  // list to get through -- the conversation is the point, and this is a
+  // reminder that a word he has learnt is sitting there unused.
+  function nudgeHtml(){
+    if(!chatNudge) return '';
+    return '<div class="nudge'+(chatNudge.used ? ' done' : '')+'">'
+      + '<span class="nudge-tag">'
+        + (chatNudge.used ? 'you used it' : 'try to use') + '</span>'
+      + '<span class="nudge-word">' + esc(chatNudge.word) + '</span>'
+      + (chatNudge.why && !chatNudge.used
+          ? '<span class="nudge-why">' + esc(chatNudge.why) + '</span>' : '')
+      + '</div>';
+  }
+
   function drillHtml(){
     if(!chatDrill) return '';
     const fix = chatDrill.fixes[chatDrill.at];
@@ -5264,6 +5297,7 @@
   // built, and shuffling again each time meant the situation was invented
   // for one set of words and the conversation then ran on another.
   let chatPracticeList = null;
+  let chatNudge = null;        // {word, why, used} -- a word worth reaching for
 
   function chatPracticeWords(){
     if(chatPracticeList) return chatPracticeList;
@@ -5613,7 +5647,9 @@
     chatDrill = null;
     chatPhase = 'idle';
     chatHeard = '';
+    chatNudge = null;
     chat = { id: newChatId(), scenario: scenario, words: words, used: [], turns: [],
+             practice: !!chatFree,
              startedAt: new Date().toISOString(), sceneAt: 0, busy: true, error: '' };
     rememberChat();
     renderChat();
@@ -5626,7 +5662,8 @@
   function rememberChat(){
     chats.current = chat ? {
       id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
-      turns: chat.turns, startedAt: chat.startedAt, sceneAt: chat.sceneAt || 0
+      turns: chat.turns, startedAt: chat.startedAt, sceneAt: chat.sceneAt || 0,
+      practice: !!chat.practice
     } : null;
     saveChats();
   }
@@ -5646,10 +5683,12 @@
     if(!saved) return false;
     if(!chats.current || chats.current.id !== saved.id) parkCurrentChat();
     chats.past = (chats.past || []).filter(c=>c.id !== saved.id);
+    chatNudge = null;
     chat = { id: saved.id || newChatId(), scenario: saved.scenario,
              words: saved.words || [], used: saved.used || [],
              turns: saved.turns || [], startedAt: saved.startedAt,
-             sceneAt: saved.sceneAt || 0, busy: false, error: '' };
+             sceneAt: saved.sceneAt || 0, practice: !!saved.practice,
+             busy: false, error: '' };
     rememberChat();
     renderChat();
     return true;
@@ -5854,7 +5893,8 @@
     root.innerHTML = '<div class="view"><div class="chat-wrap">'
       + '<div class="chat-head">'
         + '<div class="eyebrow">' + esc(chat.scenario.name)
-          + ' &middot; ' + done + ' of ' + total + ' used</div>'
+          + (chat.practice ? '' : ' &middot; ' + done + ' of ' + total + ' used')
+          + '</div>'
         + '<div class="chat-tools">'
           + (chatVoiceOnly || !canListen || !canSpeak
               ? ''
@@ -5865,10 +5905,16 @@
                 + ICON_SPEAKER + (chatSpeaks ? 'voice on' : 'voice off') + '</button>')
         + '</div>'
       + '</div>'
-      + '<div class="chat-words">'
-        + chat.words.map(w=>'<span class="chat-word'
-            + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
-      + '</div>'
+      + (chat.practice
+          ? (chat.used.length
+              ? '<div class="nudge-count">' + chat.used.length + ' word'
+                + (chat.used.length === 1 ? '' : 's') + ' of yours slipped in</div>'
+              : '')
+            + nudgeHtml()
+          : '<div class="chat-words">'
+            + chat.words.map(w=>'<span class="chat-word'
+                + (chat.used.indexOf(w) >= 0 ? ' used' : '') + '">'+esc(w)+'</span>').join('')
+            + '</div>')
       + (chatVoiceOnly ? talkViewHtml() : writtenChatHtml())
       + '<button class="reset-link" id="chat-end" style="margin-top:10px;">'
         + 'End the conversation &rarr;</button>'
@@ -6035,7 +6081,8 @@
       const out = await fetch('/api/chat', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ history: history, words: chat.words,
-                               scenario: chat.scenario.role, first: !!first })
+                               scenario: chat.scenario.role, first: !!first,
+                               practice: !!chat.practice })
       }).then(r=>r.json());
 
       chat.busy = false;
@@ -6044,6 +6091,15 @@
       } else {
         const fresh = (out.used || []).filter(w=>chat.used.indexOf(w) < 0);
         fresh.forEach(w=>chat.used.push(w));
+        // Reaching for the suggested word is the whole point of suggesting
+        // it, so say so, and do not suggest another in the same breath.
+        if(chatNudge && fresh.indexOf(chatNudge.word) >= 0){
+          chatNudge = Object.assign({}, chatNudge, { used: true });
+        } else if(out.nudge && out.nudge.word){
+          chatNudge = { word: out.nudge.word, why: out.nudge.why || '', used: false };
+        } else if(chatNudge && chatNudge.used){
+          chatNudge = null;        // it has been seen; make room for the next
+        }
         if(!first && chat.turns.length){
           const mine = chat.turns[chat.turns.length - 1];
           if(mine.who === 'you'){
@@ -6208,6 +6264,7 @@
 
   function endChat(){
     stopChatListening();
+    chatNudge = null;
     chatDrill = null;
     chatNote = null;
     if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
@@ -6217,14 +6274,16 @@
     chatVoiceOnly = false;   // the next conversation starts written unless asked
     const done = chat ? chat.used.length : 0;
     const total = chat ? chat.words.length : 0;
-    const missed = chat ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
+    const wasPractice = !!(chat && chat.practice);
+    const missed = (chat && !wasPractice)
+      ? chat.words.filter(w=>chat.used.indexOf(w) < 0) : [];
     let parked = null;
     if(chat && chat.turns.length){
       chats.past = (chats.past || []).filter(c=>c.id !== chat.id);
       parked = {
         id: chat.id, scenario: chat.scenario, words: chat.words, used: chat.used,
         turns: chat.turns, startedAt: chat.startedAt, sceneAt: chat.sceneAt || 0,
-        endedAt: new Date().toISOString()
+        practice: !!chat.practice, endedAt: new Date().toISOString()
       };
       chats.past.unshift(parked);
     }
@@ -6238,8 +6297,17 @@
     }
     root.innerHTML = '<div class="view">'
       + '<div class="eyebrow">Conversation</div>'
-      + '<h1 class="title">'+done+' of '+total+' used</h1>'
-      + '<p class="subtitle">'+(done === total
+      + '<h1 class="title">'
+        + (wasPractice
+            ? (done ? done + ' of your words came back' : 'Talked')
+            : done+' of '+total+' used')
+        + '</h1>'
+      + '<p class="subtitle">'+(wasPractice
+          ? (done
+              ? 'That is what they are for. Nothing here was counted; it was practice.'
+              : 'None of your old words came up this time, which is fine \u2014 you talked, '
+                + 'and that was the point.')
+          : done === total
           ? 'Every word, in a real conversation. That is the whole point of them.'
           : (done
               ? 'Good going. The ones that did not come up are worth another conversation.'

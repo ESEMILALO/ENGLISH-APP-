@@ -159,14 +159,28 @@ mastered. **Practice talking** does not wait for anything. It is on the
 home screen whenever you have four words or more behind you, and it is
 the same partner, the same situations, the same corrections.
 
-The difference is the words. It takes ten you have **already mastered** --
-the ones longest since you last saw them -- because a word you can
-recognise on a card and cannot reach for in a sentence is not really
-yours yet. Nothing in it is marked or counted toward the day's hour. It
-is practice.
+The difference is that there is no list to get through. Talk about
+whatever comes up; it follows you. There is no counter in the corner and
+no row of words to tick off.
 
-A fresh ten each time you come to it, and they stay the same ten for as
-long as you are in there.
+What it does instead is **remind you**. Now and then -- roughly one turn
+in three, and only when one would really fit -- a line appears above the
+conversation:
+
+    TRY TO USE   High up   this is a moment for it
+
+They are words you have **already mastered**, the ones longest since you
+last saw them, because a word you can recognise on a card and cannot
+reach for in a sentence is not really yours yet. Use it and the line
+turns green: *you used it*. Ignore it and the conversation carries on
+regardless -- it is a reminder, not a task.
+
+If nothing on your list fits what you are talking about, it says nothing.
+A nudge that does not fit is worse than none, because then you bend the
+conversation to fit the word.
+
+Nothing here is counted toward the day's hour, and it never touches your
+daily ten.
 
 **Say "imagine we are..." and the conversation goes there.** At any
 point, typed or out loud: *"imagine we are at the airport and the

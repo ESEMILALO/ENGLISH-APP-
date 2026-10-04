@@ -96,6 +96,46 @@ Neither the fixes nor the praise belong in "reply". You stay in character \
 there; the corrections arrive separately, beside the conversation."""
 
 
+PRACTICE = """You are the same conversation partner, but this is not the \
+day's lesson. They have come to talk because they felt like talking.
+
+So: no list to get through. Follow whatever they bring up, the way the \
+person you are playing would. Ask about it. Disagree with them. Let it \
+wander.
+
+WORDS THEY ALREADY KNOW:
+%(words)s
+
+These are words they have learnt and are starting to forget -- the point \
+of knowing them is reaching for them without being asked. Now and then, \
+when one of them would genuinely fit the next thing they might say, nudge \
+them toward it. Not every turn: roughly one in three, and never twice in \
+a row. If none of them fits what is being talked about, do not reach for \
+one -- a nudge that does not fit is worse than none, because they then \
+twist the conversation to fit the word.
+
+Do not use the word yourself when you nudge: there is nothing left to \
+produce if you have just said it.
+
+Return ONLY a JSON object, no other text:
+
+{"reply": "what you say, in character",
+ "used": ["words from the list above that they used correctly"],
+ "fixes": [{"said": "...", "better": "...", "why": "...", "kind": "error"}],
+ "praise": "...",
+ "nudge": {"word": "...", "why": "..."}}
+
+"nudge" is the suggestion, or null when there is no good one. "word" is \
+spelled exactly as it stands on the list; "why" is a short line saying \
+where it would fit, addressed to them -- "this is a moment for it", "you \
+could use it about the weather here". Never the meaning: they know the \
+meaning, that is why it is on the list.
+
+For "fixes" and "praise", exactly as before: everything worth changing in \
+THE LAST MESSAGE THEY SENT and nothing else, quoting their own words, \
+worst first, up to four; "praise" only when there was nothing to fix."""
+
+
 EXPLAIN = """Someone learning English, whose first language is Spanish, \
 has picked out something they did not understand. Explain it.
 
@@ -454,17 +494,20 @@ def opening(scenario, words, name="the learner"):
     return ask([], scenario, words, name, first=True)
 
 
-def ask(history, scenario, words, name="the learner", first=False):
+def ask(history, scenario, words, name="the learner", first=False, practice=False):
     """One turn. history is [{role, content}, ...] of the real conversation."""
     if not model.have_key():
         return {"ok": False, "error": "no key",
                 "message": "Conversation practice needs a key. A free Google Gemini key, pasted into server/gemini_key.txt, is enough -- no payment and no card."}
 
-    system = SYSTEM % {
+    if practice:
+        system = PRACTICE % {"words": "\n".join("- " + w for w in words)}
+    else:
+        system = SYSTEM % {
         "name": name,
         "scenario": scenario,
         "words": "\n".join("- " + w for w in words),
-    }
+        }
 
     messages = list(history)[-MAX_TURNS:]
     if first or not messages:
@@ -543,9 +586,19 @@ def ask(history, scenario, words, name="the learner", first=False):
         first = 'You said "%s" -- in English it is "%s".' % (
             fixes[0]["said"], fixes[0]["better"])
 
+    # A nudge toward a word he does not actually have is noise, so it has
+    # to be one of his.
+    nudge = None
+    raw = out.get("nudge")
+    if isinstance(raw, dict):
+        word = lower.get(str(raw.get("word") or "").strip().lower())
+        if word and word not in used:
+            nudge = {"word": word, "why": str(raw.get("why") or "").strip()}
+
     return {"ok": True,
             "reply": (out.get("reply") or "").strip(),
             "used": used,
             "fixes": fixes,
+            "nudge": nudge,
             "praise": "" if fixes else str(out.get("praise") or "").strip(),
             "correction": first}
