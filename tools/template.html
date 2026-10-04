@@ -1601,7 +1601,10 @@
     learnSets.daily = {
       wordIds: picks.map(w=>w.id),
       day: todayStr(),
-      startedAt: new Date().toISOString()
+      startedAt: new Date().toISOString(),
+      // where the clock stood when these ten arrived; the hour is
+      // measured from here
+      studyAt: totalStudy()
     };
     saveLearnSets();
     return picks;
@@ -5068,8 +5071,30 @@
   // is still recorded on its own -- the calendar and the history are
   // unchanged -- this only decides when the next ten are earnt, and it
   // does that by adding the days up rather than watching one of them.
+  // Every second ever studied. It only goes up -- the server refuses a
+  // write that would shorten a day -- so it works as an odometer, and the
+  // hour for a set of words is just the distance travelled since they
+  // arrived.
+  function totalStudy(){
+    const all = (meta && meta.study) || {};
+    let total = 0;
+    Object.keys(all).forEach(day=>{ total += all[day] || 0; });
+    return total;
+  }
+
+  // The hour starts again the moment ten new words arrive. Counting from
+  // the start of that day would hand the new set whatever had already
+  // been studied that morning, which is time that was spent on the words
+  // before it.
   function bankSeconds(){
-    const from = dailySetDay();
+    const daily = learnSets.daily;
+    if(!daily) return totalStudy();
+    if(typeof daily.studyAt === 'number'){
+      return Math.max(0, totalStudy() - daily.studyAt);
+    }
+    // A set from before this was recorded: fall back to counting whole
+    // days from the one it arrived on, which is what it did then.
+    const from = daily.day;
     if(!from) return studySeconds();
     const all = (meta && meta.study) || {};
     let total = 0;

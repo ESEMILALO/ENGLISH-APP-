@@ -261,6 +261,20 @@ word that was said still there, so you can read over it afterwards.
 Nothing is written on screen while you talk, which is the point: it is
 the closest this gets to a person in front of you.
 
+### The hour
+
+The hour is counted from the moment those ten words arrived, not from
+midnight. Forty minutes on Monday and twenty-five on Tuesday is an hour
+of studying these words, and Tuesday morning does not throw Monday away.
+
+And when ten new words arrive, **the hour starts again at zero**. Time
+you spent that morning on the ten you had before does not count toward
+the ten you have just been given: they are new words and they want their
+own hour.
+
+Each day is still recorded on its own, so the calendar and the history
+are unchanged. This only decides when the next ten are earned.
+
 **It waits while you think.** A pause of up to four seconds is not the
 end of your turn, and the browser stopping to listen part-way through
 does not end it either -- it starts again underneath while your clock
