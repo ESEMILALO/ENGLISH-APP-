@@ -490,6 +490,28 @@
   }
   .scene-turn em{ display:block; font-size:.84rem; color:var(--text-soft); margin-top:3px; }
 
+  /* saying the corrected version back */
+  .fix-say{
+    display:inline-flex; align-items:center; gap:6px; margin-top:7px;
+    background:var(--panel); border:1px solid var(--rule); color:var(--text);
+    border-radius:8px; padding:5px 10px; cursor:pointer;
+    font-family:var(--sans); font-size:.76rem;
+  }
+  .fix-say svg{ width:12px; height:12px; }
+  .fix-say:hover{ border-color:var(--amber); }
+  .fix-say.listening{ background:var(--warn); border-color:var(--warn); color:var(--bg); }
+  .fix-say:disabled{ opacity:.55; cursor:default; }
+  .fix-heard{ margin-top:6px; font-size:.78rem; line-height:1.5; }
+  .fix-heard .ok{ color:var(--good); }
+  .fix-heard .miss{ color:var(--warn); text-decoration:underline;
+    text-decoration-style:wavy; text-underline-offset:3px; }
+  .fix-verdict{
+    font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; margin-top:5px; display:block;
+  }
+  .fix-verdict.good{ color:var(--good); }
+  .fix-verdict.again{ color:var(--warn); }
+
   /* everything that was wrong with what you just said */
   .fixlist{ margin:7px 0 0; display:flex; flex-direction:column; gap:6px; }
   .fix-item{
@@ -2847,6 +2869,131 @@
 
   // Everything worth changing about what was just said, laid out so the
   // wrong version and the right one can be read against each other.
+  // Hear it, then say it. Reading a correction and moving on is how the
+  // same mistake comes back next sentence.
+  function sayItBackHtml(better){
+    if(!canListen) return '';
+    const got = fixSaid[better];
+    const state = got ? got.state : 'idle';
+    const label = state === 'listening' ? 'Listening\u2026'
+      : (state === 'speaking' ? 'Listen\u2026'
+      : (got && got.score !== undefined ? 'Say it again' : 'Say it back'));
+    return '<button class="fix-say'+(state === 'listening' ? ' listening' : '')+'" '
+        + 'data-say="'+esc(better)+'"'
+        + (state === 'listening' || state === 'speaking' ? ' disabled' : '')+'>'
+        + ICON_MIC + esc(label) + '</button>'
+      + (got && got.diffHtml
+          ? '<div class="fix-heard">' + got.diffHtml
+            + '<span class="fix-verdict '+(got.score >= 70 ? 'good' : 'again')+'">'
+            + (got.score >= 70 ? 'that is it \u2014 ' + got.score + '%'
+                               : 'not quite \u2014 ' + got.score + '%, try once more')
+            + '</span></div>'
+          : '')
+      + (got && got.error ? '<div class="fix-heard miss">'+esc(got.error)+'</div>' : '');
+  }
+
+  // One repeat at a time, and it owns the microphone while it runs: the
+  // conversation may be listening for the next thing to say, and two
+  // things listening at once means neither hears anything.
+  let fixRepeating = null;
+
+  function paintFixes(){
+    // Only the correction cards are redrawn. renderChat would rebuild the
+    // page underneath a button that is in the middle of being used.
+    document.querySelectorAll('.fix-item').forEach(card=>{
+      const better = (card.querySelector('.fix-better') || {}).textContent || '';
+      const old = card.querySelector('.fix-say');
+      if(!old) return;
+      const holder = document.createElement('div');
+      holder.innerHTML = sayItBackHtml(better);
+      let after = old.nextElementSibling;
+      while(after && (after.classList.contains('fix-heard'))){
+        const next = after.nextElementSibling;
+        after.remove();
+        after = next;
+      }
+      old.replaceWith(...holder.childNodes);
+    });
+    wireSayItBack();
+  }
+
+  async function sayItBack(better){
+    if(!canListen || fixRepeating) return;
+    fixRepeating = better;
+
+    // Whatever else was listening stops: the conversation's own turn can
+    // wait a few seconds while this one word is practised.
+    const wasInTalk = chatVoiceOnly && chatListening;
+    stopChatListening();
+    if(wasInTalk){ chatPhase = 'idle'; }
+
+    fixSaid[better] = { state: 'speaking' };
+    paintFixes();
+
+    await new Promise(done => speak(better, done));
+    if(fixRepeating !== better) return;
+
+    const ok = await ensureMic();
+    if(fixRepeating !== better) return;
+    if(!ok){
+      fixSaid[better] = { state: 'idle', error: speechErrorMessage('not-allowed') };
+      fixRepeating = null;
+      paintFixes();
+      return;
+    }
+
+    const token = ++scToken;
+    const recognition = scGetRecognizer();
+    recognition.continuous = false;      // one short sentence, said once
+    recognition.interimResults = false;
+    fixSaid[better] = { state: 'listening' };
+    paintFixes();
+
+    const finish = (result)=>{
+      if(scToken !== token && result) return;
+      fixSaid[better] = result;
+      fixRepeating = null;
+      paintFixes();
+      // and the conversation picks its turn back up
+      if(wasInTalk && chat && !chat.busy && chatVoiceOnly) chatListen();
+    };
+
+    recognition.onresult = (e)=>{
+      if(scToken !== token) return;
+      const said = (e.results[0][0].transcript || '').trim();
+      const scored = scScorePhrase(better, said);
+      finish({ state: 'idle', score: scored.score,
+               diffHtml: scored.diffHtml, transcript: said });
+    };
+    recognition.onerror = (e)=>{
+      if(scToken !== token) return;
+      const code = e.error || 'error';
+      if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+      finish({ state: 'idle', error: speechErrorMessage(code) });
+    };
+    recognition.onend = ()=>{
+      if(scToken !== token) return;
+      if(fixRepeating === better) finish({ state: 'idle' });
+    };
+    setTimeout(()=>{
+      if(scToken !== token) return;
+      try{ recognition.start(); }
+      catch(err){
+        try{ recognition.abort(); }catch(e2){}
+        scRecognizer = null;
+        finish({ state: 'idle', error: speechErrorMessage('error') });
+      }
+    }, 250);
+  }
+
+  function wireSayItBack(){
+    document.querySelectorAll('.fix-say[data-say]').forEach(b=>{
+      if(b.dataset.wired) return;
+      b.dataset.wired = '1';
+      b.addEventListener('click', ()=>sayItBack(b.dataset.say));
+    });
+  }
+
   function fixesHtml(turn){
     const fixes = turn.fixes || [];
     if(!fixes.length){
@@ -2863,6 +3010,7 @@
           + '<div class="fix-said">'+esc(f.said)+'</div>'
           + '<div class="fix-better">'+esc(f.better)+'</div>'
           + (f.why ? '<div class="fix-why">'+esc(f.why)+'</div>' : '')
+          + sayItBackHtml(f.better)
         + '</div>').join('')
       + '</div>';
   }
@@ -4987,6 +5135,11 @@
   let chatPhase = 'idle';      // idle | listening | thinking | speaking
   let chatHeard = '';          // the last thing it caught, for when it mishears
   let chatNote = null;         // the turn whose corrections are beside the circle
+  // Saying the right version back is the part that changes anything: you
+  // can read "I went" and still say "I am going" ten seconds later. Keyed
+  // by the words themselves, so the same correction keeps its result
+  // through a redraw and in both views.
+  let fixSaid = {};            // better text -> {state, score, diffHtml}
   let chatNoteTimer = null;
   let chatSilence = null;      // how long it has been quiet
   let chatTurnClosed = false;  // this turn is over; a late result is not wanted
@@ -5399,6 +5552,7 @@
         + 'End the conversation &rarr;</button>'
       + '</div></div>';
 
+    wireSayItBack();
     const log = el('#chat-log');
     if(log) log.scrollTop = log.scrollHeight;
     const input = el('#chat-input');
@@ -5539,6 +5693,7 @@
     // A new turn starts bare: what was shown belonged to the last one.
     talkShown = false;
     talkGloss = null;
+    fixSaid = {};
     chat.busy = true;
     chat.error = '';
     chatPhase = 'thinking';
@@ -5644,6 +5799,7 @@
             + 'Delete this conversation</button>')
       + '</div>';
     wireReview(c, paintReview);
+    wireSayItBack();
     el('#past-back').addEventListener('click', ()=>{ chatDeleting = null; renderChatPicker(); });
     el('#past-continue').addEventListener('click', ()=>{ chatDeleting = null; openChat(c); });
     const del = el('#past-delete');

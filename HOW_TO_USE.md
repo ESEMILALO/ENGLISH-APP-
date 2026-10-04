@@ -205,6 +205,22 @@ Only the message you just sent is marked up. Earlier ones were marked
 when you sent them, and seeing the same three corrections after every
 sentence is how you learn to stop reading them.
 
+**Then say it back.** Every correction has a **Say it back** button. It
+reads the right version out loud, listens for you to repeat it, and
+shows you word by word how close you got: green for the words you said,
+underlined for the ones you missed, with a score. Over seventy per cent
+is *that is it*; under that is *not quite, try once more*, and the
+button becomes **Say it again** for as many goes as you want.
+
+This is the part that changes anything. Reading "I went" and moving on
+is how "I am going" comes back in the next sentence; saying it is how it
+stops.
+
+It works the same while you are talking, where the correction sits
+beside the circle. Practising borrows the microphone from the
+conversation for those few seconds and hands it straight back, so the
+conversation is listening for you again the moment you have finished.
+
 **You can speak instead of typing.** Tap the microphone, say your reply,
 and it goes in as your message — no need to press send afterwards. It
 reads its own replies out loud too; *voice on* in the corner turns that
