@@ -186,9 +186,24 @@ so each one has to come from you. A word you wrote exactly as it stands
 on the list always counts, whether or not the partner noticed it. Recognising a word is easy; producing
 one in the middle of a conversation is the thing worth practising.
 
-It also corrects you, briefly and in character, when you make a real
-mistake — a conversation that lets everything past is pleasant and
-useless.
+**It marks up everything you say.** Not the worst mistake -- every one
+worth changing in that message, up to four, each as three things: your
+own words struck through, the way to say them, and the habit behind it.
+Where it comes from Spanish it says so, because that is the one you will
+make again: *"I no can walk"* comes back as *"I couldn't walk"* with
+"'no can' is a direct translation from Spanish".
+
+Things that are correct but that nobody really says are marked
+differently, as **more natural** rather than **not right**, so you can
+tell a mistake from a polish.
+
+And when a sentence was right, it says that too, in green -- *"past
+tense all correct"*. A conversation that only ever tells you what is
+wrong teaches you nothing about what is working.
+
+Only the message you just sent is marked up. Earlier ones were marked
+when you sent them, and seeing the same three corrections after every
+sentence is how you learn to stop reading them.
 
 **You can speak instead of typing.** Tap the microphone, say your reply,
 and it goes in as your message — no need to press send afterwards. It

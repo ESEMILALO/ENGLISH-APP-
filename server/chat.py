@@ -54,16 +54,46 @@ Return ONLY a JSON object, no other text:
 
 {"reply": "what you say, in character",
  "used": ["target words they used correctly in their last message"],
- "correction": "one short note about a real mistake, or empty"}
+ "fixes": [{"said": "...", "better": "...", "why": "...", "kind": "error"}],
+ "praise": "..."}
 
 For "used": only words from the list above, spelled as they are in the list, \
 and only when used with the right meaning. A word they merely copied out of \
 your own question does not count.
 
-For "correction": only when it matters -- a wrong verb form, a word used with \
-the wrong meaning, a phrasing no one says. Write it as one friendly line, for \
-example: You said "I have 25 years" -- in English it is "I am 25 years old". \
-Leave it empty for small slips and for anything you understood fine."""
+For "fixes": go through THE LAST MESSAGE THEY SENT, and nothing else, and \
+list everything in it worth changing. Not the worst one -- all of them, \
+worst first, up to four. They have asked to be corrected on everything, \
+because that is how the mistakes stop.
+
+Only that message. The earlier ones in this conversation were corrected \
+when they were sent, and listing them again means they read the same three \
+corrections after every sentence and stop reading any of them. If the last \
+message was fine, say so in "praise" and leave "fixes" empty -- do not go \
+hunting backwards for something to report.
+
+Each entry is:
+- "said": their own words, quoted exactly, and only the part that is wrong. \
+Not the whole sentence when three words are the problem.
+- "better": the same thing said properly, in their voice, not a grander \
+sentence than they were reaching for.
+- "why": the rule or habit behind it, one short line, in plain words. \
+"Negatives need don't before the verb", not a grammar lecture. Where it \
+comes from Spanish, say so -- "no puedo" becoming "I no can" is worth \
+naming, because they will do it again otherwise.
+- "kind": "error" when it is actually wrong, "better" when it is correct \
+English that no one would really say. Mark word choice that is merely \
+unnatural as "better", not as an error.
+
+Ignore what is obviously the speech recognition mishearing them, and \
+ignore missing capitals and full stops: they are speaking, not writing.
+
+For "praise": when the whole message was right, say so in a few words, and \
+name what was good if something was -- "past tense all correct", "that is \
+exactly how a native would say it". Empty when there were fixes. Never both.
+
+Neither the fixes nor the praise belong in "reply". You stay in character \
+there; the corrections arrive separately, beside the conversation."""
 
 
 EXPLAIN = """Someone learning English, whose first language is Spanish, \
@@ -481,7 +511,41 @@ def ask(history, scenario, words, name="the learner", first=False):
             if re.search(r"(?<!\w)" + re.escape(w) + r"(?!\w)", said, re.I):
                 used.append(w)
 
+    # What they actually just said. A correction quoting anything else is
+    # either an earlier message being re-reported or words they never used,
+    # and both are worse than no correction: the first trains you to ignore
+    # them, the second has you fixing a sentence you did not write.
+    latest = ""
+    for m in reversed(messages):
+        if m.get("role") == "user":
+            latest = " ".join(str(m.get("content") or "").lower().split())
+            break
+
+    fixes = []
+    for f in (out.get("fixes") or [])[:4]:
+        if not isinstance(f, dict):
+            continue
+        said = str(f.get("said") or "").strip()
+        better = str(f.get("better") or "").strip()
+        if not said or not better or said == better:
+            continue
+        if latest and " ".join(said.lower().split()) not in latest:
+            continue
+        kind = str(f.get("kind") or "error").strip().lower()
+        fixes.append({"said": said, "better": better,
+                      "why": str(f.get("why") or "").strip(),
+                      "kind": "better" if kind == "better" else "error"})
+
+    # Older conversations, and anything reading this that has not been
+    # updated, still get the one-line version they expect.
+    first = ""
+    if fixes:
+        first = 'You said "%s" -- in English it is "%s".' % (
+            fixes[0]["said"], fixes[0]["better"])
+
     return {"ok": True,
             "reply": (out.get("reply") or "").strip(),
             "used": used,
-            "correction": (out.get("correction") or "").strip()}
+            "fixes": fixes,
+            "praise": "" if fixes else str(out.get("praise") or "").strip(),
+            "correction": first}

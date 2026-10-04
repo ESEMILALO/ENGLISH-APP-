@@ -490,10 +490,40 @@
   }
   .scene-turn em{ display:block; font-size:.84rem; color:var(--text-soft); margin-top:3px; }
 
+  /* everything that was wrong with what you just said */
+  .fixlist{ margin:7px 0 0; display:flex; flex-direction:column; gap:6px; }
+  .fix-item{
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--warn);
+    border-radius:9px; padding:8px 11px; text-align:left;
+  }
+  .fix-item.better{ border-left-color:var(--amber-deep); }
+  .fix-said{
+    color:var(--text-soft); text-decoration:line-through;
+    text-decoration-color:var(--warn); font-size:.84rem;
+  }
+  .fix-item.better .fix-said{ text-decoration-color:var(--amber-deep); }
+  .fix-better{ font-weight:700; font-size:.9rem; margin-top:2px; }
+  .fix-why{ color:var(--text-soft); font-size:.78rem; margin-top:4px; line-height:1.45; }
+  .fix-kind{
+    font-family:var(--mono); font-size:.54rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--warn); display:block; margin-bottom:3px;
+  }
+  .fix-item.better .fix-kind{ color:var(--amber-deep); }
+  .chat-praise{
+    margin:7px 0 0; padding:7px 11px; border-radius:9px; text-align:left;
+    background:rgba(92,174,124,.1); border:1px solid var(--good);
+    color:var(--text); font-size:.84rem;
+  }
+  .chat-praise b{
+    display:block; font-family:var(--mono); font-size:.54rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--good); margin-bottom:3px;
+  }
+
   /* a correction, next to the circle, while talking */
   .talk-note{
     position:absolute; left:calc(50% + 112px); top:50%;
-    transform:translateY(-50%); width:15rem; text-align:left;
+    transform:translateY(-50%); width:17rem; text-align:left;
+    max-height:70vh; overflow-y:auto;
     background:var(--panel); border:1px solid var(--warn); border-left-width:3px;
     border-radius:10px; padding:10px 12px; font-size:.84rem; line-height:1.45;
     color:var(--text); box-shadow:0 8px 22px rgba(0,0,0,.4);
@@ -2815,6 +2845,28 @@
     });
   }
 
+  // Everything worth changing about what was just said, laid out so the
+  // wrong version and the right one can be read against each other.
+  function fixesHtml(turn){
+    const fixes = turn.fixes || [];
+    if(!fixes.length){
+      if(turn.praise){
+        return '<div class="chat-praise"><b>right</b>' + esc(turn.praise) + '</div>';
+      }
+      // conversations from before this existed kept one line of text
+      return turn.fix ? '<div class="chat-fix">'+esc(turn.fix)+'</div>' : '';
+    }
+    return '<div class="fixlist">'
+      + fixes.map(f=>'<div class="fix-item'+(f.kind === 'better' ? ' better' : '')+'">'
+          + '<span class="fix-kind">'
+          + (f.kind === 'better' ? 'more natural' : 'not right') + '</span>'
+          + '<div class="fix-said">'+esc(f.said)+'</div>'
+          + '<div class="fix-better">'+esc(f.better)+'</div>'
+          + (f.why ? '<div class="fix-why">'+esc(f.why)+'</div>' : '')
+        + '</div>').join('')
+      + '</div>';
+  }
+
   // Shown under the meaning, never instead of it. The credit is required
   // by the licence the picture is shared under, and is kept small.
   function wordPicHtml(w){
@@ -4934,7 +4986,7 @@
   let chatVoiceOnly = false;   // talking, with nothing written down
   let chatPhase = 'idle';      // idle | listening | thinking | speaking
   let chatHeard = '';          // the last thing it caught, for when it mishears
-  let chatNote = '';           // a correction, shown beside the circle
+  let chatNote = null;         // the turn whose corrections are beside the circle
   let chatNoteTimer = null;
   let chatSilence = null;      // how long it has been quiet
   let chatTurnClosed = false;  // this turn is over; a late result is not wanted
@@ -5158,7 +5210,7 @@
                 + '<div class="chat-bubble">'+esc(t.text)+'</div>'
                 + (t.scored && t.scored.length
                     ? '<div class="chat-scored">+ '+t.scored.map(esc).join(', ')+'</div>' : '')
-                + (t.fix ? '<div class="chat-fix">'+esc(t.fix)+'</div>' : '')
+                + fixesHtml(t)
                 + '</div>';
             }
             return '<div class="chat-turn them"><div class="chat-who">'
@@ -5240,19 +5292,22 @@
   // Said wrong, told once. It appears beside the circle and takes itself
   // away again, because in a conversation you are holding by ear a
   // correction that stays on screen is just something else to ignore.
-  function showChatNote(text){
-    chatNote = (text || '').trim();
+  function showChatNote(turn){
+    chatNote = (turn && ((turn.fixes || []).length || turn.praise)) ? turn : null;
     if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
     if(!chatNote) return;
+    // Three corrections take longer to read than one.
+    const count = (chatNote.fixes || []).length || 1;
+    const linger = Math.min(26000, 8000 + count * 4000);
     chatNoteTimer = setTimeout(()=>{
       const note = document.querySelector('.talk-note');
       if(note) note.classList.add('going');
       chatNoteTimer = setTimeout(()=>{
-        chatNote = '';
+        chatNote = null;
         chatNoteTimer = null;
         if(chatVoiceOnly && chat) renderChat();
       }, 500);
-    }, 9000);
+    }, linger);
   }
 
   function talkViewHtml(){
@@ -5269,7 +5324,9 @@
           + 'aria-label="'+STATE[phase][0]+'">'
           + (phase === 'speaking' ? ICON_SPEAKER : ICON_MIC) + '</button>'
         + (chatNote
-            ? '<div class="talk-note"><b>say it like this</b>' + esc(chatNote) + '</div>'
+            ? '<div class="talk-note">'
+              + '<b>' + ((chatNote.fixes || []).length ? 'say it like this' : 'that was right')
+              + '</b>' + fixesHtml(chatNote) + '</div>'
             : '')
       + '</div>'
       + '<div class="talk-state">'+STATE[phase][0]+'</div>'
@@ -5512,10 +5569,12 @@
           const mine = chat.turns[chat.turns.length - 1];
           if(mine.who === 'you'){
             mine.scored = fresh;
-            mine.fix = out.correction || '';
+            mine.fixes = out.fixes || [];
+            mine.praise = out.praise || '';
+            mine.fix = out.correction || '';   // for anything older
             // Talking only, there is nowhere for it to be written down,
             // so it is shown beside the circle for long enough to read.
-            if(chatVoiceOnly) showChatNote(out.correction || '');
+            if(chatVoiceOnly) showChatNote(mine);
           }
         }
         chat.turns.push({ who:'them', text: out.reply });
@@ -5556,7 +5615,7 @@
               + '<div class="chat-bubble">'+esc(t.text)+'</div>'
               + (t.scored && t.scored.length
                   ? '<div class="chat-scored">+ '+t.scored.map(esc).join(', ')+'</div>' : '')
-              + (t.fix ? '<div class="chat-fix">'+esc(t.fix)+'</div>' : '')
+              + fixesHtml(t)
               + '</div>';
           }
           return '<div class="chat-turn them"><div class="chat-who">'+esc(c.scenario.name)+'</div>'
@@ -5660,7 +5719,7 @@
 
   function endChat(){
     stopChatListening();
-    chatNote = '';
+    chatNote = null;
     if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
     stopSpeaking();
     chatPhase = 'idle';
