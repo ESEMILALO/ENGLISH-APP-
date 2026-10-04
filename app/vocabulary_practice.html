@@ -4222,6 +4222,7 @@
     // to rejoin WORDS, or their progress would point at ids nothing here
     // can resolve.
     customWords.forEach(w=>{ if(!WORDS.some(x=>x.id === w.id)) WORDS.push(w); });
+    stampSet();
     saveProgressLocal();
     saveMeta();
     saveSpeechScores();
@@ -5082,6 +5083,23 @@
     return total;
   }
 
+  // A set from before the mark existed has no idea when its hour began,
+  // and counting whole days from the day it arrived hands it everything
+  // studied that morning on the words it replaced -- ten new words
+  // showing half an hour already done. So the first time such a set is
+  // seen, it is marked here and now: its hour starts from this moment.
+  //
+  // That costs whatever has genuinely been studied on it since it
+  // arrived, which is small, and it is the only honest answer available:
+  // the app has no record of where the clock stood when those words were
+  // handed over.
+  function stampSet(){
+    const daily = learnSets.daily;
+    if(!daily || typeof daily.studyAt === 'number') return;
+    daily.studyAt = totalStudy();
+    saveLearnSets();
+  }
+
   // The hour starts again the moment ten new words arrive. Counting from
   // the start of that day would hand the new set whatever had already
   // been studied that morning, which is time that was spent on the words
@@ -5089,19 +5107,8 @@
   function bankSeconds(){
     const daily = learnSets.daily;
     if(!daily) return totalStudy();
-    if(typeof daily.studyAt === 'number'){
-      return Math.max(0, totalStudy() - daily.studyAt);
-    }
-    // A set from before this was recorded: fall back to counting whole
-    // days from the one it arrived on, which is what it did then.
-    const from = daily.day;
-    if(!from) return studySeconds();
-    const all = (meta && meta.study) || {};
-    let total = 0;
-    Object.keys(all).forEach(day=>{
-      if(day >= from) total += all[day] || 0;   // 'YYYY-MM-DD' sorts as text
-    });
-    return total;
+    if(typeof daily.studyAt !== 'number') stampSet();
+    return Math.max(0, totalStudy() - (learnSets.daily.studyAt || 0));
   }
 
   function addStudy(seconds){

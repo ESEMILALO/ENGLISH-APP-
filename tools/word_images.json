@@ -2815,6 +2815,7 @@
    "https://commons.wikimedia.org/wiki/File:0704-vector-orange-man-using-mic.jpg"
   ]
  },
+ "School vocabulary::Bay": {},
  "School vocabulary::Be used to + verb-ing": {},
  "School vocabulary::Bear with me": {
   "none": "nothing to photograph",
@@ -2829,6 +2830,7 @@
    "https://commons.wikimedia.org/wiki/File:Modern_Husbands_(1919)_-_Ad_2.jpg"
   ]
  },
+ "School vocabulary::Beauty": {},
  "School vocabulary::Because of": {
   "none": "nothing to photograph",
   "q": "-"
@@ -3117,6 +3119,7 @@
  "School vocabulary::Cast": {
   "q": "casting fishing line"
  },
+ "School vocabulary::Catch": {},
  "School vocabulary::Catch somebody red-handed": {
   "none": "nothing found",
   "q": "police catching thief"
@@ -3139,6 +3142,7 @@
   "title": "Roman Sign Maison Drouhin (157453869).jpeg",
   "why": "Underground room with storage barrels"
  },
+ "School vocabulary::Charm": {},
  "School vocabulary::Chat with": {},
  "School vocabulary::Check in": {},
  "School vocabulary::Check out": {},
@@ -3197,6 +3201,7 @@
   "title": "JdN-DarkCorojo.jpg",
   "why": "Shows box of rolled cigars clearly"
  },
+ "School vocabulary::Claim": {},
  "School vocabulary::Clam up": {},
  "School vocabulary::Clean up": {},
  "School vocabulary::Clear away": {},
@@ -3214,6 +3219,7 @@
    "https://commons.wikimedia.org/wiki/File:New_Pennsylvania_$5,000,000_electrically_operated_coal_loader_Number_3_-_DPLA_-_db6b1bf6a646329fae65e424204d50c8_(page_1).jpg"
   ]
  },
+ "School vocabulary::Coastal": {},
  "School vocabulary::Coat": {
   "none": "nothing found",
   "q": "winter coat"
@@ -3482,6 +3488,7 @@
   ]
  },
  "School vocabulary::Drive off": {},
+ "School vocabulary::Drive on up": {},
  "School vocabulary::Drop by": {},
  "School vocabulary::Drop in on": {},
  "School vocabulary::Drop off": {},
@@ -3500,6 +3507,7 @@
  "School vocabulary::Ease up": {},
  "School vocabulary::Eat out": {},
  "School vocabulary::Eat up": {},
+ "School vocabulary::Effortless": {},
  "School vocabulary::Elderly": {
   "none": "Illustration, not a real photograph",
   "q": "elderly person",
@@ -3548,6 +3556,7 @@
   "none": "nothing found",
   "q": "enzyme molecule model"
  },
+ "School vocabulary::Equator": {},
  "School vocabulary::Escalator": {
   "by": "Прес-служба Правительства Москвы",
   "file": "escalator-250233dc05.jpg",
@@ -3747,6 +3756,7 @@
   "title": "Свадьба Ирины и Алёны Шумиловых в Санкт-Петербурге (2).jpg",
   "why": "Two brides marrying, same-sex couple"
  },
+ "School vocabulary::Gear": {},
  "School vocabulary::Get across": {},
  "School vocabulary::Get along with": {},
  "School vocabulary::Get away with": {},
@@ -3942,6 +3952,8 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "School vocabulary::Head off": {},
+ "School vocabulary::Head off down": {},
  "School vocabulary::Heads up": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4059,6 +4071,8 @@
   "none": "nothing found",
   "q": "needle in haystack"
  },
+ "School vocabulary::Jogger": {},
+ "School vocabulary::Joggers": {},
  "School vocabulary::Join in": {},
  "School vocabulary::Jot down": {
   "none": "None show quick handwriting action clear",
@@ -4124,6 +4138,7 @@
   "none": "nothing found",
   "q": "courtroom hearing"
  },
+ "School vocabulary::Lead": {},
  "School vocabulary::Lean on": {},
  "School vocabulary::Leaps and bounds": {
   "none": "nothing to photograph",
@@ -4438,6 +4453,7 @@
   "title": "MilletPorridge.JPG",
   "why": "Shows thick soft mixture in pot"
  },
+ "School vocabulary::Path": {},
  "School vocabulary::Pay back": {},
  "School vocabulary::Pay in": {},
  "School vocabulary::Pay off": {},
@@ -4512,6 +4528,7 @@
   "none": "nothing found",
   "q": "pleased smiling person"
  },
+ "School vocabulary::Plenty": {},
  "School vocabulary::Plug in": {},
  "School vocabulary::Point out": {},
  "School vocabulary::Pointy": {
@@ -4564,6 +4581,7 @@
    "https://commons.wikimedia.org/wiki/File:Tada_Mitsunaka_Grave.jpg"
   ]
  },
+ "School vocabulary::Postcard": {},
  "School vocabulary::Postscript": {
   "none": "nothing found",
   "q": "handwritten letter postscript"
@@ -4625,6 +4643,7 @@
   "none": "nothing found",
   "q": "toolbox tools"
  },
+ "School vocabulary::Proudly": {},
  "School vocabulary::Prove": {
   "none": "nothing found",
   "q": "presenting evidence"
@@ -4633,6 +4652,7 @@
   "none": "nothing found",
   "q": "teasing dog"
  },
+ "School vocabulary::Pull around": {},
  "School vocabulary::Pull off": {},
  "School vocabulary::Pull out": {
   "none": "nothing found",
@@ -4910,6 +4930,7 @@
  },
  "School vocabulary::Scroll down": {},
  "School vocabulary::Scroll up": {},
+ "School vocabulary::Seaside": {},
  "School vocabulary::See through": {},
  "School vocabulary::Seize": {
   "none": "No real photo shows seizing action",
@@ -4972,7 +4993,11 @@
    "https://commons.wikimedia.org/wiki/File:Green_Circle_2.png"
   ]
  },
+ "School vocabulary::Shelf": {},
+ "School vocabulary::Shelves": {},
+ "School vocabulary::Shimmering": {},
  "School vocabulary::Shop around": {},
+ "School vocabulary::Shoreline": {},
  "School vocabulary::Shoulder holster": {
   "none": "nothing found",
   "q": "shoulder holster"
@@ -5044,6 +5069,7 @@
    "https://commons.wikimedia.org/wiki/File:Messydesk-node-ui.png"
   ]
  },
+ "School vocabulary::Sparkling": {},
  "School vocabulary::Speak out": {},
  "School vocabulary::Speak up": {},
  "School vocabulary::Speed up": {},
@@ -5146,6 +5172,8 @@
   "none": "nothing to photograph",
   "q": "-"
  },
+ "School vocabulary::Straight on the hook": {},
+ "School vocabulary::Stretches": {},
  "School vocabulary::Stretches across": {
   "by": "Iveta Drábková",
   "file": "stretches-across-bbb1cacc00.jpg",
@@ -5187,6 +5215,7 @@
   ]
  },
  "School vocabulary::Sum up": {},
+ "School vocabulary::Sunset": {},
  "School vocabulary::Supper": {
   "by": "Henri Bergius from Finland",
   "file": "supper-0829c4999b.jpg",
@@ -5335,6 +5364,7 @@
   "none": "nothing found",
   "q": "tight shoes"
  },
+ "School vocabulary::Timeless": {},
  "School vocabulary::Tissue": {
   "by": "Captain MarcusL",
   "file": "tissue-7591ad3a21.jpg",
@@ -5395,6 +5425,7 @@
   "none": "nothing found",
   "q": "helping stranger"
  },
+ "School vocabulary::Tricky": {},
  "School vocabulary::Troublesome": {
   "none": "No photo clearly shows troublesome meani",
   "q": "broken machine",
@@ -5404,6 +5435,7 @@
    "https://commons.wikimedia.org/wiki/File:Ice_Breaking_Machine._-_DPLA_-_3453cc4bf1e7347b2d3dc2ec87a7f427_(page_3).jpg"
   ]
  },
+ "School vocabulary::Trout": {},
  "School vocabulary::Try on": {},
  "School vocabulary::Tuition": {
   "none": "nothing found",

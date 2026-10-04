@@ -275,6 +275,11 @@ own hour.
 Each day is still recorded on its own, so the calendar and the history
 are unchanged. This only decides when the next ten are earned.
 
+The moment a set is built, the app writes down where the study clock
+stood. That mark is what the hour is measured from — not the date, which
+would hand ten new words whatever had already been studied that morning
+on the ten they replaced.
+
 **It waits while you think.** A pause of up to four seconds is not the
 end of your turn, and the browser stopping to listen part-way through
 does not end it either -- it starts again underneath while your clock
