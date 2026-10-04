@@ -205,12 +205,35 @@ Only the message you just sent is marked up. Earlier ones were marked
 when you sent them, and seeing the same three corrections after every
 sentence is how you learn to stop reading them.
 
-**Then say it back.** Every correction has a **Say it back** button. It
-reads the right version out loud, listens for you to repeat it, and
-shows you word by word how close you got: green for the words you said,
-underlined for the ones you missed, with a score. Over seventy per cent
-is *that is it*; under that is *not quite, try once more*, and the
-button becomes **Say it again** for as many goes as you want.
+**And the conversation waits while you say it properly.** When you get
+something actually wrong, everything stops: the reply is already written
+and it is held back, the typing box goes away, and one correction is put
+in front of you.
+
+    SAY THIS BEFORE CARRYING ON  ·  1 of 2
+    I am going
+    I went
+    Yesterday needs the past tense, not the present.
+    [ Say it ]  [ Hear it ]
+
+**Say it** reads it out loud, then listens for you to repeat it, and
+marks what you said word by word: green for the words you got,
+underlined for the ones you missed, with a score. Seventy per cent or
+better is *that is it*, and it moves straight on to the next one. Below
+that is *not quite, say it once more*, and it stays where it is.
+
+Only when they are all said does the reply arrive and the conversation
+carry on. That is the point: a correction you can scroll past is a
+correction you will make again next sentence.
+
+Things that are merely phrased oddly, marked **more natural** rather
+than **not right**, do not stop anything. They sit under your message
+with a **Say it back** button if you want the practice.
+
+**It will never trap you.** After two goes at the same one, **Carry on
+anyway** appears, and it is there from the start if your browser has no
+microphone. A word the recogniser simply cannot hear must not be the end
+of a conversation.
 
 This is the part that changes anything. Reading "I went" and moving on
 is how "I am going" comes back in the next sentence; saying it is how it

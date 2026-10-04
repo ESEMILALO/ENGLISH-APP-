@@ -490,6 +490,48 @@
   }
   .scene-turn em{ display:block; font-size:.84rem; color:var(--text-soft); margin-top:3px; }
 
+  /* the bit you have to do before the conversation carries on */
+  .drill{
+    border:1px solid var(--warn); background:rgba(213,124,78,.08);
+    border-radius:14px; padding:15px 17px; margin-top:12px;
+  }
+  .drill-head{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--warn); margin-bottom:9px;
+  }
+  .drill-count{ color:var(--text-soft); }
+  .drill-wrong{
+    color:var(--text-soft); text-decoration:line-through;
+    text-decoration-color:var(--warn); font-size:.86rem;
+  }
+  .drill-right{
+    font-family:var(--cond); font-size:1.32rem; line-height:1.3;
+    color:var(--text); margin:3px 0 4px;
+  }
+  .drill-why{ color:var(--text-soft); font-size:.82rem; line-height:1.5; }
+  .drill-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .drill-actions button{
+    background:var(--amber); color:var(--amber-ink); border:none; border-radius:10px;
+    padding:10px 16px; font-family:var(--sans); font-weight:700; font-size:.86rem;
+    cursor:pointer;
+  }
+  .drill-actions button.quiet{
+    background:var(--panel); border:1px solid var(--rule); color:var(--text-soft);
+    font-weight:400;
+  }
+  .drill-actions button:disabled{ opacity:.55; cursor:default; }
+  .drill-heard{ margin-top:10px; font-size:.9rem; line-height:1.6; }
+  .drill-heard .ok{ color:var(--good); }
+  .drill-heard .miss{ color:var(--warn); text-decoration:underline;
+    text-decoration-style:wavy; text-underline-offset:3px; }
+  .drill-verdict{
+    display:block; margin-top:6px; font-family:var(--mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase;
+  }
+  .drill-verdict.good{ color:var(--good); }
+  .drill-verdict.again{ color:var(--warn); }
+  .drill-done{ color:var(--good); font-size:.86rem; margin-top:9px; }
+
   /* saying the corrected version back */
   .fix-say{
     display:inline-flex; align-items:center; gap:6px; margin-top:7px;
@@ -2994,6 +3036,181 @@
     });
   }
 
+  // ---- Say it properly, then carry on ---------------------------------
+  //
+  // The reply is already written when this starts; it waits. Only real
+  // mistakes stop the conversation -- something merely phrased oddly is
+  // worth knowing and not worth being held up by.
+
+  function drillHtml(){
+    if(!chatDrill) return '';
+    const fix = chatDrill.fixes[chatDrill.at];
+    if(!fix) return '';
+    const got = chatDrill.result;
+    const busy = chatDrill.state === 'listening' || chatDrill.state === 'speaking';
+    const label = chatDrill.state === 'listening' ? 'Listening\u2026'
+      : (chatDrill.state === 'speaking' ? 'Listen\u2026'
+      : (got ? 'Say it again' : 'Say it'));
+
+    return '<div class="drill">'
+      + '<div class="drill-head">Say this before carrying on'
+        + (chatDrill.fixes.length > 1
+            ? ' <span class="drill-count">&middot; ' + (chatDrill.at + 1)
+              + ' of ' + chatDrill.fixes.length + '</span>'
+            : '')
+      + '</div>'
+      + '<div class="drill-wrong">' + esc(fix.said) + '</div>'
+      + '<div class="drill-right">' + esc(fix.better) + '</div>'
+      + (fix.why ? '<div class="drill-why">' + esc(fix.why) + '</div>' : '')
+      + (got && got.diffHtml
+          ? '<div class="drill-heard">' + got.diffHtml
+            + '<span class="drill-verdict '+(got.score >= DRILL_PASS ? 'good' : 'again')+'">'
+            + (got.score >= DRILL_PASS
+                ? 'that is it \u2014 ' + got.score + '%'
+                : 'not quite \u2014 ' + got.score + '%, say it once more')
+            + '</span></div>'
+          : '')
+      + (got && got.error ? '<div class="drill-heard miss">'+esc(got.error)+'</div>' : '')
+      + '<div class="drill-actions">'
+        + (canListen
+            ? '<button id="drill-say"'+(busy ? ' disabled' : '')+'>'
+              + ICON_MIC + label + '</button>'
+            : '')
+        + '<button class="quiet" id="drill-hear"'+(busy ? ' disabled' : '')+'>'
+          + 'Hear it</button>'
+        // Never a dead end: a microphone that will not work, or a word the
+        // recogniser simply cannot hear, must not end the conversation.
+        + ((chatDrill.tries >= 2 || !canListen)
+            ? '<button class="quiet" id="drill-skip">Carry on anyway</button>'
+            : '')
+      + '</div>'
+      + '</div>';
+  }
+
+  function startDrill(fixes, reply){
+    // only what was actually wrong holds things up
+    const must = (fixes || []).filter(f=>f.kind !== 'better');
+    if(!must.length) return false;
+    chatDrill = { fixes: must, at: 0, reply: reply, tries: 0,
+                  result: null, state: 'idle' };
+    return true;
+  }
+
+  function drillNext(){
+    if(!chatDrill) return;
+    chatDrill.at++;
+    chatDrill.tries = 0;
+    chatDrill.result = null;
+    chatDrill.state = 'idle';
+    if(chatDrill.at >= chatDrill.fixes.length) releaseReply();
+    else renderChat();
+  }
+
+  // The conversation picks up exactly where it would have.
+  function releaseReply(){
+    const reply = chatDrill ? chatDrill.reply : '';
+    chatDrill = null;
+    if(!chat) return;
+    if(reply){
+      chat.turns.push({ who:'them', text: reply });
+      rememberChat();
+      chatPhase = 'speaking';
+      renderChat();
+      chatSay(reply, afterSpeaking);
+      return;
+    }
+    renderChat();
+  }
+
+  async function drillSpeak(){
+    if(!chatDrill || chatDrill.state !== 'idle') return;
+    const fix = chatDrill.fixes[chatDrill.at];
+    chatDrill.state = 'speaking';
+    renderChat();
+    await new Promise(done => speak(fix.better, done));
+    if(!chatDrill) return;
+    chatDrill.state = 'idle';
+    renderChat();
+  }
+
+  async function drillListen(){
+    if(!canListen || !chatDrill || chatDrill.state !== 'idle') return;
+    const fix = chatDrill.fixes[chatDrill.at];
+
+    stopChatListening();
+    chatDrill.state = 'speaking';
+    chatDrill.result = null;
+    renderChat();
+    await new Promise(done => speak(fix.better, done));
+    if(!chatDrill) return;
+
+    const ok = await ensureMic();
+    if(!chatDrill) return;
+    if(!ok){
+      chatDrill.state = 'idle';
+      chatDrill.tries++;
+      chatDrill.result = { error: speechErrorMessage('not-allowed') };
+      renderChat();
+      return;
+    }
+
+    const token = ++scToken;
+    const recognition = scGetRecognizer();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    chatDrill.state = 'listening';
+    renderChat();
+
+    const settle = (result)=>{
+      if(scToken !== token || !chatDrill) return;
+      chatDrill.state = 'idle';
+      chatDrill.tries++;
+      chatDrill.result = result;
+      if(result && result.score >= DRILL_PASS){
+        renderChat();
+        // a beat to read "that is it" before it moves on
+        setTimeout(()=>{ if(chatDrill) drillNext(); }, 1100);
+        return;
+      }
+      renderChat();
+    };
+
+    recognition.onresult = (e)=>{
+      if(scToken !== token) return;
+      const said = (e.results[0][0].transcript || '').trim();
+      const scored = scScorePhrase(fix.better, said);
+      settle({ score: scored.score, diffHtml: scored.diffHtml, transcript: said });
+    };
+    recognition.onerror = (e)=>{
+      if(scToken !== token) return;
+      const code = e.error || 'error';
+      if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+      settle({ error: speechErrorMessage(code) });
+    };
+    recognition.onend = ()=>{
+      if(scToken !== token || !chatDrill) return;
+      if(chatDrill.state === 'listening') settle({ error: 'Did not catch that.' });
+    };
+    setTimeout(()=>{
+      if(scToken !== token) return;
+      try{ recognition.start(); }
+      catch(err){
+        try{ recognition.abort(); }catch(e2){}
+        scRecognizer = null;
+        settle({ error: speechErrorMessage('error') });
+      }
+    }, 250);
+  }
+
+  function wireDrill(){
+    const say = document.getElementById('drill-say');
+    if(say) say.addEventListener('click', drillListen);
+    const hear = document.getElementById('drill-hear');
+    if(hear) hear.addEventListener('click', drillSpeak);
+    const skip = document.getElementById('drill-skip');
+    if(skip) skip.addEventListener('click', drillNext);
+  }
+
   function fixesHtml(turn){
     const fixes = turn.fixes || [];
     if(!fixes.length){
@@ -5140,6 +5357,13 @@
   // by the words themselves, so the same correction keeps its result
   // through a redraw and in both views.
   let fixSaid = {};            // better text -> {state, score, diffHtml}
+
+  // What has to be said properly before the conversation goes on. The
+  // reply is already written by then and is simply held: letting it
+  // through and offering the correction alongside is how a correction
+  // becomes something to scroll past.
+  let chatDrill = null;        // {fixes, at, reply, tries, result}
+  const DRILL_PASS = 70;       // per cent of the words, the same bar the cards use
   let chatNoteTimer = null;
   let chatSilence = null;      // how long it has been quiet
   let chatTurnClosed = false;  // this turn is over; a late result is not wanted
@@ -5295,6 +5519,7 @@
 
   function startChat(scenario, words){
     parkCurrentChat();
+    chatDrill = null;
     chatPhase = 'idle';
     chatHeard = '';
     chat = { id: newChatId(), scenario: scenario, words: words, used: [], turns: [],
@@ -5373,17 +5598,18 @@
         + (chat.busy ? '<p class="chat-thinking">typing&hellip;</p>' : '')
         + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
       + '</div>'
-      + (chatListening ? '<p class="chat-heard">listening&hellip; speak now</p>' : '')
-      + '<div class="chat-ask">'
-        + (canListen
+      + (chatDrill ? drillHtml() : '')
+      + (chatListening && !chatDrill ? '<p class="chat-heard">listening&hellip; speak now</p>' : '')
+      + (chatDrill ? '' : '<div class="chat-ask">')
+        + (canListen && !chatDrill
             ? '<button class="chat-mic'+(chatListening?' on':'')+'" id="chat-mic" '
               + 'aria-label="Speak your reply"'+(chat.busy?' disabled':'')+'>'+ICON_MIC+'</button>'
             : '')
-        + '<input type="text" id="chat-input" placeholder="'
+        + (chatDrill ? '' : '<input type="text" id="chat-input" placeholder="'
           + (canListen ? 'Write your reply, or tap the microphone' : 'Write your reply in English')
-          + '..." autocomplete="off"'+(chat.busy?' disabled':'')+'>'
-        + '<button id="chat-send"'+(chat.busy?' disabled':'')+'>Send</button>'
-      + '</div>';
+          + '..." autocomplete="off"'+(chat.busy?' disabled':'')+'>')
+        + (chatDrill ? '' : '<button id="chat-send"'+(chat.busy?' disabled':'')+'>Send</button>')
+      + (chatDrill ? '' : '</div>');
   }
 
   // Talking only: nothing is written down, the way a real conversation is.
@@ -5470,6 +5696,10 @@
       speaking:  ['talking', 'It listens again the moment it stops.'],
       idle:      ['tap to talk', 'Tap the circle and say something.']
     };
+    if(chatDrill){
+      STATE.idle = ['say it properly', 'The conversation waits for this one.'];
+      STATE.listening = ['say it properly', 'The conversation waits for this one.'];
+    }
     const phase = STATE[chatPhase] ? chatPhase : 'idle';
     return '<div class="talk">'
       + '<div class="talk-orb-wrap">'
@@ -5485,6 +5715,7 @@
       + '<div class="talk-state">'+STATE[phase][0]+'</div>'
       + '<p class="talk-hint">'+STATE[phase][1]+'</p>'
       + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
+      + (chatDrill ? drillHtml() : '')
       + (talkShown ? talkLineHtml() : '')
       + '<div class="talk-actions">'
         + (lastThemSaid()
@@ -5583,8 +5814,10 @@
       renderChat();
       chatListen();
     });
+    wireDrill();
     const orb = el('#talk-orb');
     if(orb) orb.addEventListener('click', ()=>{
+      if(chatDrill){ drillListen(); return; }
       if(chatPhase === 'speaking'){
         stopSpeaking();
         chatPhase = 'idle';
@@ -5732,12 +5965,21 @@
             if(chatVoiceOnly) showChatNote(mine);
           }
         }
-        chat.turns.push({ who:'them', text: out.reply });
-        // In talking-only mode the turn carries on by itself: it speaks,
-        // and when it has finished speaking it listens again. Anything
-        // else would mean reaching for the screen every sentence.
-        chatPhase = 'speaking';
-        chatSay(out.reply, afterSpeaking);
+        // Something was actually wrong: say it properly first. The reply
+        // is written and waits -- handing it over with the correction
+        // underneath is how a correction becomes something to scroll past.
+        if(startDrill(out.fixes, out.reply)){
+          chatPhase = 'idle';
+          stopChatListening();
+          renderChat();
+        } else {
+          chat.turns.push({ who:'them', text: out.reply });
+          // In talking-only mode the turn carries on by itself: it speaks,
+          // and when it has finished speaking it listens again. Anything
+          // else would mean reaching for the screen every sentence.
+          chatPhase = 'speaking';
+          chatSay(out.reply, afterSpeaking);
+        }
       }
     }catch(e){
       chat.busy = false;
@@ -5875,6 +6117,7 @@
 
   function endChat(){
     stopChatListening();
+    chatDrill = null;
     chatNote = null;
     if(chatNoteTimer){ clearTimeout(chatNoteTimer); chatNoteTimer = null; }
     stopSpeaking();
