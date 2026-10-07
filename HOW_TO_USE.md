@@ -320,6 +320,17 @@ stood. That mark is what the hour is measured from — not the date, which
 would hand ten new words whatever had already been studied that morning
 on the ten they replaced.
 
+**Practice talking does not count toward it.** The hour buys the next ten
+words and has to be paid in the ten you have; time spent talking freely
+with words you mastered a fortnight ago is worth doing and is not that.
+Cards, the check at the door and the day's own conversation all count.
+
+**Start this hour again** sits under the bar. If the figure is ever wrong
+— time that went somewhere else, a set that inherited an afternoon it did
+not earn — it puts the hour back to 0:00. It asks first, and it does not
+touch your record of time studied: the calendar and the history stay
+exactly as they are. Only what counts toward these ten words changes.
+
 **It waits while you think.** A pause of up to four seconds is not the
 end of your turn, and the browser stopping to listen part-way through
 does not end it either -- it starts again underneath while your clock

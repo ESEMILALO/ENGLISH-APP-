@@ -704,6 +704,25 @@
     transition:width .4s ease;
   }
   .studybar-track span.met{ background:var(--good); }
+  .studybar-reset{
+    background:none; border:none; color:var(--text-soft); cursor:pointer;
+    font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
+    text-transform:uppercase; padding:2px 0; margin-top:7px; text-align:left;
+  }
+  .studybar-reset:hover{ color:var(--warn); }
+  .studybar-sure{
+    border:1px solid var(--warn); background:rgba(213,124,78,.08);
+    border-radius:10px; padding:11px 13px; margin-top:9px;
+  }
+  .studybar-sure p{ margin:0 0 9px; font-size:.84rem; line-height:1.5; }
+  .studybar-sure .row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .studybar-sure button{
+    border-radius:9px; padding:8px 14px; cursor:pointer;
+    font-family:var(--sans); font-size:.82rem;
+  }
+  .studybar-sure .yes{ background:var(--warn); border:none; color:var(--bg); font-weight:700; }
+  .studybar-sure .no{ background:var(--panel); border:1px solid var(--rule); color:var(--text); }
+
   .studybar-note{ font-size:.8rem; color:var(--text-soft); line-height:1.5; margin:8px 2px 0; }
   .studybar-note b{ color:var(--text); font-weight:600; }
   .studybar-note.met b{ color:var(--good); }
@@ -2698,6 +2717,7 @@
 
   function renderHome(){
     scStopListening();   // whatever was listening belongs to a screen we have left
+    studyResetArmed = false;
     clearFreshTimer(); // this render replaces the block the old timer was painting
     const stats = computeStats(WORDS);
     const catRows = CATEGORIES.map(c=>{
@@ -2897,6 +2917,7 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
+    wireStudyBar();
     wireKeyRow();
     wireVoiceRow();
     wireCalendar();
@@ -5139,6 +5160,7 @@
   let lastInteraction = Date.now();
   let studyTimer = null;
   let studyUnsaved = 0;
+  let studyResetArmed = false;   // asked once before anything is zeroed
 
   function studySeconds(day){
     const all = (meta && meta.study) || {};
@@ -5210,7 +5232,12 @@
   function studying(){
     if(document.visibilityState !== 'visible') return false;
     if(Date.now() - lastInteraction > STUDY_IDLE_MS) return false;
-    // a card, the check at the door, or a conversation: all of it is study
+    // Free talk is not the day's work. The hour buys the next ten words,
+    // and it has to be paid in the ten he has -- time spent talking about
+    // the weather with words he mastered a fortnight ago is worth doing
+    // and is not that.
+    if(chat && chat.practice) return false;
+    // a card, the check at the door, or the day's conversation
     return !!document.querySelector('.card')
         || !!document.getElementById('recall-scrim')
         || !!document.querySelector('.chat-wrap');
@@ -5278,12 +5305,48 @@
         + '<span><b class="'+(met?'met':'')+'">' + hhmm(done) + '</b> of ' + hhmm(goal) + '</span></div>'
       + '<div class="studybar-track"><span class="'+(met?'met':'')+'" style="width:'+pct+'%"></span></div>'
       + note
+      + (studyResetArmed
+          ? '<div class="studybar-sure">'
+            + '<p>Start the hour for these ten words again from <b>0:00</b>? '
+            + 'The ' + hhmm(done) + ' counted so far stops counting toward '
+            + 'them.<br>Your record of time studied is not touched \u2014 the '
+            + 'calendar and your history stay exactly as they are.</p>'
+            + '<div class="row">'
+              + '<button class="yes" id="studybar-yes">Yes, start again</button>'
+              + '<button class="no" id="studybar-no">Never mind</button>'
+            + '</div>'
+          + '</div>'
+          : '<button class="studybar-reset" id="studybar-reset">'
+            + 'Start this hour again &rarr;</button>')
       + '</div>';
+  }
+
+  // When the figure is wrong -- time that went on something else, or a
+  // set that inherited an afternoon it did not earn -- this puts the hour
+  // back to nothing without touching the record of what was studied.
+  function resetThisHour(){
+    if(!learnSets.daily) return;
+    learnSets.daily.studyAt = totalStudy();
+    saveLearnSets();
+    backupSoon();
+    studyResetArmed = false;
+    paintStudyBar();
+  }
+
+  function wireStudyBar(){
+    const ask = document.getElementById('studybar-reset');
+    if(ask) ask.addEventListener('click', ()=>{ studyResetArmed = true; paintStudyBar(); });
+    const yes = document.getElementById('studybar-yes');
+    if(yes) yes.addEventListener('click', resetThisHour);
+    const no = document.getElementById('studybar-no');
+    if(no) no.addEventListener('click', ()=>{ studyResetArmed = false; paintStudyBar(); });
   }
 
   function paintStudyBar(){
     const host = document.getElementById('studybar-host');
-    if(host) host.innerHTML = studyBarHtml();
+    if(!host) return;
+    host.innerHTML = studyBarHtml();
+    wireStudyBar();
   }
 
   // --- Using the words for real ------------------------------------------
