@@ -152,12 +152,22 @@ glossary* button, so it can go into your spreadsheet like any other.
 
 Both work on practice cards too, not only in the conversation.
 
-### Practice talking, any time
+### Practice talking
 
 The conversation above is earned: it opens when the day's ten are
-mastered. **Practice talking** does not wait for anything. It is on the
-home screen whenever you have four words or more behind you, and it is
-the same partner, the same situations, the same corrections.
+mastered, and it starts with a situation to pick. **Practice talking**
+is neither. It is on the home screen whenever you have four words or
+more behind you, and pressing it puts you **straight into a live
+conversation** -- no list, no situation, no setup. Just the circle, and
+somebody to talk to.
+
+It speaks first, listens, answers, and listens again, hands-free, the
+way a call does. **Show the conversation** gives you the written version
+if you would rather read, and **Talk again** at the end starts another
+one without going anywhere.
+
+If you do want a situation, say **"imagine we are..."** and it goes
+there.
 
 The difference is that there is no list to get through. Talk about
 whatever comes up; it follows you. There is no counter in the corner and

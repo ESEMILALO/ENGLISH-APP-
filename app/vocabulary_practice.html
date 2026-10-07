@@ -2793,7 +2793,7 @@
       + '<div id="studybar-host">'+studyBarHtml()+'</div>'
       + (masteredWords().length >= 4
           ? '<button class="btn-secondary" id="go-practice" style="margin-top:10px;">'
-            + 'Practice talking &middot; any time &rarr;</button>'
+            + 'Practice talking &rarr;</button>'
           : '')
       + (chatUnlocked()
           ? '<button class="btn-primary" id="go-chat" style="margin-top:16px;">'
@@ -2884,11 +2884,7 @@
     const chatBtn = el('#go-chat');
     if(chatBtn) chatBtn.addEventListener('click', ()=>{ chatFree = false; renderChatPicker(); });
     const practiceBtn = el('#go-practice');
-    if(practiceBtn) practiceBtn.addEventListener('click', ()=>{
-      chatFree = true;
-      chatPracticeList = null;     // a fresh ten each time he comes here
-      renderChatPicker();
-    });
+    if(practiceBtn) practiceBtn.addEventListener('click', startFreeTalk);
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
@@ -5367,6 +5363,36 @@
   // Which conversation screen we are on: the day's words, or practice.
   let chatFree = false;
 
+  // Free talk has no situation to pick and nobody to play. It is a
+  // person to talk to, so pressing the button should put you in front of
+  // one -- not in front of a menu.
+  const FREE_TALK = {
+    ok: true,
+    name: 'Free talk',
+    blurb: '',
+    role: 'You are someone easy to talk to, having an ordinary conversation '
+      + 'in English. You are not playing a part and you have no errand: you '
+      + 'are good company. Follow whatever they bring up, ask about it, say '
+      + 'what you think, disagree if you disagree. Open by asking them '
+      + 'something easy and open -- how their day went, what they have been '
+      + 'up to -- and keep your turns short, the way someone speaking out '
+      + 'loud does.'
+  };
+
+  function startFreeTalk(){
+    chatFree = true;
+    chatPracticeList = null;          // a fresh handful to be reminded of
+    const words = chatPracticeWords();
+    // Live, out loud, from the first word. The written version is one
+    // button away for anyone who would rather read.
+    chatVoiceOnly = !!(canListen && canSpeak);
+    if(chatVoiceOnly){
+      chatSpeaks = true;
+      try{ localStorage.setItem('wordlog_chat_voice', 'on'); }catch(e){}
+    }
+    startChat(FREE_TALK, words);
+  }
+
   function chatUnlocked(){
     const set = todaysSet();
     return set.length > 0 && set.every(w=>statusOf(w.id)==='mastered');
@@ -6362,10 +6388,16 @@
             + '</div>'
           : '')
       + '<div id="review-host">' + reviewHtml(parked && parked.review) + '</div>'
-      + '<button class="btn-primary" id="chat-again" style="margin-top:16px;">Another conversation &rarr;</button>'
+      + '<button class="btn-primary" id="chat-again" style="margin-top:16px;">'
+        + (wasPractice ? 'Talk again' : 'Another conversation') + ' &rarr;</button>'
       + '<button class="btn-secondary" id="chat-home" style="margin-top:10px;">&larr; Back to home</button>'
       + '</div>';
-    el('#chat-again').addEventListener('click', renderChatPicker);
+    // Another one of whichever kind this was: a practice conversation
+    // leads back into talking, not into a list of situations.
+    el('#chat-again').addEventListener('click', ()=>{
+      if(wasPractice) startFreeTalk();
+      else { chatFree = false; renderChatPicker(); }
+    });
     el('#chat-home').addEventListener('click', renderHome);
     wireReview(parked, paintReview);
   }
