@@ -5858,6 +5858,10 @@
           }).join('')
         + (chat.busy ? '<p class="chat-thinking">typing&hellip;</p>' : '')
         + (chat.error ? '<p class="chat-fix">'+esc(chat.error)+'</p>' : '')
+        + (canRetry()
+            ? '<button class="reset-link" id="chat-retry" style="text-align:left;">'
+              + 'Try again &rarr;</button>'
+            : '')
       + '</div>'
       + (chatDrill ? drillHtml() : '')
       + (chatListening && !chatDrill ? '<p class="chat-heard">listening&hellip; speak now</p>' : '')
@@ -5950,6 +5954,20 @@
     }, linger);
   }
 
+  // After a failure his words are already said and waiting; the thing
+  // to do is ask again, not say them again.
+  function canRetry(){
+    if(!chat || chat.busy || !chat.error) return false;
+    const last = chat.turns[chat.turns.length - 1];
+    return !chat.turns.length || (last && last.who === 'you');
+  }
+
+  function retryReply(){
+    if(!canRetry()) return;
+    chat.error = '';
+    sendChat(!chat.turns.length, null, true);
+  }
+
   function talkViewHtml(){
     const STATE = {
       listening: ['your turn', 'Speak. It is listening.'],
@@ -5979,6 +5997,9 @@
       + (chatDrill ? drillHtml() : '')
       + (talkShown ? talkLineHtml() : '')
       + '<div class="talk-actions">'
+        + (canRetry()
+            ? '<button class="btn-secondary" id="talk-retry">Try again</button>'
+            : '')
         + (lastThemSaid()
             ? '<button class="btn-secondary" id="talk-what">'
               + (talkShown ? 'Hide it' : 'What did it say?') + '</button>'
@@ -6063,6 +6084,8 @@
     }
     const send = el('#chat-send');
     if(send) send.addEventListener('click', ()=>sendChat(false));
+    const written = el('#chat-retry');
+    if(written) written.addEventListener('click', retryReply);
     const mic = el('#chat-mic');
     if(mic) mic.addEventListener('click', chatListen);
     const voice = el('#chat-voice');
@@ -6083,9 +6106,14 @@
       chatListen();
     });
     wireDrill();
+    const retry = el('#talk-retry') || el('#chat-retry');
+    if(retry) retry.addEventListener('click', retryReply);
     const orb = el('#talk-orb');
     if(orb) orb.addEventListener('click', ()=>{
       if(chatDrill){ drillListen(); return; }
+      // The last thing he said never got an answer: ask again rather
+      // than make him say it a second time.
+      if(canRetry()){ retryReply(); return; }
       if(chatPhase === 'speaking'){
         stopSpeaking();
         chatPhase = 'idle';
@@ -6171,10 +6199,12 @@
     sendChat(true);
   }
 
-  async function sendChat(first, spoken){
+  // `resend` asks the same thing over again after a failure: his words
+  // are already in the conversation and must not be added twice.
+  async function sendChat(first, spoken, resend){
     if(!chat || (chat.busy && !first)) return;
     let text = '';
-    if(!first){
+    if(!first && !resend){
       if(spoken !== undefined && spoken !== null){
         text = String(spoken).trim();
       } else {
@@ -6219,6 +6249,25 @@
       chat.busy = false;
       if(!out.ok){
         chat.error = out.message || 'The reply did not arrive.';
+        // Leaving the phase on 'thinking' is what made the circle spin
+        // for ever with nothing behind it. A conversation that cannot
+        // answer has to say so and hand the turn back.
+        chatPhase = 'idle';
+        // The free tier is shared and has busy minutes, and a timed-out
+        // read is the commonest of them. Listing the failures worth
+        // retrying was the wrong way round -- "the read operation timed
+        // out" matched none of them. So one quiet second try happens for
+        // anything except the failures that will not pass on their own:
+        // no key, a key refused, nothing left to pay with.
+        const permanent = /key|credit|billing|not accepted|balance/i.test(chat.error);
+        if(!resend && !permanent){
+          renderChat();
+          await new Promise(r=>setTimeout(r, 2500));
+          if(chat && !chat.busy){
+            sendChat(first, null, true);
+            return;
+          }
+        }
       } else {
         const fresh = (out.used || []).filter(w=>chat.used.indexOf(w) < 0);
         fresh.forEach(w=>chat.used.push(w));
@@ -6262,6 +6311,7 @@
     }catch(e){
       chat.busy = false;
       chat.error = 'Could not reach the app server.';
+      chatPhase = 'idle';
     }
     rememberChat();
     renderChat();

@@ -243,8 +243,17 @@ def _ask_gemini(system, messages, max_tokens, timeout):
     if not candidates:
         raise ModelError("This key cannot use any model that answers questions.")
 
+    # Five models, three attempts each, a minute a time: a bad patch could
+    # keep somebody waiting a quarter of an hour at a circle that says
+    # "thinking". Nobody waits that long, and nobody should be asked to.
+    # Whatever has not worked within this comes back as a failure he can
+    # see and press again.
+    deadline = time.time() + min(50, max(20, timeout))
+
     last = None
     for name in candidates:
+        if time.time() > deadline:
+            break
         url = "%s/models/%s:generateContent?key=%s" % (GEMINI_ROOT, name, key)
         out = None
 
@@ -268,14 +277,14 @@ def _ask_gemini(system, messages, max_tokens, timeout):
                     break
                 if e.code in (429, 500, 502, 503, 504):
                     last = problem
-                    if attempt < 2:
+                    if attempt < 2 and time.time() < deadline:
                         time.sleep(1.5 * (attempt + 1))
                         continue
                     break          # this model is not having it; try another
                 raise problem      # a bad key or a bad request is ours to fix
             except Exception as e:
                 last = ModelError("Could not reach Gemini: %s" % str(e)[:120])
-                if attempt < 2:
+                if attempt < 2 and time.time() < deadline:
                     time.sleep(1.5 * (attempt + 1))
                     continue
                 break
@@ -300,7 +309,10 @@ def _ask_gemini(system, messages, max_tokens, timeout):
                     "room given for the reply was too small.")
         last = ModelError("%s answered with nothing at all." % name)
 
-    raise last or ModelError("No Gemini model would answer.")
+    if last is None:
+        last = ModelError("Gemini was busy for too long to keep waiting. "
+                          "Try again -- it usually passes in a few seconds.")
+    raise last
 
 
 def _ask_anthropic(system, messages, max_tokens, timeout):
