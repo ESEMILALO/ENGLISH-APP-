@@ -479,11 +479,22 @@ app.
 
 ## The check at the door
 
-When you open the app it asks you about words you have already mastered,
-before it lets you at anything new. Type the word and press **Enter**;
-the answer appears, and **Enter** again moves to the next one. The whole
-run is keyboard-only -- you never have to reach for the mouse in the
-middle of it.
+When you open the app it asks you about **ten** words you have already
+mastered, before it lets you at anything new. Type the word and press
+**Enter**; the answer appears, and **Enter** again moves to the next one.
+The whole run is keyboard-only -- you never have to reach for the mouse
+in the middle of it.
+
+The ten are **a different ten each time**. Longest since you last saw it
+still decides who is in the running -- the point is the words going
+quiet, not the ones you used an hour ago -- but the forty asked most
+recently are stepped over, and the ten are drawn from the stale ones
+that are left. Taking the top ten outright meant the same ten every
+morning until they aged out together.
+
+Across twelve mornings with sixty mastered words, that reaches **all
+sixty**, with no two mornings alike. With fewer words than that some
+repetition is unavoidable, but it is never the same ten twice running.
 
 ## Earning the day's words
 

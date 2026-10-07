@@ -3980,21 +3980,57 @@
   // word you are looking at proves little, and this is meant to be the
   // hard question -- if you cannot produce it from memory, you have not
   // really kept it.
-  const RECALL_COUNT = 5;
+  const RECALL_COUNT = 10;
+  // How many of the words asked recently to remember, so the next check
+  // is a different ten rather than the same ten in a different order.
+  const RECALL_MEMORY = 40;
   let recallQuiz = null;
   let recallShown = false;
 
-  // Mastered words, longest since you last saw one first, so the check
-  // works its way through all of them instead of circling a few.
+  function shuffled(list){
+    const out = list.slice();
+    for(let i = out.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = out[i]; out[i] = out[j]; out[j] = t;
+    }
+    return out;
+  }
+
+  // Ten words out of everything mastered, and a different ten each time.
+  //
+  // Longest since you last saw it still decides who is in the running --
+  // the point is the words going quiet, not the ones you used an hour
+  // ago. But taking the top ten outright meant the same ten every
+  // morning until they aged out together. So the stalest thirty are the
+  // candidates, the last few checks are remembered and stepped over, and
+  // the ten are drawn from what is left.
   function recallPool(n){
-    const list = WORDS.filter(w=>statusOf(w.id)==='mastered');
-    list.sort((a,b)=>{
+    const all = WORDS.filter(w=>statusOf(w.id) === 'mastered');
+    if(all.length <= n) return shuffled(all);
+
+    const byAge = all.slice().sort((a,b)=>{
       const pa = progress[a.id] || {}, pb = progress[b.id] || {};
       const ta = pa.lastSeen ? new Date(pa.lastSeen).getTime() : 0;
       const tb = pb.lastSeen ? new Date(pb.lastSeen).getTime() : 0;
       return ta - tb;
     });
-    return list.slice(0, n);
+
+    const lately = (meta && meta.recallSeen) || [];
+    const unasked = byAge.filter(w=>lately.indexOf(w.id) < 0);
+    // Only fall back to the whole list when skipping would leave too few.
+    const source = unasked.length >= n ? unasked : byAge;
+    const window = source.slice(0, Math.max(n, Math.min(source.length, n * 3)));
+    return shuffled(window).slice(0, n);
+  }
+
+  // Remembered so the next check can avoid them. Kept with the rest of
+  // the progress, so it survives closing the laptop.
+  function rememberRecalled(words){
+    if(!meta) return;
+    const ids = words.map(w=>w.id);
+    const before = (meta.recallSeen || []).filter(id=>ids.indexOf(id) < 0);
+    meta.recallSeen = ids.concat(before).slice(0, RECALL_MEMORY);
+    saveMeta();
   }
 
   const RECALL_HOW = 'Type the word from its meaning';
@@ -4004,6 +4040,7 @@
     recallShown = true;
     const words = recallPool(RECALL_COUNT);
     if(!words.length) return; // nothing mastered yet, so nothing to forget
+    rememberRecalled(words);
     recallQuiz = { words: words, i: 0, revealed: false, verdict: null, marks: [], status: null };
     renderRecall();
   }
