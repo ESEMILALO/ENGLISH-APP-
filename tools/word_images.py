@@ -42,6 +42,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(FOLDER / "server"))
 
 import build_word_log as build            # noqa: E402  (path set above)
+import model                              # noqa: E402
 from glossary import api_key              # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
@@ -160,25 +161,24 @@ def save_map(m):
 
 
 def ask_claude(payload, key, attempts=4):
-    """One request, retried through the failures that tend to pass."""
-    body = json.dumps(payload).encode("utf-8")
+    """Whichever service has a key answers this.
+
+    It used to post to Anthropic itself, which was fine until the key
+    became a Google one: the wrong key at the wrong door is a 401, and
+    two words were lost to it before it was noticed. Everything else in
+    the app goes through model.ask, and so does this.
+    """
     last = None
     for attempt in range(attempts):
-        req = urllib.request.Request(API_URL, data=body, method="POST", headers={
-            "content-type": "application/json",
-            "x-api-key": key,
-            "anthropic-version": API_VERSION,
-        })
         try:
-            with urllib.request.urlopen(req, timeout=90) as res:
-                return json.loads(res.read().decode("utf-8"))
-        except urllib.error.HTTPError as e:
-            last = e
-            if e.code not in (408, 409, 429, 500, 502, 503, 504, 529):
-                raise
+            text = model.ask(payload.get("system") or "",
+                             payload.get("messages") or [],
+                             max_tokens=payload.get("max_tokens", 2000),
+                             timeout=payload.get("timeout", 90))
+            return {"content": [{"type": "text", "text": text}]}
         except Exception as e:
             last = e
-        time.sleep(2 * (attempt + 1))
+            time.sleep(2 * (attempt + 1))
     raise last
 
 
@@ -233,8 +233,12 @@ def terms_for(chunk, key):
     return terms
 
 
-NOT_ART = (" -painting -drawing -engraving -lithograph -etching -woodcut"
-           " -sculpture -manuscript -coat -arms -stamp -medal -fresco -map")
+# Nothing. Excluding artwork by keyword here seemed sensible and was a
+# disaster: Commons matches those words against the whole file page, so
+# "-map", "-arms" and "-stamp" threw out ordinary photographs that merely
+# mentioned them somewhere, and seven queries in eight came back empty.
+# Rejecting artwork is the judge's job -- it can see the picture.
+NOT_ART = ""
 
 
 def commons_search(query, limit=6, tries=5):

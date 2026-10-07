@@ -9,7 +9,6 @@
   "why": "Shows abandoned, derelict stadium buildi"
  },
  "504 Main words::Annual": {
-  "none": "nothing found",
   "q": "yearly festival"
  },
  "504 Main words::Approach": {
@@ -41,7 +40,6 @@
   ]
  },
  "504 Main words::Burden": {
-  "none": "nothing found",
   "q": "donkey heavy load"
  },
  "504 Main words::Campus": {
@@ -62,7 +60,6 @@
   ]
  },
  "504 Main words::Client": {
-  "none": "nothing found",
   "q": "client meeting"
  },
  "504 Main words::Comprehensive": {
@@ -75,7 +72,6 @@
   ]
  },
  "504 Main words::Conceal": {
-  "none": "nothing found",
   "q": "hiding object drawer"
  },
  "504 Main words::Corpse": {
@@ -91,11 +87,9 @@
   ]
  },
  "504 Main words::Debate": {
-  "none": "nothing found",
   "q": "political debate stage"
  },
  "504 Main words::Deceive": {
-  "none": "nothing found",
   "q": "scam artist"
  },
  "504 Main words::Defect": {
@@ -119,7 +113,6 @@
   ]
  },
  "504 Main words::Descend": {
-  "none": "nothing found",
   "q": "hikers descending mountain"
  },
  "504 Main words::Detect": {
@@ -132,15 +125,12 @@
   ]
  },
  "504 Main words::Devise": {
-  "none": "nothing found",
   "q": "engineers designing blueprint"
  },
  "504 Main words::Dismal": {
-  "none": "nothing found",
   "q": "disappointed losing team"
  },
  "504 Main words::Eliminate": {
-  "none": "nothing found",
   "q": "crossing out list"
  },
  "504 Main words::Employee": {
@@ -169,7 +159,6 @@
   ]
  },
  "504 Main words::Evade": {
-  "none": "nothing found",
   "q": "police car chase"
  },
  "504 Main words::Expensive": {
@@ -201,18 +190,15 @@
   ]
  },
  "504 Main words::Hardship": {
-  "none": "nothing found",
   "q": "struggling family"
  },
  "504 Main words::Humid": {
-  "none": "nothing found",
   "q": "humid tropical weather"
  },
  "504 Main words::Inhabit": {
   "q": "birds on island"
  },
  "504 Main words::Jealous": {
-  "none": "nothing found",
   "q": "jealous couple"
  },
  "504 Main words::Keen": {
@@ -244,7 +230,6 @@
   "why": "Overgrown, unkept house shows neglect"
  },
  "504 Main words::Numb": {
-  "none": "nothing found",
   "q": "cold numb fingers"
  },
  "504 Main words::Oath": {
@@ -260,7 +245,6 @@
   "q": "hikers in danger"
  },
  "504 Main words::Persuade": {
-  "none": "nothing found",
   "q": "convincing conversation"
  },
  "504 Main words::Popular": {
@@ -289,7 +273,6 @@
   ]
  },
  "504 Main words::Qualify": {
-  "none": "nothing found",
   "q": "scholarship acceptance letter"
  },
  "504 Main words::Recline": {
@@ -324,7 +307,6 @@
   "q": "woman screaming"
  },
  "504 Main words::Sinister": {
-  "none": "nothing found",
   "q": "sinister smile"
  },
  "504 Main words::Tact": {
@@ -332,11 +314,9 @@
   "q": "-"
  },
  "504 Main words::Talent": {
-  "none": "nothing found",
   "q": "child playing piano"
  },
  "504 Main words::Tempt": {
-  "none": "nothing found",
   "q": "tempting dessert"
  },
  "504 Main words::Theory": {
@@ -349,7 +329,6 @@
   ]
  },
  "504 Main words::Thorough": {
-  "none": "nothing found",
   "q": "detailed inspection"
  },
  "504 Main words::Topic": {
@@ -402,7 +381,6 @@
   ]
  },
  "504 Main words::Vapor": {
-  "none": "nothing found",
   "q": "steam rising pot"
  },
  "504 Main words::Villain": {
@@ -432,7 +410,6 @@
   ]
  },
  "504 Main words::Wholesale": {
-  "none": "nothing found",
   "q": "warehouse pallets goods"
  },
  "504 Secondary::According": {
@@ -444,18 +421,15 @@
   "q": "-"
  },
  "504 Secondary::Acts": {
-  "none": "nothing found",
   "q": "act of kindness"
  },
  "504 Secondary::Against": {
   "q": "protest march"
  },
  "504 Secondary::Aggravate": {
-  "none": "nothing found",
   "q": "person headache"
  },
  "504 Secondary::Aim": {
-  "none": "nothing found",
   "q": "archer aiming bow"
  },
  "504 Secondary::All alone": {
@@ -482,7 +456,6 @@
   ]
  },
  "504 Secondary::Appeal": {
-  "none": "nothing found",
   "q": "courtroom lawyer"
  },
  "504 Secondary::As the": {
@@ -503,7 +476,6 @@
   "why": "Clear photograph of a real car"
  },
  "504 Secondary::Award": {
-  "none": "nothing found",
   "q": "award trophy"
  },
  "504 Secondary::Bachelorette": {
@@ -518,11 +490,9 @@
   "q": "evidence documents"
  },
  "504 Secondary::Backward": {
-  "none": "nothing found",
   "q": "step backward"
  },
  "504 Secondary::Barely visible": {
-  "none": "nothing found",
   "q": "faint distant silhouette"
  },
  "504 Secondary::Baseball batters": {},
@@ -540,7 +510,6 @@
   "q": "couple arm arm"
  },
  "504 Secondary::Become fit": {
-  "none": "nothing found",
   "q": "person jogging"
  },
  "504 Secondary::Beforehand": {
@@ -591,11 +560,9 @@
   "why": "Shows sharp metal cutting blade clearly"
  },
  "504 Secondary::Blend in": {
-  "none": "nothing found",
   "q": "camouflaged animal rocks"
  },
  "504 Secondary::Boatman": {
-  "none": "nothing found",
   "q": "boatman rowing boat"
  },
  "504 Secondary::Borders": {},
@@ -635,7 +602,6 @@
   "why": "Tree bending shows gentle wind"
  },
  "504 Secondary::Bright": {
-  "none": "nothing found",
   "q": "bright sunny room"
  },
  "504 Secondary::Bring out": {
@@ -645,7 +611,6 @@
   "q": "people holding hands"
  },
  "504 Secondary::Broke in": {
-  "none": "nothing found",
   "q": "burglar breaking window"
  },
  "504 Secondary::Brought out": {
@@ -693,7 +658,6 @@
   ]
  },
  "504 Secondary::Came over": {
-  "none": "nothing found",
   "q": "friend visiting home"
  },
  "504 Secondary::Captain": {
@@ -712,7 +676,6 @@
   ]
  },
  "504 Secondary::Careful": {
-  "none": "nothing found",
   "q": "careful cutting"
  },
  "504 Secondary::Carefully": {
@@ -735,14 +698,12 @@
   "q": "-"
  },
  "504 Secondary::Cheat": {
-  "none": "nothing found",
   "q": "student cheating exam"
  },
  "504 Secondary::Cheating": {
   "q": "cheating exam"
  },
  "504 Secondary::Checkup": {
-  "none": "nothing found",
   "q": "dental checkup"
  },
  "504 Secondary::Chorus": {
@@ -781,7 +742,6 @@
   "why": "Man wearing loose outer cloak garment"
  },
  "504 Secondary::Closely packed together": {
-  "none": "nothing found",
   "q": "crowded houses close"
  },
  "504 Secondary::Closet": {
@@ -803,7 +763,6 @@
   "why": "Clear photo of real coffin"
  },
  "504 Secondary::Come down": {
-  "none": "nothing found",
   "q": "climbing down roof"
  },
  "504 Secondary::Come near": {
@@ -824,7 +783,6 @@
  },
  "504 Secondary::Convincing": {},
  "504 Secondary::Costly": {
-  "none": "nothing found",
   "q": "expensive car repair"
  },
  "504 Secondary::Costume": {
@@ -863,11 +821,9 @@
   "q": "crowd of people"
  },
  "504 Secondary::Crumble": {
-  "none": "nothing found",
   "q": "crumbling cookie"
  },
  "504 Secondary::Curse": {
-  "none": "nothing found",
   "q": "shouting person"
  },
  "504 Secondary::Customs": {
@@ -893,18 +849,15 @@
   ]
  },
  "504 Secondary::Deadened": {
-  "none": "nothing found",
   "q": "numbing injection"
  },
  "504 Secondary::Dear": {
-  "none": "nothing found",
   "q": "close friends hugging"
  },
  "504 Secondary::Debaters": {
   "q": "debate competition"
  },
  "504 Secondary::Decent": {
-  "none": "nothing found",
   "q": "decent hotel room"
  },
  "504 Secondary::Dense fog": {
@@ -917,7 +870,6 @@
   "why": "Thick fog obscuring buildings, limiting "
  },
  "504 Secondary::Densely": {
-  "none": "nothing found",
   "q": "densely packed crowd"
  },
  "504 Secondary::Desert": {
@@ -933,14 +885,12 @@
   "q": "dictator speech"
  },
  "504 Secondary::Dined": {
-  "none": "nothing found",
   "q": "couple dining restaurant"
  },
  "504 Secondary::Disappear": {
   "q": "sun behind clouds"
  },
  "504 Secondary::Discover": {
-  "none": "nothing found",
   "q": "scientist new species"
  },
  "504 Secondary::Dishonest": {
@@ -948,7 +898,6 @@
   "q": "-"
  },
  "504 Secondary::Disobey": {
-  "none": "nothing found",
   "q": "disobedient child"
  },
  "504 Secondary::Dispute": {
@@ -973,7 +922,6 @@
   ]
  },
  "504 Secondary::Downwards": {
-  "none": "nothing found",
   "q": "downhill path"
  },
  "504 Secondary::Dragnet": {
@@ -986,7 +934,6 @@
   "q": "water droplets"
  },
  "504 Secondary::Dropped": {
-  "none": "nothing found",
   "q": "dropped keys"
  },
  "504 Secondary::Eager": {
@@ -1007,15 +954,12 @@
   ]
  },
  "504 Secondary::Earn livings": {
-  "none": "nothing found",
   "q": "fishermen working boat"
  },
  "504 Secondary::Encyclopedia": {
-  "none": "nothing found",
   "q": "encyclopedia books"
  },
  "504 Secondary::Entered": {
-  "none": "nothing found",
   "q": "person entering room"
  },
  "504 Secondary::Excessive": {
@@ -1052,19 +996,15 @@
   ]
  },
  "504 Secondary::Eyesight": {
-  "none": "nothing found",
   "q": "eye chart"
  },
  "504 Secondary::FBI": {
-  "none": "nothing found",
   "q": "FBI badge"
  },
  "504 Secondary::Facing the peril": {
-  "none": "nothing found",
   "q": "facing danger"
  },
  "504 Secondary::Fall asleep": {
-  "none": "nothing found",
   "q": "person sleeping sofa"
  },
  "504 Secondary::Farm stand": {
@@ -1081,7 +1021,6 @@
   "q": "building inspection"
  },
  "504 Secondary::Fell down": {
-  "none": "nothing found",
   "q": "person falling down"
  },
  "504 Secondary::Fell out": {
@@ -1092,7 +1031,6 @@
   ]
  },
  "504 Secondary::Figuring": {
-  "none": "nothing found",
   "q": "woman calculating bills"
  },
  "504 Secondary::Find out": {
@@ -1100,15 +1038,12 @@
   "q": "-"
  },
  "504 Secondary::Fire": {
-  "none": "nothing found",
   "q": "campfire flames"
  },
  "504 Secondary::Fled": {
-  "none": "nothing found",
   "q": "family fleeing fire"
  },
  "504 Secondary::Flirting": {
-  "none": "nothing found",
   "q": "flirting couple"
  },
  "504 Secondary::Flour": {
@@ -1152,11 +1087,9 @@
   ]
  },
  "504 Secondary::Frightened": {
-  "none": "nothing found",
   "q": "frightened child"
  },
  "504 Secondary::Frightening": {
-  "none": "nothing found",
   "q": "scary thunderstorm"
  },
  "504 Secondary::Frightening someone out of something": {
@@ -1182,11 +1115,9 @@
   "why": "Crowd gathered together in one place"
  },
  "504 Secondary::Germs": {
-  "none": "nothing found",
   "q": "bacteria microscope"
  },
  "504 Secondary::Gesture": {
-  "none": "nothing found",
   "q": "hand gesture"
  },
  "504 Secondary::Get away from": {
@@ -1205,11 +1136,9 @@
   "q": "person entering car"
  },
  "504 Secondary::Get mixed up": {
-  "none": "nothing found",
   "q": "confused expression"
  },
  "504 Secondary::Give up": {
-  "none": "nothing found",
   "q": "exhausted runner stopping"
  },
  "504 Secondary::Go around": {},
@@ -1220,7 +1149,6 @@
   "q": "reviewing notes"
  },
  "504 Secondary::Go straight": {
-  "none": "nothing found",
   "q": "walking directly"
  },
  "504 Secondary::Gossip": {
@@ -1254,7 +1182,6 @@
   "q": "wall tapestry"
  },
  "504 Secondary::He drew": {
-  "none": "nothing found",
   "q": "man drawing picture"
  },
  "504 Secondary::Heated": {
@@ -1265,11 +1192,9 @@
   "q": "-"
  },
  "504 Secondary::High-priced": {
-  "none": "nothing found",
   "q": "luxury furniture store"
  },
  "504 Secondary::Historians": {
-  "none": "nothing found",
   "q": "historian examining documents"
  },
  "504 Secondary::Hoop": {
@@ -1280,7 +1205,6 @@
   "q": "-"
  },
  "504 Secondary::Hunger": {
-  "none": "nothing found",
   "q": "hungry child"
  },
  "504 Secondary::Hurt in": {
@@ -1344,11 +1268,9 @@
   ]
  },
  "504 Secondary::Lack": {
-  "none": "nothing found",
   "q": "empty wallet"
  },
  "504 Secondary::Lack of": {
-  "none": "nothing found",
   "q": "empty pantry"
  },
  "504 Secondary::Laid": {
@@ -1425,7 +1347,6 @@
   "why": "Real photo of legislative chamber"
  },
  "504 Secondary::Let out": {
-  "none": "nothing found",
   "q": "dog leaving door"
  },
  "504 Secondary::Librarian": {
@@ -1436,7 +1357,6 @@
   "q": "-"
  },
  "504 Secondary::Lights-out": {
-  "none": "nothing found",
   "q": "bedroom lights off"
  },
  "504 Secondary::Little did I realize": {},
@@ -1454,11 +1374,9 @@
   "q": "-"
  },
  "504 Secondary::Losses": {
-  "none": "nothing found",
   "q": "financial loss chart"
  },
  "504 Secondary::Loud tie": {
-  "none": "nothing found",
   "q": "colorful necktie"
  },
  "504 Secondary::Low-minded": {
@@ -1483,7 +1401,6 @@
   "why": "Fast food workers, typical low-paid job"
  },
  "504 Secondary::Maid": {
-  "none": "nothing found",
   "q": "maid cleaning room"
  },
  "504 Secondary::Major": {
@@ -1520,7 +1437,6 @@
   "why": "Face shows colorful cosmetics makeup"
  },
  "504 Secondary::Making a living": {
-  "none": "nothing found",
   "q": "street vendor working"
  },
  "504 Secondary::March of Dimes": {
@@ -1537,7 +1453,6 @@
   "why": "Photo shows soldiers marching out organi"
  },
  "504 Secondary::Margarine": {
-  "none": "nothing found",
   "q": "margarine tub"
  },
  "504 Secondary::Meaningless": {
@@ -1545,18 +1460,15 @@
   "q": "-"
  },
  "504 Secondary::Mercy": {
-  "none": "nothing found",
   "q": "prisoner begging mercy"
  },
  "504 Secondary::Messy": {
-  "none": "nothing found",
   "q": "messy bedroom"
  },
  "504 Secondary::Miniskirts": {
   "q": "woman miniskirt"
  },
  "504 Secondary::Mislead": {
-  "none": "nothing found",
   "q": "misleading advertisement"
  },
  "504 Secondary::Mist": {
@@ -1569,7 +1481,6 @@
   "why": "Hill covered in light mist"
  },
  "504 Secondary::Mistaken": {
-  "none": "nothing found",
   "q": "wrong answer mark"
  },
  "504 Secondary::Misty": {
@@ -1619,11 +1530,9 @@
   "q": "-"
  },
  "504 Secondary::Mud": {
-  "none": "nothing found",
   "q": "muddy boots"
  },
  "504 Secondary::Muddy": {
-  "none": "nothing found",
   "q": "muddy shoes"
  },
  "504 Secondary::Murder": {
@@ -1644,7 +1553,6 @@
   ]
  },
  "504 Secondary::Nearer to": {
-  "none": "nothing found",
   "q": "moving chair closer"
  },
  "504 Secondary::No one": {
@@ -1664,7 +1572,6 @@
   "q": "-"
  },
  "504 Secondary::Nylon": {
-  "none": "nothing found",
   "q": "nylon fabric"
  },
  "504 Secondary::Nylon strings": {
@@ -1678,7 +1585,6 @@
   "q": "-"
  },
  "504 Secondary::Oil paints": {
-  "none": "nothing found",
   "q": "oil paints tubes"
  },
  "504 Secondary::Omit": {
@@ -1709,7 +1615,6 @@
   ]
  },
  "504 Secondary::Passing mark": {
-  "none": "nothing found",
   "q": "exam grade paper"
  },
  "504 Secondary::Peaceful": {
@@ -1719,11 +1624,9 @@
   "q": "dog listening"
  },
  "504 Secondary::Perilous": {
-  "none": "nothing found",
   "q": "dangerous journey"
  },
  "504 Secondary::Pilgrims": {
-  "none": "nothing found",
   "q": "pilgrims walking shrine"
  },
  "504 Secondary::Pipes": {
@@ -1733,11 +1636,9 @@
   "q": "boarding up windows"
  },
  "504 Secondary::Plot": {
-  "none": "nothing found",
   "q": "storyboard sketch"
  },
  "504 Secondary::Pointed": {
-  "none": "nothing found",
   "q": "sharp knife blade"
  },
  "504 Secondary::Polished": {
@@ -1788,11 +1689,9 @@
   ]
  },
  "504 Secondary::Quarrel": {
-  "none": "nothing found",
   "q": "couple arguing"
  },
  "504 Secondary::Quart lower": {
-  "none": "nothing found",
   "q": "measuring jug"
  },
  "504 Secondary::Railroad tracks": {
@@ -1802,7 +1701,6 @@
   "q": "rainy street"
  },
  "504 Secondary::Realized": {
-  "none": "nothing found",
   "q": "surprised realization"
  },
  "504 Secondary::Realizing": {
@@ -1850,26 +1748,21 @@
   "why": "Shows retail store selling goods directl"
  },
  "504 Secondary::Rid": {
-  "none": "nothing found",
   "q": "pest spray garden"
  },
  "504 Secondary::Rioters": {
   "q": "rioters street"
  },
  "504 Secondary::Rise out": {
-  "none": "nothing found",
   "q": "smoke rising chimney"
  },
  "504 Secondary::Rise out of": {
-  "none": "nothing found",
   "q": "smoke rising chimney"
  },
  "504 Secondary::Road map": {
-  "none": "nothing found",
   "q": "road map"
  },
  "504 Secondary::Rose out of": {
-  "none": "nothing found",
   "q": "steam rising pot"
  },
  "504 Secondary::Row": {
@@ -1882,7 +1775,6 @@
   "q": "safety helmet"
  },
  "504 Secondary::Salesman": {
-  "none": "nothing found",
   "q": "car salesman"
  },
  "504 Secondary::Schemer": {
@@ -1890,7 +1782,6 @@
   "q": "-"
  },
  "504 Secondary::Scholarship": {
-  "none": "nothing found",
   "q": "scholarship certificate"
  },
  "504 Secondary::Search into": {
@@ -1938,11 +1829,9 @@
   ]
  },
  "504 Secondary::Sight": {
-  "none": "nothing found",
   "q": "human eye closeup"
  },
  "504 Secondary::Sinister-looking": {
-  "none": "nothing found",
   "q": "sinister looking man"
  },
  "504 Secondary::Sinking ship": {
@@ -1979,7 +1868,6 @@
   "why": "Dense makeshift shacks show overcrowded "
  },
  "504 Secondary::Slum area": {
-  "none": "nothing found",
   "q": "slum area"
  },
  "504 Secondary::Smooth": {
@@ -2062,7 +1950,6 @@
   "q": "forest stream"
  },
  "504 Secondary::Stretch out": {
-  "none": "nothing found",
   "q": "stretching on sofa"
  },
  "504 Secondary::Stuck in": {
@@ -2131,7 +2018,6 @@
   "q": "-"
  },
  "504 Secondary::Tax rates": {
-  "none": "nothing found",
   "q": "tax rate chart"
  },
  "504 Secondary::Telegram": {
@@ -2196,7 +2082,6 @@
   "q": "-"
  },
  "504 Secondary::Thus clearing": {
-  "none": "nothing found",
   "q": "fog clearing road"
  },
  "504 Secondary::Tight jacket": {
@@ -2226,7 +2111,6 @@
   "why": "Man raising hand, taking oath"
  },
  "504 Secondary::Tracks": {
-  "none": "nothing found",
   "q": "animal tracks snow"
  },
  "504 Secondary::Trapping": {
@@ -2269,15 +2153,12 @@
   ]
  },
  "504 Secondary::Trouble": {
-  "none": "nothing found",
   "q": "confused tourist map"
  },
  "504 Secondary::Tune up": {
-  "none": "nothing found",
   "q": "mechanic tuning engine"
  },
  "504 Secondary::Uncovered": {
-  "none": "nothing found",
   "q": "uncovered food plate"
  },
  "504 Secondary::Unforgettable": {
@@ -2322,14 +2203,12 @@
   ]
  },
  "504 Secondary::Vapor trail": {
-  "none": "nothing found",
   "q": "airplane vapor trail"
  },
  "504 Secondary::Walk someone through": {
   "q": "teaching demonstration"
  },
  "504 Secondary::Wand": {
-  "none": "nothing found",
   "q": "magic wand"
  },
  "504 Secondary::Waved": {
@@ -2342,7 +2221,6 @@
   "q": "evil king"
  },
  "504 Secondary::Widow": {
-  "none": "nothing found",
   "q": "grieving widow"
  },
  "504 Secondary::Win over to": {
@@ -2354,7 +2232,6 @@
   "q": "-"
  },
  "504 Secondary::Wipe out": {
-  "none": "nothing found",
   "q": "storm destroyed crops"
  },
  "504 Secondary::Withheld": {
@@ -2370,7 +2247,6 @@
   ]
  },
  "School books::Above": {
-  "none": "nothing found",
   "q": "lamp above table"
  },
  "School books::Alive": {
@@ -2398,7 +2274,6 @@
   "q": "-"
  },
  "School books::Breath": {
-  "none": "nothing found",
   "q": "visible breath cold"
  },
  "School books::Breathe": {
@@ -2414,11 +2289,9 @@
   "q": "carrying box"
  },
  "School books::Carry away": {
-  "none": "nothing found",
   "q": "river carrying branches"
  },
  "School books::Carry up": {
-  "none": "nothing found",
   "q": "carrying bags upstairs"
  },
  "School books::Climb": {
@@ -2492,14 +2365,12 @@
   "q": "gas flame"
  },
  "School books::Move into": {
-  "none": "nothing found",
   "q": "moving boxes apartment"
  },
  "School books::Palm trees": {
   "q": "palm trees"
  },
  "School books::Pass out": {
-  "none": "nothing found",
   "q": "person fainting"
  },
  "School books::Petroleum": {
@@ -2519,7 +2390,6 @@
   "q": "floor rug"
  },
  "School books::Run away": {
-  "none": "nothing found",
   "q": "prisoner running away"
  },
  "School books::Run into": {
@@ -2538,7 +2408,6 @@
   "q": "glass sparkling water"
  },
  "School books::Stay away": {
-  "none": "nothing found",
   "q": "warning sign fire"
  },
  "School books::Stone": {
@@ -2551,7 +2420,6 @@
   "q": "dog tail"
  },
  "School books::Tapes": {
-  "none": "nothing found",
   "q": "ribbon tape roll"
  },
  "School books::Thick": {
@@ -2565,7 +2433,6 @@
   "q": "-"
  },
  "School books::Toward": {
-  "none": "nothing found",
   "q": "walking toward door"
  },
  "School books::Tropics": {
@@ -2598,7 +2465,6 @@
   "why": "Runners crossing finish line, goal achie"
  },
  "School vocabulary::Admonish": {
-  "none": "nothing found",
   "q": "teacher admonishing class"
  },
  "School vocabulary::Aeronomy": {
@@ -2643,7 +2509,6 @@
   ]
  },
  "School vocabulary::Anointing": {
-  "none": "nothing found",
   "q": "anointing ceremony"
  },
  "School vocabulary::Appear": {
@@ -2665,7 +2530,6 @@
   "why": "Person eating food, shows desire"
  },
  "School vocabulary::Appomattox": {
-  "none": "nothing found",
   "q": "appomattox courthouse"
  },
  "School vocabulary::Archaic": {
@@ -2685,13 +2549,15 @@
   ]
  },
  "School vocabulary::Ashes": {
-  "none": "nothing found",
   "q": "campfire ashes"
  },
- "School vocabulary::Ask around": {},
- "School vocabulary::Ask for": {},
+ "School vocabulary::Ask around": {
+  "q": "asking questions"
+ },
+ "School vocabulary::Ask for": {
+  "q": "asking help"
+ },
  "School vocabulary::Assert": {
-  "none": "nothing found",
   "q": "confident speaker"
  },
  "School vocabulary::Asset": {
@@ -2816,7 +2682,10 @@
   ]
  },
  "School vocabulary::Bay": {},
- "School vocabulary::Be used to + verb-ing": {},
+ "School vocabulary::Be used to + verb-ing": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Bear with me": {
   "none": "nothing to photograph",
   "q": "-"
@@ -2856,7 +2725,6 @@
   "q": "-"
  },
  "School vocabulary::Bengal": {
-  "none": "nothing found",
   "q": "Bengal landscape"
  },
  "School vocabulary::Beside": {
@@ -2909,11 +2777,9 @@
   "why": "Blank empty page, no writing"
  },
  "School vocabulary::Bloom": {
-  "none": "nothing found",
   "q": "blooming roses"
  },
  "School vocabulary::Blueprint": {
-  "none": "nothing found",
   "q": "architectural blueprint"
  },
  "School vocabulary::Boarder": {
@@ -2934,17 +2800,21 @@
   ]
  },
  "School vocabulary::Bonds": {
-  "none": "nothing found",
   "q": "friends hugging"
  },
- "School vocabulary::Boot up": {},
+ "School vocabulary::Boot up": {
+  "q": "computer booting up"
+ },
  "School vocabulary::Bother": {
-  "none": "nothing found",
   "q": "child annoying parent"
  },
  "School vocabulary::Bottle out": {},
- "School vocabulary::Bottle up": {},
- "School vocabulary::Bounce back": {},
+ "School vocabulary::Bottle up": {
+  "q": "-"
+ },
+ "School vocabulary::Bounce back": {
+  "q": "recovering athlete"
+ },
  "School vocabulary::Brag": {
   "none": "No photo shows bragging",
   "q": "man boasting",
@@ -2955,13 +2825,13 @@
   ]
  },
  "School vocabulary::Brag about": {
-  "none": "nothing found",
   "q": "friends bragging"
  },
- "School vocabulary::Break down": {},
+ "School vocabulary::Break down": {
+  "q": "woman crying tears"
+ },
  "School vocabulary::Break into": {},
  "School vocabulary::Breaking/cracking": {
-  "none": "nothing found",
   "q": "breaking toy"
  },
  "School vocabulary::Breathtaking": {
@@ -2982,10 +2852,16 @@
    "https://commons.wikimedia.org/wiki/File:A_Brief_Meeting_Between_Shahaboddin_Habibi_Khoozani_and_Zhaleh_Amoozgar.jpg"
   ]
  },
- "School vocabulary::Brighten up": {},
+ "School vocabulary::Brighten up": {
+  "q": "happy smiling woman"
+ },
  "School vocabulary::Bring about": {},
- "School vocabulary::Bring down": {},
- "School vocabulary::Bring up": {},
+ "School vocabulary::Bring down": {
+  "q": "sad dejected man"
+ },
+ "School vocabulary::Bring up": {
+  "q": "speaking meeting"
+ },
  "School vocabulary::Broad": {
   "none": "No image clearly shows wideness concept",
   "q": "wide river",
@@ -3004,7 +2880,9 @@
    "https://commons.wikimedia.org/wiki/File:Launch_Complex_39_Launch_Record.jpg"
   ]
  },
- "School vocabulary::Browse through": {},
+ "School vocabulary::Browse through": {
+  "q": "browsing website"
+ },
  "School vocabulary::Bug": {
   "by": "Kyu3a",
   "file": "bug-586163b0d5.jpg",
@@ -3014,8 +2892,12 @@
   "title": "Small insect on metal.jpg",
   "why": "Clear real photo of small insect"
  },
- "School vocabulary::Build up": {},
- "School vocabulary::Bulk up": {},
+ "School vocabulary::Build up": {
+  "q": "weightlifting gym"
+ },
+ "School vocabulary::Bulk up": {
+  "q": "muscular bodybuilder"
+ },
  "School vocabulary::Bump": {
   "by": "Steelkamp",
   "file": "bump-d739f7f658.jpg",
@@ -3026,7 +2908,6 @@
   "why": "Raised bump on road surface"
  },
  "School vocabulary::Bundled up": {
-  "none": "nothing found",
   "q": "child bundled up"
  },
  "School vocabulary::Bureau": {
@@ -3047,8 +2928,12 @@
    "https://commons.wikimedia.org/wiki/File:Misterioso_-_for_burglary_or_mystery_-_DPLA_-_561cb948c28993c47df99ab34f98671b_(page_12).jpg"
   ]
  },
- "School vocabulary::Burn off": {},
- "School vocabulary::Buy up": {},
+ "School vocabulary::Burn off": {
+  "q": "cardio workout sweat"
+ },
+ "School vocabulary::Buy up": {
+  "q": "empty store shelves"
+ },
  "School vocabulary::Cabinets": {
   "none": "No real photograph of storage cupboards",
   "q": "kitchen cabinets",
@@ -3057,12 +2942,22 @@
    "https://commons.wikimedia.org/wiki/File:%D0%A8%D0%B0%D1%84%D0%BA%D0%B0.png"
   ]
  },
- "School vocabulary::Call around": {},
- "School vocabulary::Call back": {},
+ "School vocabulary::Call around": {
+  "q": "phone contacts"
+ },
+ "School vocabulary::Call back": {
+  "q": "person phone call"
+ },
  "School vocabulary::Call for": {},
- "School vocabulary::Call off": {},
- "School vocabulary::Call on": {},
- "School vocabulary::Calm down": {},
+ "School vocabulary::Call off": {
+  "q": "cancelled meeting sign"
+ },
+ "School vocabulary::Call on": {
+  "q": "student raising hand"
+ },
+ "School vocabulary::Calm down": {
+  "q": "taking deep breath"
+ },
  "School vocabulary::Came out": {
   "none": "Pictures show bookstore, not availabilit",
   "q": "new book display",
@@ -3072,7 +2967,6 @@
   ]
  },
  "School vocabulary::Canvas": {
-  "none": "nothing found",
   "q": "canvas fabric roll"
  },
  "School vocabulary::Capable": {
@@ -3121,7 +3015,6 @@
  },
  "School vocabulary::Catch": {},
  "School vocabulary::Catch somebody red-handed": {
-  "none": "nothing found",
   "q": "police catching thief"
  },
  "School vocabulary::Cattle": {
@@ -3143,15 +3036,28 @@
   "why": "Underground room with storage barrels"
  },
  "School vocabulary::Charm": {},
- "School vocabulary::Chat with": {},
- "School vocabulary::Check in": {},
- "School vocabulary::Check out": {},
- "School vocabulary::Check over": {},
- "School vocabulary::Check up on": {},
- "School vocabulary::Check with": {},
- "School vocabulary::Cheer up": {},
+ "School vocabulary::Chat with": {
+  "q": "friends chatting"
+ },
+ "School vocabulary::Check in": {
+  "q": "hotel reception desk"
+ },
+ "School vocabulary::Check out": {
+  "q": "pointing bicycle"
+ },
+ "School vocabulary::Check over": {
+  "q": "inspecting documents"
+ },
+ "School vocabulary::Check up on": {
+  "q": "doctor examination"
+ },
+ "School vocabulary::Check with": {
+  "q": "seeking approval"
+ },
+ "School vocabulary::Cheer up": {
+  "q": "friend comforting friend"
+ },
  "School vocabulary::Chide": {
-  "none": "nothing found",
   "q": "gentle scolding"
  },
  "School vocabulary::Chiefly": {
@@ -3203,12 +3109,20 @@
  },
  "School vocabulary::Claim": {},
  "School vocabulary::Clam up": {},
- "School vocabulary::Clean up": {},
- "School vocabulary::Clear away": {},
- "School vocabulary::Click on": {},
- "School vocabulary::Clockwise": {},
- "School vocabulary::Coal": {
+ "School vocabulary::Clean up": {
+  "q": "tidy living room"
+ },
+ "School vocabulary::Clear away": {
+  "q": "clearing dinner table"
+ },
+ "School vocabulary::Click on": {
+  "q": "clicking mouse"
+ },
+ "School vocabulary::Clockwise": {
   "none": "nothing found",
+  "q": "clockwise rotation arrow"
+ },
+ "School vocabulary::Coal": {
   "q": "coal pile"
  },
  "School vocabulary::Coaled": {
@@ -3221,15 +3135,26 @@
  },
  "School vocabulary::Coastal": {},
  "School vocabulary::Coat": {
-  "none": "nothing found",
   "q": "winter coat"
  },
- "School vocabulary::Come around": {},
- "School vocabulary::Come back": {},
- "School vocabulary::Come by": {},
- "School vocabulary::Come down with": {},
- "School vocabulary::Come in": {},
- "School vocabulary::Come to": {},
+ "School vocabulary::Come around": {
+  "q": "-"
+ },
+ "School vocabulary::Come back": {
+  "q": "coming home"
+ },
+ "School vocabulary::Come by": {
+  "q": "guests arriving home"
+ },
+ "School vocabulary::Come down with": {
+  "q": "sick person sneezing"
+ },
+ "School vocabulary::Come in": {
+  "q": "open door welcome"
+ },
+ "School vocabulary::Come to": {
+  "q": "restaurant bill total"
+ },
  "School vocabulary::Come up against": {},
  "School vocabulary::Come up with": {},
  "School vocabulary::Constituent": {
@@ -3240,7 +3165,9 @@
    "https://commons.wikimedia.org/wiki/File:Jigsaw_Puzzle_Accessories_Mixed.jpg"
   ]
  },
- "School vocabulary::Cool down": {},
+ "School vocabulary::Cool down": {
+  "q": "cooling down exercise"
+ },
  "School vocabulary::Cop": {
   "by": "Intentifymedia",
   "file": "cop-5d8af0b5b2.jpg",
@@ -3268,7 +3195,15 @@
   "title": "Pekmez.jpg",
   "why": "Shows marble counter surface clearly"
  },
- "School vocabulary::Counterclockwise": {},
+ "School vocabulary::Counterclockwise": {
+  "none": "No picture clearly shows counterclockwis",
+  "q": "counterclockwise rotation arrow",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Hubble%E2%80%99s_two_new_views_of_Jupiter_(January_2024,_compass_image)_(heic2404e).jpg",
+   "https://commons.wikimedia.org/wiki/File:Shadow_on_TW_Hydrae%E2%80%99s_disc.jpg",
+   "https://commons.wikimedia.org/wiki/File:Meranti_PIA17309.jpg"
+  ]
+ },
  "School vocabulary::Countertop": {
   "by": "Martin Henke",
   "file": "countertop-c4862b160e.jpg",
@@ -3297,15 +3232,12 @@
   ]
  },
  "School vocabulary::Cracking": {
-  "none": "nothing found",
   "q": "cracking ice"
  },
  "School vocabulary::Crave": {
-  "none": "nothing found",
   "q": "woman eating dessert"
  },
  "School vocabulary::Craving": {
-  "none": "nothing found",
   "q": "chocolate craving"
  },
  "School vocabulary::Cross": {
@@ -3316,7 +3248,9 @@
    "https://commons.wikimedia.org/wiki/File:Pedestrian_crossing_in_Klagenfurt.jpg"
   ]
  },
- "School vocabulary::Cross over": {},
+ "School vocabulary::Cross over": {
+  "q": "pedestrians crossing road"
+ },
  "School vocabulary::Cross your fingers": {
   "none": "No clear finger-crossing gesture visible",
   "q": "crossed fingers",
@@ -3334,7 +3268,6 @@
   "why": "Photo shows large group of people"
  },
  "School vocabulary::Cubicle": {
-  "none": "nothing found",
   "q": "bathroom stall"
  },
  "School vocabulary::Cul-de-sac": {
@@ -3344,8 +3277,12 @@
    "https://commons.wikimedia.org/wiki/File:Windeck.jpg"
   ]
  },
- "School vocabulary::Cut back on": {},
- "School vocabulary::Cut down on": {},
+ "School vocabulary::Cut back on": {
+  "q": "saving money"
+ },
+ "School vocabulary::Cut down on": {
+  "q": "less sugar"
+ },
  "School vocabulary::Daily Mail": {
   "by": "General Tulstein W D Twigg",
   "file": "daily-mail-c52df2a490.jpg",
@@ -3356,11 +3293,9 @@
   "why": "Shows actual Daily Mail newspaper masthe"
  },
  "School vocabulary::Damp": {
-  "none": "nothing found",
   "q": "damp towel"
  },
  "School vocabulary::Damp#2": {
-  "none": "nothing found",
   "q": "damp towel"
  },
  "School vocabulary::Dare": {
@@ -3373,12 +3308,12 @@
   "why": "Man about to jump, courage"
  },
  "School vocabulary::Dead end": {
-  "none": "nothing found",
   "q": "dead end sign"
  },
- "School vocabulary::Deal with": {},
+ "School vocabulary::Deal with": {
+  "q": "solving problem"
+ },
  "School vocabulary::Decay": {
-  "none": "nothing found",
   "q": "tooth decay"
  },
  "School vocabulary::Decaying": {
@@ -3430,7 +3365,6 @@
   "q": "-"
  },
  "School vocabulary::Diabetes": {
-  "none": "nothing found",
   "q": "blood sugar test"
  },
  "School vocabulary::Dog harness": {
@@ -3475,7 +3409,6 @@
   "why": "Clear photo of real doves"
  },
  "School vocabulary::Draw": {
-  "none": "nothing found",
   "q": "child drawing picture"
  },
  "School vocabulary::Draw#2": {
@@ -3487,13 +3420,23 @@
    "https://commons.wikimedia.org/wiki/File:The_Practical_Sketcher_-_p87.png"
   ]
  },
- "School vocabulary::Drive off": {},
+ "School vocabulary::Drive off": {
+  "q": "car driving away"
+ },
  "School vocabulary::Drive on up": {},
- "School vocabulary::Drop by": {},
- "School vocabulary::Drop in on": {},
- "School vocabulary::Drop off": {},
+ "School vocabulary::Drop by": {
+  "q": "friends visiting doorway"
+ },
+ "School vocabulary::Drop in on": {
+  "q": "unexpected visitor"
+ },
+ "School vocabulary::Drop off": {
+  "q": "dropping off school"
+ },
  "School vocabulary::Drop out": {},
- "School vocabulary::Dwell on": {},
+ "School vocabulary::Dwell on": {
+  "q": "brooding anxious person"
+ },
  "School vocabulary::Dye": {
   "none": "No images show dye substance",
   "q": "fabric dye",
@@ -3503,10 +3446,18 @@
    "https://commons.wikimedia.org/wiki/File:Wiki_aviation-hangar-fabric-structure.jpg"
   ]
  },
- "School vocabulary::Ease off": {},
- "School vocabulary::Ease up": {},
- "School vocabulary::Eat out": {},
- "School vocabulary::Eat up": {},
+ "School vocabulary::Ease off": {
+  "q": "slow down pace"
+ },
+ "School vocabulary::Ease up": {
+  "q": "relaxed person exhaling"
+ },
+ "School vocabulary::Eat out": {
+  "q": "restaurant dining table"
+ },
+ "School vocabulary::Eat up": {
+  "q": "empty dinner plate"
+ },
  "School vocabulary::Effortless": {},
  "School vocabulary::Elderly": {
   "none": "Illustration, not a real photograph",
@@ -3516,11 +3467,9 @@
   ]
  },
  "School vocabulary::Eloped": {
-  "none": "nothing found",
   "q": "couple eloping"
  },
  "School vocabulary::Embryonic": {
-  "none": "nothing found",
   "q": "embryo microscope"
  },
  "School vocabulary::Encourage": {
@@ -3553,7 +3502,6 @@
   "why": "Diamond ring symbolizes engagement to ma"
  },
  "School vocabulary::Enzymes": {
-  "none": "nothing found",
   "q": "enzyme molecule model"
  },
  "School vocabulary::Equator": {},
@@ -3567,15 +3515,17 @@
   "why": "Clear photo of real escalator stairs"
  },
  "School vocabulary::Exasperating": {
-  "none": "nothing found",
   "q": "frustrated man"
  },
  "School vocabulary::Exploded view": {
-  "none": "nothing found",
   "q": "exploded engine diagram"
  },
- "School vocabulary::Fall apart": {},
- "School vocabulary::Fall out": {},
+ "School vocabulary::Fall apart": {
+  "q": "crying woman floor"
+ },
+ "School vocabulary::Fall out": {
+  "q": "arguing people"
+ },
  "School vocabulary::Far end": {
   "none": "No photo shows distant end concept",
   "q": "end of table",
@@ -3601,7 +3551,9 @@
    "https://commons.wikimedia.org/wiki/File:RCICD_ingl%C3%AAs.jpg"
   ]
  },
- "School vocabulary::Feel up to": {},
+ "School vocabulary::Feel up to": {
+  "q": "-"
+ },
  "School vocabulary::Fence": {
   "by": "Carlquist, Sherwin John, 1930-2021",
   "file": "fence-b089c70ed1.jpg",
@@ -3612,18 +3564,25 @@
   "why": "Shows real bamboo fence around house"
  },
  "School vocabulary::Fetus": {
-  "none": "nothing found",
   "q": "ultrasound fetus"
  },
  "School vocabulary::Fight back": {},
- "School vocabulary::Fight off": {},
+ "School vocabulary::Fight off": {
+  "q": "taking medicine"
+ },
  "School vocabulary::Figurative": {
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Figure out": {},
- "School vocabulary::Fill in": {},
- "School vocabulary::Fill up": {},
+ "School vocabulary::Figure out": {
+  "q": "solving puzzle"
+ },
+ "School vocabulary::Fill in": {
+  "q": "filling form"
+ },
+ "School vocabulary::Fill up": {
+  "q": "filling water bottle"
+ },
  "School vocabulary::Finch": {
   "by": "MichaelMaggs – Edited (sharpened, down-sampled, contrast corrected, noise remove",
   "file": "finch-15b1b79187.jpg",
@@ -3634,11 +3593,9 @@
   "why": "Small seed-eating finch clearly shown"
  },
  "School vocabulary::Firecrackers": {
-  "none": "nothing found",
   "q": "firecrackers exploding"
  },
  "School vocabulary::Fireworks": {
-  "none": "nothing found",
   "q": "fireworks display"
  },
  "School vocabulary::Fisherman": {
@@ -3650,7 +3607,9 @@
   "title": "Salt Life Fishing Charters kob, crop.png",
   "why": "Real men holding fish with fishing rod"
  },
- "School vocabulary::Fix up": {},
+ "School vocabulary::Fix up": {
+  "q": "repairing old house"
+ },
  "School vocabulary::Flabbergasted": {
   "none": "No photo shows genuine surprise clearly",
   "q": "shocked face",
@@ -3678,10 +3637,16 @@
    "https://commons.wikimedia.org/wiki/File:Thomas_Affleck_(planter)_01.jpg"
   ]
  },
- "School vocabulary::Focus on": {},
- "School vocabulary::Follow along": {},
+ "School vocabulary::Focus on": {
+  "q": "studying concentrated"
+ },
+ "School vocabulary::Follow along": {
+  "q": "children following leader"
+ },
  "School vocabulary::Follow through": {},
- "School vocabulary::Follow up": {},
+ "School vocabulary::Follow up": {
+  "q": "business handshake"
+ },
  "School vocabulary::Food": {
   "none": "No actual food shown, only bowls",
   "q": "plate of food",
@@ -3704,14 +3669,14 @@
   "why": "No smoking sign shows prohibition clearl"
  },
  "School vocabulary::Forecast": {
-  "none": "nothing found",
   "q": "weather forecast map"
  },
  "School vocabulary::Forgiveness": {
-  "none": "nothing found",
   "q": "hug reconciliation"
  },
- "School vocabulary::Freeze up": {},
+ "School vocabulary::Freeze up": {
+  "q": "frozen computer"
+ },
  "School vocabulary::Frontier": {
   "none": "None clearly depict edge-of-settled-land",
   "q": "frontier settlement",
@@ -3746,7 +3711,9 @@
   "title": "Gold Strike Inn Hotel & Casino.jpg",
   "why": "Casino sign shows gambling location clea"
  },
- "School vocabulary::Gather around": {},
+ "School vocabulary::Gather around": {
+  "q": "family dinner table"
+ },
  "School vocabulary::Gay": {
   "by": "Роман Мельник",
   "file": "gay-20280b3581.jpg",
@@ -3757,14 +3724,26 @@
   "why": "Two brides marrying, same-sex couple"
  },
  "School vocabulary::Gear": {},
- "School vocabulary::Get across": {},
- "School vocabulary::Get along with": {},
+ "School vocabulary::Get across": {
+  "q": "explaining idea"
+ },
+ "School vocabulary::Get along with": {
+  "q": "friends smiling together"
+ },
  "School vocabulary::Get away with": {},
- "School vocabulary::Get back to": {},
+ "School vocabulary::Get back to": {
+  "q": "replying email"
+ },
  "School vocabulary::Get carried away": {},
- "School vocabulary::Get dressed": {},
- "School vocabulary::Get in": {},
- "School vocabulary::Get in touch with": {},
+ "School vocabulary::Get dressed": {
+  "q": "person dressing"
+ },
+ "School vocabulary::Get in": {
+  "q": "entering car"
+ },
+ "School vocabulary::Get in touch with": {
+  "q": "contacting someone"
+ },
  "School vocabulary::Get lucky": {
   "none": "Illustrations, not real photographs",
   "q": "four leaf clover",
@@ -3773,34 +3752,71 @@
    "https://commons.wikimedia.org/wiki/File:Senterpartiets_logo.png"
   ]
  },
- "School vocabulary::Get off": {},
- "School vocabulary::Get on": {},
- "School vocabulary::Get over": {},
+ "School vocabulary::Get off": {
+  "q": "leaving train"
+ },
+ "School vocabulary::Get on": {
+  "q": "boarding bus"
+ },
+ "School vocabulary::Get over": {
+  "q": "recovering in bed"
+ },
  "School vocabulary::Get over with": {},
- "School vocabulary::Get through": {},
- "School vocabulary::Get together": {},
- "School vocabulary::Get up": {},
- "School vocabulary::Give away": {},
- "School vocabulary::Give back": {},
+ "School vocabulary::Get through": {
+  "q": "phone call"
+ },
+ "School vocabulary::Get together": {
+  "q": "friends gathering"
+ },
+ "School vocabulary::Get up": {
+  "q": "getting up"
+ },
+ "School vocabulary::Give away": {
+  "q": "free sample giveaway"
+ },
+ "School vocabulary::Give back": {
+  "q": "returning item store"
+ },
  "School vocabulary::Give birth": {
-  "none": "nothing found",
   "q": "childbirth"
  },
- "School vocabulary::Go across": {},
- "School vocabulary::Go away": {},
- "School vocabulary::Go back": {},
+ "School vocabulary::Go across": {
+  "q": "people crossing bridge"
+ },
+ "School vocabulary::Go away": {
+  "q": "person walking away"
+ },
+ "School vocabulary::Go back": {
+  "q": "returning home"
+ },
  "School vocabulary::Go down": {
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Go in": {},
- "School vocabulary::Go offline": {},
- "School vocabulary::Go online": {},
- "School vocabulary::Go out": {},
- "School vocabulary::Go past": {},
- "School vocabulary::Go through": {},
- "School vocabulary::Go to bed": {},
- "School vocabulary::Go up": {},
+ "School vocabulary::Go in": {
+  "q": "entering front door"
+ },
+ "School vocabulary::Go offline": {
+  "q": "no internet connection"
+ },
+ "School vocabulary::Go online": {
+  "q": "person using laptop"
+ },
+ "School vocabulary::Go out": {
+  "q": "leaving house"
+ },
+ "School vocabulary::Go past": {
+  "q": "walking past building"
+ },
+ "School vocabulary::Go through": {
+  "q": "driving through tunnel"
+ },
+ "School vocabulary::Go to bed": {
+  "q": "sleeping in bed"
+ },
+ "School vocabulary::Go up": {
+  "q": "hiking uphill path"
+ },
  "School vocabulary::Good": {
   "none": "No image conveys general quality concept",
   "q": "good book",
@@ -3836,13 +3852,20 @@
   ]
  },
  "School vocabulary::Grouch": {
-  "none": "nothing found",
   "q": "grumpy man"
  },
- "School vocabulary::Grow apart": {},
- "School vocabulary::Grow closer": {},
- "School vocabulary::Grow out of": {},
- "School vocabulary::Grow up": {},
+ "School vocabulary::Grow apart": {
+  "q": "distant friends"
+ },
+ "School vocabulary::Grow closer": {
+  "q": "hugging friends"
+ },
+ "School vocabulary::Grow out of": {
+  "q": "small clothes"
+ },
+ "School vocabulary::Grow up": {
+  "q": "growing up"
+ },
  "School vocabulary::Hail": {
   "by": "Shixart1985",
   "file": "hail-3f580b7505.jpg",
@@ -3852,10 +3875,16 @@
   "title": "Hand catching hailstones during a rainstorm.jpg",
   "why": "Shows small ice balls in hand"
  },
- "School vocabulary::Hand in": {},
- "School vocabulary::Hand over": {},
+ "School vocabulary::Hand in": {
+  "q": "submitting paper"
+ },
+ "School vocabulary::Hand over": {
+  "q": "handing over money"
+ },
  "School vocabulary::Hang on to": {},
- "School vocabulary::Hang up": {},
+ "School vocabulary::Hang up": {
+  "q": "smartphone phone call"
+ },
  "School vocabulary::Harbor": {
   "by": "Department of Defense. American Forces Information Service. Defense Visual Infor",
   "file": "harbor-d69019e855.jpg",
@@ -3882,11 +3911,9 @@
   ]
  },
  "School vocabulary::Harm": {
-  "none": "nothing found",
   "q": "chemical burn injury"
  },
  "School vocabulary::Harmful": {
-  "none": "nothing found",
   "q": "warning sign"
  },
  "School vocabulary::Harmoniously": {
@@ -3915,7 +3942,6 @@
   "why": "Shows people harvesting grain field"
  },
  "School vocabulary::Hassle": {
-  "none": "nothing found",
   "q": "crowded parking lot"
  },
  "School vocabulary::Hatching": {
@@ -3947,7 +3973,9 @@
  "School vocabulary::Head": {
   "q": "human head"
  },
- "School vocabulary::Head back": {},
+ "School vocabulary::Head back": {
+  "q": "person walking home"
+ },
  "School vocabulary::Head down": {
   "none": "nothing to photograph",
   "q": "-"
@@ -3958,9 +3986,10 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Hear from": {},
+ "School vocabulary::Hear from": {
+  "q": "reading text message"
+ },
  "School vocabulary::Heirloom": {
-  "none": "nothing found",
   "q": "heirloom jewelry"
  },
  "School vocabulary::Herd": {
@@ -3973,10 +4002,11 @@
   "why": "Shows group of grazing animals outdoors"
  },
  "School vocabulary::Hogs": {
-  "none": "nothing found",
   "q": "pigs farm"
  },
- "School vocabulary::Hold back": {},
+ "School vocabulary::Hold back": {
+  "q": "holding back tears"
+ },
  "School vocabulary::Holster": {
   "by": "Alian Gear Holster",
   "file": "holster-39964d0df5.jpg",
@@ -4004,7 +4034,9 @@
   "title": "Hot air balloon in flight quebec 2005.jpeg",
   "why": "Clear photo of balloon flying in sky"
  },
- "School vocabulary::Hurry up": {},
+ "School vocabulary::Hurry up": {
+  "q": "running quickly"
+ },
  "School vocabulary::Hypothesis": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4022,11 +4054,9 @@
   "q": "-"
  },
  "School vocabulary::In time": {
-  "none": "nothing found",
   "q": "running to catch train"
  },
  "School vocabulary::Increase": {
-  "none": "nothing found",
   "q": "rising price graph"
  },
  "School vocabulary::Inflation": {
@@ -4046,7 +4076,6 @@
   ]
  },
  "School vocabulary::Ink tattoos": {
-  "none": "nothing found",
   "q": "tattoo artist working"
  },
  "School vocabulary::Inked out": {
@@ -4066,14 +4095,23 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Interprets": {},
+ "School vocabulary::Interprets": {
+  "none": "These show old books, not interpreting.",
+  "q": "person explaining poem",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Eliza-_an_epick_poem._In_ten_books_..._To_which_is_annex%27d,_an_index,_explaining_persons,_countries,_cities,_rivers,_%26c._-_Upper_cover_(75i4).jpg",
+   "https://commons.wikimedia.org/wiki/File:Eliza-_an_epick_poem._In_ten_books_..._To_which_is_annex%27d,_an_index,_explaining_persons,_countries,_cities,_rivers,_%26c._-Richard_Blackmore,_Sir,_-1729.-_-_A._%26_J._Churchill,_1705._-_Spine_(75i4).jpg",
+   "https://commons.wikimedia.org/wiki/File:Eliza-_an_epick_poem._In_ten_books_..._To_which_is_annex%27d,_an_index,_explaining_persons,_countries,_cities,_rivers,_%26c._-Richard_Blackmore,_Sir,_-1729.-_-_A._%26_J._Churchill,_1705._-_Upper_cover_(75i4).jpg"
+  ]
+ },
  "School vocabulary::It's like finding a needle in a haystack": {
-  "none": "nothing found",
   "q": "needle in haystack"
  },
  "School vocabulary::Jogger": {},
  "School vocabulary::Joggers": {},
- "School vocabulary::Join in": {},
+ "School vocabulary::Join in": {
+  "q": "family playing game"
+ },
  "School vocabulary::Jot down": {
   "none": "None show quick handwriting action clear",
   "q": "quick note",
@@ -4084,7 +4122,6 @@
   ]
  },
  "School vocabulary::Jowls": {
-  "none": "nothing found",
   "q": "sagging jowls"
  },
  "School vocabulary::Judge": {
@@ -4096,12 +4133,17 @@
   ]
  },
  "School vocabulary::Jump someone": {
-  "none": "nothing found",
   "q": "street mugging"
  },
- "School vocabulary::Keep off": {},
- "School vocabulary::Keep on": {},
- "School vocabulary::Keep up with": {},
+ "School vocabulary::Keep off": {
+  "q": "avoiding chocolate"
+ },
+ "School vocabulary::Keep on": {
+  "q": "practicing piano"
+ },
+ "School vocabulary::Keep up with": {
+  "q": "running group"
+ },
  "School vocabulary::Kneeling down": {
   "none": "Shows squatting, not kneeling",
   "q": "person kneeling",
@@ -4135,11 +4177,12 @@
   ]
  },
  "School vocabulary::Lawsuit": {
-  "none": "nothing found",
   "q": "courtroom hearing"
  },
  "School vocabulary::Lead": {},
- "School vocabulary::Lean on": {},
+ "School vocabulary::Lean on": {
+  "q": "comforting sad friend"
+ },
  "School vocabulary::Leaps and bounds": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4153,8 +4196,12 @@
   "title": "Lühike nahast korea jalutusrihm.jpg",
   "why": "Shows a leash with clasp clearly"
  },
- "School vocabulary::Leave behind": {},
- "School vocabulary::Leave out": {},
+ "School vocabulary::Leave behind": {
+  "q": "forgotten backpack"
+ },
+ "School vocabulary::Leave out": {
+  "q": "crossed out list"
+ },
  "School vocabulary::Lecture": {
   "none": "No image shows actual lecture happening",
   "q": "lecture hall",
@@ -4164,10 +4211,13 @@
   ]
  },
  "School vocabulary::Let down": {},
- "School vocabulary::Lie down": {},
- "School vocabulary::Lighten up": {},
+ "School vocabulary::Lie down": {
+  "q": "lying on bed"
+ },
+ "School vocabulary::Lighten up": {
+  "q": "smiling relieved person"
+ },
  "School vocabulary::Lightly": {
-  "none": "nothing found",
   "q": "gentle push door"
  },
  "School vocabulary::Likelihood": {
@@ -4184,7 +4234,6 @@
   ]
  },
  "School vocabulary::Limb": {
-  "none": "nothing found",
   "q": "human arm"
  },
  "School vocabulary::Limb#2": {
@@ -4204,20 +4253,38 @@
    "https://commons.wikimedia.org/wiki/File:John_Feeks_Western_Union_lineman_killed_by_AC_October_11_1889.png"
   ]
  },
- "School vocabulary::Line up": {},
- "School vocabulary::Link up": {},
- "School vocabulary::Listen in": {},
+ "School vocabulary::Line up": {
+  "q": "people queue line"
+ },
+ "School vocabulary::Link up": {
+  "q": "connecting devices"
+ },
+ "School vocabulary::Listen in": {
+  "q": "person eavesdropping door"
+ },
  "School vocabulary::Literally": {
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Live on": {},
+ "School vocabulary::Live on": {
+  "q": "counting coins"
+ },
  "School vocabulary::Live through": {},
- "School vocabulary::Load up": {},
- "School vocabulary::Log back in": {},
- "School vocabulary::Log in": {},
- "School vocabulary::Log onto": {},
- "School vocabulary::Log out": {},
+ "School vocabulary::Load up": {
+  "q": "loading video game"
+ },
+ "School vocabulary::Log back in": {
+  "q": "login screen"
+ },
+ "School vocabulary::Log in": {
+  "q": "computer login screen"
+ },
+ "School vocabulary::Log onto": {
+  "q": "computer login screen"
+ },
+ "School vocabulary::Log out": {
+  "q": "computer logout screen"
+ },
  "School vocabulary::Lollipop": {
   "by": "Smeet666",
   "file": "lollipop-32bd36b1f1.jpg",
@@ -4227,27 +4294,36 @@
   "title": "Paleta de cajeta.JPG",
   "why": "Shows candy on a stick"
  },
- "School vocabulary::Look after": {},
+ "School vocabulary::Look after": {
+  "q": "babysitter child care"
+ },
  "School vocabulary::Look down on": {},
- "School vocabulary::Look for": {},
+ "School vocabulary::Look for": {
+  "q": "searching keys floor"
+ },
  "School vocabulary::Look forward to + verb-ing": {
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Look in on": {},
- "School vocabulary::Look out for": {},
- "School vocabulary::Look through": {},
- "School vocabulary::Look up to": {},
+ "School vocabulary::Look in on": {
+  "q": "checking on elderly"
+ },
+ "School vocabulary::Look out for": {
+  "q": "protective sibling"
+ },
+ "School vocabulary::Look through": {
+  "q": "flipping pages"
+ },
+ "School vocabulary::Look up to": {
+  "q": "admiring father"
+ },
  "School vocabulary::Loud": {
-  "none": "nothing found",
   "q": "noisy crowd"
  },
  "School vocabulary::Lure": {
-  "none": "nothing found",
   "q": "money temptation"
  },
  "School vocabulary::Make the water still": {
-  "none": "nothing found",
   "q": "calm water"
  },
  "School vocabulary::Makeup": {
@@ -4276,8 +4352,12 @@
    "https://commons.wikimedia.org/wiki/File:Kindstedt_and_Kindberg_envoy_1915.png"
   ]
  },
- "School vocabulary::Mark down": {},
- "School vocabulary::Mark up": {},
+ "School vocabulary::Mark down": {
+  "q": "sale clearance tag"
+ },
+ "School vocabulary::Mark up": {
+  "q": "price tag increase"
+ },
  "School vocabulary::Match": {
   "by": "제주특별자치도 / Jeju Special Self-Governing Province",
   "file": "match-0bdd8b136c.jpg",
@@ -4287,7 +4367,10 @@
   "title": "Soccer Match at the Provincial Sports Festival, Jeju.png",
   "why": "Shows a live football match contest"
  },
- "School vocabulary::Mean": {},
+ "School vocabulary::Mean": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::Mesh": {
   "by": "Shadowmeld Photography",
   "file": "mesh-55deef00c4.jpg",
@@ -4336,11 +4419,21 @@
    "https://commons.wikimedia.org/wiki/File:Royal_Mausoleum_at_Kalakaua%27s_funeral_(PP-25-6-019).jpg"
   ]
  },
- "School vocabulary::Move along": {},
- "School vocabulary::Move away": {},
- "School vocabulary::Move in": {},
- "School vocabulary::Move on": {},
- "School vocabulary::Move out": {},
+ "School vocabulary::Move along": {
+  "q": "crowd walking street"
+ },
+ "School vocabulary::Move away": {
+  "q": "packing boxes"
+ },
+ "School vocabulary::Move in": {
+  "q": "moving boxes house"
+ },
+ "School vocabulary::Move on": {
+  "q": "tourists walking museum"
+ },
+ "School vocabulary::Move out": {
+  "q": "packing boxes moving"
+ },
  "School vocabulary::Mule": {
   "by": "Ed Emery",
   "file": "mule-f9d563de06.jpg",
@@ -4351,7 +4444,6 @@
   "why": "Clear photo of a mule"
  },
  "School vocabulary::Mule ride": {
-  "none": "nothing found",
   "q": "mule ride canyon"
  },
  "School vocabulary::Needle": {
@@ -4373,7 +4465,6 @@
   "why": "Shows small table beside bed"
  },
  "School vocabulary::Noisy": {
-  "none": "nothing found",
   "q": "noisy classroom"
  },
  "School vocabulary::Not until + auxiliary + subject + main verb": {
@@ -4390,7 +4481,6 @@
   "why": "Handwritten short note with names/number"
  },
  "School vocabulary::Nuisance": {
-  "none": "nothing found",
   "q": "noisy construction site"
  },
  "School vocabulary::Offspring": {
@@ -4423,9 +4513,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Open up": {},
- "School vocabulary::Opt in": {},
- "School vocabulary::Opt out": {},
+ "School vocabulary::Open up": {
+  "q": "friends talking deeply"
+ },
+ "School vocabulary::Opt in": {
+  "q": "checkbox form"
+ },
+ "School vocabulary::Opt out": {
+  "q": "unchecking checkbox"
+ },
  "School vocabulary::Outer space": {
   "by": "United States Space Force",
   "file": "outer-space-dbb28353ab.jpg",
@@ -4436,13 +4532,26 @@
   "why": "Shows Earth from space with stars"
  },
  "School vocabulary::Overrun": {
-  "none": "nothing found",
   "q": "weeds overtaking garden"
  },
- "School vocabulary::Parallel gymnastics rings": {},
- "School vocabulary::Pass around": {},
- "School vocabulary::Pass by": {},
- "School vocabulary::Pass on": {},
+ "School vocabulary::Parallel gymnastics rings": {
+  "by": "Martin Rulsch, Wikimedia Commons",
+  "file": "parallel-gymnastics-rings-ce3bac000e.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:2018-10-14_Gymnastics_at_2018_Summer_Youth_Olympics_%E2%80%93_Boys%27_Artistic_Gymnastics_%E2%80%93_Apparatus_finals_%E2%80%93_Still_rings_(Martin_Rulsch)_046.jpg",
+  "q": "gymnastics rings",
+  "title": "2018-10-14 Gymnastics at 2018 Summer Youth Olympics – Boys' Artistic Gymnastics – Apparatus finals – Still rings (Martin Rulsch) 046.jpg",
+  "why": "Shows a gymnast using hanging rings."
+ },
+ "School vocabulary::Pass around": {
+  "q": "handing out papers"
+ },
+ "School vocabulary::Pass by": {
+  "q": "walking past building"
+ },
+ "School vocabulary::Pass on": {
+  "q": "whispering message ear"
+ },
  "School vocabulary::Pass up": {},
  "School vocabulary::Paste": {
   "by": "Sundar",
@@ -4454,16 +4563,29 @@
   "why": "Shows thick soft mixture in pot"
  },
  "School vocabulary::Path": {},
- "School vocabulary::Pay back": {},
- "School vocabulary::Pay in": {},
- "School vocabulary::Pay off": {},
+ "School vocabulary::Pay back": {
+  "q": "paying money"
+ },
+ "School vocabulary::Pay in": {
+  "q": "bank deposit money"
+ },
+ "School vocabulary::Pay off": {
+  "q": "paid stamp"
+ },
  "School vocabulary::Permitted": {
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Pick out": {},
- "School vocabulary::Pick up": {},
- "School vocabulary::Picky": {},
+ "School vocabulary::Pick out": {
+  "q": "choosing dress boutique"
+ },
+ "School vocabulary::Pick up": {
+  "q": "picking up package"
+ },
+ "School vocabulary::Picky": {
+  "none": "nothing found",
+  "q": "finicky picky eater"
+ },
  "School vocabulary::Pigeon": {
   "by": "Elliott Hilaire",
   "file": "pigeon-43778f4426.jpg",
@@ -4482,7 +4604,9 @@
   "title": "Sheriff and kids.jpg",
   "why": "Child riding on man's back"
  },
- "School vocabulary::Pitch in": {},
+ "School vocabulary::Pitch in": {
+  "q": "family cleaning together"
+ },
  "School vocabulary::Plague": {
   "none": "Costume mask, not disease concept",
   "q": "plague doctor",
@@ -4525,12 +4649,15 @@
   "why": "Children playing with hoops outdoors, ha"
  },
  "School vocabulary::Pleased": {
-  "none": "nothing found",
   "q": "pleased smiling person"
  },
  "School vocabulary::Plenty": {},
- "School vocabulary::Plug in": {},
- "School vocabulary::Point out": {},
+ "School vocabulary::Plug in": {
+  "q": "plugging in charger"
+ },
+ "School vocabulary::Point out": {
+  "q": "pointing whiteboard"
+ },
  "School vocabulary::Pointy": {
   "none": "Only shows pointy ears, not general poin",
   "q": "pointy ears",
@@ -4541,11 +4668,9 @@
   ]
  },
  "School vocabulary::Poke": {
-  "none": "nothing found",
   "q": "finger poking button"
  },
  "School vocabulary::Poke around": {
-  "none": "nothing found",
   "q": "browsing bookstore"
  },
  "School vocabulary::Police dog": {
@@ -4573,7 +4698,9 @@
   "title": "Smoke plume from power plant chimney.jpg",
   "why": "Smoke stacks polluting the air"
  },
- "School vocabulary::Pop up": {},
+ "School vocabulary::Pop up": {
+  "q": "popup window"
+ },
  "School vocabulary::Poppers": {
   "none": "No image shows small popping devices",
   "q": "party poppers",
@@ -4608,7 +4735,6 @@
   "q": "rehearsal practice"
  },
  "School vocabulary::Praised": {
-  "none": "nothing found",
   "q": "teacher praising student"
  },
  "School vocabulary::Pride": {
@@ -4620,7 +4746,9 @@
   "title": "Manoocher Aryanpur in Storm Lake Iowa 2009.jpg",
   "why": "Man proudly waving flag, smiling"
  },
- "School vocabulary::Print out": {},
+ "School vocabulary::Print out": {
+  "q": "printing paper document"
+ },
  "School vocabulary::Private tutoring class": {
   "none": "None show private tutoring lesson",
   "q": "private tutoring lesson",
@@ -4640,22 +4768,18 @@
   ]
  },
  "School vocabulary::Proper": {
-  "none": "nothing found",
   "q": "toolbox tools"
  },
  "School vocabulary::Proudly": {},
  "School vocabulary::Prove": {
-  "none": "nothing found",
   "q": "presenting evidence"
  },
  "School vocabulary::Provoke": {
-  "none": "nothing found",
   "q": "teasing dog"
  },
  "School vocabulary::Pull around": {},
  "School vocabulary::Pull off": {},
  "School vocabulary::Pull out": {
-  "none": "nothing found",
   "q": "pulling out chair"
  },
  "School vocabulary::Punch": {
@@ -4680,15 +4804,31 @@
   "title": "Handbag Calceta platano.JPG",
   "why": "Clear photo of woman's handbag/purse"
  },
- "School vocabulary::Put aside": {},
- "School vocabulary::Put away": {},
- "School vocabulary::Put back": {},
- "School vocabulary::Put down": {},
+ "School vocabulary::Put aside": {
+  "q": "saving money jar"
+ },
+ "School vocabulary::Put away": {
+  "q": "organizing toys shelf"
+ },
+ "School vocabulary::Put back": {
+  "q": "handing book back"
+ },
+ "School vocabulary::Put down": {
+  "q": "putting bag down"
+ },
  "School vocabulary::Put down to": {},
- "School vocabulary::Put off": {},
- "School vocabulary::Put on": {},
- "School vocabulary::Put through": {},
- "School vocabulary::Put together": {},
+ "School vocabulary::Put off": {
+  "q": "calendar delayed"
+ },
+ "School vocabulary::Put on": {
+  "q": "putting on jacket"
+ },
+ "School vocabulary::Put through": {
+  "q": "operator switchboard"
+ },
+ "School vocabulary::Put together": {
+  "q": "assembling furniture"
+ },
  "School vocabulary::Put up with": {},
  "School vocabulary::Queue": {
   "by": "LN9267",
@@ -4712,7 +4852,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Race": {},
+ "School vocabulary::Race": {
+  "by": "Frettie",
+  "file": "race-c48af66592.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Running_girls_to_finish_of_Hr%C3%A1dek_race_in_T%C5%99eb%C3%AD%C4%8D,_T%C5%99eb%C3%AD%C4%8D_District.jpg",
+  "q": "running race finish",
+  "title": "Running girls to finish of Hrádek race in Třebíč, Třebíč District.jpg",
+  "why": "Real photo showing a running race."
+ },
  "School vocabulary::Railing": {
   "by": "Basile Morin",
   "file": "railing-68c90ca576.jpg",
@@ -4738,9 +4886,15 @@
    "https://commons.wikimedia.org/wiki/File:Lake_Charles_Louisiana_Snow_1895.jpg"
   ]
  },
- "School vocabulary::Reach out": {},
- "School vocabulary::Read out": {},
- "School vocabulary::Read over": {},
+ "School vocabulary::Reach out": {
+  "q": "person using phone"
+ },
+ "School vocabulary::Read out": {
+  "q": "reading book aloud"
+ },
+ "School vocabulary::Read over": {
+  "q": "reading document"
+ },
  "School vocabulary::Reading": {
   "by": "Abhinavgarule",
   "file": "reading-bc4de6e605.jpg",
@@ -4758,7 +4912,9 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Recover from": {},
+ "School vocabulary::Recover from": {
+  "q": "crutches healing"
+ },
  "School vocabulary::Redundancies": {
   "none": "nothing to photograph",
   "q": "-"
@@ -4767,9 +4923,10 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Reply to": {},
+ "School vocabulary::Reply to": {
+  "q": "typing reply email"
+ },
  "School vocabulary::Reprimand": {
-  "none": "nothing found",
   "q": "official reprimand"
  },
  "School vocabulary::Result": {
@@ -4793,11 +4950,9 @@
   ]
  },
  "School vocabulary::Retrieve": {
-  "none": "nothing found",
   "q": "picking up keys"
  },
  "School vocabulary::Revenge": {
-  "none": "nothing found",
   "q": "angry clenched fist"
  },
  "School vocabulary::Rewarding": {
@@ -4807,8 +4962,12 @@
    "https://commons.wikimedia.org/wiki/File:People_behaving_in_a_classroom_(6170252894).jpg"
   ]
  },
- "School vocabulary::Ring back": {},
- "School vocabulary::Ring up": {},
+ "School vocabulary::Ring back": {
+  "q": "person phoning"
+ },
+ "School vocabulary::Ring up": {
+  "q": "cashier checkout"
+ },
  "School vocabulary::Riot": {
   "none": "Shows police lineup, not violent chaos",
   "q": "street riot",
@@ -4835,7 +4994,6 @@
   "why": "Shows a real road for vehicles"
  },
  "School vocabulary::Roamed": {
-  "none": "nothing found",
   "q": "wandering city streets"
  },
  "School vocabulary::Rods": {
@@ -4860,7 +5018,6 @@
   "q": "traffic roundabout"
  },
  "School vocabulary::Rounded": {
-  "none": "nothing found",
   "q": "rounded chair edges"
  },
  "School vocabulary::Row": {
@@ -4900,7 +5057,6 @@
   ]
  },
  "School vocabulary::Salary": {
-  "none": "nothing found",
   "q": "paycheck"
  },
  "School vocabulary::Says": {
@@ -4912,7 +5068,6 @@
   ]
  },
  "School vocabulary::Scarf": {
-  "none": "nothing found",
   "q": "wool scarf"
  },
  "School vocabulary::School": {
@@ -4925,11 +5080,14 @@
   "why": "Clear school building with visible sign"
  },
  "School vocabulary::Scold": {
-  "none": "nothing found",
   "q": "teacher scolding student"
  },
- "School vocabulary::Scroll down": {},
- "School vocabulary::Scroll up": {},
+ "School vocabulary::Scroll down": {
+  "q": "scrolling down webpage"
+ },
+ "School vocabulary::Scroll up": {
+  "q": "scrolling up webpage"
+ },
  "School vocabulary::Seaside": {},
  "School vocabulary::See through": {},
  "School vocabulary::Seize": {
@@ -4945,9 +5103,15 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Sell off": {},
- "School vocabulary::Send back": {},
- "School vocabulary::Send out": {},
+ "School vocabulary::Sell off": {
+  "q": "store clearance sale"
+ },
+ "School vocabulary::Send back": {
+  "q": "returning package"
+ },
+ "School vocabulary::Send out": {
+  "q": "email newsletter icon"
+ },
  "School vocabulary::Serves": {
   "by": "File:Hacker-Pschorr Oktoberfest Girl.jpg by Markburger83 Derivative work: Lauro ",
   "file": "serves-6c50725aff.jpg",
@@ -4957,16 +5121,24 @@
   "title": "Hacker-Pschorr Oktoberfest Girl Remix.jpg",
   "why": "Woman serving beer, providing food/drink"
  },
- "School vocabulary::Service dog": {},
+ "School vocabulary::Service dog": {
+  "by": "Grossman1Daniel",
+  "file": "service-dog-bb679f9a10.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Smart_dog_Vest-Harness_Service_dogs..jpg",
+  "q": "service dog vest",
+  "title": "Smart dog Vest-Harness Service dogs..jpg",
+  "why": "Clearly shows a harnessed service dog."
+ },
  "School vocabulary::Set up": {
-  "none": "nothing found",
   "q": "setting up projector"
  },
  "School vocabulary::Settle": {
-  "none": "nothing found",
   "q": "handshake agreement"
  },
- "School vocabulary::Settle down": {},
+ "School vocabulary::Settle down": {
+  "q": "family home"
+ },
  "School vocabulary::Shade": {
   "by": "Roger A Smith",
   "file": "shade-d94be5ffb1.jpg",
@@ -4996,10 +5168,11 @@
  "School vocabulary::Shelf": {},
  "School vocabulary::Shelves": {},
  "School vocabulary::Shimmering": {},
- "School vocabulary::Shop around": {},
+ "School vocabulary::Shop around": {
+  "q": "comparing price tags"
+ },
  "School vocabulary::Shoreline": {},
  "School vocabulary::Shoulder holster": {
-  "none": "nothing found",
   "q": "shoulder holster"
  },
  "School vocabulary::Shuffle": {
@@ -5020,10 +5193,18 @@
    "https://commons.wikimedia.org/wiki/File:Brass_door_handles_shaped_like_hands_Den_Gamle_By_Aarhus.jpg"
   ]
  },
- "School vocabulary::Shut down": {},
- "School vocabulary::Sign in": {},
- "School vocabulary::Sign out": {},
- "School vocabulary::Sign up": {},
+ "School vocabulary::Shut down": {
+  "q": "turning off computer"
+ },
+ "School vocabulary::Sign in": {
+  "q": "website login page"
+ },
+ "School vocabulary::Sign out": {
+  "q": "signing out screen"
+ },
+ "School vocabulary::Sign up": {
+  "q": "online registration form"
+ },
  "School vocabulary::Sink in": {},
  "School vocabulary::Sinking": {
   "by": "Unknown authorUnknown author",
@@ -5034,19 +5215,31 @@
   "title": "North Pacific (sidewheeler) sinking 1903.jpg",
   "why": "Boat visibly going under water"
  },
- "School vocabulary::Sit down": {},
- "School vocabulary::Sit up": {},
- "School vocabulary::Sleep in": {},
- "School vocabulary::Slim down": {},
- "School vocabulary::Slow down": {},
+ "School vocabulary::Sit down": {
+  "q": "sitting down"
+ },
+ "School vocabulary::Sit up": {
+  "q": "sitting up bed"
+ },
+ "School vocabulary::Sleep in": {
+  "q": "sleeping late morning"
+ },
+ "School vocabulary::Slim down": {
+  "q": "weight loss success"
+ },
+ "School vocabulary::Slow down": {
+  "q": "driving speedometer"
+ },
  "School vocabulary::Snap": {
-  "none": "nothing found",
   "q": "broken fishing rod"
  },
- "School vocabulary::Snap out of": {},
- "School vocabulary::Snap up": {},
+ "School vocabulary::Snap out of": {
+  "q": "-"
+ },
+ "School vocabulary::Snap up": {
+  "q": "buying quickly sale"
+ },
  "School vocabulary::Snatch": {
-  "none": "nothing found",
   "q": "purse snatching"
  },
  "School vocabulary::Somber": {
@@ -5070,10 +5263,18 @@
   ]
  },
  "School vocabulary::Sparkling": {},
- "School vocabulary::Speak out": {},
- "School vocabulary::Speak up": {},
- "School vocabulary::Speed up": {},
- "School vocabulary::Spend on": {},
+ "School vocabulary::Speak out": {
+  "q": "person protesting"
+ },
+ "School vocabulary::Speak up": {
+  "q": "speaking loudly"
+ },
+ "School vocabulary::Speed up": {
+  "q": "fast runner"
+ },
+ "School vocabulary::Spend on": {
+  "q": "shopping bags"
+ },
  "School vocabulary::Spin": {
   "none": "Static spinning wheels, not turning quic",
   "q": "spinning wheel",
@@ -5083,7 +5284,9 @@
    "https://commons.wikimedia.org/wiki/File:Spinning_mill_or_wheel.JPG"
   ]
  },
- "School vocabulary::Splash out": {},
+ "School vocabulary::Splash out": {
+  "q": "luxury shopping bags"
+ },
  "School vocabulary::Split ends": {
   "by": "RealGatba",
   "file": "split-ends-889f756dbc.jpg",
@@ -5094,7 +5297,6 @@
   "why": "Clear close-up of frayed hair ends"
  },
  "School vocabulary::Split off": {
-  "none": "nothing found",
   "q": "breakaway group walking"
  },
  "School vocabulary::Sprout": {
@@ -5116,12 +5318,15 @@
   ]
  },
  "School vocabulary::Stamps": {
-  "none": "nothing found",
   "q": "postage stamps"
  },
- "School vocabulary::Stand up": {},
+ "School vocabulary::Stand up": {
+  "q": "standing up"
+ },
  "School vocabulary::Stand up for": {},
- "School vocabulary::Start up": {},
+ "School vocabulary::Start up": {
+  "q": "starting computer screen"
+ },
  "School vocabulary::Stationary": {
   "none": "No clear image showing stillness",
   "q": "stationary car",
@@ -5139,8 +5344,12 @@
    "https://commons.wikimedia.org/wiki/File:NOBILETTO,_Michael_-_Born-_(BLANK),_Naturalized-_(BLANK)_-_DPLA_-_a2d59d15c349ffb77ab9bcf4d37fe399.jpg"
   ]
  },
- "School vocabulary::Stay in": {},
- "School vocabulary::Stay over": {},
+ "School vocabulary::Stay in": {
+  "q": "relaxing at home"
+ },
+ "School vocabulary::Stay over": {
+  "q": "guest bedroom sleepover"
+ },
  "School vocabulary::Steamship": {
   "by": "Boletín de la Sociedad Geográfica de Lima [1911]",
   "file": "steamship-c5a7537e6f.jpg",
@@ -5150,24 +5359,33 @@
   "title": "Transatlantic steamships at the port of Iquitos.jpg",
   "why": "Real photograph showing actual steamship"
  },
- "School vocabulary::Step in": {},
- "School vocabulary::Step out": {},
+ "School vocabulary::Step in": {
+  "q": "stepping through door"
+ },
+ "School vocabulary::Step out": {
+  "q": "person leaving office"
+ },
  "School vocabulary::Stern": {
-  "none": "nothing found",
+  "none": "Neither picture clearly depicts strictne",
   "q": "stern expression",
   "seen": [
-   "https://commons.wikimedia.org/wiki/File:Man_with_stern_expression_in_profile_to_left_MET_DP823768.jpg"
+   "https://commons.wikimedia.org/wiki/File:Man_with_stern_expression_in_profile_to_left_MET_DP823768.jpg",
+   "https://commons.wikimedia.org/wiki/File:Experiments_in_physiology._Facial_expressions;_Stern_Wellcome_L0040056.jpg",
+   "https://commons.wikimedia.org/wiki/File:Regexper;_Kleene_star_of_(a,_b,_c).png"
   ]
  },
  "School vocabulary::Stick out": {
   "q": "sticking out ears"
  },
- "School vocabulary::Stick to": {},
+ "School vocabulary::Stick to": {
+  "q": "healthy diet"
+ },
  "School vocabulary::Sting": {
-  "none": "nothing found",
   "q": "insect sting mark"
  },
- "School vocabulary::Stock up on": {},
+ "School vocabulary::Stock up on": {
+  "q": "grocery cart full"
+ },
  "School vocabulary::Straight": {
   "none": "nothing to photograph",
   "q": "-"
@@ -5214,7 +5432,9 @@
    "https://commons.wikimedia.org/wiki/File:Verdict_in_Halvor_J._Hagen_trial.jpg"
   ]
  },
- "School vocabulary::Sum up": {},
+ "School vocabulary::Sum up": {
+  "q": "summary notes"
+ },
  "School vocabulary::Sunset": {},
  "School vocabulary::Supper": {
   "by": "Henri Bergius from Finland",
@@ -5235,10 +5455,11 @@
   "why": "Soldier raising hands, giving up"
  },
  "School vocabulary::Sweetcorn": {
-  "none": "nothing found",
   "q": "sweetcorn kernels"
  },
- "School vocabulary::Swipe through": {},
+ "School vocabulary::Swipe through": {
+  "q": "swiping smartphone"
+ },
  "School vocabulary::Synonyms": {
   "none": "No real photo depicting synonyms concept",
   "q": "thesaurus page",
@@ -5256,23 +5477,36 @@
   ]
  },
  "School vocabulary::THC gummies": {
-  "none": "nothing found",
   "q": "cannabis gummies"
  },
- "School vocabulary::Take after": {},
- "School vocabulary::Take back": {},
+ "School vocabulary::Take after": {
+  "q": "family resemblance"
+ },
+ "School vocabulary::Take back": {
+  "q": "customer returning item"
+ },
  "School vocabulary::Take down": {
-  "none": "nothing found",
   "q": "removing box shelf"
  },
- "School vocabulary::Take in": {},
- "School vocabulary::Take out": {},
- "School vocabulary::Take over": {},
- "School vocabulary::Talk back": {},
- "School vocabulary::Talk over": {},
- "School vocabulary::Talk to": {},
+ "School vocabulary::Take in": {
+  "q": "rescuing stray dog"
+ },
+ "School vocabulary::Take out": {
+  "q": "taking out trash"
+ },
+ "School vocabulary::Take over": {
+  "q": "-"
+ },
+ "School vocabulary::Talk back": {
+  "q": "defiant child"
+ },
+ "School vocabulary::Talk over": {
+  "q": "discussing meeting"
+ },
+ "School vocabulary::Talk to": {
+  "q": "two people talking"
+ },
  "School vocabulary::Tame": {
-  "none": "nothing found",
   "q": "tame fox"
  },
  "School vocabulary::Tamer": {
@@ -5311,7 +5545,9 @@
    "https://commons.wikimedia.org/wiki/File:Isneg_tattoos_(1929).png"
   ]
  },
- "School vocabulary::Tell apart": {},
+ "School vocabulary::Tell apart": {
+  "q": "identical twins"
+ },
  "School vocabulary::Thick": {
   "none": "No clear thick object shown",
   "q": "thick book",
@@ -5321,7 +5557,9 @@
    "https://commons.wikimedia.org/wiki/File:Open_Thick_Book_(51943035500).jpg"
   ]
  },
- "School vocabulary::Think over": {},
+ "School vocabulary::Think over": {
+  "q": "thinking person"
+ },
  "School vocabulary::Thong": {
   "by": "Sihi",
   "file": "thong-3d17e581e6.jpg",
@@ -5332,7 +5570,6 @@
   "why": "Shows narrow underwear worn as thong"
  },
  "School vocabulary::Throb": {
-  "none": "nothing found",
   "q": "sore finger"
  },
  "School vocabulary::Throbbing": {
@@ -5361,7 +5598,6 @@
   ]
  },
  "School vocabulary::Tight": {
-  "none": "nothing found",
   "q": "tight shoes"
  },
  "School vocabulary::Timeless": {},
@@ -5393,7 +5629,6 @@
   "why": "Egg cracking open shows hatching"
  },
  "School vocabulary::To poke": {
-  "none": "nothing found",
   "q": "poking finger"
  },
  "School vocabulary::Toast": {
@@ -5405,7 +5640,9 @@
   "title": "Uikyu Toast.jpg",
   "why": "Shows plain browned toast bread"
  },
- "School vocabulary::Tone up": {},
+ "School vocabulary::Tone up": {
+  "q": "toned arms"
+ },
  "School vocabulary::Tote": {
   "by": "Andreas Gattinger",
   "file": "tote-812ff59282.jpg",
@@ -5415,14 +5652,16 @@
   "title": "Schlauchtragekorb Freiwillige Feuerwehr München.jpg",
   "why": "Firefighters carrying heavy equipment ca"
  },
- "School vocabulary::Trade in": {},
- "School vocabulary::Travel around": {},
+ "School vocabulary::Trade in": {
+  "q": "phone trade in"
+ },
+ "School vocabulary::Travel around": {
+  "q": "backpackers traveling europe"
+ },
  "School vocabulary::Treasurer": {
-  "none": "nothing found",
   "q": "treasurer counting money"
  },
  "School vocabulary::Treat": {
-  "none": "nothing found",
   "q": "helping stranger"
  },
  "School vocabulary::Tricky": {},
@@ -5436,18 +5675,27 @@
   ]
  },
  "School vocabulary::Trout": {},
- "School vocabulary::Try on": {},
+ "School vocabulary::Try on": {
+  "q": "trying on clothes"
+ },
  "School vocabulary::Tuition": {
-  "none": "nothing found",
   "q": "student paying tuition"
  },
  "School vocabulary::Turn down": {},
- "School vocabulary::Turn in": {},
- "School vocabulary::Turn off": {},
- "School vocabulary::Turn on": {},
+ "School vocabulary::Turn in": {
+  "q": "submitting paper"
+ },
+ "School vocabulary::Turn off": {
+  "q": "turning off lights"
+ },
+ "School vocabulary::Turn on": {
+  "q": "turning on tv"
+ },
  "School vocabulary::Turn out": {},
  "School vocabulary::Turn up": {},
- "School vocabulary::Type in": {},
+ "School vocabulary::Type in": {
+  "q": "typing on keyboard"
+ },
  "School vocabulary::Typewriter": {
   "by": "Meomeo15",
   "file": "typewriter-645f77e45b.jpg",
@@ -5471,7 +5719,6 @@
   "q": "-"
  },
  "School vocabulary::Uneven": {
-  "none": "nothing found",
   "q": "uneven sidewalk"
  },
  "School vocabulary::Union": {
@@ -5487,14 +5734,17 @@
   "none": "nothing to photograph",
   "q": "-"
  },
- "School vocabulary::Unplug": {},
+ "School vocabulary::Unplug": {
+  "q": "unplugging electric cord"
+ },
  "School vocabulary::Upholstery": {
-  "none": "nothing found",
   "q": "sofa upholstery"
  },
- "School vocabulary::Used to + base verb": {},
+ "School vocabulary::Used to + base verb": {
+  "none": "nothing to photograph",
+  "q": "-"
+ },
  "School vocabulary::User-friendly": {
-  "none": "nothing found",
   "q": "simple smartphone interface"
  },
  "School vocabulary::Utterance": {
@@ -5561,8 +5811,13 @@
   ]
  },
  "School vocabulary::Wagged": {
-  "none": "nothing found",
-  "q": "dog wagging tail"
+  "none": "None clearly show tail movement action.",
+  "q": "dog wagging tail",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_tail_that_wags_the_dog_-_geograph.org.uk_-_4516017.jpg",
+   "https://commons.wikimedia.org/wiki/File:2014_Westminster_Kennel_Club_Dog_Show_(12452166934).jpg",
+   "https://commons.wikimedia.org/wiki/File:Wagging_tail_and_wagging_tongues_at_the_post_office_(Portrush,_Co_Antrim)_(30577878906).jpg"
+  ]
  },
  "School vocabulary::Waist bag": {
   "none": "Shows speaker bags, not worn on waist",
@@ -5571,12 +5826,24 @@
    "https://commons.wikimedia.org/wiki/File:JammyPack.jpg"
   ]
  },
- "School vocabulary::Wake up": {},
- "School vocabulary::Walk away": {},
- "School vocabulary::Walk by": {},
- "School vocabulary::Warm up": {},
- "School vocabulary::Warm up to": {},
- "School vocabulary::Wash up": {},
+ "School vocabulary::Wake up": {
+  "q": "waking up"
+ },
+ "School vocabulary::Walk away": {
+  "q": "walking away"
+ },
+ "School vocabulary::Walk by": {
+  "q": "walking past store"
+ },
+ "School vocabulary::Warm up": {
+  "q": "stretching before exercise"
+ },
+ "School vocabulary::Warm up to": {
+  "q": "friendly neighbors chatting"
+ },
+ "School vocabulary::Wash up": {
+  "q": "washing face hands"
+ },
  "School vocabulary::Water-based paint": {
   "none": "Color swatches, not real photo",
   "q": "water-based paint",
@@ -5584,17 +5851,21 @@
    "https://commons.wikimedia.org/wiki/File:Watercolor_modern_palette.png"
   ]
  },
- "School vocabulary::Wear down": {},
- "School vocabulary::Wear out": {},
+ "School vocabulary::Wear down": {
+  "q": "exhausted office worker"
+ },
+ "School vocabulary::Wear out": {
+  "q": "exhausted runner"
+ },
  "School vocabulary::Weeds": {
-  "none": "nothing found",
   "q": "garden weeds"
  },
  "School vocabulary::Well": {
-  "none": "nothing found",
   "q": "healthy woman"
  },
- "School vocabulary::Well up": {},
+ "School vocabulary::Well up": {
+  "q": "teary eyes crying"
+ },
  "School vocabulary::Wheat": {
   "by": "Photo: Andreas Praefcke",
   "file": "wheat-8dfe8deb6c.jpg",
@@ -5634,8 +5905,24 @@
   "title": "Homemade potato bread, half.jpg",
   "why": "Shows whole grain brown bread loaf"
  },
- "School vocabulary::Wind": {},
- "School vocabulary::Wind up": {},
+ "School vocabulary::Wind": {
+  "none": "Wind is invisible, hard to show.",
+  "q": "wind blowing trees",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wind_blowing_on_green.jpg",
+   "https://commons.wikimedia.org/wiki/File:Willow_blowing_in_the_Wind_-_geograph.org.uk_-_148244.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wind_blowing_through_beech_canopy_-_geograph.org.uk_-_437183.jpg"
+  ]
+ },
+ "School vocabulary::Wind up": {
+  "none": "Phrasal verb meaning is too abstract",
+  "q": "person sitting alone",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sitting_alone_in_a_hill_road.jpg",
+   "https://commons.wikimedia.org/wiki/File:Girl_sitting_alone_in_the_Sea_Grill_8d27122v.jpg",
+   "https://commons.wikimedia.org/wiki/File:Woman_sitting_alone_(Unsplash).jpg"
+  ]
+ },
  "School vocabulary::Windy": {
   "none": "Painting or unrelated photos, no clear w",
   "q": "windy day",
@@ -5658,7 +5945,6 @@
   "q": "speaking without notes"
  },
  "School vocabulary::Withdraw": {
-  "none": "nothing found",
   "q": "withdrawing cash atm"
  },
  "School vocabulary::Withdrawn": {
@@ -5679,9 +5965,15 @@
    "https://commons.wikimedia.org/wiki/File:Wool-_merino_sheep,_wool_processing_machinery_and_teazle._(_1858-_).jpg"
   ]
  },
- "School vocabulary::Work off": {},
- "School vocabulary::Work on": {},
- "School vocabulary::Work out": {},
+ "School vocabulary::Work off": {
+  "q": "working out gym"
+ },
+ "School vocabulary::Work on": {
+  "q": "working laptop"
+ },
+ "School vocabulary::Work out": {
+  "q": "person exercising gym"
+ },
  "School vocabulary::Work through": {},
  "School vocabulary::Wound (past of wind)": {
   "none": "Shows wound thread but ambiguous without",
@@ -5701,7 +5993,9 @@
   "title": "Make Poverty History band plastic.jpg",
   "why": "Clear photo of bands worn on wrist"
  },
- "School vocabulary::Write back": {},
+ "School vocabulary::Write back": {
+  "q": "writing letter desk"
+ },
  "School vocabulary::Write down": {
   "by": "Jairus Monilla",
   "file": "write-down-40e6bb6467.jpg",
@@ -5712,7 +6006,9 @@
   "why": "Shows hand writing notes in notebook"
  },
  "School vocabulary::Write off": {},
- "School vocabulary::Write up": {},
+ "School vocabulary::Write up": {
+  "q": "typing report"
+ },
  "School vocabulary::Wrongdoing": {
   "none": "nothing to photograph",
   "q": "-"
@@ -5738,14 +6034,17 @@
    "https://commons.wikimedia.org/wiki/File:Sudirman,_his_wife,_and_youngest_child,_Kenang-Kenangan_Pada_Panglima_Besar_Letnan_Djenderal_Soedirman,_p26.jpg"
   ]
  },
- "School vocabulary::Zoom in": {},
- "School vocabulary::Zoom out": {},
+ "School vocabulary::Zoom in": {
+  "q": "zooming in map"
+ },
+ "School vocabulary::Zoom out": {
+  "q": "zooming out map"
+ },
  "Series::Ace": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "Series::Acknowledgment": {
-  "none": "nothing found",
   "q": "nodding agreement"
  },
  "Series::Admire": {
@@ -5755,7 +6054,6 @@
   "q": "magazine advertisement"
  },
  "Series::Affection": {
-  "none": "nothing found",
   "q": "mother hugging child"
  },
  "Series::Afterward": {
@@ -5763,11 +6061,9 @@
   "q": "-"
  },
  "Series::Aim": {
-  "none": "nothing found",
   "q": "archer aiming target"
  },
  "Series::Aiming": {
-  "none": "nothing found",
   "q": "camera aiming stage"
  },
  "Series::Allowance": {
@@ -5793,7 +6089,6 @@
   "q": "-"
  },
  "Series::Appreciate": {
-  "none": "nothing found",
   "q": "thank you handshake"
  },
  "Series::Are they naughty": {
@@ -5807,14 +6102,12 @@
   "q": "arranging chairs"
  },
  "Series::Assess": {
-  "none": "nothing found",
   "q": "teacher grading paper"
  },
  "Series::Assessment": {
   "q": "teacher grading exam"
  },
  "Series::Awkward": {
-  "none": "nothing found",
   "q": "awkward handshake"
  },
  "Series::Awry": {
@@ -5825,7 +6118,6 @@
   "q": "babysitter with child"
  },
  "Series::Baffle": {
-  "none": "nothing found",
   "q": "confused expression"
  },
  "Series::Bait": {
@@ -5838,11 +6130,9 @@
   "q": "bare floor"
  },
  "Series::Being chauffeured around": {
-  "none": "nothing found",
   "q": "chauffeur driving car"
  },
  "Series::Beseech": {
-  "none": "nothing found",
   "q": "pleading hands"
  },
  "Series::Bet": {
@@ -5856,40 +6146,33 @@
   "q": "placing bet"
  },
  "Series::Binge-watch": {
-  "none": "nothing found",
   "q": "watching tv couch"
  },
  "Series::Bizarre": {
   "q": "bizarre art"
  },
  "Series::Bleak": {
-  "none": "nothing found",
   "q": "bleak landscape"
  },
  "Series::Bloom": {
   "q": "blooming rose"
  },
  "Series::Blow up": {
-  "none": "nothing found",
   "q": "explosion"
  },
  "Series::Blunt": {
-  "none": "nothing found",
   "q": "blunt knife"
  },
  "Series::Boastful": {
   "q": "man bragging"
  },
  "Series::Bond": {
-  "none": "nothing found",
   "q": "close friends hugging"
  },
  "Series::Bother": {
-  "none": "nothing found",
   "q": "covering ears noise"
  },
  "Series::Bothersome": {
-  "none": "nothing found",
   "q": "annoyed person phone"
  },
  "Series::Bow": {
@@ -5902,7 +6185,6 @@
   "q": "house fire"
  },
  "Series::Bribe": {
-  "none": "nothing found",
   "q": "money envelope handshake"
  },
  "Series::Bride": {
@@ -5915,7 +6197,6 @@
   "q": "carrying book"
  },
  "Series::Bring it on": {
-  "none": "nothing found",
   "q": "beckoning challenge gesture"
  },
  "Series::Bring on": {
@@ -5934,7 +6215,6 @@
   "q": "group of friends"
  },
  "Series::Called my bluff": {
-  "none": "nothing found",
   "q": "poker table bluff"
  },
  "Series::Campfire": {
@@ -5944,7 +6224,6 @@
   "q": "red cape"
  },
  "Series::Carry on": {
-  "none": "nothing found",
   "q": "person working desk"
  },
  "Series::Catch up": {
@@ -5954,25 +6233,21 @@
   "q": "student doing homework"
  },
  "Series::Catch up with": {
-  "none": "nothing found",
   "q": "runner catching up"
  },
  "Series::Charming": {
   "q": "charming village"
  },
  "Series::Chauffeured": {
-  "none": "nothing found",
   "q": "chauffeur driving"
  },
  "Series::Cheat": {
-  "none": "nothing found",
   "q": "student cheating exam"
  },
  "Series::Cheating": {
   "q": "cheating exam"
  },
  "Series::Cheesy": {
-  "none": "nothing found",
   "q": "melted cheese pizza"
  },
  "Series::Chop up": {
@@ -6005,15 +6280,12 @@
   "q": "friends walking together"
  },
  "Series::Come off": {
-  "none": "nothing found",
   "q": "broken door handle"
  },
  "Series::Come over": {
-  "none": "nothing found",
   "q": "friends visiting home"
  },
  "Series::Come to a decision": {
-  "none": "nothing found",
   "q": "handshake agreement"
  },
  "Series::Come up": {
@@ -6032,7 +6304,6 @@
   "q": "molecule model"
  },
  "Series::Convenience": {
-  "none": "nothing found",
   "q": "online banking app"
  },
  "Series::Courage": {
@@ -6051,18 +6322,15 @@
   "q": "studying night"
  },
  "Series::Cranky": {
-  "none": "nothing found",
   "q": "cranky child"
  },
  "Series::Creek": {
   "q": "small stream"
  },
  "Series::Crosshairs": {
-  "none": "nothing found",
   "q": "rifle scope crosshairs"
  },
  "Series::Crotch": {
-  "none": "nothing found",
   "q": "torn pants crotch"
  },
  "Series::Crushed": {
@@ -6079,26 +6347,21 @@
   "q": "kitchen cupboard"
  },
  "Series::Curate": {
-  "none": "nothing found",
   "q": "museum exhibit display"
  },
  "Series::Curiosity": {
-  "none": "nothing found",
   "q": "curious child"
  },
  "Series::Curious": {
-  "none": "nothing found",
   "q": "curious child"
  },
  "Series::Cut off": {
   "q": "cutting bread"
  },
  "Series::Cut out": {
-  "none": "nothing found",
   "q": "cutting paper scissors"
  },
  "Series::Debate": {
-  "none": "nothing found",
   "q": "political debate"
  },
  "Series::Debunk": {
@@ -6143,18 +6406,15 @@
   "q": "-"
  },
  "Series::Dive": {
-  "none": "nothing found",
   "q": "diving into pool"
  },
  "Series::Doubt": {
-  "none": "nothing found",
   "q": "confused expression"
  },
  "Series::Drafting": {
   "q": "writing letter"
  },
  "Series::Draw up": {
-  "none": "nothing found",
   "q": "lawyer drafting contract"
  },
  "Series::Drawer": {
@@ -6171,11 +6431,9 @@
   "q": "membership fee payment"
  },
  "Series::Dull": {
-  "none": "nothing found",
   "q": "bored audience lecture"
  },
  "Series::Dump": {
-  "none": "nothing found",
   "q": "discarding furniture"
  },
  "Series::Dusk": {
@@ -6185,7 +6443,6 @@
   "q": "children opening gift"
  },
  "Series::Eerie": {
-  "none": "nothing found",
   "q": "eerie foggy forest"
  },
  "Series::Either": {
@@ -6200,11 +6457,9 @@
   "q": "-"
  },
  "Series::Entrust": {
-  "none": "nothing found",
   "q": "handing over keys"
  },
  "Series::Envy": {
-  "none": "nothing found",
   "q": "envious look"
  },
  "Series::Equity": {
@@ -6218,15 +6473,12 @@
   "q": "exchanging gifts"
  },
  "Series::Excruciating": {
-  "none": "nothing found",
   "q": "man grimacing pain"
  },
  "Series::Exhale": {
-  "none": "nothing found",
   "q": "person exhaling breath"
  },
  "Series::Expense": {
-  "none": "nothing found",
   "q": "receipt stack"
  },
  "Series::Explain": {
@@ -6245,7 +6497,6 @@
   "q": "-"
  },
  "Series::Feast your eyes": {
-  "none": "nothing found",
   "q": "admiring view"
  },
  "Series::Fill out": {
@@ -6258,7 +6509,6 @@
   "q": "thumbs up"
  },
  "Series::Fit into": {
-  "none": "nothing found",
   "q": "shoes fitting box"
  },
  "Series::Flawless": {
@@ -6266,7 +6516,6 @@
   "q": "-"
  },
  "Series::Flee": {
-  "none": "nothing found",
   "q": "people fleeing fire"
  },
  "Series::Flossing": {
@@ -6276,7 +6525,6 @@
   "q": "aluminum foil"
  },
  "Series::Font": {
-  "none": "nothing found",
   "q": "font samples"
  },
  "Series::Foreshadow": {
@@ -6284,15 +6532,12 @@
   "q": "-"
  },
  "Series::Freak out": {
-  "none": "nothing found",
   "q": "scared person screaming"
  },
  "Series::Freaked out": {
-  "none": "nothing found",
   "q": "scared frightened person"
  },
  "Series::From scratch": {
-  "none": "nothing found",
   "q": "baking ingredients kitchen"
  },
  "Series::Fulfill": {
@@ -6310,7 +6555,6 @@
   "q": "people gathering"
  },
  "Series::Gaze": {
-  "none": "nothing found",
   "q": "person stargazing"
  },
  "Series::Generous": {
@@ -6327,15 +6571,12 @@
   "q": "person crouching down"
  },
  "Series::Get out": {
-  "none": "nothing found",
   "q": "person leaving room"
  },
  "Series::Get out of": {
-  "none": "nothing found",
   "q": "child avoiding chores"
  },
  "Series::Get swelling down": {
-  "none": "nothing found",
   "q": "icing swollen ankle"
  },
  "Series::Give out": {
@@ -6346,11 +6587,9 @@
   "q": "-"
  },
  "Series::Glimpse": {
-  "none": "nothing found",
   "q": "peeking through curtain"
  },
  "Series::Gnaw": {
-  "none": "nothing found",
   "q": "dog gnawing bone"
  },
  "Series::Go downhill": {
@@ -6382,14 +6621,12 @@
   "q": "building hallway"
  },
  "Series::Hand down": {
-  "none": "nothing found",
   "q": "heirloom watch"
  },
  "Series::Hang on": {
   "q": "hand stop gesture"
  },
  "Series::Hate someone's guts": {
-  "none": "nothing found",
   "q": "angry glare"
  },
  "Series::Have to": {
@@ -6400,7 +6637,6 @@
   "q": "person leaving door"
  },
  "Series::Healthy": {
-  "none": "nothing found",
   "q": "fit person exercising"
  },
  "Series::Hectic": {
@@ -6416,18 +6652,15 @@
   "q": "person pausing"
  },
  "Series::Hiatus": {
-  "none": "nothing found",
   "q": "closed sign"
  },
  "Series::History": {
   "q": "history books"
  },
  "Series::Hit it off": {
-  "none": "nothing found",
   "q": "two people laughing"
  },
  "Series::Hit the hay": {
-  "none": "nothing found",
   "q": "person sleeping bed"
  },
  "Series::Hodgepodge": {
@@ -6449,7 +6682,6 @@
   "q": "family at home"
  },
  "Series::Housekeeper": {
-  "none": "nothing found",
   "q": "housekeeper cleaning room"
  },
  "Series::How'd you get by": {
@@ -6468,11 +6700,9 @@
   "q": "-"
  },
  "Series::Hunger": {
-  "none": "nothing found",
   "q": "hungry child"
  },
  "Series::Hunt": {
-  "none": "nothing found",
   "q": "searching for keys"
  },
  "Series::Hustle": {
@@ -6491,7 +6721,6 @@
   "q": "-"
  },
  "Series::I'm mad at": {
-  "none": "nothing found",
   "q": "angry face"
  },
  "Series::Idea": {
@@ -6502,11 +6731,9 @@
   "q": "-"
  },
  "Series::Incoming": {
-  "none": "nothing found",
   "q": "incoming call screen"
  },
  "Series::Inmate": {
-  "none": "nothing found",
   "q": "prison inmate"
  },
  "Series::Innovate": {
@@ -6517,11 +6744,9 @@
   "q": "-"
  },
  "Series::Intimacy": {
-  "none": "nothing found",
   "q": "couple embracing closely"
  },
  "Series::Invest": {
-  "none": "nothing found",
   "q": "stock investment chart"
  },
  "Series::Isolated": {
@@ -6539,7 +6764,6 @@
   "q": "-"
  },
  "Series::Joy": {
-  "none": "nothing found",
   "q": "joyful smile"
  },
  "Series::Judge someone": {
@@ -6547,7 +6771,6 @@
   "q": "-"
  },
  "Series::Keep up": {
-  "none": "nothing found",
   "q": "runners keeping pace"
  },
  "Series::Keeper": {
@@ -6585,11 +6808,9 @@
   "q": "airport waiting lounge"
  },
  "Series::Lend": {
-  "none": "nothing found",
   "q": "handing over pen"
  },
  "Series::Let’s catch up": {
-  "none": "nothing found",
   "q": "friends coffee chat"
  },
  "Series::Lid": {
@@ -6606,7 +6827,6 @@
   "q": "wood log"
  },
  "Series::Longer than": {
-  "none": "nothing found",
   "q": "comparing rope lengths"
  },
  "Series::Look forward to": {
@@ -6614,22 +6834,18 @@
   "q": "-"
  },
  "Series::Look up": {
-  "none": "nothing found",
   "q": "dictionary word search"
  },
  "Series::Lullaby": {
-  "none": "nothing found",
   "q": "mother singing baby"
  },
  "Series::Lush": {
   "q": "lush vegetation"
  },
  "Series::Maggot": {
-  "none": "nothing found",
   "q": "maggots on food"
  },
  "Series::Maim": {
-  "none": "nothing found",
   "q": "bandaged injury"
  },
  "Series::Mainstream": {
@@ -6640,22 +6856,18 @@
   "q": "squinting to see"
  },
  "Series::Make out#2": {
-  "none": "nothing found",
   "q": "person squinting distance"
  },
  "Series::Mangle": {
-  "none": "nothing found",
   "q": "mangled metal"
  },
  "Series::Mapping": {
-  "none": "nothing found",
   "q": "drawing map"
  },
  "Series::Maze": {
   "q": "garden maze"
  },
  "Series::Mess": {
-  "none": "nothing found",
   "q": "messy room"
  },
  "Series::Messed up": {
@@ -6663,7 +6875,6 @@
   "q": "-"
  },
  "Series::Milestone": {
-  "none": "nothing found",
   "q": "milestone marker"
  },
  "Series::Mind": {
@@ -6678,22 +6889,18 @@
   "q": "-"
  },
  "Series::Mock": {
-  "none": "nothing found",
   "q": "kids teasing"
  },
  "Series::Muffled": {
-  "none": "nothing found",
   "q": "muffled voice"
  },
  "Series::My grown son": {
   "q": "adult son"
  },
  "Series::Nasty": {
-  "none": "nothing found",
   "q": "sneering face"
  },
  "Series::Naughty": {
-  "none": "nothing found",
   "q": "mischievous child"
  },
  "Series::Nest": {
@@ -6719,19 +6926,15 @@
   "q": "-"
  },
  "Series::Out of": {
-  "none": "nothing found",
   "q": "empty milk carton"
  },
  "Series::Outstanding": {
-  "none": "nothing found",
   "q": "gold medal"
  },
  "Series::Outstretched": {
-  "none": "nothing found",
   "q": "outstretched arms"
  },
  "Series::Overdue": {
-  "none": "nothing found",
   "q": "overdue library book"
  },
  "Series::Overrated": {
@@ -6739,25 +6942,21 @@
   "q": "-"
  },
  "Series::Overwhelmed": {
-  "none": "nothing found",
   "q": "overwhelmed with paperwork"
  },
  "Series::Pad": {
   "q": "knee pad"
  },
  "Series::Patsy": {
-  "none": "nothing found",
   "q": "finger pointing blame"
  },
  "Series::Pay for": {
-  "none": "nothing found",
   "q": "paying cashier"
  },
  "Series::Pebble": {
   "q": "small pebble"
  },
  "Series::Pesky": {
-  "none": "nothing found",
   "q": "mosquito swarm"
  },
  "Series::Petal": {
@@ -6767,15 +6966,12 @@
   "q": "terrified face"
  },
  "Series::Philosophy": {
-  "none": "nothing found",
   "q": "philosophy books"
  },
  "Series::Pile up": {
-  "none": "nothing found",
   "q": "dishes piling sink"
  },
  "Series::Placeholder": {
-  "none": "nothing found",
   "q": "placeholder icon"
  },
  "Series::Plot": {
@@ -6790,7 +6986,6 @@
   "q": "person diving"
  },
  "Series::Poignant": {
-  "none": "nothing found",
   "q": "emotional farewell"
  },
  "Series::Power grid": {
@@ -6806,7 +7001,6 @@
   "q": "car pulled over"
  },
  "Series::Pull up": {
-  "none": "nothing found",
   "q": "car stopped roadside"
  },
  "Series::Pull up#2": {
@@ -6816,11 +7010,9 @@
   "q": "football punt kick"
  },
  "Series::Pursue": {
-  "none": "nothing found",
   "q": "police chase"
  },
  "Series::Pursuit": {
-  "none": "nothing found",
   "q": "police car chase"
  },
  "Series::Query": {
@@ -6838,7 +7030,6 @@
   "q": "-"
  },
  "Series::Raw": {
-  "none": "nothing found",
   "q": "raw chicken meat"
  },
  "Series::Recognizable": {
@@ -6852,7 +7043,6 @@
   "q": "person thinking"
  },
  "Series::Relationship": {
-  "none": "nothing found",
   "q": "two people talking"
  },
  "Series::Reliable": {
@@ -6869,7 +7059,6 @@
   "q": "solving puzzle"
  },
  "Series::Restraining": {
-  "none": "nothing found",
   "q": "police restraining person"
  },
  "Series::Restraint": {
@@ -6887,22 +7076,18 @@
   "q": "-"
  },
  "Series::Roofied": {
-  "none": "nothing found",
   "q": "spiked drink"
  },
  "Series::Rope": {
   "q": "coiled rope"
  },
  "Series::Rub": {
-  "none": "nothing found",
   "q": "hand rubbing surface"
  },
  "Series::Ruining": {
-  "none": "nothing found",
   "q": "rain ruining picnic"
  },
  "Series::Run out of": {
-  "none": "nothing found",
   "q": "empty milk carton"
  },
  "Series::Rush": {
@@ -6915,7 +7100,6 @@
   "q": "sandbox playground"
  },
  "Series::Save up": {
-  "none": "nothing found",
   "q": "piggy bank savings"
  },
  "Series::Scam": {
@@ -6932,7 +7116,6 @@
   "q": "seed in soil"
  },
  "Series::Seek": {
-  "none": "nothing found",
   "q": "person searching map"
  },
  "Series::Seeking": {
@@ -6945,19 +7128,15 @@
   "q": "sold out sign"
  },
  "Series::Set down": {
-  "none": "nothing found",
   "q": "placing box down"
  },
  "Series::Set off": {
-  "none": "nothing found",
   "q": "hikers departing sunrise"
  },
  "Series::Set off#2": {
-  "none": "nothing found",
   "q": "hikers starting journey"
  },
  "Series::Settle": {
-  "none": "nothing found",
   "q": "handshake agreement"
  },
  "Series::Sewing": {
@@ -6974,7 +7153,6 @@
   "q": "drunk man passed out"
  },
  "Series::Shoplifting": {
-  "none": "nothing found",
   "q": "shoplifter hiding item"
  },
  "Series::Show off": {
@@ -6993,7 +7171,6 @@
   "q": "mountain shrine"
  },
  "Series::Shy": {
-  "none": "nothing found",
   "q": "shy child"
  },
  "Series::Signal": {
@@ -7012,7 +7189,6 @@
   "q": "car braking"
  },
  "Series::Smart": {
-  "none": "nothing found",
   "q": "student raising hand"
  },
  "Series::Smoothness": {
@@ -7023,15 +7199,12 @@
   "q": "-"
  },
  "Series::Sparkle": {
-  "none": "nothing found",
   "q": "sparkling stars"
  },
  "Series::Spoiled": {
-  "none": "nothing found",
   "q": "spoiled child toys"
  },
  "Series::Spoiler": {
-  "none": "nothing found",
   "q": "spoiler alert sign"
  },
  "Series::Spot": {
@@ -7047,42 +7220,33 @@
   "q": "lawn sprinkler"
  },
  "Series::Squealing": {
-  "none": "nothing found",
   "q": "squealing car brakes"
  },
  "Series::Stall": {
-  "none": "nothing found",
   "q": "bathroom stall"
  },
  "Series::Stall door": {
-  "none": "nothing found",
   "q": "toilet cubicle door"
  },
  "Series::Stand out": {
-  "none": "nothing found",
   "q": "red coat crowd"
  },
  "Series::Stand out#2": {
-  "none": "nothing found",
   "q": "red coat crowd"
  },
  "Series::Start out": {
   "q": "new teacher classroom"
  },
  "Series::Steady": {
-  "none": "nothing found",
   "q": "steady pace running"
  },
  "Series::Stoic": {
-  "none": "nothing found",
   "q": "stoic expression"
  },
  "Series::Stomp": {
-  "none": "nothing found",
   "q": "stomping foot"
  },
  "Series::Stood up": {
-  "none": "nothing found",
   "q": "waiting alone restaurant"
  },
  "Series::Straightforward": {
@@ -7103,11 +7267,9 @@
   "q": "person struggling"
  },
  "Series::Stubborn": {
-  "none": "nothing found",
   "q": "arms crossed refusal"
  },
  "Series::Stuck": {
-  "none": "nothing found",
   "q": "car stuck mud"
  },
  "Series::Stunt": {
@@ -7122,7 +7284,6 @@
   "q": "-"
  },
  "Series::Support someone": {
-  "none": "nothing found",
   "q": "comforting hug"
  },
  "Series::Supposed to be great": {
@@ -7133,15 +7294,12 @@
   "q": "courtroom oath"
  },
  "Series::Swelling": {
-  "none": "nothing found",
   "q": "swollen ankle"
  },
  "Series::Swelling down": {
-  "none": "nothing found",
   "q": "swollen ankle"
  },
  "Series::Swot": {
-  "none": "nothing found",
   "q": "studying hard"
  },
  "Series::Syringe": {
@@ -7157,7 +7315,6 @@
   "q": "people in competition"
  },
  "Series::Take up": {
-  "none": "nothing found",
   "q": "woman painting easel"
  },
  "Series::Take your time": {
@@ -7165,18 +7322,15 @@
   "q": "-"
  },
  "Series::Tale": {
-  "none": "nothing found",
   "q": "storytelling book"
  },
  "Series::Tapestry": {
   "q": "wall tapestry"
  },
  "Series::Tearjerker": {
-  "none": "nothing found",
   "q": "crying at movie"
  },
  "Series::Tell off": {
-  "none": "nothing found",
   "q": "scolding child"
  },
  "Series::Tend": {
@@ -7188,7 +7342,6 @@
   "q": "-"
  },
  "Series::The welcome wagon": {
-  "none": "nothing found",
   "q": "welcome committee"
  },
  "Series::There's no way": {
@@ -7218,11 +7371,9 @@
   "q": "throwing away trash"
  },
  "Series::Throw up": {
-  "none": "nothing found",
   "q": "person vomiting"
  },
  "Series::Tidy": {
-  "none": "nothing found",
   "q": "tidy room"
  },
  "Series::Tie": {
@@ -7242,19 +7393,15 @@
   "q": "-"
  },
  "Series::To clue": {
-  "none": "nothing found",
   "q": "whispering hint"
  },
  "Series::To cut bait": {
-  "none": "nothing found",
   "q": "cutting fishing line"
  },
  "Series::Tough": {
-  "none": "nothing found",
   "q": "tough steak"
  },
  "Series::Tread": {
-  "none": "nothing found",
   "q": "footstep wet floor"
  },
  "Series::Trick": {
@@ -7273,7 +7420,6 @@
   "q": "artificial turf field"
  },
  "Series::Turn around": {
-  "none": "nothing found",
   "q": "person turning around"
  },
  "Series::Turn over": {
@@ -7283,7 +7429,6 @@
   "q": "person going bed"
  },
  "Series::Typo": {
-  "none": "nothing found",
   "q": "typo document"
  },
  "Series::Unanimous": {
@@ -7308,11 +7453,9 @@
   "q": "-"
  },
  "Series::Unwanted": {
-  "none": "nothing found",
   "q": "junk mail pile"
  },
  "Series::Upright": {
-  "none": "nothing found",
   "q": "person sitting upright"
  },
  "Series::Uptight": {
@@ -7323,7 +7466,6 @@
   "q": "velvet fabric"
  },
  "Series::Vex": {
-  "none": "nothing found",
   "q": "annoyed woman"
  },
  "Series::Vital": {
@@ -7331,15 +7473,12 @@
   "q": "-"
  },
  "Series::Vivid": {
-  "none": "nothing found",
   "q": "vivid colors painting"
  },
  "Series::Wad": {
-  "none": "nothing found",
   "q": "wad of cash"
  },
  "Series::Wander": {
-  "none": "nothing found",
   "q": "wandering old town"
  },
  "Series::Warden": {
@@ -7352,11 +7491,9 @@
   "q": "pile of money"
  },
  "Series::Wealth#2": {
-  "none": "nothing found",
   "q": "stack of cash"
  },
  "Series::Wealthy": {
-  "none": "nothing found",
   "q": "wealthy family mansion"
  },
  "Series::What are you up to?": {
@@ -7379,7 +7516,6 @@
   "q": "child whining"
  },
  "Series::Whisper": {
-  "none": "nothing found",
   "q": "person whispering"
  },
  "Series::Wicked": {
@@ -7415,11 +7551,9 @@
   "q": "-"
  },
  "Series::Worn": {
-  "none": "nothing found",
   "q": "worn carpet"
  },
  "Series::Worth": {
-  "none": "nothing found",
   "q": "expensive painting"
  },
  "Series::Worthy": {
@@ -7433,11 +7567,9 @@
   "q": "-"
  },
  "Series::Wrap up": {
-  "none": "nothing found",
   "q": "closing meeting handshake"
  },
  "Series::Wrist": {
-  "none": "nothing found",
   "q": "wrist joint"
  },
  "Series::You're breaking up": {
