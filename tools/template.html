@@ -4110,6 +4110,17 @@
       document.body.appendChild(scrim);
     }
 
+    // Enter answers, Enter moves on, and Enter leaves at the end. Set
+    // here rather than at the foot of the function, because the closing
+    // panel returns before it gets there -- which is why the last press
+    // of a ten-word run needed the mouse.
+    scrim.onkeydown = function(e){
+      if(e.key !== 'Enter') return;
+      const on = document.getElementById('recall-next')
+             || document.getElementById('recall-done');
+      if(on){ e.preventDefault(); on.click(); }
+    };
+
     // finished: say what happened, then get out of the way
     if(q.i >= q.words.length){
       const kept = q.marks.filter(function(m){ return m === 'ok'; }).length;
@@ -4122,8 +4133,11 @@
               + ' back in the rotation and will come round again soon.'
             : 'Nothing forgotten. They are all booked in for a longer gap.')+'</p>'
         + '<button class="btn-primary" id="recall-done">Go to the app &rarr;</button>'
+        + '<p class="recall-how" style="margin-top:9px;">Press Enter</p>'
         + '</div>';
-      document.getElementById('recall-done').addEventListener('click', closeRecall);
+      const done = document.getElementById('recall-done');
+      done.addEventListener('click', closeRecall);
+      done.focus();           // so Enter has somewhere to land
       return;
     }
 
@@ -4184,15 +4198,6 @@
       });
       input.focus();
     }
-
-    // Enter answers, and then Enter again moves on. Assigned rather than
-    // added, so redrawing the panel replaces this instead of stacking up
-    // another copy of it.
-    scrim.onkeydown = function(e){
-      if(e.key !== 'Enter') return;
-      const next = document.getElementById('recall-next');
-      if(next){ e.preventDefault(); next.click(); }
-    };
 
     // Without this the key has nowhere to land once the typing box is
     // gone, and the whole run would need the mouse again halfway through.
