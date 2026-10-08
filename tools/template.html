@@ -395,6 +395,33 @@
     margin:0 0 7px;
   }
 
+  /* the phrasal verb of the day */
+  .pv-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .pv-word{
+    font-family:var(--cond); font-size:1.9rem; line-height:1.15; color:var(--text);
+  }
+  .pv-pron{ font-family:var(--mono); font-size:.76rem; color:var(--text-soft); }
+  .pv-mean{ font-size:1rem; line-height:1.55; margin:9px 0 0; }
+  .pv-ex{
+    font-style:italic; color:var(--text-soft); font-size:.92rem;
+    margin:7px 0 0; padding-left:11px; border-left:2px solid var(--rule);
+  }
+  .pv-note{
+    color:var(--text-soft); font-size:.8rem; line-height:1.5; margin:10px 0 0;
+  }
+  .pv-note b{ color:var(--text); font-weight:700; }
+  .pv-row{ display:flex; gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap; }
+  .pv-row .speak-btn{ margin:0; }
+  .pv-pic{ margin-top:12px; }
+  .pv-pic img{
+    width:100%; max-width:260px; height:auto; border-radius:11px;
+    border:1px solid var(--rule); display:block;
+  }
+  .pv-seen{
+    font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--text-soft); margin-left:auto;
+  }
+
   /* choosing the voice */
   .voice-row{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:10px 2px 0; }
   .voice-row label{
@@ -2845,6 +2872,17 @@
       + '<div id="backup-host">'+backupLineHtml()+'</div>'
       + '</div>';
 
+    // Four hundred phrasal verbs is too many to meet ten at a time, and
+    // they are the part of English that does not come from Spanish at
+    // all. One a day, whether or not it is in today's set.
+    const pvHtml = phrasalVerbs().length
+      ? '<div class="home-band">'
+        + '<div class="band-head"><span>Phrasal verb of the day</span>'
+          + '<span class="band-hint">' + phrasalVerbs().length + ' in your lists</span></div>'
+        + '<div id="pv-host">' + phrasalHtml() + '</div>'
+        + '</div>'
+      : '';
+
     const calHtml = '<div class="home-band">'
       + '<div class="band-head"><span>Calendar</span>'
         + '<span class="band-hint">what you finished, by day</span></div>'
@@ -2887,7 +2925,8 @@
             + keyRowHtml(true) + '</div>'
           : '')
       + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
-      + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
+      + '<div class="home-pair">' + pvHtml + statsHtml + '</div>'
+      + '<div class="home-pair">' + calHtml + '</div>'
       + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">'
@@ -2917,6 +2956,7 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
+    wirePhrasal();
     wireStudyBar();
     wireKeyRow();
     wireVoiceRow();
@@ -3997,6 +4037,111 @@
   // word you are looking at proves little, and this is meant to be the
   // hard question -- if you cannot produce it from memory, you have not
   // really kept it.
+  // --- The phrasal verb of the day ---------------------------------
+  //
+  // He has four hundred of them and they are the hardest part of English
+  // for a Spanish speaker: "take off", "take up", "take in" and "take
+  // over" share a verb and nothing else. One a day, in front of him,
+  // whether or not it is one of today's ten.
+  const PV_MEMORY = 60;        // how many to remember, so it does not circle
+
+  function phrasalVerbs(){
+    return WORDS.filter(w=>w.pv);
+  }
+
+  function pickPhrasal(){
+    const all = phrasalVerbs();
+    if(!all.length) return null;
+    const lately = (meta && meta.pvSeen) || [];
+    const fresh = all.filter(w=>lately.indexOf(w.id) < 0);
+    const pool = fresh.length ? fresh : all;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // The same one all day: it is the verb of the *day*, and one that
+  // changed every time the page was drawn would be nothing at all.
+  function phrasalOfTheDay(){
+    const today = todayStr();
+    const kept = (meta && meta.pvDay) || null;
+    if(kept && kept.day === today){
+      const found = WORDS.find(w=>w.id === kept.id);
+      if(found) return found;
+    }
+    const pick = pickPhrasal();
+    if(!pick) return null;
+    rememberPhrasal(pick, today);
+    return pick;
+  }
+
+  function rememberPhrasal(word, day){
+    if(!meta) return;
+    meta.pvDay = { day: day || todayStr(), id: word.id };
+    const before = (meta.pvSeen || []).filter(id=>id !== word.id);
+    meta.pvSeen = [word.id].concat(before).slice(0, PV_MEMORY);
+    saveMeta();
+  }
+
+  function anotherPhrasal(){
+    const pick = pickPhrasal();
+    if(!pick) return;
+    rememberPhrasal(pick);
+    paintPhrasal();
+  }
+
+  function phrasalHtml(){
+    const w = phrasalOfTheDay();
+    if(!w) return '';
+    const m = (w.me || [])[0] || {};
+    const pic = WORD_IMAGES[w.id];
+    const status = statusOf(w.id);
+    return '<div class="pv-head">'
+        + '<span class="pv-word">' + esc(w.w) + '</span>'
+        + (w.p ? '<span class="pv-pron">/' + esc(w.p) + '/</span>' : '')
+        + (status === 'mastered'
+            ? '<span class="pv-seen">yours already</span>'
+            : (status ? '<span class="pv-seen">' + esc(status) + '</span>'
+                      : '<span class="pv-seen">new to you</span>'))
+      + '</div>'
+      + (m.m ? '<p class="pv-mean">' + esc(m.m) + '</p>' : '')
+      + (m.e ? '<p class="pv-ex">&ldquo;' + esc(m.e) + '&rdquo;</p>' : '')
+      + ((w.me || []).length > 1 && w.me[1].m
+          ? '<p class="pv-mean">' + esc(w.me[1].m) + '</p>'
+            + (w.me[1].e ? '<p class="pv-ex">&ldquo;' + esc(w.me[1].e) + '&rdquo;</p>' : '')
+          : '')
+      + (w.n ? '<p class="pv-note">' + esc(w.n) + '</p>' : '')
+      + (pic && pic.file
+          ? '<figure class="pv-pic"><img src="images/' + esc(pic.file) + '" '
+            + 'alt="' + esc(w.w) + '" decoding="async"></figure>'
+          : '')
+      + '<div class="pv-row">'
+        + (canSpeak
+            ? '<button class="speak-btn" id="pv-say" aria-label="Listen to it">'
+              + ICON_SPEAKER + '</button>'
+            : '')
+        + '<button class="reset-link" id="pv-another" style="width:auto; margin:0;">'
+          + 'Another one &rarr;</button>'
+      + '</div>';
+  }
+
+  function paintPhrasal(){
+    const host = document.getElementById('pv-host');
+    if(!host) return;
+    host.innerHTML = phrasalHtml();
+    wirePhrasal();
+  }
+
+  function wirePhrasal(){
+    const say = document.getElementById('pv-say');
+    if(say) say.addEventListener('click', ()=>{
+      const w = phrasalOfTheDay();
+      if(!w) return;
+      const m = (w.me || [])[0] || {};
+      speak(m.e ? w.w + '. ' + m.e : w.w);
+    });
+    const another = document.getElementById('pv-another');
+    if(another) another.addEventListener('click', anotherPhrasal);
+  }
+
   const RECALL_COUNT = 10;
   // How many of the words asked recently to remember, so the next check
   // is a different ten rather than the same ten in a different order.

@@ -450,6 +450,29 @@ with second copies. Add `--dry-run` to see what it would write without
 writing it, and `--limit 10` to try a few first. A copy of the workbook
 goes into `backups\` before anything is added.
 
+## Phrasal verb of the day
+
+Your lists hold **402 phrasal verbs**, and they are the part of English
+that does not come from Spanish at all: *take off*, *take up*, *take in*
+and *take over* share a verb and nothing else. Ten a day will not get
+through four hundred of them, so one sits on the home screen every day
+whether or not it is in today's set.
+
+It shows the verb, how to say it, the meaning, the example, and the forms
+with whether it separates -- *"Separable: load something up"* is the part
+that catches people out. The speaker button reads it with its example,
+and **Another one** gives you a different one if you want more than one
+in a sitting.
+
+The same verb stays all day, even across a reload: it is the verb of the
+*day*. The last sixty are remembered so it works through the list rather
+than circling the same few.
+
+The app works out which words are phrasal verbs when it reads the
+spreadsheet -- two or three words ending in a particle, where the notes
+say it is a verb -- so anything you add later joins in with no work from
+you.
+
 ## Pictures
 
 Under the meaning, some words carry a photograph. Not all of them, and

@@ -44,6 +44,38 @@ IMAGE_MAP = TOOLS / "word_images.json"
 IMAGES = ROOT / "app" / "images"
 
 
+# The little words that turn a verb into a different verb. "Take" and
+# "take off" are not the same thing, which is exactly why they are worth
+# a block of their own.
+PARTICLES = {
+    "up", "down", "out", "in", "on", "off", "over", "away", "back",
+    "through", "around", "about", "along", "across", "by", "for", "into",
+    "to", "with", "after", "ahead", "apart", "aside", "forward",
+    "together", "under", "upon", "round", "past", "behind",
+}
+
+
+def is_phrasal(word, notes, meaning):
+    """Two or three words ending in a particle, and a verb.
+
+    The notes say "Regular verb" or "Irregular verb" for anything that is
+    one, which is what separates "back down" from "service dog". A few
+    entries say in their meaning that they are not really phrasal verbs
+    at all; they are taken at their word.
+    """
+    parts = str(word or "").lower().replace("-", " ").split()
+    if not 2 <= len(parts) <= 4:
+        return False
+    if parts[-1] not in PARTICLES:
+        return False
+    if "verb" not in str(notes or "").lower():
+        return False
+    said = str(meaning or "").lower()
+    if "not an actual phrasal verb" in said or "false pattern" in said:
+        return False
+    return True
+
+
 def find_spreadsheet():
     # Looks for any .xlsx file in the folder instead of one exact name,
     # since downloads/renames can end up with slightly different names
@@ -146,6 +178,9 @@ def extract_words(path):
             if alts:
                 entry["alt"] = alts
 
+            if is_phrasal(entry.get("w"), entry.get("n"),
+                          (entry.get("me") or [{}])[0].get("m")):
+                entry["pv"] = 1
             words.append(entry)
 
     return words, dupes
@@ -187,7 +222,9 @@ def main():
     print(f"Using spreadsheet: {spreadsheet.name}\n")
     words, dupes = extract_words(spreadsheet)
     categories = sorted(set(w["cat"] for w in words))
-    print(f"Found {len(words)} words across {len(categories)} categories:")
+    phrasal = sum(1 for w in words if w.get("pv"))
+    print(f"Found {len(words)} words across {len(categories)} categories "
+          f"({phrasal} of them phrasal verbs):")
     for cat in categories:
         n = sum(1 for w in words if w["cat"] == cat)
         print(f"  - {cat}: {n}")
