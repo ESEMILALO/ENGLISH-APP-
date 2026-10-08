@@ -273,6 +273,13 @@
        takes the width. Half a row with nothing beside it just looks
        like something failed to load. */
     .home-pair > :only-child{ grid-column:1 / -1; }
+    /* One side of a row stacking two bands, so the short one does not
+       leave half the screen empty beneath it. */
+    .home-col{ min-width:0; }
+    /* ...and the opposite case: a row with one thing in it that should
+       not grow. A month given the whole screen turns into seven great
+       empty panels with the dates lost in the middle of them. */
+    .home-pair-half > :only-child{ grid-column:1; }
   }
 
   /* Conversation practice: the words you are learning, used for real. */
@@ -905,6 +912,24 @@
     .stage-pill{ padding:7px 4px; }
     .stage-pill b{ font-size:1rem; }
     .stage-pill span{ font-size:.5rem; letter-spacing:.03em; }
+  }
+
+  /* The five counts are the day's ten, taken apart. Floating them below
+     the button as their own strip made them read as a separate thing;
+     joined to its underside they read as what they are -- the inside of
+     that one button. */
+  .today-hero{
+    border:1px solid var(--rule); border-radius:12px; overflow:hidden;
+    background:var(--bg); margin-bottom:22px;
+    box-shadow:0 12px 26px rgba(0,0,0,.30);
+  }
+  .today-hero .btn-hero{
+    border-radius:0; margin-bottom:0; box-shadow:none;
+  }
+  .today-hero .stage-row{ margin:0; padding:11px 11px 12px; }
+  @media (max-width:430px){
+    .today-hero{ margin-bottom:16px; }
+    .today-hero .stage-row{ padding:8px 8px 9px; }
   }
 
   /* An empty block should point at what fills it, not just say it is empty. */
@@ -2839,8 +2864,9 @@
       + '<div class="band-head"><span>Today</span>'
         + '<span class="band-hint">'+LEARNSET_SIZE+' a day &middot; '+PER_TOPIC+' from each list</span></div>'
       + streakHtml
-      + heroHtml
-      + '<div class="stage-row">'+stagePills+'</div>'
+      + '<div class="today-hero">' + heroHtml
+        + '<div class="stage-row">'+stagePills+'</div>'
+      + '</div>'
       + '<div id="studybar-host">'+studyBarHtml()+'</div>'
       + (masteredWords().length >= 4
           ? '<button class="btn-secondary" id="go-practice" style="margin-top:10px;">'
@@ -2919,9 +2945,14 @@
       // under it, and adding a word -- which he does occasionally rather
       // than daily -- waits below them.
       + '<div class="home-pair">' + freshHtml + '</div>'
-      + '<div class="home-pair">' + todayHtml + pvHtml + '</div>'
+      // The phrasal verb is a few lines tall and the day's ten is not,
+      // so the right-hand side used to run out halfway down the screen.
+      // Your progress goes under it and the column reaches the floor.
+      + '<div class="home-pair">' + todayHtml
+        + '<div class="home-col">' + pvHtml + statsHtml + '</div>'
+      + '</div>'
       + addWordBlockHtml()
-      + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
+      + '<div class="home-pair home-pair-half">' + calHtml + '</div>'
       + moreHtml
       // At the foot, where he asked for it. It is worth saying and not
       // worth standing between him and the day's words.
