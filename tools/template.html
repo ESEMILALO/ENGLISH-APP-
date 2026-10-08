@@ -269,6 +269,10 @@
       display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
       gap:0 36px; align-items:start;
     }
+    /* A row with one thing in it is a row about that one thing, so it
+       takes the width. Half a row with nothing beside it just looks
+       like something failed to load. */
+    .home-pair > :only-child{ grid-column:1 / -1; }
   }
 
   /* Conversation practice: the words you are learning, used for real. */
@@ -2909,10 +2913,15 @@
       + '<div class="eyebrow">Vocabulary &middot; '+WORDS.length+' words</div>'
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
+      // Keep them fresh goes first and goes wide: the words already won
+      // are the ones quietly slipping, and they should be the thing he
+      // walks into. The day's ten and the phrasal verb sit together
+      // under it, and adding a word -- which he does occasionally rather
+      // than daily -- waits below them.
+      + '<div class="home-pair">' + freshHtml + '</div>'
+      + '<div class="home-pair">' + todayHtml + pvHtml + '</div>'
       + addWordBlockHtml()
-      + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
-      + '<div class="home-pair">' + pvHtml + statsHtml + '</div>'
-      + '<div class="home-pair">' + calHtml + '</div>'
+      + '<div class="home-pair">' + statsHtml + calHtml + '</div>'
       + moreHtml
       // At the foot, where he asked for it. It is worth saying and not
       // worth standing between him and the day's words.
