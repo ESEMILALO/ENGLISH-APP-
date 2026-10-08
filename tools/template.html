@@ -2910,8 +2910,14 @@
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       + addWordBlockHtml()
+      + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
+      + '<div class="home-pair">' + pvHtml + statsHtml + '</div>'
+      + '<div class="home-pair">' + calHtml + '</div>'
+      + moreHtml
+      // At the foot, where he asked for it. It is worth saying and not
+      // worth standing between him and the day's words.
       + (keyNeeded()
-          ? '<div id="key-host" class="key-banner">'
+          ? '<div id="key-host" class="key-banner" style="margin-top:18px;">'
             + '<p class="key-banner-head">'
             + ((keyState && keyState.problem)
                 ? 'The conversation and the translations have stopped working.'
@@ -2924,10 +2930,6 @@
                 : '')
             + keyRowHtml(true) + '</div>'
           : '')
-      + '<div class="home-pair">' + todayHtml + freshHtml + '</div>'
-      + '<div class="home-pair">' + pvHtml + statsHtml + '</div>'
-      + '<div class="home-pair">' + calHtml + '</div>'
-      + moreHtml
       + '<div class="divider" style="margin-top:30px;"><span></span></div>'
       + '<button class="reset-link" id="reset-progress" style="margin-top:6px; color:var(--warn);">'
         + (resetArmed ? 'Never mind, keep my progress' : 'Reset progress')+'</button>'

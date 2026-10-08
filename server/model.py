@@ -156,15 +156,32 @@ def _explain_http(err, who):
         detail = ""
 
     low = detail.lower()
-    if "credit balance" in low or "billing" in low:
-        return ModelError(
-            "The Anthropic credit has run out. Either add credit, or put a "
-            "free Google Gemini key in server/gemini_key.txt and the app "
-            "will use that instead.", err.code)
-    if err.code == 429 or "quota" in low or "rate limit" in low:
-        return ModelError(
-            "That was too many requests for the free allowance just now. "
-            "Wait a minute and try again.", err.code)
+
+    # Whose money has run out matters. Saying "the Anthropic credit has run
+    # out" when it was Google that refused sent somebody looking at the
+    # wrong account entirely, and the message outlived the problem by days.
+    if who == "gemini":
+        if err.code == 402 or "prepayment" in low or "credits are depleted" in low:
+            return ModelError(
+                "Google says this project's credits are used up. The free "
+                "allowance refills on its own -- the daily one at midnight "
+                "US Pacific -- so this usually comes back by itself. "
+                "aistudio.google.com shows where it stands.", err.code)
+        if err.code == 429 or "quota" in low or "rate limit" in low:
+            return ModelError(
+                "That was more than the free Google allowance for the "
+                "moment. Wait a minute and try again; the daily one refills "
+                "at midnight US Pacific.", err.code)
+    else:
+        if "credit balance" in low or "billing" in low:
+            return ModelError(
+                "The Anthropic credit has run out. Either add credit, or put "
+                "a free Google Gemini key in server/gemini_key.txt and the "
+                "app will use that instead.", err.code)
+        if err.code == 429 or "quota" in low or "rate limit" in low:
+            return ModelError(
+                "That was too many requests for the moment. Wait a minute "
+                "and try again.", err.code)
     if err.code in (401, 403):
         return ModelError(
             "The %s key was not accepted. Check the key file in the server "
@@ -275,6 +292,8 @@ def _ask_gemini(system, messages, max_tokens, timeout):
                         pass
                     last = problem
                     break
+                if e.code == 402:
+                    raise problem       # no model will answer; it is the bill
                 if e.code in (429, 500, 502, 503, 504):
                     last = problem
                     if attempt < 2 and time.time() < deadline:
@@ -346,17 +365,32 @@ LAST_PROBLEM = None
 _ASKED_ONCE = False
 
 
-def _remember(problem):
-    """Across restarts too, or the app forgets every time it is started.
+def is_permanent(problem):
+    """Will this still be true in five minutes?
 
-    Restarting the server does not put credit on an account, and an app
-    that cheerfully reports "all fine" until the next thing fails is how
-    somebody ends up hunting for a box that is not being shown.
+    No key, a key refused, nothing left to pay with: those need him to go
+    and do something, and are worth a banner. Google being busy for ten
+    seconds is not, and a banner about it is worse than useless -- it
+    outlives the thing it describes.
+    """
+    low = str(problem or "").lower()
+    return any(word in low for word in
+               ("key", "credit", "billing", "not accepted", "balance", "quota"))
+
+
+def _remember(problem):
+    """Across restarts too, for the kind of problem that survives one.
+
+    Restarting the server does not put credit on an account. It does,
+    however, clear a busy minute at Google, so only the lasting sort is
+    written down -- the other sort used to stay on screen for days,
+    describing a service that had long since recovered and, worse, naming
+    whichever service had been in use at the time.
     """
     global LAST_PROBLEM
     LAST_PROBLEM = problem
     try:
-        if problem:
+        if problem and is_permanent(problem):
             PROBLEM_FILE.write_text(problem, encoding="utf-8")
         elif PROBLEM_FILE.exists():
             PROBLEM_FILE.unlink()
@@ -377,27 +411,34 @@ def last_problem():
 def health():
     """Is there a key, and can it actually answer?
 
-    A key file proves nothing: the one here is real, correctly spelled,
-    and out of money. So the first time anybody asks, the question is put
-    to the service itself -- one word, a fraction of a penny if it works
-    at all -- and the answer is kept.
+    A key file proves nothing: one of the keys here is real, correctly
+    spelled, and out of money. So the question is put to the service
+    itself, once per run -- one word, and nothing at all if it works.
+
+    The asking comes first. Trusting the remembered answer instead was
+    how a note about Anthropic running out of credit stayed on screen for
+    days after the app had moved to a Google key and was working
+    perfectly: nothing ever went back and checked.
     """
     global _ASKED_ONCE
     if provider() is None:
         return False, None
+
+    if not _ASKED_ONCE:
+        _ASKED_ONCE = True
+        try:
+            ask("Answer with one word: ok",
+                [{"role": "user", "content": "ok"}], max_tokens=300, timeout=20)
+            return True, None
+        except ModelError as e:
+            problem = str(e)
+            return (False, problem) if is_permanent(problem) else (True, None)
+        except Exception:
+            return True, None      # a network blip is not a broken key
+
     known = last_problem()
-    if known:
+    if known and is_permanent(known):
         return False, known
-    if _ASKED_ONCE:
-        return True, None
-    _ASKED_ONCE = True
-    try:
-        ask("Answer with one word: ok",
-            [{"role": "user", "content": "ok"}], max_tokens=300, timeout=20)
-    except ModelError as e:
-        return False, str(e)
-    except Exception:
-        return True, None          # a network blip is not a broken key
     return True, None
 
 
