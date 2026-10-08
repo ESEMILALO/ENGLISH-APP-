@@ -2489,6 +2489,7 @@
   "why": "Runners crossing finish line, goal achie"
  },
  "School vocabulary::Admonish": {
+  "none": "nothing found",
   "q": "teacher admonishing class"
  },
  "School vocabulary::Adulthood": {
@@ -2539,7 +2540,13 @@
   ]
  },
  "School vocabulary::Anointing": {
-  "q": "anointing ceremony"
+  "none": "The pictures are old printed book orname",
+  "q": "anointing ceremony",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:An_historical_and_chronological_treatise_of_the_anointing_and_coronation_of_the_Kings_and_queens_of_France,_from_Clovis_I_Fleuron_T123498-11.png",
+   "https://commons.wikimedia.org/wiki/File:An_historical_and_chronological_treatise_of_the_anointing_and_coronation_of_the_Kings_and_queens_of_France,_from_Clovis_I_Fleuron_T123498-21.png",
+   "https://commons.wikimedia.org/wiki/File:An_historical_and_chronological_treatise_of_the_anointing_and_coronation_of_the_Kings_and_queens_of_France,_from_Clovis_I_Fleuron_T123498-2.png"
+  ]
  },
  "School vocabulary::Appear": {
   "by": "Sireesha Kandimalla",
@@ -2560,7 +2567,13 @@
   "why": "Person eating food, shows desire"
  },
  "School vocabulary::Appomattox": {
-  "q": "appomattox courthouse"
+  "none": "Historical photos require too much conte",
+  "q": "appomattox courthouse",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Appomattox_courthouse.jpg",
+   "https://commons.wikimedia.org/wiki/File:Appomattox_courthouse_1865.jpg",
+   "https://commons.wikimedia.org/wiki/File:Appomattox_Courthouse_Printing_House.jpg"
+  ]
  },
  "School vocabulary::Archaic": {
   "none": "These are old documents, not photos",
@@ -2579,15 +2592,34 @@
   ]
  },
  "School vocabulary::Ashes": {
-  "q": "campfire ashes"
+  "by": "Walter Siegmund (talk)",
+  "file": "ashes-7a0bcc1c37.jpg",
+  "lic": "CC BY 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:Campfire_scar_08319.JPG",
+  "q": "campfire ashes",
+  "title": "Campfire scar 08319.JPG",
+  "why": "Clear picture of cold campfire ashes."
  },
  "School vocabulary::Ask around": {
-  "q": "asking questions"
+  "none": "These pictures show asking a question, n",
+  "q": "asking questions",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Asking_Questions_-_WCDF_1835.jpg",
+   "https://commons.wikimedia.org/wiki/File:Asking_Questions_-_WCDF_1837.jpg",
+   "https://commons.wikimedia.org/wiki/File:Nahadah_Islamic_School_students_asking_questions_in_class.jpg"
+  ]
  },
  "School vocabulary::Ask for": {
-  "q": "asking help"
+  "none": "No image clearly shows requesting someth",
+  "q": "asking help",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Leader_of_Vets_Asking_U.S._Help_1932.jpg",
+   "https://commons.wikimedia.org/wiki/File:Immigrant_Venezuelan_homeless_asking_for_help_in_the_street.jpg",
+   "https://commons.wikimedia.org/wiki/File:Help_panel_ask_screen,_cswiki,_2020-04-19.png"
+  ]
  },
  "School vocabulary::Assert": {
+  "none": "nothing found",
   "q": "confident speaker"
  },
  "School vocabulary::Asset": {
@@ -2608,6 +2640,7 @@
   "q": "-"
  },
  "School vocabulary::Back out": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Bactrian": {
@@ -2714,7 +2747,13 @@
   ]
  },
  "School vocabulary::Bay": {
-  "q": "coastal bay"
+  "by": "Richard West",
+  "file": "bay-025376bfcd.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Coastal_Northumberland_,_Embleton_Bay_-_geograph.org.uk_-_2992750.jpg",
+  "q": "coastal bay",
+  "title": "Coastal Northumberland , Embleton Bay - geograph.org.uk - 2992750.jpg",
+  "why": "Picture 1 clearly shows a bay."
  },
  "School vocabulary::Be used to + verb-ing": {
   "none": "nothing to photograph",
@@ -2725,7 +2764,12 @@
   "q": "-"
  },
  "School vocabulary::Beat yourself up": {
-  "q": "frustrated facepalm"
+  "none": "Ambiguous gesture could mean stress or t",
+  "q": "frustrated facepalm",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Frustrated_man_at_a_desk.jpg",
+   "https://commons.wikimedia.org/wiki/File:Frustrated_man_at_a_desk_(cropped).jpg"
+  ]
  },
  "School vocabulary::Beau": {
   "none": "Old movie posters, not photos",
@@ -2763,7 +2807,13 @@
   "q": "-"
  },
  "School vocabulary::Bengal": {
-  "q": "Bengal landscape"
+  "none": "Pictures are paintings or generic landsc",
+  "q": "Bengal landscape",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:George_Chinnery_-_Bengal_landscape_with_a_Hindu_Shrine_or_Tomb_-_NG_2742_-_National_Galleries_of_Scotland.jpg",
+   "https://commons.wikimedia.org/wiki/File:George_Chinnery_(1774-1852)_-_Bengal_Landscape_with_a_Hindu_Shrine_or_Tomb_-_NG_2742_-_National_Galleries_of_Scotland.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sundarban_Landscape_during_monsoon,_West_Bengal,_India_01.jpg"
+  ]
  },
  "School vocabulary::Beside": {
   "by": "PattayaPatrol",
@@ -2815,10 +2865,22 @@
   "why": "Blank empty page, no writing"
  },
  "School vocabulary::Bloom": {
-  "q": "blooming roses"
+  "none": "These show a pub, not blooming.",
+  "q": "blooming roses",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_Blooming_Roses_Inn_-_geograph.org.uk_-_5708996.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Blooming_Rose_Inn,_Hunslet_-_geograph.org.uk_-_2985492.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Blooming_Rose_Inn,_Hunslet_-_geograph.org.uk_-_2985491.jpg"
+  ]
  },
  "School vocabulary::Blueprint": {
-  "q": "architectural blueprint"
+  "none": "Drawings and diagrams are not photograph",
+  "q": "architectural blueprint",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Original_Blueprint_of_United_States_National_Agricultural_Library.jpg",
+   "https://commons.wikimedia.org/wiki/File:Blueprint_of_Bishopsfield_-_geograph.org.uk_-_137378.jpg",
+   "https://commons.wikimedia.org/wiki/File:Blueprint_of_elevation_by_Alice_Trythall_Washburn.jpg"
+  ]
  },
  "School vocabulary::Boarder": {
   "none": "No picture shows a boarder person",
@@ -2838,22 +2900,43 @@
   ]
  },
  "School vocabulary::Bonds": {
-  "q": "friends hugging"
+  "by": "Rod Waddington from Kergunyah, Australia",
+  "file": "bonds-f2ad03d7a3.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Friends,_Jimma_(10923360765).jpg",
+  "q": "friends hugging",
+  "title": "Friends, Jimma (10923360765).jpg",
+  "why": "Children with arms around each other."
  },
  "School vocabulary::Boot up": {
-  "q": "computer booting up"
+  "by": "Mbrickn",
+  "file": "boot-up-11344a3c26.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Workgroup_Server_8150_Booting_Up.jpg",
+  "q": "computer booting up",
+  "title": "Workgroup Server 8150 Booting Up.jpg",
+  "why": "Computer starting up with operating syst"
  },
  "School vocabulary::Bother": {
+  "none": "nothing found",
   "q": "child annoying parent"
  },
  "School vocabulary::Bottle out": {
+  "none": "nothing found",
   "q": "nervous public speaker"
  },
  "School vocabulary::Bottle up": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Bounce back": {
-  "q": "recovering athlete"
+  "none": "These pictures show museum statues, not ",
+  "q": "recovering athlete",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Bronze_portrait_of_young_athlete_recovered_from_the_Villa_dei_Papyri_in_the_1754_excavations_03.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bronze_portrait_of_young_athlete_recovered_from_the_Villa_dei_Papyri_in_the_1754_excavations_04.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bronze_portrait_of_young_athlete_recovered_from_the_Villa_dei_Papyri_in_the_1754_excavations_02.jpg"
+  ]
  },
  "School vocabulary::Brag": {
   "none": "No photo shows bragging",
@@ -2865,16 +2948,35 @@
   ]
  },
  "School vocabulary::Brag about": {
+  "none": "nothing found",
   "q": "friends bragging"
  },
  "School vocabulary::Break down": {
-  "q": "woman crying tears"
+  "by": "Ozersky / Озерский",
+  "file": "break-down-cbfe780778.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:RIAN_archive_346_Tears_of_joy.jpg",
+  "q": "woman crying tears",
+  "title": "RIAN archive 346 Tears of joy.jpg",
+  "why": "Real photograph shows emotional breakdow"
  },
  "School vocabulary::Break into": {
-  "q": "bursting into laughter"
+  "by": "U.S. Department of State from United States",
+  "file": "break-into-8247c19312.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Secretary_Kerry_Bursts_Into_Laughter_as_a_Youngster_Continually_Answers_%22yes%22_to_His_Questions_in_Abuja_(28582822044).jpg",
+  "q": "bursting into laughter",
+  "title": "Secretary Kerry Bursts Into Laughter as a Youngster Continually Answers \"yes\" to His Questions in Abuja (28582822044).jpg",
+  "why": "Man laughing suddenly, showing emotion."
  },
  "School vocabulary::Breaking/cracking": {
-  "q": "breaking toy"
+  "none": "Pictures show museum artifacts or dance,",
+  "q": "breaking toy",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Breaking_Hosts.jpg",
+   "https://commons.wikimedia.org/wiki/File:Modern_toy_gun_(FindID_610234).jpg",
+   "https://commons.wikimedia.org/wiki/File:Post_Medieval_toy_gun_(FindID_234874).jpg"
+  ]
  },
  "School vocabulary::Breathtaking": {
   "none": "None show breathtaking beauty or excitem",
@@ -2895,16 +2997,30 @@
   ]
  },
  "School vocabulary::Brighten up": {
-  "q": "happy smiling woman"
+  "none": "Action of becoming happier cannot be sho",
+  "q": "happy smiling woman",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Happy_woman_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Happy_African_woman.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_Woman_wearing_Ghana_Jersey_happy_smiling.jpg"
+  ]
  },
  "School vocabulary::Bring about": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Bring down": {
+  "none": "nothing found",
   "q": "sad dejected man"
  },
  "School vocabulary::Bring up": {
-  "q": "speaking meeting"
+  "none": "Introducing topics cannot be depicted vi",
+  "q": "speaking meeting",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Hilal_Nesin_speaking_at_Strasbourg_Justice_Meeting_2026_02.jpg",
+   "https://commons.wikimedia.org/wiki/File:Nancy_speaking_at_the_DNC_meeting.jpg",
+   "https://commons.wikimedia.org/wiki/File:Hilal_Nesin_speaking_at_Strasbourg_Justice_Meeting_2026_01.jpg"
+  ]
  },
  "School vocabulary::Broad": {
   "none": "No image clearly shows wideness concept",
@@ -2925,7 +3041,13 @@
   ]
  },
  "School vocabulary::Browse through": {
-  "q": "browsing website"
+  "none": "No real-world photo illustrates browsing",
+  "q": "browsing website",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Web_Browser,_Search_Engine_Page,_Gear_Cogwheel.png",
+   "https://commons.wikimedia.org/wiki/File:Wikipedia_mobile_website_search_-_Brian_Johnson.png",
+   "https://commons.wikimedia.org/wiki/File:Spider_web_Luc_Viatour.jpg"
+  ]
  },
  "School vocabulary::Bug": {
   "by": "Kyu3a",
@@ -2937,10 +3059,22 @@
   "why": "Clear real photo of small insect"
  },
  "School vocabulary::Build up": {
-  "q": "weightlifting gym"
+  "none": "Strength training is shown, but not the ",
+  "q": "weightlifting gym",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Panathinaikos_weightlifting_gym_DSC00858.JPG",
+   "https://commons.wikimedia.org/wiki/File:Several_athletes_and_coaches_gather_in_a_gym_for_a_weightlifting_competition.jpg",
+   "https://commons.wikimedia.org/wiki/File:Patriot-games-weightlifting-competition_50710473796_o.jpg"
+  ]
  },
  "School vocabulary::Bulk up": {
-  "q": "muscular bodybuilder"
+  "by": "Inder Mohan Singh Bodybuilder",
+  "file": "bulk-up-e6762fc0b6.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Inder_mohan_Singh_Bodybuilder.jpg",
+  "q": "muscular bodybuilder",
+  "title": "Inder mohan Singh Bodybuilder.jpg",
+  "why": "Man with large muscles from bulking up."
  },
  "School vocabulary::Bump": {
   "by": "Steelkamp",
@@ -2952,7 +3086,13 @@
   "why": "Raised bump on road surface"
  },
  "School vocabulary::Bundled up": {
-  "q": "child bundled up"
+  "by": "Enoch Leung from Canada",
+  "file": "bundled-up-1c72f6afef.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Bundle_Up_-_Flickr_-_Czar_Hey.jpg",
+  "q": "child bundled up",
+  "title": "Bundle Up - Flickr - Czar Hey.jpg",
+  "why": "Boy dressed warmly in winter jacket."
  },
  "School vocabulary::Bureau": {
   "by": "Abasaa",
@@ -2973,10 +3113,17 @@
   ]
  },
  "School vocabulary::Burn off": {
+  "none": "nothing found",
   "q": "cardio workout sweat"
  },
  "School vocabulary::Buy up": {
-  "q": "empty store shelves"
+  "by": "Revisorius",
+  "file": "buy-up-3f12d7e92d.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Covid_Empty_Store_Shelves,_Toilet_Paper.jpg",
+  "q": "empty store shelves",
+  "title": "Covid Empty Store Shelves, Toilet Paper.jpg",
+  "why": "Empty shelves show items were bought up."
  },
  "School vocabulary::Cabinets": {
   "none": "No real photograph of storage cupboards",
@@ -2987,22 +3134,53 @@
   ]
  },
  "School vocabulary::Call around": {
-  "q": "phone contacts"
+  "none": "The pictures show phone jack components.",
+  "q": "phone contacts",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Phone_connector,_6.35_mm,_jack_with_switch_contacts-40827.jpg",
+   "https://commons.wikimedia.org/wiki/File:Phone_connector,_6.35_mm,_jack_with_switch_contacts_and_plug_inserted-40827.jpg",
+   "https://commons.wikimedia.org/wiki/File:Phone_connector,_6.35_mm,_jack_with_switch_contacts_and_plug_inserted-40826.jpg"
+  ]
  },
  "School vocabulary::Call back": {
-  "q": "person phone call"
+  "none": "Action of returning call not clear.",
+  "q": "person phone call",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Man_talking_on_the_phone_in_Montr%C3%A9al-Pierre_Elliott_Trudeau_International_Airport_006.jpg",
+   "https://commons.wikimedia.org/wiki/File:Paris_-_A_waitress_making_a_Phone_call_-_4588.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_phone_call_from_the_Oval_Office_to_Apollo_11.jpg"
+  ]
  },
  "School vocabulary::Call for": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Call off": {
-  "q": "cancelled meeting sign"
+  "by": "Bob Dass",
+  "file": "call-off-72b3b40f2f.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Cancelled_Due_To_Coronavirus_in_Ukiah_(49659876688).jpg",
+  "q": "cancelled meeting sign",
+  "title": "Cancelled Due To Coronavirus in Ukiah (49659876688).jpg",
+  "why": "Sign clearly shows canceled events."
  },
  "School vocabulary::Call on": {
-  "q": "student raising hand"
+  "none": "These show raising hands, not calling on",
+  "q": "student raising hand",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:1964_Hammond_Slides_Student_Raising_Hand.jpg",
+   "https://commons.wikimedia.org/wiki/File:Third_graders_raise_their_hands_at_a_USAID_sponsored_Alternative_Basic_Education_Center_Photo_credit_Kelly_Ramundo_USAID.jpg",
+   "https://commons.wikimedia.org/wiki/File:Student_in_hijab.jpg"
+  ]
  },
  "School vocabulary::Calm down": {
-  "q": "taking deep breath"
+  "by": "beIN SPORTS Türkiye",
+  "file": "calm-down-c19001e96d.jpg",
+  "lic": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Quaresma_deep_breath_(Fenerbah%C3%A7e-Be%C5%9Fikta%C5%9F_Derby,_2016-17_S%C3%BCper_Lig).png",
+  "q": "taking deep breath",
+  "title": "Quaresma deep breath (Fenerbahçe-Beşiktaş Derby, 2016-17 Süper Lig).png",
+  "why": "Man taking deep breath to calm down."
  },
  "School vocabulary::Came out": {
   "none": "Pictures show bookstore, not availabilit",
@@ -3051,7 +3229,13 @@
   ]
  },
  "School vocabulary::Carry out": {
-  "q": "scientist conducting experiment"
+  "none": "Completing a task is too abstract",
+  "q": "scientist conducting experiment",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Laboratory_scientist_conducts_an_experiment_with_a_Rotary_evaporator.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_scientist_at_McMurdo_Station_conducts_an_experiment_-_DPLA_-_e31190532bb40e8a55d2c5009f8232cd.jpeg",
+   "https://commons.wikimedia.org/wiki/File:A_man_in_the_foreground_conducts_an_alchemical_experiment_wi_Wellcome_V0025590.jpg"
+  ]
  },
  "School vocabulary::Casket": {
   "by": "Department of Defense. American Forces Information Service. Defense Visual Infor",
@@ -3063,12 +3247,19 @@
   "why": "Shows flag-draped casket carried by hono"
  },
  "School vocabulary::Cast": {
-  "q": "casting fishing line"
+  "by": "Sergi Coll",
+  "file": "cast-eb9cbfaac3.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Casting_a_fishing_line_at_Ciutat_Jard%C3%AD_beach,_Palma,_January_2018.jpg",
+  "q": "casting fishing line",
+  "title": "Casting a fishing line at Ciutat Jardí beach, Palma, January 2018.jpg",
+  "why": "Person casting a fishing line on beach"
  },
  "School vocabulary::Catch": {
   "q": "person catching ball"
  },
  "School vocabulary::Catch somebody red-handed": {
+  "none": "nothing found",
   "q": "police catching thief"
  },
  "School vocabulary::Cattle": {
@@ -3090,30 +3281,71 @@
   "why": "Underground room with storage barrels"
  },
  "School vocabulary::Charm": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Chat with": {
-  "q": "friends chatting"
+  "by": "Michael Coghlan from Adelaide, Australia",
+  "file": "chat-with-5e05644342.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Friends_Chatting_(25242731825).jpg",
+  "q": "friends chatting",
+  "title": "Friends Chatting (25242731825).jpg",
+  "why": "Two women chatting friendly at table."
  },
  "School vocabulary::Check in": {
-  "q": "hotel reception desk"
+  "none": "These show hotel lobbies, not checking i",
+  "q": "hotel reception desk",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Entrance_lounge_and_reception_desks_of_the_Carlton_Hotel_Downtown_Core_Singapore.jpg",
+   "https://commons.wikimedia.org/wiki/File:Reception_desks_of_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg",
+   "https://commons.wikimedia.org/wiki/File:Reception_hall_with_reflecting_floor_and_chandelier_at_The_Fullerton_Bay_Hotel_Singapore.jpg"
+  ]
  },
  "School vocabulary::Check out": {
-  "q": "pointing bicycle"
+  "none": "These pictures show bicycle stations, no",
+  "q": "pointing bicycle",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Brandnertal-bicycle-wash-4.jpg",
+   "https://commons.wikimedia.org/wiki/File:Fahrradwaschstation_Innsbruck_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bicycle_maintenance_point,_Kilwinning_Station,_North_Ayrshire.jpg"
+  ]
  },
  "School vocabulary::Check over": {
-  "q": "inspecting documents"
+  "none": "Pictures show reading or books, not revi",
+  "q": "inspecting documents",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Inspecting_Admiralty_documents_at_The_National_Archives.jpg",
+   "https://commons.wikimedia.org/wiki/File:Datames_inspecting_an_arrow.jpg",
+   "https://commons.wikimedia.org/wiki/File:Inspecting_Soviet_skiing_manuals.jpg"
+  ]
  },
  "School vocabulary::Check up on": {
-  "q": "doctor examination"
+  "none": "The pictures just show a medical room.",
+  "q": "doctor examination",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:A_typical_examination_room_and_exam_table_in_a_doctor%27s_office._03.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_typical_examination_room_and_exam_table_in_a_doctor%27s_office._02.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_typical_examination_room_and_exam_table_in_a_doctor%27s_office._01.jpg"
+  ]
  },
  "School vocabulary::Check with": {
-  "q": "seeking approval"
+  "none": "Action cannot be depicted easily in phot",
+  "q": "seeking approval",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jawaharlal_Nehru_seeking_His_Majesty%27s_approval.jpg"
+  ]
  },
  "School vocabulary::Cheer up": {
-  "q": "friend comforting friend"
+  "none": "Both pictures are artistic drawings, not",
+  "q": "friend comforting friend",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Roman_de_la_Rose_f._47r_(The_friend_comforts_the_Lover).jpg",
+   "https://commons.wikimedia.org/wiki/File:Our_mutual_friend_(1895)_(14800967343).jpg"
+  ]
  },
  "School vocabulary::Chide": {
+  "none": "nothing found",
   "q": "gentle scolding"
  },
  "School vocabulary::Chiefly": {
@@ -3167,23 +3399,46 @@
   "q": "-"
  },
  "School vocabulary::Clam up": {
-  "q": "hand over mouth"
+  "by": "Marc Nozell from Merrimack, New Hampshire, USA",
+  "file": "clam-up-c0c3c38b5f.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Huma_Abedin_with_hand_over_mouth.jpg",
+  "q": "hand over mouth",
+  "title": "Huma Abedin with hand over mouth.jpg",
+  "why": "Person covering mouth, refusing to speak"
  },
  "School vocabulary::Clean up": {
-  "q": "tidy living room"
+  "none": "These pictures show vacuuming or tidied ",
+  "q": "tidy living room",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Studio-Living_room_(2015-01-10_17.18.06_by_c-g.).jpg",
+   "https://commons.wikimedia.org/wiki/File:Vacuum_cleaner_placed_on_the_floor_in_a_living_room_during_routine_cleaning_activity.jpg",
+   "https://commons.wikimedia.org/wiki/File:Middle-aged_woman_cleaning_a_couch_with_a_handheld_vacuum_in_a_living_room_during_the_day.jpg"
+  ]
  },
  "School vocabulary::Clear away": {
+  "none": "nothing found",
   "q": "clearing dinner table"
  },
  "School vocabulary::Click on": {
-  "q": "clicking mouse"
+  "none": "Picture is a drawing, not real.",
+  "q": "clicking mouse",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Mouse_Click_Left_25.png"
+  ]
  },
  "School vocabulary::Clockwise": {
   "none": "nothing found",
   "q": "clockwise rotation arrow"
  },
  "School vocabulary::Coal": {
-  "q": "coal pile"
+  "none": "Pictures show mountains or mining equipm",
+  "q": "coal pile",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Coal_pile_in_Bankhead.jpg",
+   "https://commons.wikimedia.org/wiki/File:Coal_waste_pile_west_of_Trevorton,_Pennsylvania_far_shot_2.JPG",
+   "https://commons.wikimedia.org/wiki/File:Komatsu_bulldozer_pushing_coal_in_Power_plant_Ljubljana_(winter_2017).jpg"
+  ]
  },
  "School vocabulary::Coaled": {
   "none": "Postcards, not real photographs",
@@ -3194,33 +3449,71 @@
   ]
  },
  "School vocabulary::Coastal": {
-  "q": "coastal road"
+  "none": "none of them showed it",
+  "q": "coastal road",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Coastal_Road_work_Mumbai.jpg",
+   "https://commons.wikimedia.org/wiki/File:Mumbai_skyline,_Coastal_road,_Carter_Road.jpg"
+  ]
  },
  "School vocabulary::Coat": {
-  "q": "winter coat"
+  "by": "Tobias ToMar Maier",
+  "file": "coat-6f5f6b3542.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Winter_coat_with_houndstooth_pattern_over_long_knitted_dress_with_boots.jpg",
+  "q": "winter coat",
+  "title": "Winter coat with houndstooth pattern over long knitted dress with boots.jpg",
+  "why": "Woman wearing a stylish winter coat."
  },
  "School vocabulary::Come around": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Come back": {
-  "q": "coming home"
+  "none": "Action phrasal verbs need motion clarity",
+  "q": "coming home",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Climber_at_Coming_Home_Fund_Raiser_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sylwester_Ambroziak_Mama_I%27m_Coming_Home,_Poznan_(1).jpg",
+   "https://commons.wikimedia.org/wiki/File:Climber_at_Coming_Home_Fund_Raiser_1.jpg"
+  ]
  },
  "School vocabulary::Come by": {
-  "q": "guests arriving home"
+  "none": "Phrasal verb meaning is too abstract",
+  "q": "guests arriving home",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Prince_Kitashirawa_arriving_at_the_Governor-General%27s_residence.jpg",
+   "https://commons.wikimedia.org/wiki/File:SLNSW_10222_Guests_arrive_in_top_hats_and_pouring_rain.jpg"
+  ]
  },
  "School vocabulary::Come down with": {
+  "none": "nothing found",
   "q": "sick person sneezing"
  },
  "School vocabulary::Come in": {
-  "q": "open door welcome"
+  "by": "Richard Croft",
+  "file": "come-in-9f872b199f.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Open_Door_-_geograph.org.uk_-_1302200.jpg",
+  "q": "open door welcome",
+  "title": "Open Door - geograph.org.uk - 1302200.jpg",
+  "why": "View from inside looking out an entrance"
  },
  "School vocabulary::Come to": {
-  "q": "restaurant bill total"
+  "by": "Sakurakat",
+  "file": "come-to-865dbd455f.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Bill_Vishwanand_2026-01-28.jpg",
+  "q": "restaurant bill total",
+  "title": "Bill Vishwanand 2026-01-28.jpg",
+  "why": "Receipt showing a total amount reaching "
  },
  "School vocabulary::Come up against": {
+  "none": "nothing found",
   "q": "runner facing hurdle"
  },
  "School vocabulary::Come up with": {
+  "none": "nothing found",
   "q": "woman brainstorming whiteboard"
  },
  "School vocabulary::Constituent": {
@@ -3232,7 +3525,13 @@
   ]
  },
  "School vocabulary::Cool down": {
-  "q": "cooling down exercise"
+  "none": "None show post-exercise relaxation.",
+  "q": "cooling down exercise",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cooling_down_with_an_ice_block_under_summer_skies_in_New_Zealand.jpg",
+   "https://commons.wikimedia.org/wiki/File:Woman_cooling_down_by_water_hose2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Cooling_down_(53927241394).jpg"
+  ]
  },
  "School vocabulary::Cop": {
   "by": "Intentifymedia",
@@ -3298,13 +3597,29 @@
   ]
  },
  "School vocabulary::Cracking": {
-  "q": "cracking ice"
+  "none": "These show static cracks, not cracking a",
+  "q": "cracking ice",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:New_ice_cracking_on_stone_as_tide_goes_out_at_Govik.jpg",
+   "https://commons.wikimedia.org/wiki/File:Cracks_in_the_ice_(8141638926).jpg",
+   "https://commons.wikimedia.org/wiki/File:Crack_in_the_ice_(15208443513).jpg"
+  ]
  },
  "School vocabulary::Crave": {
-  "q": "woman eating dessert"
+  "none": "Desire cannot be easily photographed.",
+  "q": "woman eating dessert",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Life_is_uncertain,_eat_dessert_first_folsom_street_fair,_san_francisco_(2012)_(8028270436).jpg"
+  ]
  },
  "School vocabulary::Craving": {
-  "q": "chocolate craving"
+  "none": "Craving is an abstract emotional desire.",
+  "q": "chocolate craving",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Churros_with_dark_chocolate_dip.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sonic_Chocolate_Malt.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chocolate_Banana_Ice_Cream_Recipe_By_Sonia_Goyal.jpg"
+  ]
  },
  "School vocabulary::Cross": {
   "none": "No person shown crossing street",
@@ -3315,7 +3630,13 @@
   ]
  },
  "School vocabulary::Cross over": {
-  "q": "pedestrians crossing road"
+  "by": "Chris Allen",
+  "file": "cross-over-b44303feb5.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Pedestrian_crossing,_Prince_of_Wales_Road,_Exeter_-_geograph.org.uk_-_6029446.jpg",
+  "q": "pedestrians crossing road",
+  "title": "Pedestrian crossing, Prince of Wales Road, Exeter - geograph.org.uk - 6029446.jpg",
+  "why": "People crossing the street on foot."
  },
  "School vocabulary::Cross your fingers": {
   "none": "No clear finger-crossing gesture visible",
@@ -3334,7 +3655,13 @@
   "why": "Photo shows large group of people"
  },
  "School vocabulary::Cubicle": {
-  "q": "bathroom stall"
+  "none": "None show a standard office cubicle clea",
+  "q": "bathroom stall",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Bathroom_stall_door_with_a_missing_handle.jpg",
+   "https://commons.wikimedia.org/wiki/File:TARDIS_bathroom_stall,_Huntsville,_Alabama.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bathroom_Stall_Lock.jpg"
+  ]
  },
  "School vocabulary::Cul-de-sac": {
   "none": "Doesn't show closed dead-end street",
@@ -3344,10 +3671,21 @@
   ]
  },
  "School vocabulary::Cut back on": {
-  "q": "saving money"
+  "none": "None show reducing spending specifically",
+  "q": "saving money",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Motshelo_(A.k.a_)Stokvel_(informal_money_saving_scheme).jpg",
+   "https://commons.wikimedia.org/wiki/File:Money_saving_growth.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sparepenger_p%C3%A5_Norgesglass.jpg"
+  ]
  },
  "School vocabulary::Cut down on": {
-  "q": "less sugar"
+  "none": "No clear depiction of the phrasal verb.",
+  "q": "less sugar",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Germans_destroy_French_sugar_mills._Sugar_production_in_France_has_fallen_to_less_than_..._(3856303779).jpg",
+   "https://commons.wikimedia.org/wiki/File:Sugar._1-_none_on_fruits,_2-_none_in_desserts,_3-_less_on_cereals,_4-_less_in_coffee_or_tea,_5-_less_in_preserving,_6-_l_-_NARA_-_512507.jpg"
+  ]
  },
  "School vocabulary::Daily Mail": {
   "by": "General Tulstein W D Twigg",
@@ -3359,10 +3697,18 @@
   "why": "Shows actual Daily Mail newspaper masthe"
  },
  "School vocabulary::Damp": {
-  "q": "damp towel"
+  "none": "Does not clearly show dampness.",
+  "q": "damp towel",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Einmannpackung_Typ1_Inhalts%C3%BCbersicht.jpg"
+  ]
  },
  "School vocabulary::Damp#2": {
-  "q": "damp towel"
+  "none": "Does not clearly show dampness.",
+  "q": "damp towel",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Einmannpackung_Typ1_Inhalts%C3%BCbersicht.jpg"
+  ]
  },
  "School vocabulary::Dare": {
   "by": "Jean-Pierre Bazard Jpbazard",
@@ -3374,13 +3720,31 @@
   "why": "Man about to jump, courage"
  },
  "School vocabulary::Dead end": {
-  "q": "dead end sign"
+  "by": "Scotted400",
+  "file": "dead-end-973a775e21.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Dead_End!.jpg",
+  "q": "dead end sign",
+  "title": "Dead End!.jpg",
+  "why": "Clear English sign showing a dead end."
  },
  "School vocabulary::Deal with": {
-  "q": "solving problem"
+  "by": "Campus Party Europe in Berlin",
+  "file": "deal-with-ce15c389d5.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Problem_solving_thinking.jpg",
+  "q": "solving problem",
+  "title": "Problem solving thinking.jpg",
+  "why": "Men focused on solving a problem."
  },
  "School vocabulary::Decay": {
-  "q": "tooth decay"
+  "by": "Suyash.dwivedi",
+  "file": "decay-5da495eaca.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Dental_Caries_Cavity_2.JPG",
+  "q": "tooth decay",
+  "title": "Dental Caries Cavity 2.JPG",
+  "why": "Clearly shows a decayed tooth."
  },
  "School vocabulary::Decaying": {
   "by": "Carlquist, Sherwin John, 1930-2021",
@@ -3505,24 +3869,50 @@
   ]
  },
  "School vocabulary::Drive off": {
-  "q": "car driving away"
+  "by": "Qwexcxewq",
+  "file": "drive-off-a6a5399197.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:RCMP_Car_in_Seba_Beach.jpg",
+  "q": "car driving away",
+  "title": "RCMP Car in Seba Beach.jpg",
+  "why": "Police car driving away in snow."
  },
  "School vocabulary::Drive on up": {
   "q": "car driving up"
  },
  "School vocabulary::Drop by": {
+  "none": "nothing found",
   "q": "friends visiting doorway"
  },
  "School vocabulary::Drop in on": {
-  "q": "unexpected visitor"
+  "none": "None depict an unexpected personal visit",
+  "q": "unexpected visitor",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Benjamin_Robert_Haydon_(1786-1846)_-_Unexpected_Visitor_-_PLYMG.1965.132_-_The_Box.jpg",
+   "https://commons.wikimedia.org/wiki/File:Unexpected_Visitor_-_geograph.org.uk_-_5458906.jpg",
+   "https://commons.wikimedia.org/wiki/File:An_unexpected_visitor_-_geograph.org.uk_-_1121873.jpg"
+  ]
  },
  "School vocabulary::Drop off": {
-  "q": "dropping off school"
+  "none": "None clearly show someone being dropped ",
+  "q": "dropping off school",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:School_drop-off_lane_at_Erindale_Secondary_School.jpg",
+   "https://commons.wikimedia.org/wiki/File:Ruston_High_School_Rear_bus_drop_off_1959.jpg",
+   "https://commons.wikimedia.org/wiki/File:Dropping-off_point_-_geograph.org.uk_-_6278236.jpg"
+  ]
  },
  "School vocabulary::Drop out": {
-  "q": "student leaving school"
+  "none": "Dropping out cannot be depicted visually",
+  "q": "student leaving school",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Parent_Taking_Student_Leaving_School_20150603a.jpg",
+   "https://commons.wikimedia.org/wiki/File:Parent_Taking_Student_Leaving_School_20150603b.jpg",
+   "https://commons.wikimedia.org/wiki/File:Students_leaving_school_in_Cairo-Photo_by_Linda_Herrera,_2020.jpg"
+  ]
  },
  "School vocabulary::Dwell on": {
+  "none": "nothing found",
   "q": "brooding anxious person"
  },
  "School vocabulary::Dye": {
@@ -3535,16 +3925,38 @@
   ]
  },
  "School vocabulary::Ease off": {
-  "q": "slow down pace"
+  "none": "None of the pictures show reducing effor",
+  "q": "slow down pace",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Slow_down_to_the_pace_of_nature.jpg",
+   "https://commons.wikimedia.org/wiki/File:Slow_down_to_the_pace_of_nature.%F0%9F%8C%A0.jpg",
+   "https://commons.wikimedia.org/wiki/File:Green_Spiral_Slow_Feeder_Dog_Bowl.jpg"
+  ]
  },
  "School vocabulary::Ease up": {
-  "q": "relaxed person exhaling"
+  "none": "Drawing, not a real photograph.",
+  "q": "relaxed person exhaling",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Iron_lung_action_diagrams.png"
+  ]
  },
  "School vocabulary::Eat out": {
-  "q": "restaurant dining table"
+  "none": "Empty restaurant, doesn't clearly show e",
+  "q": "restaurant dining table",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Restaurant_table_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg",
+   "https://commons.wikimedia.org/wiki/File:Restaurant_room_of_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg",
+   "https://commons.wikimedia.org/wiki/File:White_tablecloth_on_restaurant_table_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg"
+  ]
  },
  "School vocabulary::Eat up": {
-  "q": "empty dinner plate"
+  "by": "Haydn Blackey",
+  "file": "eat-up-97c8d0ed2d.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:The_way_we_like_our_plates_at_the_end_of_dinner-_Dinner_on_New_Year%27s_Day_2024_-_The_Eighth_Day_of_Christmas_-_53435741068.jpg",
+  "q": "empty dinner plate",
+  "title": "The way we like our plates at the end of dinner- Dinner on New Year's Day 2024 - The Eighth Day of Christmas - 53435741068.jpg",
+  "why": "An empty plate shows finished food."
  },
  "School vocabulary::Effortless": {
   "q": "-"
@@ -3557,10 +3969,22 @@
   ]
  },
  "School vocabulary::Eloped": {
-  "q": "couple eloping"
+  "none": "Pictures 1 and 3 are paintings. Picture ",
+  "q": "couple eloping",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Bartolozzi_after_Morland_The_Elopement.jpg",
+   "https://commons.wikimedia.org/wiki/File:Griffin_House_Elopement_in_Hood_River,_Oregon..jpg",
+   "https://commons.wikimedia.org/wiki/File:Edmund_Blair_Leighton_-_The_Elopement_-_1893.jpg"
+  ]
  },
  "School vocabulary::Embryonic": {
-  "q": "embryo microscope"
+  "none": "Microscopic fluorescence images are uncl",
+  "q": "embryo microscope",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Embryo_of_Zebrafish.jpg",
+   "https://commons.wikimedia.org/wiki/File:Fluorescence_microscopy_of_stage_24_squid_embryo_with_ZEISS_Celldiscoverer_7_(30614937302).jpg",
+   "https://commons.wikimedia.org/wiki/File:Embryonic_musculature_in_an_insect_embryo_(14523694239).jpg"
+  ]
  },
  "School vocabulary::Encourage": {
   "none": "Certificate image, not showing encourage",
@@ -3592,7 +4016,11 @@
   "why": "Diamond ring symbolizes engagement to ma"
  },
  "School vocabulary::Enzymes": {
-  "q": "enzyme molecule model"
+  "none": "It is an illustration, not a photograph.",
+  "q": "enzyme molecule model",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Purine_Nucleoside_Phosphorylase.jpg"
+  ]
  },
  "School vocabulary::Equator": {
   "q": "globe equator line"
@@ -3607,22 +4035,45 @@
   "why": "Clear photo of real escalator stairs"
  },
  "School vocabulary::Exasperating": {
-  "q": "frustrated man"
+  "by": "Blechhhy",
+  "file": "exasperating-f2e751406d.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:A_frustrated_and_depressed_man_holds_his_head_in_his_hand.jpg",
+  "q": "frustrated man",
+  "title": "A frustrated and depressed man holds his head in his hand.jpg",
+  "why": "Man showing frustration with his hand."
  },
  "School vocabulary::Expenses": {
   "q": "receipts and calculator"
  },
  "School vocabulary::Exploded view": {
-  "q": "exploded engine diagram"
+  "by": "Willdre 00:24, 8 February 2007 (UTC)",
+  "file": "exploded-view-d698b553a9.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Automobile_starter_2.JPG",
+  "q": "exploded engine diagram",
+  "title": "Automobile starter 2.JPG",
+  "why": "Real photo showing separated mechanical "
  },
  "School vocabulary::Fair enough": {
   "q": "-"
  },
  "School vocabulary::Fall apart": {
-  "q": "crying woman floor"
+  "none": "Irrelevant buildings, not emotional upse",
+  "q": "crying woman floor",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Life_and_light_for_woman_(1873)_(14782079142).jpg",
+   "https://commons.wikimedia.org/wiki/File:Life_and_light_for_woman_(1873)_(14780072544).jpg"
+  ]
  },
  "School vocabulary::Fall out": {
-  "q": "arguing people"
+  "none": "Pictures are either drawings or irreleva",
+  "q": "arguing people",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:CRAIYON-REALESRGAN-People_arguing_over_the_definition_of_a_recession.jpg",
+   "https://commons.wikimedia.org/wiki/File:Four_Men_Arguing_MET_DP803781.jpg",
+   "https://commons.wikimedia.org/wiki/File:Arguing_(15715875740).jpg"
+  ]
  },
  "School vocabulary::Falls behind": {
   "q": "-"
@@ -3653,6 +4104,7 @@
   ]
  },
  "School vocabulary::Feel up to": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Fence": {
@@ -3665,29 +4117,63 @@
   "why": "Shows real bamboo fence around house"
  },
  "School vocabulary::Fetus": {
-  "q": "ultrasound fetus"
+  "by": "Goleisureintl",
+  "file": "fetus-690ab1ce3c.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Obstetric_ultrasound_scan_monitor_showing_20-week_human_fetus_profile_in_Navi_Mumbai_2015.jpg",
+  "q": "ultrasound fetus",
+  "title": "Obstetric ultrasound scan monitor showing 20-week human fetus profile in Navi Mumbai 2015.jpg",
+  "why": "Ultrasound scan showing developing human"
  },
  "School vocabulary::Fight back": {
-  "q": "holding back tears"
+  "none": "Ambiguous image, shows grief, not clearl",
+  "q": "holding back tears",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:An_image_of_a_woman_holding_back_her_tears_at_a_funeral_service_in_Ikot_Udo,_Akwa_Ibom_state.jpg"
+  ]
  },
  "School vocabulary::Fight off": {
-  "q": "taking medicine"
+  "none": "Drawings, cartoons, and war scenes are u",
+  "q": "taking medicine",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Taking_Medicine.jpg",
+   "https://commons.wikimedia.org/wiki/File:Taking_his_medicine_-_J.S._Pughe._LCCN2010652232.jpg",
+   "https://commons.wikimedia.org/wiki/File:Taking_cover_(MAMAS_E44-78-2),_National_Museum_of_Health_and_Medicine_(3403071908).jpg"
+  ]
  },
  "School vocabulary::Figurative": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Figure out": {
-  "q": "solving puzzle"
+  "by": "kallerna",
+  "file": "figure-out-d029efe933.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Jigsaw_puzzle_solving_2.jpg",
+  "q": "solving puzzle",
+  "title": "Jigsaw puzzle solving 2.jpg",
+  "why": "Solving a puzzle represents figuring thi"
  },
  "School vocabulary::Figures": {
   "q": "sales figures chart"
  },
  "School vocabulary::Fill in": {
-  "q": "filling form"
+  "none": "Action is too specific, hard to distingu",
+  "q": "filling form",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:FIlling_Up_Embarkation_Form_at_Hazrat_Shahjalal_International_Airport_(21828506110).jpg",
+   "https://commons.wikimedia.org/wiki/File:Filling_out_a_form_(9787696074).jpg",
+   "https://commons.wikimedia.org/wiki/File:23_0058440_Convair_Negative_Image_-_Convair_employee_filling_form_at_restricted_area_12-29-1961_(53991400342).jpg"
+  ]
  },
  "School vocabulary::Fill up": {
-  "q": "filling water bottle"
+  "none": "These show refill stations, not making s",
+  "q": "filling water bottle",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Water_bottle_filling_station_at_Park_in_Toronto,_Ontario,_Canada.jpg",
+   "https://commons.wikimedia.org/wiki/File:Water_Bottle_Refill_-_Exmouth_Beach_-_2022.jpg",
+   "https://commons.wikimedia.org/wiki/File:Water_bottle_filling_station,_Looe,_Cornwall_-_October_2025.jpg"
+  ]
  },
  "School vocabulary::Final number": {
   "q": "receipt total"
@@ -3705,10 +4191,22 @@
   "why": "Small seed-eating finch clearly shown"
  },
  "School vocabulary::Firecrackers": {
-  "q": "firecrackers exploding"
+  "none": "Unclear abstract light trails, not firec",
+  "q": "firecrackers exploding",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Firecreaker_exploding_in_the_air.jpg",
+   "https://commons.wikimedia.org/wiki/File:Firecracker_exploding.jpg",
+   "https://commons.wikimedia.org/wiki/File:1954_Firecracker.png"
+  ]
  },
  "School vocabulary::Fireworks": {
-  "q": "fireworks display"
+  "by": "Ondrejk",
+  "file": "fireworks-f53b00e4ed.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Bratislava_New_Year_Fireworks.jpg",
+  "q": "fireworks display",
+  "title": "Bratislava New Year Fireworks.jpg",
+  "why": "Clear close-up photograph of bright fire"
  },
  "School vocabulary::Firm date": {
   "q": "-"
@@ -3723,7 +4221,13 @@
   "why": "Real men holding fish with fishing rod"
  },
  "School vocabulary::Fix up": {
-  "q": "repairing old house"
+  "by": "Des Blenkinsopp",
+  "file": "fix-up-2dad0f29e9.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Repairing_Old_Property,_Little_Tew_-_geograph.org.uk_-_6138149.jpg",
+  "q": "repairing old house",
+  "title": "Repairing Old Property, Little Tew - geograph.org.uk - 6138149.jpg",
+  "why": "Picture shows building undergoing repair"
  },
  "School vocabulary::Flabbergasted": {
   "none": "No photo shows genuine surprise clearly",
@@ -3753,16 +4257,34 @@
   ]
  },
  "School vocabulary::Focus on": {
-  "q": "studying concentrated"
+  "none": "No suitable picture shows concentration ",
+  "q": "studying concentrated",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Obstetrics;_small_finistrated_vectis_by_Charles._Wellcome_L0006307.jpg",
+   "https://commons.wikimedia.org/wiki/File:Midwife_check-up.jpg"
+  ]
  },
  "School vocabulary::Follow along": {
-  "q": "children following leader"
+  "none": "The pictures do not clearly show the act",
+  "q": "children following leader",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Following_the_Leader_Memorial_Sculpture_-_Closeup.jpg",
+   "https://commons.wikimedia.org/wiki/File:Following_the_Leader_Memorial_Sculpture.jpg",
+   "https://commons.wikimedia.org/wiki/File:Following_the_leader_(16440807932).jpg"
+  ]
  },
  "School vocabulary::Follow through": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Follow up": {
-  "q": "business handshake"
+  "none": "Handshakes do not clearly depict follow-",
+  "q": "business handshake",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Business_agreement_handshake_at_coffee_shop.jpg",
+   "https://commons.wikimedia.org/wiki/File:Business_man_and_woman_handshake_in_work_office.jpg",
+   "https://commons.wikimedia.org/wiki/File:HANDSHAKE_2016-07-18_(28351919246).jpg"
+  ]
  },
  "School vocabulary::Food": {
   "none": "No actual food shown, only bowls",
@@ -3807,7 +4329,13 @@
   "q": "-"
  },
  "School vocabulary::Freeze up": {
-  "q": "frozen computer"
+  "none": "These show literal freezing, not softwar",
+  "q": "frozen computer",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_Frontenac_after_a_freezing_rain_day_in_Quebec_city.jpg",
+   "https://commons.wikimedia.org/wiki/File:Frozen_Folks_(34441169465).jpg",
+   "https://commons.wikimedia.org/wiki/File:Freezing_rain_(glaze)_damage_at_Postojna_train_station.jpg"
+  ]
  },
  "School vocabulary::From here on out": {
   "q": "-"
@@ -3847,7 +4375,13 @@
   "why": "Casino sign shows gambling location clea"
  },
  "School vocabulary::Gather around": {
-  "q": "family dinner table"
+  "by": "Hans Bernhard Schwerin",
+  "file": "gather-around-39a0136fd8.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Schwerin_and_Freudenberg_family_at_the_dinner_table_circa_1920.jpg",
+  "q": "family dinner table",
+  "title": "Schwerin and Freudenberg family at the dinner table circa 1920.jpg",
+  "why": "People gathered together around a table."
  },
  "School vocabulary::Gay": {
   "by": "Роман Мельник",
@@ -3862,28 +4396,65 @@
   "q": "camping gear"
  },
  "School vocabulary::Get across": {
-  "q": "explaining idea"
+  "none": "All options are illustrations or drawing",
+  "q": "explaining idea",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:%22Here_Lies_a_Good_Idea._Don%27t_Let_Your_Idea_Die._Put_it_in_the_Suggestion_Box_Today%22_-_NARA_-_514482.jpg",
+   "https://commons.wikimedia.org/wiki/File:An_Idea_At_Work_-_NARA_-_534166.jpg",
+   "https://commons.wikimedia.org/wiki/File:Now_that_everyone_has_advanced_his_little_idea_explaining_their_presence_-_F._Fox._Just_one_d-_thing_after_another_-_Phil_Porter._LCCN2002706877.jpg"
+  ]
  },
  "School vocabulary::Get along with": {
-  "q": "friends smiling together"
+  "none": "Phrasal verbs cannot be depicted visuall",
+  "q": "friends smiling together",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:DFC_1112_A_lively_group_of_friends_posing_together_along_a_pool_table_smiling_and_enjoying_a_night_out.jpg",
+   "https://commons.wikimedia.org/wiki/File:DFC_2023_Friends_gather_around_a_glowing_tray_of_candles_smiling_and_taking_photos_as_they_celebrate_together_in_the_evening.jpg",
+   "https://commons.wikimedia.org/wiki/File:DZ6_1007_A_lively_group_of_friends_dressed_for_a_night_out_posing_together_and_smiling_under_colorful_neon_lights.jpg"
+  ]
  },
  "School vocabulary::Get away with": {
+  "none": "nothing found",
   "q": "child sneaking cookie"
  },
  "School vocabulary::Get back to": {
-  "q": "replying email"
+  "none": "No image depicts replying later clearly.",
+  "q": "replying email",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:EU_Email_reply_-_20230130.png",
+   "https://commons.wikimedia.org/wiki/File:Official_email_reply_from_Korean_actor_Heo_Namjun%E2%80%99s_agency.jpg",
+   "https://commons.wikimedia.org/wiki/File:British-International-Reply-Coupon.jpg"
+  ]
  },
  "School vocabulary::Get carried away": {
+  "none": "nothing found",
   "q": "overexcited person"
  },
  "School vocabulary::Get dressed": {
-  "q": "person dressing"
+  "none": "Both pictures are paintings or museum ob",
+  "q": "person dressing",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Paolo_Fiammingo_-_Judith_dressing_up_before_presenting_herself_to_Holofernes.jpg",
+   "https://commons.wikimedia.org/wiki/File:Dressing_table_MET_DP306892.jpg"
+  ]
  },
  "School vocabulary::Get in": {
-  "q": "entering car"
+  "none": "None show someone entering a car.",
+  "q": "entering car",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Upholstering_the_seats_of_your_own_car,_Margarita_Island,_Venezuela.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_car_entering_Rockley_-_geograph.org.uk_-_3509624.jpg",
+   "https://commons.wikimedia.org/wiki/File:Entering_car_park_and_information_area_-_geograph.org.uk_-_7606395.jpg"
+  ]
  },
  "School vocabulary::Get in touch with": {
-  "q": "contacting someone"
+  "none": "None of the pictures show contacting som",
+  "q": "contacting someone",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Number_of_optician_retail_outlets_per_10,000_people.jpg",
+   "https://commons.wikimedia.org/wiki/File:One_of_the_oldest_ophthalmic_optician_in_Rome.jpg",
+   "https://commons.wikimedia.org/wiki/File:INF3-126_War_Effort_In_Germany..._someone_is_doing_the_same_job_as_you_-_Beat_him!_edit.jpg"
+  ]
  },
  "School vocabulary::Get lucky": {
   "none": "Illustrations, not real photographs",
@@ -3894,31 +4465,75 @@
   ]
  },
  "School vocabulary::Get off": {
-  "q": "leaving train"
+  "none": "Pictures only show trains, not leaving t",
+  "q": "leaving train",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Trains_leaving_H%C5%AFrka_station_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Type_1_%22Watermelon%22_Train_of_Line_2_leaving_Yuandong_Avenue_Station,_Shanghai_Metro,_Aug_11_2023.jpg",
+   "https://commons.wikimedia.org/wiki/File:Leaving_Train_-_geograph.org.uk_-_5457983.jpg"
+  ]
  },
  "School vocabulary::Get on": {
-  "q": "boarding bus"
+  "by": "Seattle Municipal Archives from Seattle, WA",
+  "file": "get-on-41e22a8f74.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:People_boarding_bus_on_Third_Avenue,_Seattle,_1970s.jpg",
+  "q": "boarding bus",
+  "title": "People boarding bus on Third Avenue, Seattle, 1970s.jpg",
+  "why": "People boarding a public bus."
  },
  "School vocabulary::Get over": {
-  "q": "recovering in bed"
+  "none": "All candidate pictures are drawings, not",
+  "q": "recovering in bed",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Patient_getting_up_out_of_bed_after_recovering_from_illness._Wellcome_L0000911.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_woman_in_bed_recovering_from_childbirth,_a_midwife_washes_Wellcome_V0014914ER.jpg",
+   "https://commons.wikimedia.org/wiki/File:Federico_Zuccari_-_Taddeo_Returning_Home_with_the_Sack_of_Stones_and_in_Bed_Recovering_from_His_Fever.jpg"
+  ]
  },
  "School vocabulary::Get over with": {
+  "none": "nothing found",
   "q": "relieved student exam"
  },
  "School vocabulary::Get through": {
-  "q": "phone call"
+  "none": "None clearly show successful phone conta",
+  "q": "phone call",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:TouchWiz_2012_phone_call.png",
+   "https://commons.wikimedia.org/wiki/File:The_phone_call_from_the_Oval_Office_to_Apollo_11.jpg",
+   "https://commons.wikimedia.org/wiki/File:Zombie_phone_call_(6301827495).jpg"
+  ]
  },
  "School vocabulary::Get together": {
-  "q": "friends gathering"
+  "none": "All options are paintings, not photos.",
+  "q": "friends gathering",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Eustache_Le_Sueur_-_A_Gathering_of_Friends_-_WGA12608.jpg",
+   "https://commons.wikimedia.org/wiki/File:Eustache_Le_Sueur,_A_Gathering_of_Friends,_c._1640%E2%80%931644,_Louvre_INV_8063_(MR_2720).JPG",
+   "https://commons.wikimedia.org/wiki/File:%27Friends_Gathering_under_Cypress_Trees%27_by_Zhou_Quan.jpg"
+  ]
  },
  "School vocabulary::Get up": {
-  "q": "getting up"
+  "none": "Pictures 2 and 3 are artworks.",
+  "q": "getting up",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Dunny_getting_up.jpg",
+   "https://commons.wikimedia.org/wiki/File:Getting_Up_MET_DP835925.jpg",
+   "https://commons.wikimedia.org/wiki/File:Getting_Up,_from_the_series_Elles_MET_DP835921.jpg"
+  ]
  },
  "School vocabulary::Give away": {
+  "none": "nothing found",
   "q": "free sample giveaway"
  },
  "School vocabulary::Give back": {
-  "q": "returning item store"
+  "none": "No suitable real-world photograph found.",
+  "q": "returning item store",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:An_Orderly_returning_Washing_to_the_Linen_Store,_Millbank_Hospital_(Art.IWM_ART_LD_1735).jpg",
+   "https://commons.wikimedia.org/wiki/File:Returning_to_Stewkley_-_geograph.org.uk_-_399756.jpg",
+   "https://commons.wikimedia.org/wiki/File:Jules_Adolphe_Aim%C3%A9_Louis_Breton_-_Returning_from_the_Fields_-_Walters_3758_(2).jpg"
+  ]
  },
  "School vocabulary::Give birth": {
   "none": "none of them showed it",
@@ -3930,41 +4545,106 @@
   ]
  },
  "School vocabulary::Go across": {
-  "q": "people crossing bridge"
+  "none": "None clearly show moving across somethin",
+  "q": "people crossing bridge",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Pont_Y_Monach,_or_The_Devil%27s_Bridge._Near_Aberystwith.jpeg",
+   "https://commons.wikimedia.org/wiki/File:People_Crossing_Pontoon_Bridge_over_the_Tigris,_Baghdad.jpg",
+   "https://commons.wikimedia.org/wiki/File:People_Crossing_Bridge_to_weekend_market.jpg"
+  ]
  },
  "School vocabulary::Go away": {
-  "q": "person walking away"
+  "none": "Walking away does not show leaving clear",
+  "q": "person walking away",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Woman_with_a_trolley_walking_away_from_the_camera_on_a_snowy_walkway,_Promenadeplatz,_Munich,_Germany_julesvernex2.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_person_walking_away_on_Earls_Court_Road_(49961513171).jpg",
+   "https://commons.wikimedia.org/wiki/File:Bella_walking_away_(51616016144).jpg"
+  ]
  },
  "School vocabulary::Go back": {
-  "q": "returning home"
+  "none": "All candidate pictures are paintings or ",
+  "q": "returning home",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jules_Jacques_Veyrassat_(1828-1893)_-_Returning_Home_-_1917.220_-_Manchester_Art_Gallery.jpg",
+   "https://commons.wikimedia.org/wiki/File:Adolf_Liebscher_-_Returning_Home.jpg",
+   "https://commons.wikimedia.org/wiki/File:Home_Return_Permit_New.jpg"
+  ]
  },
  "School vocabulary::Go down": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Go in": {
-  "q": "entering front door"
+  "by": "Eric Jones",
+  "file": "go-in-bdee25409c.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Visitors_entering_through_the_front_door_of_Trinity_College_-_geograph.org.uk_-_1741593.jpg",
+  "q": "entering front door",
+  "title": "Visitors entering through the front door of Trinity College - geograph.org.uk - 1741593.jpg",
+  "why": "People walking through a doorway inside."
  },
  "School vocabulary::Go offline": {
-  "q": "no internet connection"
+  "none": "None depict disconnecting from the inter",
+  "q": "no internet connection",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Internet_Access_(21763031135).jpg",
+   "https://commons.wikimedia.org/wiki/File:Internet_connection_speed_(mobile_connection).jpg",
+   "https://commons.wikimedia.org/wiki/File:Jio_internet_connection_box_on_road_(30566).jpg"
+  ]
  },
  "School vocabulary::Go online": {
-  "q": "person using laptop"
+  "by": "Kwameghana(Bright Kwame Ayisi)",
+  "file": "go-online-e439b27b53.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:A_group_of_boys_using_a_laptop_04.jpg",
+  "q": "person using laptop",
+  "title": "A group of boys using a laptop 04.jpg",
+  "why": "Boys looking at laptop together online."
  },
  "School vocabulary::Go out": {
-  "q": "leaving house"
+  "by": "Richard Humphrey",
+  "file": "go-out-3026cf41cc.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Leaving_Peckover_House_in_Wisbech_-_geograph.org.uk_-_5534068.jpg",
+  "q": "leaving house",
+  "title": "Leaving Peckover House in Wisbech - geograph.org.uk - 5534068.jpg",
+  "why": "People walking out from a building."
  },
  "School vocabulary::Go past": {
-  "q": "walking past building"
+  "none": "Action is not clearly captured here.",
+  "q": "walking past building",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Walking_past_hangar_5_-_geograph.org.uk_-_770401.jpg",
+   "https://commons.wikimedia.org/wiki/File:Walking_Past_the_Gatehouse_-_geograph.org.uk_-_4612543.jpg",
+   "https://commons.wikimedia.org/wiki/File:Walking_past_John_Lewis_-_geograph.org.uk_-_3136291.jpg"
+  ]
  },
  "School vocabulary::Go through": {
-  "q": "driving through tunnel"
+  "by": "bluesbby from Mountain View, USA",
+  "file": "go-through-7616fc2dfa.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Driving_through_the_tunnel_(34439364396).jpg",
+  "q": "driving through tunnel",
+  "title": "Driving through the tunnel (34439364396).jpg",
+  "why": "Vehicles driving through a tunnel."
  },
  "School vocabulary::Go to bed": {
-  "q": "sleeping in bed"
+  "none": "Action is not clearly shown.",
+  "q": "sleeping in bed",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Mother_and_newborn_sleeping_on_a_bamboo_bed_near_a_campfire_in_a_house_in_Don_Det_Laos.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Sleeping_Girls_in_Japanese_Bed_(3109911667)_(cropped).jpg"
+  ]
  },
  "School vocabulary::Go up": {
-  "q": "hiking uphill path"
+  "by": "Krishna k. sahh",
+  "file": "go-up-f50f7d91b9.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Two_hikers_ascending_a_stone-stepped_forest_path.jpg",
+  "q": "hiking uphill path",
+  "title": "Two hikers ascending a stone-stepped forest path.jpg",
+  "why": "hikers walking up stone forest steps"
  },
  "School vocabulary::Good": {
   "none": "No image conveys general quality concept",
@@ -4001,19 +4681,48 @@
   ]
  },
  "School vocabulary::Grouch": {
-  "q": "grumpy man"
+  "none": "No clear depiction of a grouch.",
+  "q": "grumpy man",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:%27Extremely_grumpy_old_man%27,_Hareden_Fell_-_geograph.org.uk_-_4163038.jpg",
+   "https://commons.wikimedia.org/wiki/File:Carved_head_of_grumpy_old_man,_Elland_Park_Wood_-_geograph.org.uk_-_6494448.jpg",
+   "https://commons.wikimedia.org/wiki/File:Grumpy_green_man_(70144277).jpg"
+  ]
  },
  "School vocabulary::Grow apart": {
-  "q": "distant friends"
+  "none": "Abstract concept cannot be shown visuall",
+  "q": "distant friends",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Friends_(14084336828).jpg",
+   "https://commons.wikimedia.org/wiki/File:Fox_River_Dam_with_friends_(11168295873).jpg"
+  ]
  },
  "School vocabulary::Grow closer": {
-  "q": "hugging friends"
+  "by": "Decha Aulia",
+  "file": "grow-closer-2425a7fe29.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Best_friends_holiday.jpg",
+  "q": "hugging friends",
+  "title": "Best friends holiday.jpg",
+  "why": "Friends hugging and smiling closely toge"
  },
  "School vocabulary::Grow out of": {
-  "q": "small clothes"
+  "none": "None of the pictures show growing out.",
+  "q": "small clothes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Electric_iron_lie.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wooden_clothes_pegs_on_a_table.jpg",
+   "https://commons.wikimedia.org/wiki/File:Iron_electrolytic_and_1cm3_cube.jpg"
+  ]
  },
  "School vocabulary::Grow up": {
-  "q": "growing up"
+  "none": "These pictures show a promotional event.",
+  "q": "growing up",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Growing_up_Creepie_01.jpg",
+   "https://commons.wikimedia.org/wiki/File:Growing_up_Creepie_02.jpg",
+   "https://commons.wikimedia.org/wiki/File:WKCD_Growing_Up_Pavilion_201904.jpg"
+  ]
  },
  "School vocabulary::Hail": {
   "by": "Shixart1985",
@@ -4025,19 +4734,42 @@
   "why": "Shows small ice balls in hand"
  },
  "School vocabulary::Hand in": {
-  "q": "submitting paper"
+  "none": "Neither picture shows submitting an assi",
+  "q": "submitting paper",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:On_November_25,_1915,_Albert_Einstein_submitted_his_final_paper_on_the_general_theory_of_relativity.jpg",
+   "https://commons.wikimedia.org/wiki/File:Franklin_Paper_Mill,_now_United_Paper_Box_(Holyoke,_Massachusetts).jpg"
+  ]
  },
  "School vocabulary::Hand over": {
-  "q": "handing over money"
+  "by": "Original photo: Institute for Money, Technology and Financial Inclusion from Uni",
+  "file": "hand-over-ccf3069cbb.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Common_scams_banner_Handing_over_money.jpg",
+  "q": "handing over money",
+  "title": "Common scams banner Handing over money.jpg",
+  "why": "Clearly shows handing over money."
  },
  "School vocabulary::Handle": {
   "q": "suitcase handle"
  },
  "School vocabulary::Hang on to": {
-  "q": "holding old photograph"
+  "none": "Abstract meaning cannot be clearly photo",
+  "q": "holding old photograph",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:An_old_man_sitting_and_holding_a_book_NLW3364987.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_95_year_old_woman_with_her_pet_rooster,_Havana,_Cuba.jpg",
+   "https://commons.wikimedia.org/wiki/File:Oscar_Wilde_by_Napoleon_Sarony._Three-quarter-length_photograph,_seated.jpg"
+  ]
  },
  "School vocabulary::Hang up": {
-  "q": "smartphone phone call"
+  "none": "None clearly show ending a call.",
+  "q": "smartphone phone call",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wikipedia_Mobile_on_a_feature_phone.JPG",
+   "https://commons.wikimedia.org/wiki/File:Modern-desk-phone-or-smartphone-with-incoming-call.jpg",
+   "https://commons.wikimedia.org/wiki/File:Feature-phone.jpg"
+  ]
  },
  "School vocabulary::Harbor": {
   "by": "Department of Defense. American Forces Information Service. Defense Visual Infor",
@@ -4065,7 +4797,13 @@
   ]
  },
  "School vocabulary::Harm": {
-  "q": "chemical burn injury"
+  "none": "Graphic medical images are inappropriate",
+  "q": "chemical burn injury",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Chemical_burn_injury..jpg",
+   "https://commons.wikimedia.org/wiki/File:Chemical_burns_follwong_Israeli_bombings1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chemical_burns_follwong_Israeli_bombings_B.jpg"
+  ]
  },
  "School vocabulary::Harmful": {
   "none": "none of them showed it",
@@ -4077,7 +4815,12 @@
   ]
  },
  "School vocabulary::Harmoniously": {
-  "q": "buildings blending together"
+  "none": "The word is too abstract for photos.",
+  "q": "buildings blending together",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Western_and_Oriental_buildings_blend.JPG",
+   "https://commons.wikimedia.org/wiki/File:Paisley_Abbey_from_the_west_-_crop.jpg"
+  ]
  },
  "School vocabulary::Harness": {
   "by": "Rhode Island Collection, Providence Public Library",
@@ -4102,7 +4845,13 @@
   "why": "Shows people harvesting grain field"
  },
  "School vocabulary::Hassle": {
-  "q": "crowded parking lot"
+  "none": "These show traffic, not a hassle.",
+  "q": "crowded parking lot",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Crowded_parking_lots,_Mammoth_Hot_Springs_(42157139300).jpg",
+   "https://commons.wikimedia.org/wiki/File:Crowded_parking_lot,_Brink_of_Lower_Falls_(32984607493).jpg",
+   "https://commons.wikimedia.org/wiki/File:Crowded_parking_lot_at_Kilauea_Visitor_Center_(49097584887).jpg"
+  ]
  },
  "School vocabulary::Hatching": {
   "by": "USDA",
@@ -4131,10 +4880,22 @@
   "q": "-"
  },
  "School vocabulary::Head": {
-  "q": "human head"
+  "none": "No suitable photograph showing a human h",
+  "q": "human head",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Male_human_head_louse.jpg",
+   "https://commons.wikimedia.org/wiki/File:Ingrown_oval_sculpture_of_human_head_in_a_tree_trunk_in_Laos_(1).jpg",
+   "https://commons.wikimedia.org/wiki/File:Head_lateral_sagittal_brain.jpg"
+  ]
  },
  "School vocabulary::Head back": {
-  "q": "person walking home"
+  "none": "None depict returning to a previous plac",
+  "q": "person walking home",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Home_Care_Helping_Person_Walk.png",
+   "https://commons.wikimedia.org/wiki/File:Crowds_walking_home_after_2011_Sendai_earthquake.jpg",
+   "https://commons.wikimedia.org/wiki/File:Gone_Home_-_TV_Room.jpg"
+  ]
  },
  "School vocabulary::Head down": {
   "none": "nothing to photograph",
@@ -4151,9 +4912,16 @@
   "q": "-"
  },
  "School vocabulary::Hear from": {
-  "q": "reading text message"
+  "none": "Phrasal verbs cannot be easily pictured ",
+  "q": "reading text message",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:State_Library_of_Victoria_La_Trobe_Reading_room_5th_floor_view.jpg",
+   "https://commons.wikimedia.org/wiki/File:Krishna_reading_the_message_from_Rukmini_(6125137408).jpg",
+   "https://commons.wikimedia.org/wiki/File:Variable_message_sign_on_westbound_Interstate_376_in_Pittsburgh,_Pennsylvania.jpg"
+  ]
  },
  "School vocabulary::Heirloom": {
+  "none": "nothing found",
   "q": "heirloom jewelry"
  },
  "School vocabulary::Herd": {
@@ -4181,7 +4949,13 @@
   "why": "Clear photo of domestic pigs"
  },
  "School vocabulary::Hold back": {
-  "q": "holding back tears"
+  "by": "Samizxyn",
+  "file": "hold-back-0faf737d28.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:An_image_of_a_woman_holding_back_her_tears_at_a_funeral_service_in_Ikot_Udo,_Akwa_Ibom_state.jpg",
+  "q": "holding back tears",
+  "title": "An image of a woman holding back her tears at a funeral service in Ikot Udo, Akwa Ibom state.jpg",
+  "why": "Woman trying to hold back tears."
  },
  "School vocabulary::Holster": {
   "by": "Alian Gear Holster",
@@ -4214,7 +4988,13 @@
   "q": "-"
  },
  "School vocabulary::Hurry up": {
-  "q": "running quickly"
+  "none": "None depict the meaning of hurrying up.",
+  "q": "running quickly",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Running_quicker_than_the_cars_-_geograph.org.uk_-_7174677.jpg",
+   "https://commons.wikimedia.org/wiki/File:Apple_QuickTime_VR_Studio_v1.0_combining_photos_into_a_panorama.jpg",
+   "https://commons.wikimedia.org/wiki/File:Running_Back_-_geograph.org.uk_-_1064771.jpg"
+  ]
  },
  "School vocabulary::Hypothesis": {
   "none": "nothing to photograph",
@@ -4233,9 +5013,16 @@
   "q": "-"
  },
  "School vocabulary::In time": {
-  "q": "running to catch train"
+  "by": "bs70",
+  "file": "in-time-effa0c8573.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Girl_catchs_a_train.jpg",
+  "q": "running to catch train",
+  "title": "Girl catchs a train.jpg",
+  "why": "Woman rushing with luggage before too la"
  },
  "School vocabulary::Increase": {
+  "none": "nothing found",
   "q": "rising price graph"
  },
  "School vocabulary::Inflation": {
@@ -4290,7 +5077,13 @@
   ]
  },
  "School vocabulary::It's like finding a needle in a haystack": {
-  "q": "needle in haystack"
+  "none": "Idioms cannot be shown in photographs cl",
+  "q": "needle in haystack",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Needle_in_a_haystack_-_geograph.org.uk_-_1179815.jpg",
+   "https://commons.wikimedia.org/wiki/File:Needle_in_a_haystack.jpg",
+   "https://commons.wikimedia.org/wiki/File:Needle_in_a_haystack_(2425404674).jpg"
+  ]
  },
  "School vocabulary::Itemized": {
   "q": "itemized receipt"
@@ -4302,7 +5095,13 @@
   "q": "jogger pants"
  },
  "School vocabulary::Join in": {
-  "q": "family playing game"
+  "by": "Bill Branson (Photographer)",
+  "file": "join-in-78e9b38e6d.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Family_playing_a_board_game_(2).jpg",
+  "q": "family playing game",
+  "title": "Family playing a board game (2).jpg",
+  "why": "Family happily participating in board ga"
  },
  "School vocabulary::Jot down": {
   "none": "None show quick handwriting action clear",
@@ -4314,7 +5113,11 @@
   ]
  },
  "School vocabulary::Jowls": {
-  "q": "sagging jowls"
+  "none": "It shows wood carving, not jowls.",
+  "q": "sagging jowls",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:PEARTREE_JOWL_CARVING.jpg"
+  ]
  },
  "School vocabulary::Judge": {
   "none": "No judge person shown, empty courtrooms",
@@ -4325,16 +5128,40 @@
   ]
  },
  "School vocabulary::Jump someone": {
-  "q": "street mugging"
+  "none": "None show someone attacking another pers",
+  "q": "street mugging",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Staffordshire_Potteries_mug.jpg",
+   "https://commons.wikimedia.org/wiki/File:London_street_sign_mugs.jpg",
+   "https://commons.wikimedia.org/wiki/File:Thomas_Melia,_arrested_for_mugging_a_Norwegian_seaman_(21315966765).jpg"
+  ]
  },
  "School vocabulary::Keep off": {
-  "q": "avoiding chocolate"
+  "none": "These pictures just show food items.",
+  "q": "avoiding chocolate",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Chocolate_cake_and_Victoria_sponge.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chocolate_croissant_Pret_a_Manger_Bankside_London_England.jpg",
+   "https://commons.wikimedia.org/wiki/File:Gibberd_Garden_chocolate_cake_Harlow_Essex_England.jpg"
+  ]
  },
  "School vocabulary::Keep on": {
-  "q": "practicing piano"
+  "none": "Action of continuing is hard to depict.",
+  "q": "practicing piano",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Young_Jarrod_Radnich_practicing_piano.jpg",
+   "https://commons.wikimedia.org/wiki/File:Piano_practice_hands.jpg",
+   "https://commons.wikimedia.org/wiki/File:SAKURAKO_-_Piano_practice_(16524104524).jpg"
+  ]
  },
  "School vocabulary::Keep up with": {
-  "q": "running group"
+  "by": "Peter van der Sluijs",
+  "file": "keep-up-with-2fcf680603.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Large_group_running_girls.JPG",
+  "q": "running group",
+  "title": "Large group running girls.JPG",
+  "why": "Runners matching pace on a track."
  },
  "School vocabulary::Kneeling down": {
   "none": "Shows squatting, not kneeling",
@@ -4369,12 +5196,19 @@
   ]
  },
  "School vocabulary::Lawsuit": {
-  "q": "courtroom hearing"
+  "by": "Source: ERT (Hellenic Broadcasting Corporation)",
+  "file": "lawsuit-d713dca449.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Tempi_Train_Crash_Trial_Courtroom_Presiding_Judge_Opening_Statement_23_March_2023.png",
+  "q": "courtroom hearing",
+  "title": "Tempi Train Crash Trial Courtroom Presiding Judge Opening Statement 23 March 2023.png",
+  "why": "Real photograph of a court proceeding."
  },
  "School vocabulary::Lead": {
   "q": "hiking guide leading"
  },
  "School vocabulary::Lean on": {
+  "none": "nothing found",
   "q": "comforting sad friend"
  },
  "School vocabulary::Leaps and bounds": {
@@ -4391,10 +5225,21 @@
   "why": "Shows a leash with clasp clearly"
  },
  "School vocabulary::Leave behind": {
-  "q": "forgotten backpack"
+  "by": "waferboard",
+  "file": "leave-behind-0e836a71dd.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:The_forgotten_backpack_(3728862839).jpg",
+  "q": "forgotten backpack",
+  "title": "The forgotten backpack (3728862839).jpg",
+  "why": "Abandoned backpack shows leaving somethi"
  },
  "School vocabulary::Leave out": {
-  "q": "crossed out list"
+  "none": "Neither picture clearly illustrates leav",
+  "q": "crossed out list",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Baruch_Espinosa_crossed_out_from_pupil_list,_Ets_Haim,_Amsterdam,_17th_century.jpeg",
+   "https://commons.wikimedia.org/wiki/File:Way_out_of_Nonsuch_Park_(geograph_3799457).jpg"
+  ]
  },
  "School vocabulary::Lecture": {
   "none": "No image shows actual lecture happening",
@@ -4405,15 +5250,29 @@
   ]
  },
  "School vocabulary::Let down": {
-  "q": "disappointed teammate"
+  "none": "Disappointment cannot be depicted in the",
+  "q": "disappointed teammate",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Tacoma_Speedway_1920.jpg",
+   "https://commons.wikimedia.org/wiki/File:Tacoma_Speedway_1920_Eddie%27O_Donnell_head_(cropped).jpg",
+   "https://commons.wikimedia.org/wiki/File:1920_Tacoma_Speedway_Eddie_O%27Donnell_in_Duesenberg_Marvin_D_Boland_Collection_G511140.jpg"
+  ]
  },
  "School vocabulary::Lie down": {
-  "q": "lying on bed"
+  "by": "Lies Thru a Lens ",
+  "file": "lie-down-975aa0c7a8.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Model_Rosie_on_a_bed_-_In_Black_and_White_(14192377223).jpg",
+  "q": "lying on bed",
+  "title": "Model Rosie on a bed - In Black and White (14192377223).jpg",
+  "why": "Person lying down on a bed."
  },
  "School vocabulary::Lighten up": {
+  "none": "nothing found",
   "q": "smiling relieved person"
  },
  "School vocabulary::Lightly": {
+  "none": "nothing found",
   "q": "gentle push door"
  },
  "School vocabulary::Likelihood": {
@@ -4430,7 +5289,13 @@
   ]
  },
  "School vocabulary::Limb": {
-  "q": "human arm"
+  "by": "Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige",
+  "file": "limb-8c5ee442d1.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Extended_arm.jpg",
+  "q": "human arm",
+  "title": "Extended arm.jpg",
+  "why": "The photo clearly shows a human arm."
  },
  "School vocabulary::Limb#2": {
   "by": "Hipnotic88",
@@ -4450,37 +5315,87 @@
   ]
  },
  "School vocabulary::Line up": {
-  "q": "people queue line"
+  "by": "Ciara Ní Riain",
+  "file": "line-up-2a841e04b4.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Exam_time_queue_university_library_Aarhus_02.jpg",
+  "q": "people queue line",
+  "title": "Exam time queue university library Aarhus 02.jpg",
+  "why": "People standing in a queue."
  },
  "School vocabulary::Link up": {
-  "q": "connecting devices"
+  "none": "These show connectors or cables, not lin",
+  "q": "connecting devices",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wago_221-413_splicing_connector_with_stranded_wire.jpg",
+   "https://commons.wikimedia.org/wiki/File:Male_VGA_connector,_side_view.jpg",
+   "https://commons.wikimedia.org/wiki/File:N_Connector.jpg"
+  ]
  },
  "School vocabulary::Listen in": {
-  "q": "person eavesdropping door"
+  "none": "All options are paintings or engravings.",
+  "q": "person eavesdropping door",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Pieter_Brueghel_the_Elder_-_The_Dutch_Proverbs_-_Google_Art_Project.jpg",
+   "https://commons.wikimedia.org/wiki/File:Twee_mannen_praten_nabij_een_dorp_en_een_andere_man_kijkt_toe_door_een_boomholte,_RP-P-1874-11-81-1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Het_afgeluisterde_gesprek,_RP-P-1906-4335.jpg"
+  ]
  },
  "School vocabulary::Literally": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Live on": {
-  "q": "counting coins"
+  "none": "All candidate pictures are paintings.",
+  "q": "counting coins",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jan_Steen_-_Woman_Counting_Coins_-_JS-101_-_Leiden_Collection.jpg",
+   "https://commons.wikimedia.org/wiki/File:Annibale_Carracci_-_Man_Counting_Coins_-_NG.K%26H.B.15183_-_National_Museum_of_Art,_Architecture_and_Design.jpg",
+   "https://commons.wikimedia.org/wiki/File:Matthias_Stom_-_Woman_counting_coins_by_candlelight,_allegory_of_avarice.jpg"
+  ]
  },
  "School vocabulary::Live through": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Load up": {
-  "q": "loading video game"
+  "none": "None depict loading software clearly.",
+  "q": "loading video game",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Neo-Geo-CD-TopLoader-wController-FL.jpg",
+   "https://commons.wikimedia.org/wiki/File:Adventures_with_Anxiety_loading_screen.png",
+   "https://commons.wikimedia.org/wiki/File:Arcade_Video_Game.JPG"
+  ]
  },
  "School vocabulary::Log back in": {
-  "q": "login screen"
+  "by": "User aldo kidz",
+  "file": "log-back-in-33f0d813c4.png",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:A_screenshot_of_the_English_Wikipedia_login_form.png",
+  "q": "login screen",
+  "title": "A screenshot of the English Wikipedia login form.png",
+  "why": "Shows a standard login screen"
  },
  "School vocabulary::Log in": {
-  "q": "computer login screen"
+  "by": "UkrainianSSR",
+  "file": "log-in-38a5036c90.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Image_persistance_GW2765HT.jpg",
+  "q": "computer login screen",
+  "title": "Image persistance GW2765HT.jpg",
+  "why": "Screen shows a login prompt clearly."
  },
  "School vocabulary::Log onto": {
-  "q": "computer login screen"
+  "none": "None clearly depict logging onto a syste",
+  "q": "computer login screen",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:20230322_125057_The_Outlet_Collection_Seattle_-_kiosk_-_Windows_7_login_screen.jpg",
+   "https://commons.wikimedia.org/wiki/File:Image_persistance_GW2765HT.jpg",
+   "https://commons.wikimedia.org/wiki/File:LCM_Unisys_V_-_02.jpg"
+  ]
  },
  "School vocabulary::Log out": {
+  "none": "nothing found",
   "q": "computer logout screen"
  },
  "School vocabulary::Lollipop": {
@@ -4493,12 +5408,24 @@
   "why": "Shows candy on a stick"
  },
  "School vocabulary::Look after": {
-  "q": "babysitter child care"
+  "by": "Shadowguy97",
+  "file": "look-after-bbcfe07276.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Daycare_Attendee.jpg",
+  "q": "babysitter child care",
+  "title": "Daycare Attendee.jpg",
+  "why": "Person taking care of children."
  },
  "School vocabulary::Look down on": {
-  "q": "disdainful look"
+  "none": "Abstract concept difficult to depict pho",
+  "q": "disdainful look",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wheely_Down_-_geograph.org.uk_-_831790.jpg",
+   "https://commons.wikimedia.org/wiki/File:Print,_satirical_print_(BM_1896,0918.1).jpg"
+  ]
  },
  "School vocabulary::Look for": {
+  "none": "nothing found",
   "q": "searching keys floor"
  },
  "School vocabulary::Look forward to + verb-ing": {
@@ -4506,28 +5433,60 @@
   "q": "-"
  },
  "School vocabulary::Look in on": {
-  "q": "checking on elderly"
+  "none": "The pictures just show people, not visit",
+  "q": "checking on elderly",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Elderly_woman.jpg",
+   "https://commons.wikimedia.org/wiki/File:Ifugao_Elderly_Warrior.jpg",
+   "https://commons.wikimedia.org/wiki/File:Elderly_Bodo_man.jpg"
+  ]
  },
  "School vocabulary::Look out for": {
-  "q": "protective sibling"
+  "none": "Pictures do not show protecting someone.",
+  "q": "protective sibling",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:%E7%81%BD%E5%AE%B3%E6%95%91%E6%8F%B4%E3%83%99%E3%83%B3%E3%83%80%E3%83%BC_(51067132283).jpg",
+   "https://commons.wikimedia.org/wiki/File:%E6%89%8B%E3%81%AF%E7%B9%8B%E3%81%8C%E3%81%9A_(52823073661).jpg",
+   "https://commons.wikimedia.org/wiki/File:Maternity_Statue.jpg"
+  ]
  },
  "School vocabulary::Look through": {
-  "q": "flipping pages"
+  "none": "None depict quickly reading or examining",
+  "q": "flipping pages",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Flipping_furniture_-_geograph.org.uk_-_7540191.jpg",
+   "https://commons.wikimedia.org/wiki/File:Killing_time_at_the_library-_flipping_a_dictionary_to_random_pages._(8721342675).jpg",
+   "https://commons.wikimedia.org/wiki/File:OSIRIS-REx_-_Flipping_the_TAGSAM_jsc2023e058644.jpg"
+  ]
  },
  "School vocabulary::Look up to": {
+  "none": "nothing found",
   "q": "admiring father"
  },
  "School vocabulary::Looking like": {
   "q": "-"
  },
  "School vocabulary::Loud": {
-  "q": "noisy crowd"
+  "none": "Loudness cannot be shown visually clearl",
+  "q": "noisy crowd",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:%27Hither_from_noisy_crowds_I_fly%27_-_geograph.org.uk_-_6473470.jpg",
+   "https://commons.wikimedia.org/wiki/File:Paul_Ryan_talks_to_a_noisy,_supportive_crowd_at_Carroll_University_in_Waukesha_on_Oct._15,_2012._(8091035017).jpg",
+   "https://commons.wikimedia.org/wiki/File:Nepal_Railway_-_Station_Janakpur_(Crowd_Of_People).jpg"
+  ]
  },
  "School vocabulary::Lure": {
+  "none": "nothing found",
   "q": "money temptation"
  },
  "School vocabulary::Make the water still": {
-  "q": "calm water"
+  "none": "All options are paintings, not photograp",
+  "q": "calm water",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jan_van_Os_(1744-1808)_-_Dutch_Vessels_in_Calm_Water_-_NG1462_-_National_Gallery.jpg",
+   "https://commons.wikimedia.org/wiki/File:Prins_Eugen_-_Calm_Water_-_Google_Art_Project.jpg",
+   "https://commons.wikimedia.org/wiki/File:Willem_van_de_Velde_II_-_Dutch_men-o%27-war_and_other_shipping_in_a_calm.jpg"
+  ]
  },
  "School vocabulary::Makeover": {
   "q": "kitchen makeover"
@@ -4559,10 +5518,22 @@
   ]
  },
  "School vocabulary::Mark down": {
-  "q": "sale clearance tag"
+  "none": "None show reducing prices clearly.",
+  "q": "sale clearance tag",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Ye_Clearance_Sale_of_Ye_Grove_SLNSW_FL1040886.jpg",
+   "https://commons.wikimedia.org/wiki/File:%E6%8B%86%E8%BF%81%E7%94%A9%E5%8D%96_-_Clearance_Sale_-_2014.10_-_panoramio.jpg",
+   "https://commons.wikimedia.org/wiki/File:January_1_1905_Clearance_Sale_(Broadway_Department_Store,_Los_Angeles).jpg"
+  ]
  },
  "School vocabulary::Mark up": {
-  "q": "price tag increase"
+  "none": "The images do not show pricing.",
+  "q": "price tag increase",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Price_increase_in_subsidised_products_(FL63271918).jpg",
+   "https://commons.wikimedia.org/wiki/File:Price_increase_in_subsidised_products_(FL63272118).jpg",
+   "https://commons.wikimedia.org/wiki/File:Price_increase_in_subsidised_products_(FL63271873).jpg"
+  ]
  },
  "School vocabulary::Match": {
   "by": "제주특별자치도 / Jeju Special Self-Governing Province",
@@ -4611,7 +5582,12 @@
   "why": "Measuring tape shows length units clearl"
  },
  "School vocabulary::Miss out on": {
-  "q": "watching friends play"
+  "none": "The concept is too abstract to picture.",
+  "q": "watching friends play",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Ra%C5%9Fit_%C3%96zta%C5%9F_watching_his_friends_playing_backgammon.jpg",
+   "https://commons.wikimedia.org/wiki/File:1-17_Amy_and_friends_watch_play_in_the_Residence_Theatre;_Meeting_with_Golda_Meir_-_DPLA_-_01ecf1828d565ba33fcc6449fb63c242.jpg"
+  ]
  },
  "School vocabulary::Motion": {
   "by": "Colin Huang",
@@ -4631,19 +5607,47 @@
   ]
  },
  "School vocabulary::Move along": {
-  "q": "crowd walking street"
+  "none": "Action is not clearly identifiable here.",
+  "q": "crowd walking street",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Street_scene,_crowd_walking_LCCN2016892098.jpg",
+   "https://commons.wikimedia.org/wiki/File:Street_scene,_crowd_walking_LCCN2016892097.jpg",
+   "https://commons.wikimedia.org/wiki/File:Crowd_infront_of_Fifty_Dead_Men_Walking_premiere.jpg"
+  ]
  },
  "School vocabulary::Move away": {
-  "q": "packing boxes"
+  "none": "None show leaving home to live elsewhere",
+  "q": "packing boxes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Packing_Boxes(GN08871).jpg",
+   "https://commons.wikimedia.org/wiki/File:Raspberry_PiM2.0_HAT%2B_01_01_Packing_box.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_packing_of_apples_in_barrels_and_boxes._(1907)_(14577502570).jpg"
+  ]
  },
  "School vocabulary::Move in": {
-  "q": "moving boxes house"
+  "by": "NPS Photo",
+  "file": "move-in-1236b04895.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Central_State_University_students_and_Central_State_University_ROTC_cadets_moving_boxes_out_of_the_house_to_be_delivered_to_(40067dcf-d5a1-444a-8655-8d34be3ac993).jpg",
+  "q": "moving boxes house",
+  "title": "Central State University students and Central State University ROTC cadets moving boxes out of the house to be delivered to (40067dcf-d5a1-444a-8655-8d34be3ac993).jpg",
+  "why": "People moving boxes into a building."
  },
  "School vocabulary::Move on": {
-  "q": "tourists walking museum"
+  "none": "Action is not clearly identifiable.",
+  "q": "tourists walking museum",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Rear_of_Royal_Observatory,_Greenwich,_and_museum_entrance.jpg"
+  ]
  },
  "School vocabulary::Move out": {
-  "q": "packing boxes moving"
+  "by": "brownpau",
+  "file": "move-out-7a389a8f17.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:An_Overview_of_Moving_Companies_and_Their_Use_of_Moving_Boxes.jpg",
+  "q": "packing boxes moving",
+  "title": "An Overview of Moving Companies and Their Use of Moving Boxes.jpg",
+  "why": "The loaded moving truck shows moving out"
  },
  "School vocabulary::Mule": {
   "by": "Ed Emery",
@@ -4655,7 +5659,13 @@
   "why": "Clear photo of a mule"
  },
  "School vocabulary::Mule ride": {
-  "q": "mule ride canyon"
+  "by": "inkknife_2000 (7.5 million views +)",
+  "file": "mule-ride-4225f6681f.jpg",
+  "lic": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Mule_Ride,_Bryce_Canyon_(5882192188).jpg",
+  "q": "mule ride canyon",
+  "title": "Mule Ride, Bryce Canyon (5882192188).jpg",
+  "why": "Clear photo showing someone riding a mul"
  },
  "School vocabulary::Needle": {
   "by": "Sagar purnima",
@@ -4676,7 +5686,12 @@
   "why": "Shows small table beside bed"
  },
  "School vocabulary::Noisy": {
-  "q": "noisy classroom"
+  "none": "Sound is difficult to show visually.",
+  "q": "noisy classroom",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Mistress_Columbia,_who_has_been_taking_a_nap,_suddenly_wakes_up_and_calls_her_noisy_scholars_to_order_-_J.M.L._LCCN2002713114.jpg",
+   "https://commons.wikimedia.org/wiki/File:L%C3%A4rmampel.jpg"
+  ]
  },
  "School vocabulary::Not until + auxiliary + subject + main verb": {
   "none": "nothing to photograph",
@@ -4692,7 +5707,13 @@
   "why": "Handwritten short note with names/number"
  },
  "School vocabulary::Nuisance": {
-  "q": "noisy construction site"
+  "none": "The pictures do not clearly show nuisanc",
+  "q": "noisy construction site",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Chantier_Station_Gare_Noisy_Sec_Tramway_IdF_Ligne_1_-_Noisy-le-Sec_(FR93)_-_2025-01-25_-_5.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chantier_Station_Gare_Noisy_Sec_Tramway_IdF_Ligne_1_-_Noisy-le-Sec_(FR93)_-_2025-01-25_-_4.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chantier_Station_Gare_Noisy_Sec_Tramway_IdF_Ligne_1_-_Noisy-le-Sec_(FR93)_-_2025-01-25_-_1.jpg"
+  ]
  },
  "School vocabulary::Offspring": {
   "by": "Opsylac",
@@ -4725,12 +5746,15 @@
   "q": "-"
  },
  "School vocabulary::Open up": {
+  "none": "nothing found",
   "q": "friends talking deeply"
  },
  "School vocabulary::Opt in": {
+  "none": "nothing found",
   "q": "checkbox form"
  },
  "School vocabulary::Opt out": {
+  "none": "nothing found",
   "q": "unchecking checkbox"
  },
  "School vocabulary::Out of the way": {
@@ -4746,6 +5770,7 @@
   "why": "Shows Earth from space with stars"
  },
  "School vocabulary::Overrun": {
+  "none": "nothing found",
   "q": "weeds overtaking garden"
  },
  "School vocabulary::Paperwork": {
@@ -4761,15 +5786,24 @@
   "why": "Shows a gymnast using hanging rings."
  },
  "School vocabulary::Pass around": {
+  "none": "nothing found",
   "q": "handing out papers"
  },
  "School vocabulary::Pass by": {
-  "q": "walking past building"
+  "none": "Action is not clear in photos.",
+  "q": "walking past building",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Walking_past_hangar_5_-_geograph.org.uk_-_770401.jpg",
+   "https://commons.wikimedia.org/wiki/File:Walking_Past_the_Gatehouse_-_geograph.org.uk_-_4612543.jpg",
+   "https://commons.wikimedia.org/wiki/File:Walking_past_John_Lewis_-_geograph.org.uk_-_3136291.jpg"
+  ]
  },
  "School vocabulary::Pass on": {
+  "none": "nothing found",
   "q": "whispering message ear"
  },
  "School vocabulary::Pass up": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Paste": {
@@ -4785,23 +5819,43 @@
   "q": "forest path"
  },
  "School vocabulary::Pay back": {
+  "none": "nothing found",
   "q": "paying money"
  },
  "School vocabulary::Pay in": {
-  "q": "bank deposit money"
+  "none": "No suitable photograph showing depositin",
+  "q": "bank deposit money",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Uw_rekening_bij_Saxo_Bank_(onder_BinckBank_N.V.)_valt_onder_het_Nederlandse_Depositogarantiestelsel_(23-12-2022).png",
+   "https://commons.wikimedia.org/wiki/File:Uw_rekening_valt_onder_het_Depositogarantiestelsel_-_Saxo_Bank_(23-12-2022).png",
+   "https://commons.wikimedia.org/wiki/File:Charlie_Becker,_midget_trainer_with_Singer%27s_Midgets,_walked_the_smallest_elephant_of_his_troupe_to_Merchant%27s_Bank,_and_made_a_deposit_for_Keith%27s_Theatre._The_elephant_delivered_the_money_LCCN2016893372.jpg"
+  ]
  },
  "School vocabulary::Pay off": {
-  "q": "paid stamp"
+  "none": "The pictures show postage stamps, not de",
+  "q": "paid stamp",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:SpecDel.jpg",
+   "https://commons.wikimedia.org/wiki/File:Special_Delivery_stamps_3.jpg",
+   "https://commons.wikimedia.org/wiki/File:Special_Delivery_stamps_2.jpg"
+  ]
  },
  "School vocabulary::Permitted": {
   "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Pick out": {
+  "none": "nothing found",
   "q": "choosing dress boutique"
  },
  "School vocabulary::Pick up": {
-  "q": "picking up package"
+  "by": "Robert Orzanna",
+  "file": "pick-up-53f6b0a683.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Picking_up_trash_in_Madrid.jpg",
+  "q": "picking up package",
+  "title": "Picking up trash in Madrid.jpg",
+  "why": "Hand picking up object from ground."
  },
  "School vocabulary::Picked": {
   "q": "-"
@@ -4829,7 +5883,11 @@
   "why": "Child riding on man's back"
  },
  "School vocabulary::Pitch in": {
-  "q": "family cleaning together"
+  "none": "Ambiguous scene, needs explanation to un",
+  "q": "family cleaning together",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Families_keep_their_neighborhoods_clean_together_(7620558).jpg"
+  ]
  },
  "School vocabulary::Plague": {
   "none": "Costume mask, not disease concept",
@@ -4873,16 +5931,32 @@
   "why": "Children playing with hoops outdoors, ha"
  },
  "School vocabulary::Pleased": {
-  "q": "pleased smiling person"
+  "none": "The image is a drawing, not a photograph",
+  "q": "pleased smiling person",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_sandman%27s_mountain;_a_story_for_large_persons_to_read_to_small_persons_(1920)_(14752551012).jpg"
+  ]
  },
  "School vocabulary::Plenty": {
   "q": "feast food table"
  },
  "School vocabulary::Plug in": {
-  "q": "plugging in charger"
+  "none": "Shows power adapters, not plugging in",
+  "q": "plugging in charger",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:NA_Nintendo_3DS_charger_back.jpg",
+   "https://commons.wikimedia.org/wiki/File:Notebook-Computer-AC-Adapter.jpg",
+   "https://commons.wikimedia.org/wiki/File:Canon_AC_POWER_SUPPLY_ADAPTER_K30352.jpg"
+  ]
  },
  "School vocabulary::Point out": {
-  "q": "pointing whiteboard"
+  "by": "Manal M. El Shemy",
+  "file": "point-out-84a3658515.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%D8%A7%D8%A8%D8%A7%D9%86%D9%88%D8%A8_%D9%88%D9%87%D9%88_%D9%8A%D8%B4%D8%B1%D8%AD_%D9%81%D9%83%D8%B1%D8%AA%D8%A9_%D9%81%D9%89_%D8%A7%D8%AD%D8%AF_%D9%85%D8%B1%D8%A7%D9%83%D8%B2_%D8%A7%D9%84%D8%A8%D8%AD%D8%AB_%D8%A7%D9%84%D8%B9%D9%84%D9%85%D9%89_1-5-2016_.jpg",
+  "q": "pointing whiteboard",
+  "title": "ابانوب وهو يشرح فكرتة فى احد مراكز البحث العلمى 1-5-2016 .jpg",
+  "why": "Man pointing at a whiteboard diagram."
  },
  "School vocabulary::Pointy": {
   "none": "Only shows pointy ears, not general poin",
@@ -4894,10 +5968,17 @@
   ]
  },
  "School vocabulary::Poke": {
+  "none": "nothing found",
   "q": "finger poking button"
  },
  "School vocabulary::Poke around": {
-  "q": "browsing bookstore"
+  "by": "Mennonite Church USA Archives",
+  "file": "poke-around-4ff8b4f08c.jpg",
+  "lic": "No restrictions",
+  "page": "https://commons.wikimedia.org/wiki/File:Bookstore,_Ranchi,_India,_1964_(16739277510).jpg",
+  "q": "browsing bookstore",
+  "title": "Bookstore, Ranchi, India, 1964 (16739277510).jpg",
+  "why": "Man casually browsing through book shelv"
  },
  "School vocabulary::Police dog": {
   "none": "No clear police dog visible",
@@ -4925,7 +6006,13 @@
   "why": "Smoke stacks polluting the air"
  },
  "School vocabulary::Pop up": {
-  "q": "popup window"
+  "by": "Ehsan Akhgari",
+  "file": "pop-up-482a590c30.jpg",
+  "lic": "MPL 2",
+  "page": "https://commons.wikimedia.org/wiki/File:In-page_pop-up_window_advertisement.jpg",
+  "q": "popup window",
+  "title": "In-page pop-up window advertisement.jpg",
+  "why": "Clearly shows a pop-up window."
  },
  "School vocabulary::Poppers": {
   "none": "No image shows small popping devices",
@@ -4938,7 +6025,13 @@
   "q": "-"
  },
  "School vocabulary::Postcard": {
-  "q": "travel postcard"
+  "none": "none of them showed it",
+  "q": "travel postcard",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:AL-248C_018_Stearman_and_Travel_Air_factory_postcards.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sample_postcard,_cartoon_postcard_printed_by_the_Asheville_Post_Card_Co,_two_people_traveling_in_a..._(NBY_422007).jpg",
+   "https://commons.wikimedia.org/wiki/File:Winslow_AZ_-_Winslow_Travel_Lodge_(NBY_436766).jpg"
+  ]
  },
  "School vocabulary::Postscript": {
   "none": "nothing found",
@@ -4963,9 +6056,16 @@
   "why": "Real photo of transmission gears/powertr"
  },
  "School vocabulary::Practice run": {
-  "q": "rehearsal practice"
+  "none": "These show musicians, not practice runs.",
+  "q": "rehearsal practice",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Stone_Age_Romeos_rehearsal_at_The_Practice_Place_1994.jpg",
+   "https://commons.wikimedia.org/wiki/File:Rehearsal_shot_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Rehearsal_shot.jpg"
+  ]
  },
  "School vocabulary::Praised": {
+  "none": "nothing found",
   "q": "teacher praising student"
  },
  "School vocabulary::Pride": {
@@ -4978,7 +6078,13 @@
   "why": "Man proudly waving flag, smiling"
  },
  "School vocabulary::Print out": {
-  "q": "printing paper document"
+  "none": "These pictures show postage stamps, not ",
+  "q": "printing paper document",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Russia_1921_CPA_29%D0%90_printing_sheet_(pelure_paper)_back.jpg",
+   "https://commons.wikimedia.org/wiki/File:Russia_1921_CPA_29%D0%90_printing_sheet_(pelure_paper).jpg",
+   "https://commons.wikimedia.org/wiki/File:Russia_1921_CPA_30_printing_sheet_(ordinary_paper).jpg"
+  ]
  },
  "School vocabulary::Private tutoring class": {
   "none": "None show private tutoring lesson",
@@ -4999,7 +6105,13 @@
   ]
  },
  "School vocabulary::Proper": {
-  "q": "toolbox tools"
+  "none": "Abstract concepts cannot be shown with t",
+  "q": "toolbox tools",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Toolbox-vintage-werkzeugkiste-alt-01.jpg",
+   "https://commons.wikimedia.org/wiki/File:GIMP-Toolbox-Tools-Default.png",
+   "https://commons.wikimedia.org/wiki/File:WWII_toolbox_at_Easton_Lodge_Gardens,_Little_Easton,_Essex,_England.jpg"
+  ]
  },
  "School vocabulary::Proudly": {
   "q": "graduate holding diploma"
@@ -5014,16 +6126,33 @@
   ]
  },
  "School vocabulary::Provoke": {
-  "q": "teasing dog"
+  "none": "All options are paintings, not photograp",
+  "q": "teasing dog",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jan_Miense_Molenaer_(c.1610-1668)_-_A_Group_of_Children_Teasing_a_Dog_with_a_Cat_-_631059_-_National_Trust.jpg",
+   "https://commons.wikimedia.org/wiki/File:Boy_Teasing_a_Dog-_Nightscene_Lit_by_Pinewood_Torch_(SM_583).png",
+   "https://commons.wikimedia.org/wiki/File:Frans_van_Mieris_the_Elder_Teasing_the_Pet.jpg"
+  ]
  },
  "School vocabulary::Pull around": {
   "q": "drive thru window"
  },
  "School vocabulary::Pull off": {
-  "q": "celebrating mountain climber"
+  "none": "Phrasal verb meaning is too abstract.",
+  "q": "celebrating mountain climber",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wanda_Rutkiewicz,_G%C3%B3ry_Sokole,_fot._Seweryn_Bidzi%C5%84ski.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wanda_B%C5%82aszkiewicz_Rutkiewicz_Sekcja_Groto%C5%82az%C3%B3w_Wroc%C5%82aw_1966.jpg",
+   "https://commons.wikimedia.org/wiki/File:Climber_on_the_summit_of_Lenin_Peak.png"
+  ]
  },
  "School vocabulary::Pull out": {
-  "q": "pulling out chair"
+  "none": "Neither picture is a clear photograph.",
+  "q": "pulling out chair",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Chairs_An_early_19th_century_wheel_chair_with_a_pull_out_footrest.jpg",
+   "https://commons.wikimedia.org/wiki/File:Illustration_of_a_kinkajou_on_chair_1896.jpg"
+  ]
  },
  "School vocabulary::Punch": {
   "by": "The original uploader was NoNo at English Wikipedia.",
@@ -5054,34 +6183,78 @@
   "q": "push up exercise"
  },
  "School vocabulary::Put aside": {
-  "q": "saving money jar"
+  "by": "nattanan",
+  "file": "put-aside-a23e749658.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Money_saving_growth.jpg",
+  "q": "saving money jar",
+  "title": "Money saving growth.jpg",
+  "why": "Coins showing savings for the future"
  },
  "School vocabulary::Put away": {
-  "q": "organizing toys shelf"
+  "by": "U.S. Marine Corps photo by Lance Cpl. Margaret Gale",
+  "file": "put-away-7d83b8c3c3.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:24th_MEU,_USS_Iwo_Jima_volunteer_in_Norway_after_successful_exercise_(4907185).jpg",
+  "q": "organizing toys shelf",
+  "title": "24th MEU, USS Iwo Jima volunteer in Norway after successful exercise (4907185).jpg",
+  "why": "Boy placing books on the shelf."
  },
  "School vocabulary::Put back": {
-  "q": "handing book back"
+  "none": "No pictures illustrate returning an item",
+  "q": "handing book back",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_Left_Hand_of_God_(2010_novel).jpg",
+   "https://commons.wikimedia.org/wiki/File:Hand-book_of_physiology_(1892)_(14742314976).jpg"
+  ]
  },
  "School vocabulary::Put down": {
+  "none": "nothing found",
   "q": "putting bag down"
  },
  "School vocabulary::Put down to": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Put off": {
+  "none": "nothing found",
   "q": "calendar delayed"
  },
  "School vocabulary::Put on": {
-  "q": "putting on jacket"
+  "by": "Department of Defense. Department of the Army. U.S. Army Materiel Command. U.S. ",
+  "file": "put-on-4a09c3c385.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:(Photograph_of_General_Dwight_D._Eisenhower_Putting_on_a_Jacket)_-_DPLA_-_41aeca039b907903592297a9f2f3d5ad.jpg",
+  "q": "putting on jacket",
+  "title": "(Photograph of General Dwight D. Eisenhower Putting on a Jacket) - DPLA - 41aeca039b907903592297a9f2f3d5ad.jpg",
+  "why": "Man putting on his jacket"
  },
  "School vocabulary::Put through": {
-  "q": "operator switchboard"
+  "none": "historical switchboards do not clarify m",
+  "q": "operator switchboard",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jersey_Telecom_switchboard_and_operator.jpg",
+   "https://commons.wikimedia.org/wiki/File:Switchboard_Operator,_c1950.jpg",
+   "https://commons.wikimedia.org/wiki/File:Female_Indian_telephone_switchboard_operator_-_%22Helen_of_Many_Glacier_Hotel.%22,_26_June_1925_LCCN2014718418.jpg"
+  ]
  },
  "School vocabulary::Put together": {
-  "q": "assembling furniture"
+  "none": "None clearly show the assembly process.",
+  "q": "assembling furniture",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Assembling_furniture_(3840186153).jpg",
+   "https://commons.wikimedia.org/wiki/File:16th_century_forerunner_of_flat-pack_furniture_-_geograph.org.uk_-_1181935.jpg",
+   "https://commons.wikimedia.org/wiki/File:Ikea_Frustration_(27879380013).jpg"
+  ]
  },
  "School vocabulary::Put up with": {
-  "q": "person covering ears"
+  "by": "Luis Miguel Bugallo Sánchez (Lmbuga Commons)(Lmbuga Galipedia) Publicada por/Pub",
+  "file": "put-up-with-d2b4f4ad36.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Ru%C3%ADdo_Noise_041113GFDL.JPG",
+  "q": "person covering ears",
+  "title": "Ruído Noise 041113GFDL.JPG",
+  "why": "Boy covering ears showing annoyance or e"
  },
  "School vocabulary::Queue": {
   "by": "LN9267",
@@ -5143,13 +6316,31 @@
   ]
  },
  "School vocabulary::Reach out": {
-  "q": "person using phone"
+  "none": "Phrasal verbs need clearer action contex",
+  "q": "person using phone",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Woman_using_a_mobile_phone_on_Praia_do_Forte,_Cabo_Frio,_Brazil.jpg",
+   "https://commons.wikimedia.org/wiki/File:Phone_banking_for_Michael_Bennet.jpg",
+   "https://commons.wikimedia.org/wiki/File:Man_talking_on_the_phone_in_Montr%C3%A9al-Pierre_Elliott_Trudeau_International_Airport_006.jpg"
+  ]
  },
  "School vocabulary::Read out": {
-  "q": "reading book aloud"
+  "none": "All pictures are illustrations, not phot",
+  "q": "reading book aloud",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Story-telling_ballads,_selected_and_arranged_for_story-telling_and_reading_aloud_and_for_the_boys%27_and_girls%27_own_reading_(1920)_(14781095251).jpg",
+   "https://commons.wikimedia.org/wiki/File:Good_stories_for_great_birthdays,_arranged_for_story-telling_and_reading_aloud_and_for_the_children%27s_own_reading_(1922)_(14582128197).jpg",
+   "https://commons.wikimedia.org/wiki/File:Good_stories_for_great_birthdays,_arranged_for_story-telling_and_reading_aloud_and_for_the_children%27s_own_reading_(1922)_(14768588545).jpg"
+  ]
  },
  "School vocabulary::Read over": {
-  "q": "reading document"
+  "none": "These pictures show libraries, not check",
+  "q": "reading document",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:British_Museum_Reading_Room_Panorama_Feb_2006.jpg",
+   "https://commons.wikimedia.org/wiki/File:Graz_University-Library_reading-room.jpg",
+   "https://commons.wikimedia.org/wiki/File:NYC_Public_Library_Research_Room_Jan_2006-1-_3.jpg"
+  ]
  },
  "School vocabulary::Reading": {
   "by": "Abhinavgarule",
@@ -5169,7 +6360,13 @@
   "q": "-"
  },
  "School vocabulary::Recover from": {
-  "q": "crutches healing"
+  "none": "No real-world photo clearly shows recove",
+  "q": "crutches healing",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sorrowful_Mother_Shrine_Chapel_(Bellevue,_Ohio)_-_crutches_and_braces_left_from_healings.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_crippled_girl_discarding_her_crutches_after_being_healed_a_Wellcome_V0016618.jpg",
+   "https://commons.wikimedia.org/wiki/File:Our_Lady_of_Consolation_(Carey,_Ohio),_interior,_undercroft,_Saint_Catherine_of_Alexandria_statue_and_crutches_left_by_the_healed.jpg"
+  ]
  },
  "School vocabulary::Redundancies": {
   "none": "nothing to photograph",
@@ -5180,10 +6377,22 @@
   "q": "-"
  },
  "School vocabulary::Reply to": {
-  "q": "typing reply email"
+  "by": "PPelberg (WMF)",
+  "file": "reply-to-e188fdfed7.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Reply_link_screenshot.png",
+  "q": "typing reply email",
+  "title": "Reply link screenshot.png",
+  "why": "Shows a reply interface clearly."
  },
  "School vocabulary::Reprimand": {
-  "q": "official reprimand"
+  "none": "All choices are paintings, not photograp",
+  "q": "official reprimand",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Grandmother%27s_Reprimand_(1874),_by_Michele_Cammarano.jpg",
+   "https://commons.wikimedia.org/wiki/File:Louis_Antoine_Carolus_(1814-1865)_-_The_Reprimand_-_B.M.502_-_Bowes_Museum.jpg",
+   "https://commons.wikimedia.org/wiki/File:Brooklyn_Museum_-_The_Reprimand._Ah_You_Naughty_Fawn_You_Have_Been_Eating_the_Flowers_Again._-_Arthur_Fitzwilliam_Tait.jpg"
+  ]
  },
  "School vocabulary::Result": {
   "none": "Diagram with labels, not photo",
@@ -5215,7 +6424,13 @@
   ]
  },
  "School vocabulary::Revenge": {
-  "q": "angry clenched fist"
+  "none": "All options are drawings, not photograph",
+  "q": "angry clenched fist",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sir_Charly_detected_or_the_exciseman_cornuted_(BM_1868,0808.10047).jpg",
+   "https://commons.wikimedia.org/wiki/File:D%C3%A9sespoir_de_Guizot_(BM_1940,0810.21.21).jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Propagation_of_a_Lie_(BM_J,6.77_2).jpg"
+  ]
  },
  "School vocabulary::Rewarding": {
   "none": "Classroom photo doesn't convey satisfact",
@@ -5228,10 +6443,20 @@
   "q": "incoming phone call"
  },
  "School vocabulary::Ring back": {
-  "q": "person phoning"
+  "none": "Shows phone directory, not calling back.",
+  "q": "person phoning",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:San_Francisco_and_Bay_counties_telephone_directory_(1917)_(14570058278).jpg"
+  ]
  },
  "School vocabulary::Ring up": {
-  "q": "cashier checkout"
+  "none": "The images show cash registers, not tran",
+  "q": "cashier checkout",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Extra_Coop_supermarket,_Bergen_Storsenter,_Norway_2017-11-01_cashier_checkout_a.jpg",
+   "https://commons.wikimedia.org/wiki/File:Publix_checkout_aisle.jpg",
+   "https://commons.wikimedia.org/wiki/File:Extra_Coop_supermarket,_Bergen_Storsenter,_Norway_2017-11-01_cashier_checkout_b.jpg"
+  ]
  },
  "School vocabulary::Riot": {
   "none": "Shows police lineup, not violent chaos",
@@ -5259,7 +6484,13 @@
   "why": "Shows a real road for vehicles"
  },
  "School vocabulary::Roamed": {
-  "q": "wandering city streets"
+  "none": "Action is not clear in pictures.",
+  "q": "wandering city streets",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wandering_in_the_streets.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wandering_Rocks1967.JPG",
+   "https://commons.wikimedia.org/wiki/File:Wandering_down_Friar_Street_-_geograph.org.uk_-_4445064.jpg"
+  ]
  },
  "School vocabulary::Rocky": {
   "q": "rocky terrain"
@@ -5283,10 +6514,22 @@
   ]
  },
  "School vocabulary::Roundabout": {
-  "q": "traffic roundabout"
+  "by": "Matsushima Hidehiro",
+  "file": "roundabout-59f8ff9937.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Myojinbashi_Takamori_side_roundabout_01.jpg",
+  "q": "traffic roundabout",
+  "title": "Myojinbashi Takamori side roundabout 01.jpg",
+  "why": "Clear aerial view of a roundabout."
  },
  "School vocabulary::Rounded": {
-  "q": "rounded chair edges"
+  "none": "The pictures show museum chairs, not rou",
+  "q": "rounded chair edges",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Chair_(England),_ca._1844_(CH_18458645).jpg",
+   "https://commons.wikimedia.org/wiki/File:Chair_(England),_ca._1844_(CH_18458645-2).jpg",
+   "https://commons.wikimedia.org/wiki/File:Chair_(AM_1985.371-6).jpg"
+  ]
  },
  "School vocabulary::Row": {
   "none": "No image shows a line/row",
@@ -5306,7 +6549,11 @@
   "why": "Clear photo of a backpack"
  },
  "School vocabulary::Rule out": {
-  "q": "crossing off list"
+  "none": "Abstract meaning cannot be pictured dire",
+  "q": "crossing off list",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:An_old_motorcycle_dries_off_after_crossing_the_ford_at_Eynsford_Bridge.JPG"
+  ]
  },
  "School vocabulary::Rum": {
   "by": "Sebfynn",
@@ -5327,7 +6574,13 @@
   ]
  },
  "School vocabulary::Salary": {
-  "q": "paycheck"
+  "none": "Documents don't clearly illustrate regul",
+  "q": "paycheck",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:2023-03-13_paycheck-salary.jpg",
+   "https://commons.wikimedia.org/wiki/File:Loco_pay_cheque_-_GWR.JPG",
+   "https://commons.wikimedia.org/wiki/File:Paycheck.png"
+  ]
  },
  "School vocabulary::Says": {
   "none": "No photo shows speaking action",
@@ -5338,7 +6591,13 @@
   ]
  },
  "School vocabulary::Scarf": {
-  "q": "wool scarf"
+  "by": "Deryck Chan",
+  "file": "scarf-f875519209.jpg",
+  "lic": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Alpaca_wool_scarf.JPG",
+  "q": "wool scarf",
+  "title": "Alpaca wool scarf.JPG",
+  "why": "Clear photo of a real scarf."
  },
  "School vocabulary::School": {
   "by": "G. Edward Johnson",
@@ -5350,18 +6609,37 @@
   "why": "Clear school building with visible sign"
  },
  "School vocabulary::Scold": {
+  "none": "nothing found",
   "q": "teacher scolding student"
  },
  "School vocabulary::Scroll down": {
-  "q": "scrolling down webpage"
+  "none": "Neither picture illustrates scrolling do",
+  "q": "scrolling down webpage",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Bruce_Castle_Museum.jpg",
+   "https://commons.wikimedia.org/wiki/File:Omar_to_Omar_(9645928025).jpg"
+  ]
  },
  "School vocabulary::Scroll up": {
-  "q": "scrolling up webpage"
+  "none": "None depict moving up a page.",
+  "q": "scrolling up webpage",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:After_the_Riots._Boarded-up_door_-_Body_Shop,_Wood_Green.jpg",
+   "https://commons.wikimedia.org/wiki/File:Omar_to_Omar_(9645928025).jpg",
+   "https://commons.wikimedia.org/wiki/File:After_the_Riots._Post-it_notes,_Body_Shop_Wood_Green.jpg"
+  ]
  },
  "School vocabulary::Seaside": {
-  "q": "seaside town"
+  "by": "Crymaker",
+  "file": "seaside-7c4cd6b2fa.jpg",
+  "lic": "CC BY-SA 2.5",
+  "page": "https://commons.wikimedia.org/wiki/File:Kemer_beach,_Antalya.jpg",
+  "q": "seaside town",
+  "title": "Kemer beach, Antalya.jpg",
+  "why": "Clearly shows a seaside holiday resort"
  },
  "School vocabulary::See through": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Seize": {
@@ -5381,12 +6659,22 @@
   "q": "-"
  },
  "School vocabulary::Sell off": {
-  "q": "store clearance sale"
+  "none": "It is an old newspaper advertisement.",
+  "q": "store clearance sale",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:January_1_1905_Clearance_Sale_(Broadway_Department_Store,_Los_Angeles).jpg"
+  ]
  },
  "School vocabulary::Send back": {
-  "q": "returning package"
+  "none": "Neither picture clearly shows returning ",
+  "q": "returning package",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Slides_from_mars_sample_return_presentations_04.png",
+   "https://commons.wikimedia.org/wiki/File:STUDENTS_FROM_PEORIA_ELEMENTARY_SCHOOL_WITH_PACKAGES_OF_USED_MILK_CARTONS._DENVER_SCHOOLS_ARE_RETURNING_ALL_THEIR..._-_NARA_-_544827.jpg"
+  ]
  },
  "School vocabulary::Send out": {
+  "none": "nothing found",
   "q": "email newsletter icon"
  },
  "School vocabulary::Serves": {
@@ -5408,13 +6696,31 @@
   "why": "Clearly shows a harnessed service dog."
  },
  "School vocabulary::Set up": {
-  "q": "setting up projector"
+  "none": "None clearly show installing or arrangin",
+  "q": "setting up projector",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sound_technicians_setting_up_the_turn-table_and_amplifiers_for_the_first_%22talkies%22_in_Australia,_1927-1928_(2877787608).jpg",
+   "https://commons.wikimedia.org/wiki/File:Bridging_Access,_Mapping_Maternal_and_Child_health_Facilities_in_Ikwerre_LGA_Rivers_State_3.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bridging_Access,_Mapping_Maternal_and_Child_health_Facilities_in_Ikwerre_LGA_Rivers_6.jpg"
+  ]
  },
  "School vocabulary::Settle": {
-  "q": "handshake agreement"
+  "none": "Handshakes represent agreements, not res",
+  "q": "handshake agreement",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Business_agreement_handshake_at_coffee_shop.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sudan_Envoy_-_Bilateral_Agreement_handshake_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sudan_Envoy_-_Bilateral_Agreement_Handshake.jpg"
+  ]
  },
  "School vocabulary::Settle down": {
-  "q": "family home"
+  "none": "These show houses, not settling down.",
+  "q": "family home",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cube-style_single-family_homes,_Katelijne_Janssensstraat,_Battel,_Mechelen,_2026.jpg",
+   "https://commons.wikimedia.org/wiki/File:Jacobs_Home_earlier_called_Miller-Jacobs_Home,_Galveston.jpg",
+   "https://commons.wikimedia.org/wiki/File:Hawes_Summer_Home_--_Galveston.jpg"
+  ]
  },
  "School vocabulary::Shade": {
   "by": "Roger A Smith",
@@ -5435,6 +6741,7 @@
   "why": "Clear dark shadow cast by hill"
  },
  "School vocabulary::Shake off": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Shape": {
@@ -5454,13 +6761,26 @@
   "q": "shimmering lake"
  },
  "School vocabulary::Shop around": {
+  "none": "nothing found",
   "q": "comparing price tags"
  },
  "School vocabulary::Shoreline": {
-  "q": "ocean shoreline"
+  "none": "none of them showed it",
+  "q": "ocean shoreline",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Foot_of_Newport_at_Ocean_Beach_Shoreline,_San_Diego,_California.jpg",
+   "https://commons.wikimedia.org/wiki/File:Gjoa_Haven_shoreline_with_Ocean_Endeavour_moored_off-shore,_September_2019.jpg",
+   "https://commons.wikimedia.org/wiki/File:Mayaro_Beach_Shoreline_and_Ocean,_Trinidad_and_Tobago.jpg"
+  ]
  },
  "School vocabulary::Shoulder holster": {
-  "q": "shoulder holster"
+  "none": "Picture 1 shows a holster without straps",
+  "q": "shoulder holster",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Holster_(shoulder_holster)-_Argentine_Air_Force_EQU4365.jpg",
+   "https://commons.wikimedia.org/wiki/File:Norway_in_WW2._Nazi_Germany_police_uniform._Hauptwachtmeister_Ordnungspolizei,_holster,_green_sleeve_badge._Forsvarsmuseet_(Armed_Forces_Museum)_Oslo_2019-03-31_DSC01632.jpg",
+   "https://commons.wikimedia.org/wiki/File:WW2_German_uniforms_Army_Wehrmacht_Heer_Infantryman_Stahlhelm_fieldgear_Field_tunic_Feldbluse_breast_eagle-and-swastika_Gott_mit_uns_buckle_Whistle_P38_Pistol_holster_Daimon_flashlight_etc_Lofoten_Krigsminnemuseum_Norway_DSC01577.jpg"
+  ]
  },
  "School vocabulary::Shuffle": {
   "by": "Alexbuirds at English Wikipedia",
@@ -5481,21 +6801,39 @@
   ]
  },
  "School vocabulary::Shut down": {
-  "q": "turning off computer"
+  "none": "Drawings are not allowed photographs.",
+  "q": "turning off computer",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Turning_Red_fanart_by_huyvo2001.jpg",
+   "https://commons.wikimedia.org/wiki/File:Turning_Red_fanart_by_Ry-Spirit.jpg"
+  ]
  },
  "School vocabulary::Sign in": {
-  "q": "website login page"
+  "none": "Adult websites and a joke sign.",
+  "q": "website login page",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Screen_of_Xvideos_login_page.PNG",
+   "https://commons.wikimedia.org/wiki/File:Screen_of_YouPorn_login_page.png",
+   "https://commons.wikimedia.org/wiki/File:Login_sign,_Login,_Whitland_-_geograph.org.uk_-_1280634.jpg"
+  ]
  },
  "School vocabulary::Sign off": {
   "q": "signing document pen"
  },
  "School vocabulary::Sign out": {
+  "none": "nothing found",
   "q": "signing out screen"
  },
  "School vocabulary::Sign up": {
-  "q": "online registration form"
+  "none": "The images show people in meetings.",
+  "q": "online registration form",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_Union_Minister_for_Women_and_Child_Development,_Smt._Maneka_Sanjay_Gandhi_launching_the_module_for_online_registration_of_Child_Care_Institutions,_in_New_Delhi.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Union_Minister_for_Mines,_Steel_and_Labour_%26_Employment,_Shri_Narendra_Singh_Tomar_addressing_after_launching_the_facility_for_online_registration_with_Employees_Provident_Fund_Organisation.jpg"
+  ]
  },
  "School vocabulary::Sink in": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Sinking": {
@@ -5508,34 +6846,72 @@
   "why": "Boat visibly going under water"
  },
  "School vocabulary::Sit down": {
-  "q": "sitting down"
+  "by": "Original: Ravan Khosa Derivative work: Aristeas",
+  "file": "sit-down-48af0d5893.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Indian_Farmers%27_Protest_by_Ravan_Khosa_37_(ed_RE1).jpg",
+  "q": "sitting down",
+  "title": "Indian Farmers' Protest by Ravan Khosa 37 (ed RE1).jpg",
+  "why": "The men are sitting down together."
  },
  "School vocabulary::Sit up": {
-  "q": "sitting up bed"
+  "none": "No suitable photograph showing sitting u",
+  "q": "sitting up bed",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Couple_sitting_up_and_embracing_in_bed_by_Dainis_Graveris_on_www.sexualalpha.com_(51097137465).jpg",
+   "https://commons.wikimedia.org/wiki/File:Portrait_of_Meryon_Sitting_up_in_Bed_MET_DP865815.jpg",
+   "https://commons.wikimedia.org/wiki/File:Woman_that_just_woke_up_sitting_in_her_bed_and_holding_her_neck_in_pain.jpg"
+  ]
  },
  "School vocabulary::Sleep in": {
-  "q": "sleeping late morning"
+  "none": "Sleep in is hard to depict.",
+  "q": "sleeping late morning",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cats_sleeping_together.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sleeping_pilgrims1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sleeping_cows_-_geograph.org.uk_-_1510846.jpg"
+  ]
  },
  "School vocabulary::Slim down": {
+  "none": "nothing found",
   "q": "weight loss success"
  },
  "School vocabulary::Slow down": {
-  "q": "driving speedometer"
+  "none": "Speedometers alone do not show slowing d",
+  "q": "driving speedometer",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Speedometer-in-driving-car.jpg",
+   "https://commons.wikimedia.org/wiki/File:Speedometer_(kmh).JPG",
+   "https://commons.wikimedia.org/wiki/File:Speedometer_of_a_VW_Golf_IV_at_night.jpg"
+  ]
  },
  "School vocabulary::Smuggler": {
   "q": "-"
  },
  "School vocabulary::Snap": {
-  "q": "broken fishing rod"
+  "none": "Neither picture shows something breaking",
+  "q": "broken fishing rod",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:With_fly-rod_and_camera_(1890)_(14759838806).jpg",
+   "https://commons.wikimedia.org/wiki/File:With_fly-rod_and_camera_(1890)_(14596194138).jpg"
+  ]
  },
  "School vocabulary::Snap out of": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Snap up": {
+  "none": "nothing found",
   "q": "buying quickly sale"
  },
  "School vocabulary::Snatch": {
-  "q": "purse snatching"
+  "none": "None show someone snatching something qu",
+  "q": "purse snatching",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Vuitton_purse_(418324117).jpg",
+   "https://commons.wikimedia.org/wiki/File:Plan_to_arrest_purse_snatchers_and_extortionists_33_(2025)_Tasnim.jpg",
+   "https://commons.wikimedia.org/wiki/File:Plan_to_arrest_purse_snatchers_and_extortionists_30_(2025)_Tasnim.jpg"
+  ]
  },
  "School vocabulary::Somber": {
   "none": "nothing found",
@@ -5558,19 +6934,48 @@
   ]
  },
  "School vocabulary::Sparkling": {
-  "q": "sparkling diamond"
+  "by": "Thomas Quine",
+  "file": "sparkling-b24a26fc12.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sparkling_diamond_ring_(40176943091).jpg",
+  "q": "sparkling diamond",
+  "title": "Sparkling diamond ring (40176943091).jpg",
+  "why": "Real photo of a sparkling ring."
  },
  "School vocabulary::Speak out": {
-  "q": "person protesting"
+  "by": "Wilfredor",
+  "file": "speak-out-645eea07fe.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Protests_opposing_Venezuelan_Bolivarian_Revolution_in_Avenida_Paulista,_S%C3%A3o_Paulo,_Brazil.jpg",
+  "q": "person protesting",
+  "title": "Protests opposing Venezuelan Bolivarian Revolution in Avenida Paulista, São Paulo, Brazil.jpg",
+  "why": "Protesters expressing opinions openly in"
  },
  "School vocabulary::Speak up": {
-  "q": "speaking loudly"
+  "none": "None clearly show speaking louder.",
+  "q": "speaking loudly",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wittman_speaks_loudly_(8455023836).jpg",
+   "https://commons.wikimedia.org/wiki/File:Votes_Speak_Louder_Than_Words_Berger_1918.jpg",
+   "https://commons.wikimedia.org/wiki/File:Blair_Imani_at_LoveLoud_2018_(44222384742).jpg"
+  ]
  },
  "School vocabulary::Speed up": {
-  "q": "fast runner"
+  "none": "Action is not clearly shown.",
+  "q": "fast runner",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Super_fast_runner_Miruku_(8255744775).jpg",
+   "https://commons.wikimedia.org/wiki/File:1969_Plymouth_Road_Runner_(13493885724).jpg",
+   "https://commons.wikimedia.org/wiki/File:1968_Plymouth_Road_Runner_A12_(13493566773).jpg"
+  ]
  },
  "School vocabulary::Spend on": {
-  "q": "shopping bags"
+  "none": "Pictures show bags, not spending money.",
+  "q": "shopping bags",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Blokker_shopping_bags,_Groningen_(2019).jpg",
+   "https://commons.wikimedia.org/wiki/File:Moi_Groninger_flag_shopping_bags,_Veendam_(2020).jpg"
+  ]
  },
  "School vocabulary::Spin": {
   "none": "Static spinning wheels, not turning quic",
@@ -5582,7 +6987,13 @@
   ]
  },
  "School vocabulary::Splash out": {
-  "q": "luxury shopping bags"
+  "none": "Spending money cannot be depicted direct",
+  "q": "luxury shopping bags",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Tannery_Manila_luxury_leather_bags_accessoriesE.jpg",
+   "https://commons.wikimedia.org/wiki/File:London_Luxury.jpg",
+   "https://commons.wikimedia.org/wiki/File:Woman_Shopping_LV.jpg"
+  ]
  },
  "School vocabulary::Split ends": {
   "by": "RealGatba",
@@ -5594,6 +7005,7 @@
   "why": "Clear close-up of frayed hair ends"
  },
  "School vocabulary::Split off": {
+  "none": "nothing found",
   "q": "breakaway group walking"
  },
  "School vocabulary::Sprout": {
@@ -5615,16 +7027,37 @@
   ]
  },
  "School vocabulary::Stamps": {
-  "q": "postage stamps"
+  "by": "Heptagon",
+  "file": "stamps-8f87671e6d.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Magnifying_glass2.jpg",
+  "q": "postage stamps",
+  "title": "Magnifying glass2.jpg",
+  "why": "Clear photo of postage stamps viewed clo"
  },
  "School vocabulary::Stand up": {
-  "q": "standing up"
+  "none": "None clearly show someone standing up.",
+  "q": "standing up",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Land_on_the_Moon_7_21_1969-repair.jpg",
+   "https://commons.wikimedia.org/wiki/File:Nude_child_standing_up_(rbm-QP301M8-1887-479).jpg",
+   "https://commons.wikimedia.org/wiki/File:Nude_child_standing_up_(rbm-QP301M8-1887-479b~6).jpg"
+  ]
  },
  "School vocabulary::Stand up for": {
-  "q": "stopping a bully"
+  "none": "Word cloud graphic, not a photo",
+  "q": "stopping a bully",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cyber_bullying.jpg"
+  ]
  },
  "School vocabulary::Start up": {
-  "q": "starting computer screen"
+  "none": "Neither picture clearly shows operating ",
+  "q": "starting computer screen",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Albi_cathedral_-_choir_and_choir_screen.jpg",
+   "https://commons.wikimedia.org/wiki/File:Computer_Screen_with_software_error_at_Gate_11_(SCL).jpg"
+  ]
  },
  "School vocabulary::Stationary": {
   "none": "No clear image showing stillness",
@@ -5644,9 +7077,16 @@
   ]
  },
  "School vocabulary::Stay in": {
-  "q": "relaxing at home"
+  "by": "Newmanthfc",
+  "file": "stay-in-4a0418d921.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:David_Newman_-_relaxing_at_home_with_Tottenham_teddy_bear.jpg",
+  "q": "relaxing at home",
+  "title": "David Newman - relaxing at home with Tottenham teddy bear.jpg",
+  "why": "Man relaxing at home indoors with books."
  },
  "School vocabulary::Stay over": {
+  "none": "nothing found",
   "q": "guest bedroom sleepover"
  },
  "School vocabulary::Steamship": {
@@ -5659,10 +7099,22 @@
   "why": "Real photograph showing actual steamship"
  },
  "School vocabulary::Step in": {
-  "q": "stepping through door"
+  "none": "Just shows closed doors, not entering.",
+  "q": "stepping through door",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Stepping_through_the_door_-_geograph.org.uk_-_7104309.jpg",
+   "https://commons.wikimedia.org/wiki/File:Rome_(Italy),_Door_--_2013_--_3558.jpg",
+   "https://commons.wikimedia.org/wiki/File:Funchal_(Madeira,_Portugal),_Rua_de_Santa_Maria_39_--_2025_--_0831.jpg"
+  ]
  },
  "School vocabulary::Step out": {
-  "q": "person leaving office"
+  "by": "White House (Pete Souza) / Maison Blanche (Pete Souza)",
+  "file": "step-out-0d6180d907.jpg",
+  "lic": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Barack_Obama_leaving_his_secretary_office_at_night.jpg",
+  "q": "person leaving office",
+  "title": "Barack Obama leaving his secretary office at night.jpg",
+  "why": "Person stepping out of a doorway."
  },
  "School vocabulary::Stern": {
   "none": "Neither picture clearly depicts strictne",
@@ -5674,19 +7126,42 @@
   ]
  },
  "School vocabulary::Stick out": {
-  "q": "sticking out ears"
+  "none": "None clearly show protruding objects.",
+  "q": "sticking out ears",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wrestling_at_the_2025_Islamic_Solidarity_Games_33.jpg",
+   "https://commons.wikimedia.org/wiki/File:Chile-03043_-_Big_Ears.._(49073162277).jpg",
+   "https://commons.wikimedia.org/wiki/File:Mateusz_Gamrot.jpg"
+  ]
  },
  "School vocabulary::Stick to": {
-  "q": "healthy diet"
+  "none": "The concept is too abstract to picture.",
+  "q": "healthy diet",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cost-healthy-diet.png",
+   "https://commons.wikimedia.org/wiki/File:Healthy_Deit_For_A_Healthy_Well_Well_and_Leave.jpg",
+   "https://commons.wikimedia.org/wiki/File:Bitter_Leaf_Soup_(Vernonia_amygdalina).jpg"
+  ]
  },
  "School vocabulary::Stick with": {
   "q": "-"
  },
  "School vocabulary::Sting": {
-  "q": "insect sting mark"
+  "none": "All options are book pages, not photogra",
+  "q": "insect sting mark",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Wild_bees,_wasps_and_ants_and_other_stinging_insects_BHL21564869.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wild_bees,_wasps_and_ants_and_other_stinging_insects_BHL21564746.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wild_bees,_wasps_and_ants_and_other_stinging_insects_BHL21564750.jpg"
+  ]
  },
  "School vocabulary::Stock up on": {
-  "q": "grocery cart full"
+  "none": "The action of stocking up is unclear.",
+  "q": "grocery cart full",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Customers_shopping_inside_Co-operative_Grocery_Store_No_1,_Seattle,_circa_1918_(MOHAI_15357).jpg",
+   "https://commons.wikimedia.org/wiki/File:Charles_F._Hallman_Grocery_Store,_Mankato,_Minnesota_-_DPLA_-_f4a92aaa28e435f5bf9b8cb62c335a5a.jpg"
+  ]
  },
  "School vocabulary::Straight": {
   "none": "nothing to photograph",
@@ -5739,7 +7214,13 @@
   ]
  },
  "School vocabulary::Sum up": {
-  "q": "summary notes"
+  "none": "These pictures show fashion exhibition m",
+  "q": "summary notes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Camp_-_Notes_on_Fashion_at_the_Met_-_Burberry_rainbow_cape_(73854).jpg",
+   "https://commons.wikimedia.org/wiki/File:Camp_-_Notes_on_Fashion_at_the_Met_-_Moschino_(73834).jpg",
+   "https://commons.wikimedia.org/wiki/File:Camp_-_Notes_on_Fashion_at_the_Met_(73884).jpg"
+  ]
  },
  "School vocabulary::Sunset": {
   "q": "ocean sunset"
@@ -5763,10 +7244,17 @@
   "why": "Soldier raising hands, giving up"
  },
  "School vocabulary::Sweetcorn": {
+  "none": "nothing found",
   "q": "sweetcorn kernels"
  },
  "School vocabulary::Swipe through": {
-  "q": "swiping smartphone"
+  "none": "None show someone swiping through conten",
+  "q": "swiping smartphone",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Swiped.jpg",
+   "https://commons.wikimedia.org/wiki/File:Swipe_Alli-in-One.jpg",
+   "https://commons.wikimedia.org/wiki/File:Halo_3G_Tablet_PC.jpg"
+  ]
  },
  "School vocabulary::Synonyms": {
   "none": "No real photo depicting synonyms concept",
@@ -5785,40 +7273,86 @@
   ]
  },
  "School vocabulary::THC gummies": {
-  "q": "cannabis gummies"
+  "by": "Teamkana",
+  "file": "thc-gummies-1985441335.jpg",
+  "lic": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Cannabis_gummies_with_cannabis_leaf_on_stone_surface.jpg",
+  "q": "cannabis gummies",
+  "title": "Cannabis gummies with cannabis leaf on stone surface.jpg",
+  "why": "Gummies shown alongside a cannabis leaf."
  },
  "School vocabulary::Tackle": {
   "q": "-"
  },
  "School vocabulary::Take after": {
-  "q": "family resemblance"
+  "none": "Family resemblance is not clearly shown.",
+  "q": "family resemblance",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:US-hoosier-family.jpg",
+   "https://commons.wikimedia.org/wiki/File:Family_Resemblance_(47207432292).jpg",
+   "https://commons.wikimedia.org/wiki/File:Sister_Republic_-_a_family_resemblance_p.255.jpg"
+  ]
  },
  "School vocabulary::Take back": {
+  "none": "nothing found",
   "q": "customer returning item"
  },
  "School vocabulary::Take down": {
+  "none": "nothing found",
   "q": "removing box shelf"
  },
  "School vocabulary::Take in": {
-  "q": "rescuing stray dog"
+  "by": "Akhil gowda",
+  "file": "take-in-e58a7ba619.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Atul_with_strays.png",
+  "q": "rescuing stray dog",
+  "title": "Atul with strays.png",
+  "why": "Man showing affection to a dog at home."
  },
  "School vocabulary::Take out": {
-  "q": "taking out trash"
+  "none": "Ambiguous military actions, not clear re",
+  "q": "taking out trash",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Taking_out_the_%27devil%27s_trash_heap%E2%80%99_130930-D-ZQ898-563.jpg",
+   "https://commons.wikimedia.org/wiki/File:Taking_out_the_%27devil%27s_trash_heap%E2%80%99_130930-D-ZQ898-992.jpg",
+   "https://commons.wikimedia.org/wiki/File:Taking_out_the_%27devil%27s_trash_heap%E2%80%99_130930-D-ZQ898-975.jpg"
+  ]
  },
  "School vocabulary::Take over": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Talk back": {
+  "none": "nothing found",
   "q": "defiant child"
  },
  "School vocabulary::Talk over": {
-  "q": "discussing meeting"
+  "none": "None show people discussing something ca",
+  "q": "discussing meeting",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Cllr_Housden_meeting_Nadine_Dorris_discussing_Sport_Funding.jpg",
+   "https://commons.wikimedia.org/wiki/File:Cllr_Housden_meeting_with_Alok_Sharma_discussing_Housing_%26_Climate_Change.png",
+   "https://commons.wikimedia.org/wiki/File:Community_women_in_a_meeting_discussing_the_education_of_their_wards.jpg"
+  ]
  },
  "School vocabulary::Talk to": {
-  "q": "two people talking"
+  "none": "Picture 1 is art, 3 is drawing.",
+  "q": "two people talking",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Hans_Andersen_Brendekilde_-_Ind_under_aften._Hvad_taler_de_to_gamle_mon_om%3F.png",
+   "https://commons.wikimedia.org/wiki/File:Two_people_reading,_Two_people_talking_(12652865873).jpg",
+   "https://commons.wikimedia.org/wiki/File:Two-people-talking-logo.jpg"
+  ]
  },
  "School vocabulary::Tame": {
-  "q": "tame fox"
+  "by": "Geoff Charles",
+  "file": "tame-01e7a86abd.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Joey,_Mrs_Dorothy_Lindos%27_tame_fox_(1527433).jpg",
+  "q": "tame fox",
+  "title": "Joey, Mrs Dorothy Lindos' tame fox (1527433).jpg",
+  "why": "Woman comfortably holding a wild fox."
  },
  "School vocabulary::Tamer": {
   "by": "Unknown authorUnknown author",
@@ -5857,7 +7391,13 @@
   ]
  },
  "School vocabulary::Tell apart": {
-  "q": "identical twins"
+  "none": "Action of distinguishing is not clear.",
+  "q": "identical twins",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Indian_Twins.jpg",
+   "https://commons.wikimedia.org/wiki/File:Identical_twins_lg.jpg",
+   "https://commons.wikimedia.org/wiki/File:Identical_twins.jpg"
+  ]
  },
  "School vocabulary::They're up": {
   "q": "installed kitchen cabinets"
@@ -5872,7 +7412,13 @@
   ]
  },
  "School vocabulary::Think over": {
-  "q": "thinking person"
+  "none": "Thinking is too abstract for photos.",
+  "q": "thinking person",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Person_in_winter_clothing_in_Quebec_City.jpg",
+   "https://commons.wikimedia.org/wiki/File:Thinking_woman.jpg",
+   "https://commons.wikimedia.org/wiki/File:Thinking_of_Dad_1997.jpg"
+  ]
  },
  "School vocabulary::Thong": {
   "by": "Sihi",
@@ -5884,7 +7430,13 @@
   "why": "Shows narrow underwear worn as thong"
  },
  "School vocabulary::Throb": {
-  "q": "sore finger"
+  "none": "None depict a throbbing sensation.",
+  "q": "sore finger",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sore_finger_-_44197401960.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_Sore_Finger_-_49304801582.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wedding_ring_fit_for_the_finger,_or,_The_salve_of_divinity_on_the_sore_of_humanity_-_title.png"
+  ]
  },
  "School vocabulary::Throbbing": {
   "none": "Diagram/chart, not real photo",
@@ -5912,12 +7464,19 @@
   ]
  },
  "School vocabulary::Tight": {
-  "q": "tight shoes"
+  "none": "None clearly show fitting closely.",
+  "q": "tight shoes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Tight_skirt.jpg",
+   "https://commons.wikimedia.org/wiki/File:Soldiersfootmili00munsrich_Fig42_A_soldiers_foot_badly_deformed_by_too-tight_shoes-Foot_is_at_rest_as_the_soldier_is_seated-see_Fig43_for_weight-bearing_image_of_same_foot.jpg",
+   "https://commons.wikimedia.org/wiki/File:The_perfect_tight_roll.jpg"
+  ]
  },
  "School vocabulary::Tiles": {
   "q": "ceramic floor tiles"
  },
  "School vocabulary::Timeless": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Timeline": {
@@ -5951,7 +7510,13 @@
   "why": "Egg cracking open shows hatching"
  },
  "School vocabulary::To poke": {
-  "q": "poking finger"
+  "none": "No clear photo of poking someone.",
+  "q": "poking finger",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Double_Poke_in_the_Eye_II_(39384241195).jpg",
+   "https://commons.wikimedia.org/wiki/File:Eye_Poke_(5135051538).jpg",
+   "https://commons.wikimedia.org/wiki/File:Finger_on_a_tree.jpg"
+  ]
  },
  "School vocabulary::Toast": {
   "by": "Kykk wiki",
@@ -5963,7 +7528,13 @@
   "why": "Shows plain browned toast bread"
  },
  "School vocabulary::Tone up": {
-  "q": "toned arms"
+  "none": "None show muscle toning clearly.",
+  "q": "toned arms",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Groove_and_needle_in_close_embrace_from_beginning_to_end.jpg",
+   "https://commons.wikimedia.org/wiki/File:ADC_TRX-2_TRX-1_cartridge_on_Micro_Seiki_DD-33_Turntable_(5221041873).jpg",
+   "https://commons.wikimedia.org/wiki/File:Toned_Taiko_arms.jpg"
+  ]
  },
  "School vocabulary::Toss": {
   "q": "throwing away trash"
@@ -5978,9 +7549,16 @@
   "why": "Firefighters carrying heavy equipment ca"
  },
  "School vocabulary::Trade in": {
-  "q": "phone trade in"
+  "none": "None show the concept of trading in.",
+  "q": "phone trade in",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Mobile_Phone_Trade_offices_on_Broad_Street,_Northampton_(geograph_5400329).jpg",
+   "https://commons.wikimedia.org/wiki/File:World_Trade_Center_buildings_in_Lower_Manhattan_-_2014_(127).jpg",
+   "https://commons.wikimedia.org/wiki/File:Destinations,_phone_cards_and_trade_stickers,_Brigstock_Road,_Thornton_Heath_-_geograph.org.uk_-_4959870.jpg"
+  ]
  },
  "School vocabulary::Travel around": {
+  "none": "nothing found",
   "q": "backpackers traveling europe"
  },
  "School vocabulary::Treasurer": {
@@ -6010,31 +7588,74 @@
   "q": "rainbow trout fish"
  },
  "School vocabulary::Try on": {
-  "q": "trying on clothes"
+  "none": "Picture one is virtual, picture two uncl",
+  "q": "trying on clothes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Virtual_clothes_trying_(9507550174).jpg",
+   "https://commons.wikimedia.org/wiki/File:Havoc_of_War_-_Refugees_-_Italy_-_Trying_on_Clothes_Provided_by_American_Red_Cross_for_refugee_children_in_Italy_-_NARA_-_31483618.jpg"
+  ]
  },
  "School vocabulary::Tuition": {
-  "q": "student paying tuition"
+  "none": "Just text, not a photo.",
+  "q": "student paying tuition",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:No_student_should_have_to_borrow_money_to_pay_tuition_at_a_public_college.jpg"
+  ]
  },
  "School vocabulary::Turn down": {
-  "q": "hand pushing document"
+  "none": "The phrasal verb cannot be visually repr",
+  "q": "hand pushing document",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:A_man_in_yellow_sportsuit_pushing_a_hand_cart_with_goods_at_Hoi_Yuen_Road.JPG",
+   "https://commons.wikimedia.org/wiki/File:Moving_big_guns_up_to_the_front_by_hand_(2957889559).jpg",
+   "https://commons.wikimedia.org/wiki/File:The_Hand_of_Gasparilla_Pirate_Legend_Tampa_Florida_Jose_Gaspar.jpg"
+  ]
  },
  "School vocabulary::Turn in": {
-  "q": "submitting paper"
+  "none": "Neither picture shows submitting an assi",
+  "q": "submitting paper",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:On_November_25,_1915,_Albert_Einstein_submitted_his_final_paper_on_the_general_theory_of_relativity.jpg",
+   "https://commons.wikimedia.org/wiki/File:Franklin_Paper_Mill,_now_United_Paper_Box_(Holyoke,_Massachusetts).jpg"
+  ]
  },
  "School vocabulary::Turn off": {
-  "q": "turning off lights"
+  "none": "None show stopping a device.",
+  "q": "turning off lights",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Turning_off_the_lights_in_Iraq,_A_look_back_DVIDS519014.jpg",
+   "https://commons.wikimedia.org/wiki/File:Turning_off_the_lights_in_Iraq,_A_look_back_DVIDS519035.jpg",
+   "https://commons.wikimedia.org/wiki/File:Turning_off_the_lights_in_Iraq,_A_look_back_DVIDS519060.jpg"
+  ]
  },
  "School vocabulary::Turn on": {
-  "q": "turning on tv"
+  "none": "No suitable photographs provided.",
+  "q": "turning on tv",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Turning_Red_fanart_by_huyvo2001.jpg",
+   "https://commons.wikimedia.org/wiki/File:Turning_Red_fanart_by_Ry-Spirit.jpg",
+   "https://commons.wikimedia.org/wiki/File:Vegtind_turning_to_Port_Side_Tallinn_6_June_2026.jpg"
+  ]
  },
  "School vocabulary::Turn out": {
+  "none": "nothing to photograph",
   "q": "-"
  },
  "School vocabulary::Turn up": {
-  "q": "finding lost keys"
+  "none": "Concept too abstract for a photo.",
+  "q": "finding lost keys",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Florida_Keys_Scenic_Highway_-_This_Way_to_the_Florida_Keys_Scenic_Highway_-_NARA_-_7718431.jpg"
+  ]
  },
  "School vocabulary::Type in": {
-  "q": "typing on keyboard"
+  "by": "Alabama Extension",
+  "file": "type-in-a50a886d7f.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Typing_On_Apple_Desktop_Keyboard_-_51328178723.jpg",
+  "q": "typing on keyboard",
+  "title": "Typing On Apple Desktop Keyboard - 51328178723.jpg",
+  "why": "Someone typing information using a keybo"
  },
  "School vocabulary::Typewriter": {
   "by": "Meomeo15",
@@ -6059,7 +7680,13 @@
   "q": "-"
  },
  "School vocabulary::Uneven": {
-  "q": "uneven sidewalk"
+  "none": "Pictures contain text signs, not clear i",
+  "q": "uneven sidewalk",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Uneven_sidewalk_(509401903).jpg",
+   "https://commons.wikimedia.org/wiki/File:Uneven_brick_sidewalk_(28119665666).jpg",
+   "https://commons.wikimedia.org/wiki/File:Uneven_footpath,_Torre_-_geograph.org.uk_-_3352357.jpg"
+  ]
  },
  "School vocabulary::Union": {
   "by": "San Diego Air & Space Museum Archives",
@@ -6075,10 +7702,17 @@
   "q": "-"
  },
  "School vocabulary::Unplug": {
+  "none": "nothing found",
   "q": "unplugging electric cord"
  },
  "School vocabulary::Upholstery": {
-  "q": "sofa upholstery"
+  "by": "Eric Polk",
+  "file": "upholstery-7f26e687df.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sofa_-_upholstery_pattern_-_HNT.jpg",
+  "q": "sofa upholstery",
+  "title": "Sofa - upholstery pattern - HNT.jpg",
+  "why": "Clear photo showing fabric covering furn"
  },
  "School vocabulary::Used to + base verb": {
   "none": "nothing to photograph",
@@ -6171,22 +7805,56 @@
   ]
  },
  "School vocabulary::Wake up": {
-  "q": "waking up"
+  "none": "None show someone waking up.",
+  "q": "waking up",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Sleeping,_homeless_children_-_Jacob_Riis.jpg",
+   "https://commons.wikimedia.org/wiki/File:White_dog_sleeping_on_the_floor_with_puppies_after_nursing_in_Don_Det_Laos.jpg",
+   "https://commons.wikimedia.org/wiki/File:Sa-sleeping-koala.JPG"
+  ]
  },
  "School vocabulary::Walk away": {
-  "q": "walking away"
+  "none": "Just shows walking, not walking away.",
+  "q": "walking away",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Walking_away_(31096929974).jpg",
+   "https://commons.wikimedia.org/wiki/File:Walking_away_-_geograph.org.uk_-_3125239.jpg"
+  ]
  },
  "School vocabulary::Walk by": {
-  "q": "walking past store"
+  "by": "PattayaPatrol",
+  "file": "walk-by-c750b7b7a4.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:DZ6_0567_A_small_brightly_lit_corner_shop_and_outdoor_seating_area_at_night_with_a_lone_pedestrian_walking_past_under_a_glowing_red_sign.jpg",
+  "q": "walking past store",
+  "title": "DZ6 0567 A small brightly lit corner shop and outdoor seating area at night with a lone pedestrian walking past under a glowing red sign.jpg",
+  "why": "Man walking past a sitting person."
  },
  "School vocabulary::Warm up": {
-  "q": "stretching before exercise"
+  "by": "Shixart1985",
+  "file": "warm-up-5fb29f02dd.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Woman_stretching_in_a_park_before_exercising.jpg",
+  "q": "stretching before exercise",
+  "title": "Woman stretching in a park before exercising.jpg",
+  "why": "Stretching is a common warm-up exercise."
  },
  "School vocabulary::Warm up to": {
-  "q": "friendly neighbors chatting"
+  "none": "Process cannot be depicted in photo",
+  "q": "friendly neighbors chatting",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:A_FRIENDLY_CHAT_BETWEEN_JEWISH_SETTLERS_FROM_ZICHRON_YA%27ACOV_AND_ARAB_NEIGHBORS_AT_THE_ARAB_VILLAGE_OF_SUBRIN._%D7%A9%D7%99%D7%97%D7%94_%D7%99%D7%93%D7%99%D7%93%D7%95%D7%93%D7%99%D7%AA_%D7%91%D7%99%D7%9F_%D7%9E%D7%AA%D7%99%D7%99%D7%A9%D7%91%D7%99%D7%9D_%D7%99%D7%94%D7%95%D7%93%D7%99%D7%9D_%D7%9E%D7%96%D7%9B%D7%A8%D7%95D1-075.jpg",
+   "https://commons.wikimedia.org/wiki/File:A_FRIENDLY_CHAT_BETWEEN_JEWISH_SETTLERS_FROM_ZICHRON_YA%27ACOV_AND_ARAB_NEIGHBORS_AT_THE_ARAB_VILLAGE_OF_SUBRIN._%D7%A9%D7%99%D7%97%D7%94_%D7%99%D7%93%D7%99%D7%93%D7%95%D7%93%D7%99%D7%AA_%D7%91%D7%99%D7%9F_%D7%9E%D7%AA%D7%99%D7%99%D7%A9%D7%91%D7%99%D7%9D_%D7%99%D7%94%D7%95%D7%93%D7%99%D7%9D_%D7%9E%D7%96%D7%9B%D7%A8%D7%95D814-017.jpg"
+  ]
  },
  "School vocabulary::Wash up": {
-  "q": "washing face hands"
+  "by": "Boamaeric1",
+  "file": "wash-up-45fb47b4e1.jpg",
+  "lic": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:WATER_IS_HEALTH.jpg",
+  "q": "washing face hands",
+  "title": "WATER IS HEALTH.jpg",
+  "why": "The picture shows hands being washed."
  },
  "School vocabulary::Water-based paint": {
   "none": "Color swatches, not real photo",
@@ -6196,19 +7864,47 @@
   ]
  },
  "School vocabulary::Wear down": {
-  "q": "exhausted office worker"
+  "none": "Diagrams are not real-world photographs.",
+  "q": "exhausted office worker",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Figure_7-_Employment_Status_of_Displaced_Workers_Who_Exhausted_UI_(6777474866).jpg"
+  ]
  },
  "School vocabulary::Wear out": {
-  "q": "exhausted runner"
+  "none": "Running does not show exhaustion clearly",
+  "q": "exhausted runner",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Exhausted_runner_@_Vancouver_Sun_Run_(5628563946).jpg",
+   "https://commons.wikimedia.org/wiki/File:1974_Plymouth_Road_Runner_(13554089495).jpg",
+   "https://commons.wikimedia.org/wiki/File:Dublin_Marathon_2009_-_The_Kenyan_runner_Noah_Serem_came_third._(4046684829).jpg"
+  ]
  },
  "School vocabulary::Weeds": {
-  "q": "garden weeds"
+  "none": "No picture clearly shows unwanted wild p",
+  "q": "garden weeds",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:The_Garden_of_Weeds_(1924)_-_1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Weeds_in_a_garden.jpg",
+   "https://commons.wikimedia.org/wiki/File:Weeds_and_wilderness,_Granton_Walled_Garden_-_geograph.org.uk_-_7838628.jpg"
+  ]
  },
  "School vocabulary::Well": {
-  "q": "healthy woman"
+  "none": "None depict good health clearly enough.",
+  "q": "healthy woman",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Healthy-light-woman-legs_(24031148380).jpg",
+   "https://commons.wikimedia.org/wiki/File:Healthy-person-woman-sport_(24242974791).jpg",
+   "https://commons.wikimedia.org/wiki/File:Healthy-person-woman-sport-1_(23698632413).jpg"
+  ]
  },
  "School vocabulary::Well up": {
-  "q": "teary eyes crying"
+  "by": "Alex Proimos from Sydney, Australia",
+  "file": "well-up-f5fd9745f8.jpg",
+  "lic": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Teary_Eyes_(7964510666).jpg",
+  "q": "teary eyes crying",
+  "title": "Teary Eyes (7964510666).jpg",
+  "why": "Eyes filling with tears shown clearly."
  },
  "School vocabulary::Wheat": {
   "by": "Photo: Andreas Praefcke",
@@ -6286,7 +7982,11 @@
   "why": "Underground cellar room storing wine bar"
  },
  "School vocabulary::Wing it": {
-  "q": "speaking without notes"
+  "none": "Idiom cannot be depicted visually.",
+  "q": "speaking without notes",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Nancy_Reagan_Speaking_at_a_Schools_Without_Drugs_Event_in_The_East_Room_-_DPLA_-_61c79e3ff03bd1ee7b0a3a32e76ab5c8.jpg"
+  ]
  },
  "School vocabulary::Withdraw": {
   "none": "None of the pictures show withdrawing.",
@@ -6316,16 +8016,40 @@
   ]
  },
  "School vocabulary::Work off": {
-  "q": "working out gym"
+  "none": "These show gyms, not getting rid of calo",
+  "q": "working out gym",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Closeup_of_number_21._Group_of_athletes_working_out_in_gym.jpg",
+   "https://commons.wikimedia.org/wiki/File:Blonde_woman_working_out_in_the_gym.jpg",
+   "https://commons.wikimedia.org/wiki/File:Gym_Dumbbells_For_Working_Out_(193383405).jpeg"
+  ]
  },
  "School vocabulary::Work on": {
-  "q": "working laptop"
+  "none": "Phrasal verbs are too abstract visually.",
+  "q": "working laptop",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Young_woman_working_on_laptop_and_writing_at_home.jpg",
+   "https://commons.wikimedia.org/wiki/File:Little_child_working_on_laptop_from_above.jpg",
+   "https://commons.wikimedia.org/wiki/File:Woman_working_on_a_laptop_in_the_kitchen._Top_view.jpg"
+  ]
  },
  "School vocabulary::Work out": {
-  "q": "person exercising gym"
+  "by": "Anna Frodesiak",
+  "file": "work-out-ca4831ee2e.jpg",
+  "lic": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Haikou_People%27s_Park_-_people_exercising_on_exercise_equipment_-_01.jpg",
+  "q": "person exercising gym",
+  "title": "Haikou People's Park - people exercising on exercise equipment - 01.jpg",
+  "why": "People exercising outdoors in a park."
  },
  "School vocabulary::Work through": {
-  "q": "solving jigsaw puzzle"
+  "none": "Puzzles do not illustrate this phrasal v",
+  "q": "solving jigsaw puzzle",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Jigsaw_puzzle_solving_2.jpg",
+   "https://commons.wikimedia.org/wiki/File:Jigsaw_puzzle_solving_1.jpg",
+   "https://commons.wikimedia.org/wiki/File:Having_food_and_solving_puzzle_at_Puzzle_Bored_2024-12-30.jpg"
+  ]
  },
  "School vocabulary::Wound (past of wind)": {
   "none": "Shows wound thread but ambiguous without",
@@ -6346,7 +8070,13 @@
   "why": "Clear photo of bands worn on wrist"
  },
  "School vocabulary::Write back": {
-  "q": "writing letter desk"
+  "none": "All candidate pictures are drawings, not",
+  "q": "writing letter desk",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:A_woman_is_sitting_at_a_desk_in_a_library,_writing_a_letter._Wellcome_V0040734.jpg",
+   "https://commons.wikimedia.org/wiki/File:Thomas_Patch_-_A_Young_Man_Seated_at_a_Desk_Writing_a_Letter_-_B1977.14.309(6)_-_Yale_Center_for_British_Art.jpg",
+   "https://commons.wikimedia.org/wiki/File:Vespucci_at_his_desk,_from_Letter_to_Soderini_(1505).jpg"
+  ]
  },
  "School vocabulary::Write down": {
   "by": "Jairus Monilla",
@@ -6358,10 +8088,20 @@
   "why": "Shows hand writing notes in notebook"
  },
  "School vocabulary::Write off": {
-  "q": "wrecked car"
+  "none": "Write-off is abstract; damaged cars are ",
+  "q": "wrecked car",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Auto_wreck,_USA,_1923.jpg",
+   "https://commons.wikimedia.org/wiki/File:Car_Wreck_Art.jpg",
+   "https://commons.wikimedia.org/wiki/File:Wrecked_car,_Wellington_21_Nov_2026_flood_aftermath.jpg"
+  ]
  },
  "School vocabulary::Write up": {
-  "q": "typing report"
+  "none": "Irrelevant historical photograph, not wr",
+  "q": "typing report",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Stroop_Report_-_Warsaw_Ghetto_Uprising_06b.jpg"
+  ]
  },
  "School vocabulary::Wrongdoing": {
   "none": "nothing to photograph",
@@ -6389,10 +8129,22 @@
   ]
  },
  "School vocabulary::Zoom in": {
-  "q": "zooming in map"
+  "none": "Need a pair showing zoom effect.",
+  "q": "zooming in map",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Camera_zoom_burst_on_a_Microsoft_computer_keyboard_in_Tuntorp_8.jpg",
+   "https://commons.wikimedia.org/wiki/File:Zooming_in_at_Curryfree_-_geograph.org.uk_-_224865.jpg",
+   "https://commons.wikimedia.org/wiki/File:Zooming_in_on_Blea_Tarn_-_geograph.org.uk_-_945696.jpg"
+  ]
  },
  "School vocabulary::Zoom out": {
-  "q": "zooming out map"
+  "none": "Action cannot be conveyed in static phot",
+  "q": "zooming out map",
+  "seen": [
+   "https://commons.wikimedia.org/wiki/File:Zooming_out_(4310300468).jpg",
+   "https://commons.wikimedia.org/wiki/File:Zoomed_out_-_geograph.org.uk_-_1336466.jpg",
+   "https://commons.wikimedia.org/wiki/File:Shotover_Jet_boat_zooming_out_of_Shotover_Canyon_at_Arthur%27s_Point.jpg"
+  ]
  },
  "Series::Ace": {
   "none": "nothing to photograph",

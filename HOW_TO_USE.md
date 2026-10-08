@@ -506,6 +506,11 @@ mastered, before it lets you at anything new. Type the word and press
 The whole run is keyboard-only -- you never have to reach for the mouse
 in the middle of it.
 
+**Escape leaves it.** Any point in the run, wherever you have clicked:
+the words you have already answered are kept and the rest are simply not
+asked. The app is not a door you have to answer your way past when you
+opened it to do something else.
+
 The ten are **a different ten each time**. Longest since you last saw it
 still decides who is in the running -- the point is the words going
 quiet, not the ones you used an hour ago -- but the forty asked most

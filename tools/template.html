@@ -4132,11 +4132,28 @@
     // panel returns before it gets there -- which is why the last press
     // of a ten-word run needed the mouse.
     scrim.onkeydown = function(e){
+      // Escape is the way out. Ten words is the right thing to be asked
+      // and the wrong thing to be trapped by: somebody who opened the app
+      // to do something else should not have to answer his way past it.
+      if(e.key === 'Escape'){ e.preventDefault(); closeRecall(); return; }
       if(e.key !== 'Enter') return;
       const on = document.getElementById('recall-next')
              || document.getElementById('recall-done');
       if(on){ e.preventDefault(); on.click(); }
     };
+
+    // ...and from wherever the focus happens to be. The panel takes the
+    // key when something inside it is focused, which is almost always,
+    // but "almost" is no use to somebody holding Escape down.
+    if(!scrim.dataset.escape){
+      scrim.dataset.escape = '1';
+      document.addEventListener('keydown', function(e){
+        if(e.key !== 'Escape') return;
+        if(!document.getElementById('recall-scrim')) return;
+        e.preventDefault();
+        closeRecall();
+      });
+    }
 
     // finished: say what happened, then get out of the way
     if(q.i >= q.words.length){
@@ -4187,7 +4204,8 @@
 
     scrim.innerHTML = '<div class="recall-box">' + head + body
       + recallDots(q)
-      + '<button class="recall-dismiss" id="recall-skip">Not now &mdash; take me to the app</button>'
+      + '<button class="recall-dismiss" id="recall-skip">'
+        + 'Not now &mdash; take me to the app &nbsp;<b>Esc</b></button>'
       + '</div>';
 
     const on = function(id, fn){
