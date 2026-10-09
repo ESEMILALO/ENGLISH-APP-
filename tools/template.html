@@ -1318,13 +1318,24 @@
   // here: a wrong picture teaches the wrong thing, so most words have none.
   const WORD_IMAGES = {};
 
-  const CATEGORIES = ['School vocabulary','504 Main words','504 Secondary','School books','Series'];
+  // Taken from the words themselves, in the order the sheets come. Kept
+  // as a written-out list once, this quietly went wrong the day two
+  // sheets became one: the topic list still offered the two old names,
+  // each with no words in it and a progress figure of NaN, and the new
+  // one was nowhere, so the day's ten were drawn from four lists while
+  // the screen said five.
+  const CATEGORIES = (() => {
+    const seen = [];
+    for(const w of WORDS) if(seen.indexOf(w.cat) < 0) seen.push(w.cat);
+    return seen;
+  })();
+
+  // Short forms for the places where the full name will not fit. A topic
+  // with no entry here keeps its own name, so a new sheet needs nothing
+  // doing to it.
   const CAT_ABBR = {
     'School vocabulary':'School vocab',
-    '504 Main words':'504 · Main',
-    '504 Secondary':'504 · Secondary',
-    'School books':'School books',
-    'Series':'Series'
+    '504 Essential words':'504 Essential'
   };
 
   const ICON_SPEAKER ='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3,9 8,9 13,4 13,20 8,15 3,15" fill="currentColor" stroke="none"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>';
@@ -6736,7 +6747,50 @@
     if(ask) ask.addEventListener('click', ()=>askReview(convo, ()=>paint(convo)));
   }
 
+  // A word is remembered as "<topic>::<word>", so renaming or merging a
+  // topic in the spreadsheet would quietly orphan everything already
+  // learnt from it -- the word would come back as if it had never been
+  // seen. This rewrites the old name wherever it is stored, once, before
+  // anything is read. Nothing matches on later runs, so it costs nothing.
+  const TOPIC_RENAMES = [
+    ['504 Main words::', '504 Essential words::'],
+    ['504 Secondary::',  '504 Essential words::']
+  ];
+
+  function renameInside(value){
+    if(typeof value === 'string'){
+      for(const [from, to] of TOPIC_RENAMES){
+        if(value.startsWith(from)) return to + value.slice(from.length);
+      }
+      return value;
+    }
+    if(Array.isArray(value)) return value.map(renameInside);
+    if(value && typeof value === 'object'){
+      const out = {};
+      for(const k of Object.keys(value)) out[renameInside(k)] = renameInside(value[k]);
+      return out;
+    }
+    return value;
+  }
+
+  function migrateTopicNames(){
+    const keys = [STORAGE_KEY, META_KEY, CUSTOM_KEY, MYLIST_KEY,
+                  SPEECH_KEY, LEARNSET_KEY, CHATS_KEY];
+    for(const key of keys){
+      let raw;
+      try{ raw = localStorage.getItem(key); }catch(e){ continue; }
+      if(!raw) continue;
+      // Cheap guard: almost every run has nothing to do.
+      if(!TOPIC_RENAMES.some(([from]) => raw.indexOf(from) >= 0)) continue;
+      try{
+        const moved = JSON.stringify(renameInside(JSON.parse(raw)));
+        localStorage.setItem(key, moved);
+      }catch(e){}
+    }
+  }
+
   async function init(){
+    migrateTopicNames();
     loadProgress();
     loadMeta();
     loadCustomWords();

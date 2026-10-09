@@ -40,7 +40,11 @@ def meaning_key(text):
 import pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FILE = str(ROOT / "ENGLISH SCHOOL.xlsx")
-SHEET_ORDER = ["School vocabulary", "504 Main words", "504 Secondary", "School books", "Series"]
+# Which sheet keeps a word when the same one is in two of them. Read
+# from the workbook rather than written out, so merging or renaming a
+# sheet does not silently drop it to the bottom of the order.
+def sheet_order(wb):
+    return list(wb.sheetnames)
 
 
 def richness(ws, row):
@@ -61,6 +65,7 @@ def main(apply_changes):
         shutil.copy(FILE, os.path.join("backups", "ENGLISH SCHOOL.pre-dedupe-%s.xlsx" % stamp))
 
     wb = openpyxl.load_workbook(FILE)
+    order_of = sheet_order(wb)
     groups = defaultdict(list)
 
     for sheet in wb.sheetnames:
@@ -71,7 +76,7 @@ def main(apply_changes):
                 continue
             word = str(raw).strip()
             filled, length = richness(ws, row)
-            order = SHEET_ORDER.index(sheet) if sheet in SHEET_ORDER else 99
+            order = order_of.index(sheet) if sheet in order_of else 99
             groups[word.lower()].append(
                 {"sheet": sheet, "row": row, "word": word,
                  "filled": filled, "length": length, "order": order}
@@ -156,7 +161,12 @@ def main(apply_changes):
                 ws.delete_rows(row, 1)
         wb.save(FILE)
 
-    with open("dedupe_report.txt", "w", encoding="utf-8") as fh:
+    # Beside the tool, not beside whatever directory it was run from.
+    # Run from the project root it left a second report there while
+    # the one in tools/ stayed behind, still naming sheets that had
+    # since been merged away.
+    report_path = ROOT / "tools" / "dedupe_report.txt"
+    with open(report_path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(report))
 
     print("duplicate words merged, same sheet:    %d" % same_sheet)
@@ -164,7 +174,7 @@ def main(apply_changes):
     print("senses rescued from removed rows:      %d" % moved)
     print("words left alone (too many senses):    %d" % skipped)
     print("rows removed:                          %d" % removed)
-    print("details written to dedupe_report.txt")
+    print("details written to %s" % report_path.name)
     print("MODE: %s" % ("WRITTEN" if apply_changes else "dry run, nothing saved"))
 
 

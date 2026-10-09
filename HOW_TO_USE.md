@@ -121,9 +121,9 @@ Without a key nothing is lost: words wait in
 `progress/pending-words.json`, the app says how many are waiting, and
 once a key is in there is a button to fill them all in at once.
 
-You choose which list it joins each time — the five topics are offered,
-with the one you picked last at the top, since a run of new words usually
-belongs together.
+You choose which list it joins each time — every topic in the
+spreadsheet is offered, with the one you picked last at the top, since a
+run of new words usually belongs together.
 
 A dated copy of the spreadsheet is kept in `backups/` before every write,
 and a word already somewhere in the workbook is refused rather than
@@ -450,9 +450,29 @@ with second copies. Add `--dry-run` to see what it would write without
 writing it, and `--limit 10` to try a few first. A copy of the workbook
 goes into `backups\` before anything is added.
 
+### The 504
+
+*504 Absolutely Essential Words* is in there whole, as one topic called
+**504 Essential words**: the 504 headwords and, beside them, the other
+ways of saying each one. They arrived as two separate lists, which meant
+the app treated *abandon* and *desert* as different subjects;
+`tools\merge_504_sheets.py` joined them and carried the saved progress
+across.
+
+The words themselves were written by hand into
+`tools\504-chunks\*.json` and put in the sheet with
+
+    python tools\add_504_words.py tools\504-chunks\lessons-07-12.json
+
+One entry is `["Word", "pronunciation", [[meaning, example], ...],
+notes]`. Write `"v"` for the notes and the verb's forms are worked out
+for you; `"v|and one more thing"` adds a sentence after them. A word
+already anywhere in the workbook is skipped and reported, so a file can
+be run twice without doubling up.
+
 ## Phrasal verb of the day
 
-Your lists hold **402 phrasal verbs**, and they are the part of English
+Your lists hold **401 phrasal verbs**, and they are the part of English
 that does not come from Spanish at all: *take off*, *take up*, *take in*
 and *take over* share a verb and nothing else. Ten a day will not get
 through four hundred of them, so one sits on the home screen every day
@@ -590,6 +610,12 @@ machine only.
 spreadsheet. Progress is filed under `category::word`, so a rename looks
 like a brand-new word and the old record is orphaned. Reordering rows,
 adding words and editing meanings are all safe.
+
+Renaming or merging a *sheet* would do the same to every word in it, so
+when that happens the old name is added to `TOPIC_RENAMES` in
+`tools/template.html` and the app rewrites the saved ids once, the next
+time it starts. `tools/merge_504_sheets.py` does the matching rewrite in
+`progress/progress.json` and in `tools/word_images.json`.
 
 ## What the server will hand out
 
