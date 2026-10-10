@@ -455,6 +455,62 @@
     .studybar-row{ flex-direction:column; }
   }
 
+  /* Games. The conversation needs a key and the key has run out, so
+     these are the ways left to turn a list of words into something to
+     do. Every one of them runs on what is already in the page: the
+     words, the sentences from the books, and a voice that needs no
+     account. */
+  .game-list{ display:grid; gap:10px; }
+  @media (min-width:620px){ .game-list{ grid-template-columns:1fr 1fr; } }
+  .game-pick{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--amber);
+    border-radius:12px; padding:14px 16px; color:var(--text); font-family:var(--sans);
+    transition:background .15s ease, transform .1s ease;
+  }
+  .game-pick:hover{ background:#28313a; }
+  .game-pick:active{ transform:scale(.995); }
+  .game-pick:disabled{ opacity:.45; cursor:default; border-left-color:var(--rule); }
+  .game-pick b{ display:block; font-family:var(--cond); font-size:1.15rem; font-weight:700; }
+  .game-pick span{
+    display:block; color:var(--text-soft); font-size:.84rem; line-height:1.45; margin-top:3px;
+  }
+  .game-pick em{
+    display:block; font-style:normal; font-family:var(--mono); font-size:.62rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--text-soft); margin-top:7px;
+  }
+  /* An icon dropped into a full-width button has nothing telling it how
+     big to be, and an SVG with no size fills whatever it is given. */
+  .btn-oncard svg{
+    width:1.05em; height:1.05em; vertical-align:-.15em; margin-right:7px;
+  }
+  .game-prompt{
+    font-family:var(--cond); font-size:clamp(1.3rem,5vw,1.7rem); line-height:1.3;
+    margin:0 0 4px; color:var(--card-ink);
+  }
+  .game-sub{ color:#5d5d5d; font-size:.86rem; margin:0 0 16px; }
+  .game-opts{ display:grid; gap:8px; margin-top:4px; }
+  .game-opt{
+    display:block; width:100%; text-align:left; cursor:pointer; font-family:var(--sans);
+    background:rgba(36,24,4,.05); border:1px solid rgba(36,24,4,.18); border-radius:10px;
+    padding:11px 14px; font-size:.95rem; color:#2b2b2b;
+  }
+  .game-opt:hover{ background:rgba(36,24,4,.10); }
+  .game-opt.right{ background:rgba(92,174,124,.22); border-color:var(--good); font-weight:600; }
+  .game-opt.wrong{ background:rgba(201,92,74,.18); border-color:var(--warn); }
+  .game-opt:disabled{ cursor:default; }
+  .game-pairs{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .game-pair{
+    display:block; width:100%; cursor:pointer; font-family:var(--sans); font-size:.9rem;
+    background:rgba(36,24,4,.05); border:1px solid rgba(36,24,4,.18); border-radius:10px;
+    padding:10px 12px; color:#2b2b2b; text-align:left; line-height:1.35;
+  }
+  .game-pair.picked{ border-color:var(--amber-deep); background:rgba(227,154,58,.22); }
+  .game-pair.done{ opacity:.35; cursor:default; border-style:dashed; }
+  .game-pair.miss{ background:rgba(201,92,74,.18); border-color:var(--warn); }
+  .game-answer{ margin-top:14px; font-size:.95rem; line-height:1.5; color:#3a3a3a; }
+  .game-answer b{ color:var(--amber-deep); }
+
   /* the idiomatic phrase of the day */
   .idiom-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   .idiom-word{
@@ -2983,6 +3039,15 @@
         + '</div>'
       : '';
 
+    const gamesHtml = '<div class="home-band">'
+      + '<div class="band-head"><span>Games</span>'
+        + '<span class="band-hint">practice without the conversation</span></div>'
+      + '<p class="hint" style="margin:0 0 12px;">Five ways to work on the words you '
+      + 'have. None of them needs a key or an allowance, and the time counts '
+      + 'towards your hour.</p>'
+      + '<button class="btn-secondary" id="go-games">Open the games &rarr;</button>'
+      + '</div>';
+
     const calHtml = '<div class="home-band">'
       + '<div class="band-head"><span>Calendar</span>'
         + '<span class="band-hint">what you finished, by day</span></div>'
@@ -3022,7 +3087,7 @@
         + '<div class="home-col">' + idiomBlock + statsHtml + '</div>'
       + '</div>'
       + addWordBlockHtml()
-      + '<div class="home-pair home-pair-half">' + calHtml + '</div>'
+      + '<div class="home-pair">' + gamesHtml + calHtml + '</div>'
       + moreHtml
       // At the foot, where he asked for it. It is worth saying and not
       // worth standing between him and the day's words.
@@ -3056,6 +3121,8 @@
     if(chatBtn) chatBtn.addEventListener('click', ()=>{ chatFree = false; renderChatPicker(); });
     const practiceBtn = el('#go-practice');
     if(practiceBtn) practiceBtn.addEventListener('click', startFreeTalk);
+    const gamesBtn = el('#go-games');
+    if(gamesBtn) gamesBtn.addEventListener('click', renderGames);
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
@@ -4175,6 +4242,439 @@
   // word you are looking at proves little, and this is meant to be the
   // hard question -- if you cannot produce it from memory, you have not
   // really kept it.
+  // --- Games -------------------------------------------------------
+  //
+  // The conversation is the part of this app that needs a key, and the
+  // free allowance behind that key runs out. These do not: every one of
+  // them is built from what is already in the page -- the words, the
+  // sentences out of the two books, and a voice that needs no account.
+  //
+  // They are practice, not assessment. None of them touches a word's
+  // status, because the schedule that decides when a word comes round
+  // again is built on the cards, and a guess between four buttons is not
+  // the same evidence as recalling a word cold. They do count as study
+  // time, because they are studying.
+  const GAME_ROUNDS = 10;
+  let game = null;
+
+  function gameWords(){
+    return WORDS.filter(w => w.me && w.me.length && w.me[0].m);
+  }
+
+  // Every sentence the app holds for a word, the book's and its own,
+  // that actually contains the word somewhere.
+  function sentencesFor(w){
+    const forms = [w.w].concat(w.alt || []);
+    const out = [];
+    const take = text => {
+      if(!text) return;
+      for(const f of forms){
+        if(new RegExp('\\b' + escapeRegExp(f) + '\\b', 'i').test(text)){
+          if(out.indexOf(text) < 0) out.push(text);
+          return;
+        }
+      }
+    };
+    (w.bk || []).forEach(take);
+    (w.me || []).forEach(m => take(m.e));
+    return out;
+  }
+
+  function gamePool(kind){
+    if(kind === 'idiom') return WORDS.filter(w => w.cat === IDIOM_TOPIC);
+    if(kind === 'spell'){
+      const tricky = WORDS.filter(w => /easily misspelled/i.test(w.n || ''));
+      return tricky.length >= GAME_ROUNDS ? tricky : gameWords();
+    }
+    if(kind === 'listen') return gameWords().filter(w => sentencesFor(w).length);
+    return gameWords();
+  }
+
+  const GAMES = [
+    { kind:'listen', name:'Listen and type',
+      blurb:'A sentence is read aloud and you write what you heard. The one '
+          + 'thing the conversation was for, without the conversation.' },
+    { kind:'choose', name:'Choose the word',
+      blurb:'A meaning, and four words it might belong to. Quick, for when '
+          + 'typing feels like work.' },
+    { kind:'match', name:'Match the pairs',
+      blurb:'Five words, five meanings, out of order. Good for the ones you '
+          + 'nearly know.' },
+    { kind:'idiom', name:'Complete the idiom',
+      blurb:'One word taken out of an idiom. They are fixed phrases, so this '
+          + 'is the honest way to test them.' },
+    { kind:'spell', name:'Spell it',
+      blurb:'The word is read to you and you spell it. Built from the words '
+          + 'the book says are most often spelled wrong.' }
+  ];
+
+  function renderGames(){
+    const rows = GAMES.map(g => {
+      const n = gamePool(g.kind).length;
+      const enough = n >= (g.kind === 'match' ? 5 : 4);
+      return '<button class="game-pick" data-game="' + g.kind + '"'
+        + (enough ? '' : ' disabled') + '>'
+        + '<b>' + esc(g.name) + '</b>'
+        + '<span>' + esc(g.blurb) + '</span>'
+        + '<em>' + (enough ? n + ' to draw on' : 'not enough words yet') + '</em>'
+        + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="sess-top"><button class="sess-back" id="games-back">'
+        + ICON_BACK + 'Home</button><span>Games</span><span class="cat-tag">'
+        + GAMES.length + '</span></div>'
+      + '<h1 class="title" style="margin-top:14px;">Games</h1>'
+      + '<p class="subtitle">Ten rounds each. None of these needs a key, and '
+      + 'none of them changes what the app thinks you have learnt &mdash; they '
+      + 'are practice, and the time counts towards your hour.</p>'
+      + '<div class="game-list">' + rows + '</div>'
+      + '</div>';
+
+    el('#games-back').addEventListener('click', renderHome);
+    root.querySelectorAll('.game-pick').forEach(b => {
+      if(b.disabled) return;
+      b.addEventListener('click', () => startGame(b.dataset.game));
+    });
+  }
+
+  function startGame(kind){
+    const pool = shuffled(gamePool(kind));
+    if(kind === 'match'){
+      const rounds = [];
+      for(let i = 0; i + 5 <= pool.length && rounds.length < GAME_ROUNDS; i += 5){
+        rounds.push(pool.slice(i, i + 5));
+      }
+      game = { kind, rounds, i:0, right:0, picked:null, solved:[], miss:null };
+    } else {
+      game = { kind, rounds: pool.slice(0, GAME_ROUNDS), i:0, right:0, answered:null };
+      if(kind === 'choose') buildChoices();
+    }
+    renderGame();
+  }
+
+  function buildChoices(){
+    const w = game.rounds[game.i];
+    if(!w) return;
+    const sameTopic = WORDS.filter(x => x.cat === w.cat && x.id !== w.id
+                                     && x.w.toLowerCase() !== w.w.toLowerCase());
+    const others = shuffled(sameTopic.length >= 3 ? sameTopic : gameWords()).slice(0, 3);
+    game.options = shuffled([w].concat(others));
+  }
+
+  function gameTop(){
+    return '<div class="sess-top">'
+      + '<button class="sess-back" id="game-quit">' + ICON_BACK + 'Games</button>'
+      + '<span>Round ' + Math.min(game.i + 1, game.rounds.length)
+        + ' / ' + game.rounds.length + '</span>'
+      + '<span class="cat-tag">' + Math.round(game.right) + ' right</span></div>'
+      + '<div class="bar bar-session"><div class="bar-fill" style="width:'
+        + Math.round((game.i / Math.max(1, game.rounds.length)) * 100) + '%"></div></div>';
+  }
+
+  function gameOver(){
+    const total = game.rounds.length;
+    root.innerHTML = '<div class="view">'
+      + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<div class="card-word">' + Math.round(game.right) + ' / ' + total + '</div>'
+        + '<p class="game-sub" style="text-align:center; margin-top:10px;">'
+        + (game.right === total ? 'Every one.'
+           : game.right >= total * 0.7 ? 'Good round.'
+           : 'Worth another go.') + '</p>'
+      + '</div>'
+      + '<div class="rate-row">'
+        + '<button class="tag-btn tag-warn" id="game-again">' + ICON_WRENCH + 'Play again</button>'
+        + '<button class="tag-btn tag-good" id="game-menu">' + ICON_CHECK + 'Other games</button>'
+      + '</div></div>';
+    const kind = game.kind;
+    el('#game-again').addEventListener('click', () => startGame(kind));
+    el('#game-menu').addEventListener('click', renderGames);
+    el('#game-quit').addEventListener('click', renderGames);
+  }
+
+  function renderGame(){
+    if(!game) return renderGames();
+    if(game.i >= game.rounds.length) return gameOver();
+    if(game.kind === 'listen') return renderListen();
+    if(game.kind === 'choose') return renderChoose();
+    if(game.kind === 'match') return renderMatch();
+    if(game.kind === 'idiom') return renderIdiomGame();
+    if(game.kind === 'spell') return renderSpell();
+  }
+
+  function nextRound(){
+    game.i++;
+    game.answered = null;
+    game.picked = null;
+    game.solved = [];
+    game.miss = null;
+    game.text = null;        // the sentence this round was read from
+    game.puzzle = null;      // the idiom with a word taken out
+    if(game.kind === 'choose' && game.i < game.rounds.length) buildChoices();
+    renderGame();
+  }
+
+  function gameNextBar(label){
+    return '<div class="rate-row" style="grid-template-columns:1fr;">'
+      + '<button class="tag-btn tag-good" id="game-next">' + ICON_CHECK
+      + (label || 'Next') + '</button></div>'
+      + '<p class="hint" style="text-align:center;">Press Enter</p>';
+  }
+
+  // Enter moves on, the same key that answered the round. Bound to the
+  // document once rather than to each button, because the button is
+  // rebuilt on every render and a listener per render would stack up.
+  let gameKeysBound = false;
+
+  function bindGameKeys(){
+    if(gameKeysBound) return;
+    gameKeysBound = true;
+    document.addEventListener('keydown', e => {
+      if(e.key !== 'Enter') return;
+      const next = document.getElementById('game-next');
+      if(!next) return;
+      const on = document.activeElement;
+      if(on && (on.tagName === 'INPUT' || on.tagName === 'TEXTAREA')) return;
+      e.preventDefault();
+      next.click();
+    });
+  }
+
+  function wireNext(){
+    const b = el('#game-next');
+    if(b){ b.addEventListener('click', nextRound); b.focus(); }
+    const q = el('#game-quit');
+    if(q) q.addEventListener('click', renderGames);
+    bindGameKeys();
+  }
+
+  // --- Listen and type ---------------------------------------------
+  function renderListen(){
+    const w = game.rounds[game.i];
+    const sentences = sentencesFor(w);
+    if(!game.answered) game.text = game.text || sentences[Math.floor(Math.random() * sentences.length)];
+    const text = game.text;
+    const done = game.answered !== null;
+
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-prompt">Listen and write it down</p>'
+        + '<p class="game-sub">Play it as many times as you like.</p>'
+        + '<button class="btn-oncard" id="listen-play">' + ICON_SPEAKER + ' Play it again</button>'
+        + (done
+            ? '<div class="game-answer"><b>' + esc(text) + '</b>'
+              + '<div style="margin-top:8px; color:#5d5d5d;">You wrote: '
+              + esc(game.answered || '(nothing)') + '</div></div>'
+            : '<input type="text" class="type-input" id="listen-input" autocomplete="off" '
+              + 'autocapitalize="off" autocorrect="off" spellcheck="false" '
+              + 'placeholder="Type what you hear, then Enter">')
+      + '</div>'
+      + (done ? gameNextBar() : '<p class="hint" style="text-align:center;">Enter to check</p>')
+      + '</div>';
+
+    el('#listen-play').addEventListener('click', () => speak(text));
+    el('#game-quit').addEventListener('click', renderGames);
+    if(done){ wireNext(); return; }
+    const input = el('#listen-input');
+    input.focus();
+    input.addEventListener('keydown', e => {
+      if(e.key !== 'Enter') return;
+      e.preventDefault();
+      e.stopPropagation();
+      game.answered = input.value.trim();
+      if(normalizeAnswer(game.answered) === normalizeAnswer(text)) game.right++;
+      renderListen();
+    });
+    speak(text);
+  }
+
+  // --- Choose the word ---------------------------------------------
+  function renderChoose(){
+    const w = game.rounds[game.i];
+    const opts = game.options || [w];
+    const done = game.answered !== null;
+
+    const buttons = opts.map((o, n) => {
+      let cls = 'game-opt';
+      if(done && o.id === w.id) cls += ' right';
+      else if(done && o.id === game.answered) cls += ' wrong';
+      return '<button class="' + cls + '" data-id="' + esc(o.id) + '"'
+        + (done ? ' disabled' : '') + '>' + esc(o.w) + '</button>';
+    }).join('');
+
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-prompt">' + esc(w.me[0].m) + '</p>'
+        + '<p class="game-sub">Which word is it?</p>'
+        + '<div class="game-opts">' + buttons + '</div>'
+        + (done && w.me[0].e
+            ? '<div class="game-answer">&ldquo;' + esc(w.me[0].e) + '&rdquo;</div>' : '')
+      + '</div>'
+      + (done ? gameNextBar() : '')
+      + '</div>';
+
+    el('#game-quit').addEventListener('click', renderGames);
+    if(done){ wireNext(); return; }
+    root.querySelectorAll('.game-opt').forEach(b => {
+      b.addEventListener('click', () => {
+        game.answered = b.dataset.id;
+        if(game.answered === w.id) game.right++;
+        renderChoose();
+      });
+    });
+  }
+
+  // --- Match the pairs ---------------------------------------------
+  function renderMatch(){
+    const five = game.rounds[game.i];
+    if(!game.meanings) game.meanings = shuffled(five.slice());
+    const solved = game.solved || [];
+
+    const left = five.map(w =>
+      '<button class="game-pair' + (solved.indexOf(w.id) >= 0 ? ' done' : '')
+      + (game.picked === w.id ? ' picked' : '') + '" data-side="w" data-id="'
+      + esc(w.id) + '"' + (solved.indexOf(w.id) >= 0 ? ' disabled' : '')
+      + '>' + esc(w.w) + '</button>').join('');
+    const right = game.meanings.map(w =>
+      '<button class="game-pair' + (solved.indexOf(w.id) >= 0 ? ' done' : '')
+      + (game.miss === w.id ? ' miss' : '') + '" data-side="m" data-id="'
+      + esc(w.id) + '"' + (solved.indexOf(w.id) >= 0 ? ' disabled' : '')
+      + '>' + esc(w.me[0].m.split('\u2014')[0].trim()) + '</button>').join('');
+
+    const allDone = solved.length === five.length;
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-prompt">Match them up</p>'
+        + '<p class="game-sub">Tap a word, then its meaning.</p>'
+        + '<div class="game-pairs">'
+          + '<div style="display:grid; gap:8px;">' + left + '</div>'
+          + '<div style="display:grid; gap:8px;">' + right + '</div>'
+        + '</div>'
+      + '</div>'
+      + (allDone ? gameNextBar('Next five') : '')
+      + '</div>';
+
+    el('#game-quit').addEventListener('click', renderGames);
+    if(allDone){
+      game.meanings = null;
+      wireNext();
+      return;
+    }
+    root.querySelectorAll('.game-pair').forEach(b => {
+      if(b.disabled) return;
+      b.addEventListener('click', () => {
+        const id = b.dataset.id;
+        if(b.dataset.side === 'w'){
+          game.picked = id;
+          game.miss = null;
+        } else if(game.picked){
+          if(game.picked === id){
+            game.solved = (game.solved || []).concat(id);
+            game.right += 0.2;        // five pairs make one round
+            game.picked = null;
+            game.miss = null;
+          } else {
+            game.miss = id;
+            game.picked = null;
+          }
+        }
+        renderMatch();
+      });
+    });
+  }
+
+  // --- Complete the idiom ------------------------------------------
+  function blankOne(phrase){
+    const words = phrase.split(/\s+/);
+    const SMALL = ['a','an','the','of','in','on','to','it','is','at','and','your','you','be'];
+    const good = [];
+    words.forEach((x, n) => {
+      const bare = x.replace(/[^A-Za-z'-]/g, '').toLowerCase();
+      if(bare.length > 2 && SMALL.indexOf(bare) < 0) good.push(n);
+    });
+    if(!good.length) return null;
+    const at = good[Math.floor(Math.random() * good.length)];
+    const answer = words[at].replace(/[^A-Za-z'-]/g, '');
+    const shown = words.slice();
+    shown[at] = '_____';
+    return { blanked: shown.join(' '), answer: answer };
+  }
+
+  function renderIdiomGame(){
+    const w = game.rounds[game.i];
+    if(!game.puzzle) game.puzzle = blankOne(w.w);
+    if(!game.puzzle){ game.rounds.splice(game.i, 1); return renderGame(); }
+    const done = game.answered !== null;
+
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-prompt">' + esc(game.puzzle.blanked) + '</p>'
+        + '<p class="game-sub">' + esc(w.me[0].m) + '</p>'
+        + (done
+            ? '<div class="game-answer">The word is <b>' + esc(game.puzzle.answer) + '</b>.'
+              + (w.me[0].e ? '<div style="margin-top:8px; color:#5d5d5d;">&ldquo;'
+                  + esc(w.me[0].e) + '&rdquo;</div>' : '')
+              + '</div>'
+            : '<input type="text" class="type-input" id="idiom-input" autocomplete="off" '
+              + 'autocapitalize="off" autocorrect="off" spellcheck="false" '
+              + 'placeholder="The missing word, then Enter">')
+      + '</div>'
+      + (done ? gameNextBar() : '')
+      + '</div>';
+
+    el('#game-quit').addEventListener('click', renderGames);
+    if(done){ wireNext(); return; }
+    const input = el('#idiom-input');
+    input.focus();
+    input.addEventListener('keydown', e => {
+      if(e.key !== 'Enter') return;
+      e.preventDefault();
+      e.stopPropagation();
+      game.answered = input.value.trim();
+      if(normalizeAnswer(game.answered) === normalizeAnswer(game.puzzle.answer)) game.right++;
+      renderIdiomGame();
+    });
+  }
+
+  // --- Spell it -----------------------------------------------------
+  function renderSpell(){
+    const w = game.rounds[game.i];
+    const done = game.answered !== null;
+    const hint = (w.n || '').match(/Easily misspelled:[^.]*\./);
+
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-prompt">Spell what you hear</p>'
+        + '<p class="game-sub">' + esc(w.me[0].m) + '</p>'
+        + '<button class="btn-oncard" id="spell-play">' + ICON_SPEAKER + ' Say it again</button>'
+        + (done
+            ? '<div class="game-answer">It is <b>' + esc(w.w) + '</b>.'
+              + (hint ? '<div style="margin-top:8px; color:#5d5d5d;">' + esc(hint[0]) + '</div>' : '')
+              + '</div>'
+            : '<input type="text" class="type-input" id="spell-input" autocomplete="off" '
+              + 'autocapitalize="off" autocorrect="off" spellcheck="false" '
+              + 'placeholder="Spell it, then Enter">')
+      + '</div>'
+      + (done ? gameNextBar() : '')
+      + '</div>';
+
+    el('#spell-play').addEventListener('click', () => speak(w.w));
+    el('#game-quit').addEventListener('click', renderGames);
+    if(done){ wireNext(); return; }
+    const input = el('#spell-input');
+    input.focus();
+    input.addEventListener('keydown', e => {
+      if(e.key !== 'Enter') return;
+      e.preventDefault();
+      e.stopPropagation();
+      game.answered = input.value.trim();
+      if(normalizeAnswer(game.answered) === normalizeAnswer(w.w)) game.right++;
+      renderSpell();
+    });
+    speak(w.w);
+  }
+
   // --- The idiomatic phrase of the day ------------------------------
   //
   // An idiom is the part of English that cannot be worked out from the
@@ -6938,7 +7438,7 @@
     // Meets you at the door, once per opening of the app.
     maybeOpenRecall();
   }
-  init().catch(()=>{ root.innerHTML = '<p class="loading">Something went wrong loading the app. Refreshing might help.</p>'; });
+  init().catch(e=>{ window.__initError = (e && e.stack) || String(e); root.innerHTML = '<p class="loading">Something went wrong loading the app. Refreshing might help.</p>'; });
 
   // Registering the worker is what makes the browser offer to install
   // this as an app. It needs a trusted origin, which localhost is as much

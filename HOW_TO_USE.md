@@ -559,6 +559,32 @@ asks twice, and anything in the current ten you have not mastered comes
 across into the new set, so nothing is left half-learnt. The hour then
 starts from 0:00 for the new ten.
 
+## Games
+
+Five of them, in a block of their own on the home screen. They exist
+because the conversation is the one part of this app that needs a key,
+and the free allowance behind that key runs out -- so when it does,
+there is still something to do.
+
+| | |
+|---|---|
+| **Listen and type** | a sentence is read aloud and you write it down |
+| **Choose the word** | a meaning and four words it might belong to |
+| **Match the pairs** | five words, five meanings, out of order |
+| **Complete the idiom** | one word taken out of a fixed phrase |
+| **Spell it** | the word is read to you and you spell it |
+
+Every one is built from what the page already holds: the words, the
+3,300 sentences out of the two books, and the neural voice, which needs
+no account. Ten rounds each.
+
+They are **practice, not assessment**. None of them touches a word's
+status, because the schedule that decides when a word comes round again
+is built on the cards, and a guess between four buttons is not the same
+evidence as recalling a word cold. They do count as study time, because
+they are studying -- each game draws its panel as a `.card`, which is
+what `studying()` looks for.
+
 ## Idiomatic phrase of the day
 
 **Idiomatic phrases** is a topic of 131 expressions whose meaning cannot
