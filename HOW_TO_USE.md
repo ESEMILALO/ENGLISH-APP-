@@ -561,6 +561,17 @@ that catches people out. The speaker button reads it with its example,
 and **Another one** gives you a different one if you want more than one
 in a sitting.
 
+Every phrasal verb in the app gets its own day before any of them gets
+a second one -- the band says how many are still to come. The list used
+to remember only the last sixty, which meant the same handful came
+round again while hundreds had never been shown at all.
+
+A word counts as a phrasal verb if its notes carry the forms line
+("Regular verb. Base: ...") or say it is separable, or if it sits in a
+topic that is nothing but phrasal verbs. Looking for the bare word
+"verb" in the notes was not enough: it matched *adverb*, and it matched
+*instead of*, whose note mentions a verb ending in -ing.
+
 The same verb stays all day, even across a reload: it is the verb of the
 *day*. The last sixty are remembered so it works through the list rather
 than circling the same few.

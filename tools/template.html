@@ -2961,7 +2961,9 @@
     const pvHtml = phrasalVerbs().length
       ? '<div class="home-band">'
         + '<div class="band-head"><span>Phrasal verb of the day</span>'
-          + '<span class="band-hint">' + phrasalVerbs().length + ' in your lists</span></div>'
+          + '<span class="band-hint">' + phrasalVerbs().length + ' in your lists &middot; '
+          + Math.max(0, phrasalVerbs().length - (((meta && meta.pvSeen) || []).length))
+          + ' still to come</span></div>'
         + '<div id="pv-host">' + phrasalHtml() + '</div>'
         + '</div>'
       : '';
@@ -4164,7 +4166,9 @@
   // for a Spanish speaker: "take off", "take up", "take in" and "take
   // over" share a verb and nothing else. One a day, in front of him,
   // whether or not it is one of today's ten.
-  const PV_MEMORY = 60;        // how many to remember, so it does not circle
+  // Every phrasal verb in the app gets its own day before any of them
+  // gets a second one. Remembering only the last sixty meant the same
+  // handful came round again while hundreds had never been shown at all.
 
   function phrasalVerbs(){
     return WORDS.filter(w=>w.pv);
@@ -4197,8 +4201,13 @@
   function rememberPhrasal(word, day){
     if(!meta) return;
     meta.pvDay = { day: day || todayStr(), id: word.id };
+    const total = phrasalVerbs().length;
     const before = (meta.pvSeen || []).filter(id=>id !== word.id);
-    meta.pvSeen = [word.id].concat(before).slice(0, PV_MEMORY);
+    let seen = [word.id].concat(before);
+    // When every one has had its day, the round starts again rather than
+    // the list growing for ever.
+    if(total && seen.length >= total) seen = [word.id];
+    meta.pvSeen = seen.slice(0, Math.max(total, 1));
     saveMeta();
   }
 

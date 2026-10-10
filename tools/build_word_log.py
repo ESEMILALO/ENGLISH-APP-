@@ -53,7 +53,17 @@ PARTICLES = {
     "through", "around", "about", "along", "across", "by", "for", "into",
     "to", "with", "after", "ahead", "apart", "aside", "forward",
     "together", "under", "upon", "round", "past", "behind",
+    # The prepositions a verb can lean on just as hard: aim at, hear of,
+    # keep from, go beyond, do without. Leaving these out meant fifteen
+    # entries in the phrasal verb list were not counted as phrasal verbs.
+    "at", "of", "from", "against", "beyond", "toward", "towards",
+    "without", "onto", "between", "among", "beside", "off of",
 }
+
+
+# A sheet of nothing but phrasal verbs says so by its name, and that
+# beats any amount of guessing from the spelling.
+PHRASAL_SHEETS = {"phrasal verbs"}
 
 
 def is_phrasal(word, notes, meaning):
@@ -69,7 +79,12 @@ def is_phrasal(word, notes, meaning):
         return False
     if parts[-1] not in PARTICLES:
         return False
-    if "verb" not in str(notes or "").lower():
+    # The notes of a verb open with its forms -- "Regular verb. Base: ..."
+    # -- and that line is what marks one. Looking for the bare word "verb"
+    # instead caught "adverb", and caught "instead of", whose note happens
+    # to mention a verb ending in -ing.
+    low = str(notes or "").lower()
+    if not re.search(r"\b(?:ir)?regular verb\b", low) and "separable" not in low:
         return False
     said = str(meaning or "").lower()
     if "not an actual phrasal verb" in said or "false pattern" in said:
@@ -216,8 +231,9 @@ def extract_words(path):
             if alts:
                 entry["alt"] = alts
 
-            if is_phrasal(entry.get("w"), entry.get("n"),
-                          (entry.get("me") or [{}])[0].get("m")):
+            if (category.strip().lower() in PHRASAL_SHEETS
+                    or is_phrasal(entry.get("w"), entry.get("n"),
+                                  (entry.get("me") or [{}])[0].get("m"))):
                 entry["pv"] = 1
             words.append(entry)
 
