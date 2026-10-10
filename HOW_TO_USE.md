@@ -547,6 +547,18 @@ book's extra senses in their empty Meaning slots through
 `tools\enrich_phrasal_rows.py`, which never replaces a meaning that is
 already there.
 
+### When the hour cannot be reached
+
+The hour exists so that ten new words are earned rather than piled on
+top of ten unlearnt ones. But it can become unreachable through no
+fault of yours -- the conversation needs a key, and a free key runs out
+of allowance -- and then the app simply stops giving you anything to do.
+
+So beside **Start this hour again** there is **Ten new words now**. It
+asks twice, and anything in the current ten you have not mastered comes
+across into the new set, so nothing is left half-learnt. The hour then
+starts from 0:00 for the new ten.
+
 ## Phrasal verb of the day
 
 Your lists hold **425 phrasal verbs**, and they are the part of English

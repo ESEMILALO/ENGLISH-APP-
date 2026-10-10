@@ -448,6 +448,13 @@
   .book-line:last-child{ margin-bottom:0; }
   .book-line .mini-speak{ margin-left:5px; }
 
+  /* Two ways out of a stuck hour, side by side under the bar. */
+  .studybar-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .studybar-row .studybar-reset{ flex:1 1 auto; margin:0; }
+  @media (max-width:430px){
+    .studybar-row{ flex-direction:column; }
+  }
+
   /* the phrasal verb of the day */
   .pv-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   .pv-word{
@@ -5453,7 +5460,8 @@
   let lastInteraction = Date.now();
   let studyTimer = null;
   let studyUnsaved = 0;
-  let studyResetArmed = false;   // asked once before anything is zeroed
+  let studyResetArmed = false;
+  let freshSetArmed = false;   // asked once before anything is zeroed
 
   function studySeconds(day){
     const all = (meta && meta.study) || {};
@@ -5609,9 +5617,38 @@
               + '<button class="no" id="studybar-no">Never mind</button>'
             + '</div>'
           + '</div>'
-          : '<button class="studybar-reset" id="studybar-reset">'
-            + 'Start this hour again &rarr;</button>')
+          : (freshSetArmed
+            ? '<div class="studybar-sure">'
+              + '<p>Swap these ten for ten new ones now, without finishing '
+              + 'the hour?<br>Anything here you have not mastered comes with '
+              + 'them, so nothing is left half-learnt, and the hour starts '
+              + 'again from <b>0:00</b> for the new set.</p>'
+              + '<div class="row">'
+                + '<button class="yes" id="studybar-fresh-yes">Yes, ten new words</button>'
+                + '<button class="no" id="studybar-fresh-no">Never mind</button>'
+              + '</div>'
+            + '</div>'
+            : '<div class="studybar-row">'
+              + '<button class="studybar-reset" id="studybar-reset">'
+                + 'Start this hour again &rarr;</button>'
+              + '<button class="studybar-reset" id="studybar-fresh">'
+                + 'Ten new words now &rarr;</button>'
+            + '</div>'))
       + '</div>';
+  }
+
+  // The hour is there so that ten new words are earned rather than piled
+  // on top of ten unlearnt ones. But the hour can be unreachable through
+  // no fault of his -- the conversation needs a key, and the key needs an
+  // allowance that runs out -- and then the app simply stops giving him
+  // anything to do. This is the way past that: it is his decision, it is
+  // asked for twice, and nothing unmastered is thrown away, because the
+  // set that gets built carries those words into the new ten.
+  function freshSetNow(){
+    freshSetArmed = false;
+    buildDailySet();
+    backupSoon();
+    renderHome();
   }
 
   // When the figure is wrong -- time that went on something else, or a
@@ -5629,6 +5666,12 @@
   function wireStudyBar(){
     const ask = document.getElementById('studybar-reset');
     if(ask) ask.addEventListener('click', ()=>{ studyResetArmed = true; paintStudyBar(); });
+    const fresh = document.getElementById('studybar-fresh');
+    if(fresh) fresh.addEventListener('click', ()=>{ freshSetArmed = true; paintStudyBar(); });
+    const freshYes = document.getElementById('studybar-fresh-yes');
+    if(freshYes) freshYes.addEventListener('click', freshSetNow);
+    const freshNo = document.getElementById('studybar-fresh-no');
+    if(freshNo) freshNo.addEventListener('click', ()=>{ freshSetArmed = false; paintStudyBar(); });
     const yes = document.getElementById('studybar-yes');
     if(yes) yes.addEventListener('click', resetThisHour);
     const no = document.getElementById('studybar-no');
