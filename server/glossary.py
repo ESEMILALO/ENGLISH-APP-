@@ -50,8 +50,8 @@ API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-sonnet-5"
 API_VERSION = "2023-06-01"
 
-MEANING_COLS = [(3, 4), (5, 6), (7, 8)]  # (meaning, example) column pairs
-NOTES_COL = 9
+MEANING_COLS = [(3, 4), (5, 6), (7, 8), (9, 10), (11, 12)]  # meaning, example
+NOTES_COL = 13
 
 
 def api_key():

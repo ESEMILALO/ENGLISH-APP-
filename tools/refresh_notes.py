@@ -29,7 +29,7 @@ from glossary import normalise  # noqa: E402
 from add_504_words import verb_note, DASH  # noqa: E402
 
 CHUNKS = HERE / "504-chunks"
-NOTES_COL = 9
+NOTES_COL = 13
 
 
 def note_for(entry):

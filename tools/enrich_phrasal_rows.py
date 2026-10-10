@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT / "server"))
 import glossary  # noqa: E402
 from glossary import normalise  # noqa: E402
 
-SLOTS = [(3, 4), (5, 6), (7, 8)]       # 1-based columns: meaning, example
+SLOTS = [(3, 4), (5, 6), (7, 8), (9, 10), (11, 12)]   # 1-based: meaning, example
 
 
 def main():

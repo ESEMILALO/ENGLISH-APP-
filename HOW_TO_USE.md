@@ -509,6 +509,19 @@ What is deliberately **not** in the app: the reading passages, the
 exercises, the Spotlight On etymology notes, the Bonus Review, and
 Panorama of Words. Those are things to do, not words to learn.
 
+### Five meanings to a word
+
+The sheets used to have three Meaning slots. The Ultimate Phrasal Verb
+Book gives some verbs far more than that -- *pick up* has twelve -- so
+`tools\widen_meanings.py` inserted two more pairs of columns before
+Notes, which moved Notes from column 9 to column 13:
+
+    Word | Pron | M1 E1 | M2 E2 | M3 E3 | M4 E4 | M5 E5 | Notes
+
+No word changed sheet or spelling, so no id changed and no progress
+moved. `tools\enrich_phrasal_rows.py` then filled the new slots, and it
+only ever writes into an empty one.
+
 ## The phrasal verb books
 
 *The Ultimate Phrasal Verb Book* is in the app as its own topic,

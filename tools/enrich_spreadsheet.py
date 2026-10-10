@@ -114,7 +114,7 @@ def main(apply_changes):
                 if v and str(v).strip():
                     meanings.append(str(v).strip())
 
-            note_cell = ws.cell(row=r, column=9)
+            note_cell = ws.cell(row=r, column=13)   # Notes, after five meanings
             note = str(note_cell.value).strip() if note_cell.value else ""
 
             filled = MISSING_NOTES.get((name.strip(), word))

@@ -180,7 +180,7 @@ def extract_words(path):
 
             pron = row[1] if len(row) > 1 and row[1] else ""
             meanings = []
-            for m_col, e_col in [(2, 3), (4, 5), (6, 7)]:
+            for m_col, e_col in [(2, 3), (4, 5), (6, 7), (8, 9), (10, 11)]:
                 m = row[m_col] if m_col < len(row) else None
                 e = row[e_col] if e_col < len(row) else None
                 if m and str(m).strip():
@@ -188,7 +188,7 @@ def extract_words(path):
                         "m": str(m).strip(),
                         "e": str(e).strip() if e else ""
                     })
-            notes = row[8] if len(row) > 8 and row[8] else ""
+            notes = row[12] if len(row) > 12 and row[12] else ""
 
             # Stable id: built from category + word, not row position, so
             # inserting or reordering rows later never scrambles your

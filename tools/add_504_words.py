@@ -40,7 +40,7 @@ DEFAULT_SHEET = "504 Essential words"
 DASH = "\u2014"
 HEADER = ["Word/expression", "Pronunciation",
           "Meaning 1", "Example", "Meaning 2", "Example", "Meaning 3", "Example",
-          "Notes"]
+          "Meaning 4", "Example", "Meaning 5", "Example", "Notes"]
 
 
 def verb_note(base):
@@ -96,7 +96,7 @@ def main():
             extra = str(note)[2:].strip()
             note = " ".join(x for x in (verb_note(word.lower()), extra) if x)
         cells = [word, str(pron).strip() or None]
-        for i in range(3):
+        for i in range(5):
             if i < len(meanings):
                 m, ex = (list(meanings[i]) + ["", ""])[:2]
                 cells += [str(m).strip(), str(ex).strip() or None]

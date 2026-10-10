@@ -28,7 +28,7 @@ from datetime import datetime
 
 import openpyxl
 
-MEANING_COLS = [(3, 4), (5, 6), (7, 8)]  # (meaning, example) column pairs
+MEANING_COLS = [(3, 4), (5, 6), (7, 8), (9, 10), (11, 12)]  # meaning, example
 
 
 def meaning_key(text):
