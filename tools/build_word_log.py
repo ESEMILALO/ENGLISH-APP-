@@ -251,6 +251,30 @@ def load_pictures(known):
 
 
 SYNONYMS = TOOLS / "504_synonyms.json"
+EXAMPLES = TOOLS / "504_examples.json"
+
+
+def attach_examples(words):
+    """Hang the book's own three sentences on each of the 504.
+
+    Beside the short sentence the spreadsheet keeps, not instead of it:
+    the short one is written for a Spanish reader and is what the
+    fill-in-the-blank card is built from, while these are how the book
+    actually uses the word.
+    """
+    if not EXAMPLES.exists():
+        return 0
+    try:
+        table = json.loads(EXAMPLES.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return 0
+    found = 0
+    for w in words:
+        got = table.get(w["w"].strip().lower())
+        if got:
+            w["bk"] = got
+            found += 1
+    return found
 
 
 def attach_synonyms(words):
@@ -309,6 +333,9 @@ def main():
     if beside:
         print("\n%d of them carry the other words the book prints "
               "beside them." % beside)
+    quoted = attach_examples(words)
+    if quoted:
+        print("%d of them carry the book's own sentences as well." % quoted)
 
     final = shell.replace(
         marker,

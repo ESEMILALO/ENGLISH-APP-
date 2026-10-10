@@ -428,6 +428,26 @@
     .also-word{ font-size:.8rem; padding:2px 8px; }
   }
 
+  /* The book's own sentences, kept beside the short one rather than
+     in place of it. */
+  .book-box{
+    margin:16px 0 0; padding:12px 14px 11px; text-align:left;
+    border:1px dashed var(--rule); border-radius:11px;
+  }
+  .card .book-box{ border-color:rgba(36,24,4,.22); }
+  .book-label{
+    display:block; font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--text-soft); margin-bottom:7px;
+  }
+  .card .book-label{ color:rgba(43,43,43,.6); }
+  .book-line{
+    display:block; font-style:italic; font-size:.86rem; line-height:1.5;
+    color:var(--text-soft); margin:0 0 6px; text-align:left;
+  }
+  .card .book-line{ color:#4a4a4a; }
+  .book-line:last-child{ margin-bottom:0; }
+  .book-line .mini-speak{ margin-left:5px; }
+
   /* the phrasal verb of the day */
   .pv-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   .pv-word{
@@ -3442,6 +3462,20 @@
       + '</div>';
   }
 
+  // The three sentences the book teaches the word with. The short one
+  // above is the one the fill-in-the-blank card is built from and the
+  // one written for a Spanish reader; these show how the word really
+  // behaves in a sentence somebody else wrote.
+  function bookHtml(w){
+    if(!w.bk || !w.bk.length) return '';
+    return '<div class="book-box"><span class="book-label">From the book</span>'
+      + w.bk.map(x=>'<span class="book-line">&ldquo;'+esc(x)+'&rdquo;'
+          + (canSpeak ? '<button class="mini-speak example-speak" data-text="'+esc(x)
+              + '" aria-label="Listen to this sentence">'+ICON_SPEAKER+'</button>' : '')
+          + '</span>').join('')
+      + '</div>';
+  }
+
   function renderMeanings(w){
     const rows = w.me.map((m,i)=>{
       const exampleHtml = m.e ? (
@@ -3453,7 +3487,7 @@
         + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div>'+exampleHtml+'</div></div>';
     }).join('');
     const notes = w.n ? '<div class="note-box"><span class="note-label">Note</span>'+esc(w.n)+'</div>' : '';
-    return alsoHtml(w)+'<div class="meanings">'+rows+'</div>'+notes;
+    return alsoHtml(w)+'<div class="meanings">'+rows+'</div>'+notes+bookHtml(w);
   }
 
   function renderTypedPrompt(w){

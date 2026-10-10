@@ -468,6 +468,15 @@ card is asking. 354 of the 504 have one; `tools\make_504_synonyms.py`
 builds the list and `tools\504_synonyms.json` holds it, keyed by the
 word itself so renaming the sheet cannot empty it.
 
+Under the note, a block marked **From the book** holds the three
+sentences the book teaches that word with -- 1,508 of them, kept beside
+the short sentence rather than in place of it. The short one is written
+for a Spanish reader and is what the fill-in-the-blank card is built
+from; these are how the word behaves in somebody else's writing.
+`tools\make_504_examples.py` pulls them out of the PDF and cuts off the
+page furniture that the scan leaves hanging on the last sentence of each
+lesson.
+
 The words themselves were written by hand into
 `tools\504-chunks\*.json` and put in the sheet with
 
