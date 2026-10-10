@@ -406,6 +406,28 @@
     margin:0 0 7px;
   }
 
+  /* The other ways of saying it, printed beside the word in the book. */
+  .also-row{
+    display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
+    gap:6px; margin:14px 0 2px;
+  }
+  .also-label{
+    font-family:var(--mono); font-size:.58rem; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--text-soft); margin-right:2px;
+  }
+  .also-word{
+    font-family:var(--sans); font-size:.86rem; line-height:1.2;
+    padding:3px 9px; border-radius:999px;
+    border:1px solid var(--rule); color:var(--text);
+  }
+  /* The card is light, so the chips need the card's own ink, not the
+     dark screen's. */
+  .card .also-word{ border-color:rgba(36,24,4,.22); color:#2b2b2b; }
+  .card .also-label{ color:rgba(43,43,43,.6); }
+  @media (max-width:430px){
+    .also-word{ font-size:.8rem; padding:2px 8px; }
+  }
+
   /* the phrasal verb of the day */
   .pv-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   .pv-word{
@@ -3408,6 +3430,18 @@
       + '</figure>';
   }
 
+  // The book prints two or three other ways of saying each of its 504
+  // words -- "abandon: desert, quit". Seeing them with the word is how
+  // they stop being four separate words to learn and become one.
+  // Shown with the meaning rather than with the prompt: on the front of
+  // the card they would answer the question being asked.
+  function alsoHtml(w){
+    if(!w.syn || !w.syn.length) return '';
+    return '<div class="also-row"><span class="also-label">Also</span>'
+      + w.syn.map(x=>'<span class="also-word">'+esc(x)+'</span>').join('')
+      + '</div>';
+  }
+
   function renderMeanings(w){
     const rows = w.me.map((m,i)=>{
       const exampleHtml = m.e ? (
@@ -3419,7 +3453,7 @@
         + '<div class="meaning-body"><div class="meaning-text">'+esc(m.m)+'</div>'+exampleHtml+'</div></div>';
     }).join('');
     const notes = w.n ? '<div class="note-box"><span class="note-label">Note</span>'+esc(w.n)+'</div>' : '';
-    return '<div class="meanings">'+rows+'</div>'+notes;
+    return alsoHtml(w)+'<div class="meanings">'+rows+'</div>'+notes;
   }
 
   function renderTypedPrompt(w){

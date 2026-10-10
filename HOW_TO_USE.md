@@ -460,6 +460,14 @@ the app treated *abandon* and *desert* as different subjects;
 `tools\merge_504_sheets.py` joined them and carried the saved progress
 across.
 
+On the back of a card, under the word and its pronunciation, a row
+marked **Also** shows the other ways of saying it that the book prints
+beside that word -- *abandon: desert, quit*. It is on the back rather
+than the front, because on the front it would answer the question the
+card is asking. 354 of the 504 have one; `tools\make_504_synonyms.py`
+builds the list and `toolsń_synonyms.json` holds it, keyed by the
+word itself so renaming the sheet cannot empty it.
+
 The words themselves were written by hand into
 `tools\504-chunks\*.json` and put in the sheet with
 

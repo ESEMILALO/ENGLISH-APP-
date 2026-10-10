@@ -250,6 +250,32 @@ def load_pictures(known):
     return out
 
 
+SYNONYMS = TOOLS / "504_synonyms.json"
+
+
+def attach_synonyms(words):
+    """Hang the words the book prints beside each of the 504 on the word.
+
+    Keyed on the word itself rather than on its "<topic>::<word>" id, so
+    that merging or renaming the sheet cannot quietly empty it -- which is
+    exactly what happened to the picture map the first time. Returns how
+    many words were given a list.
+    """
+    if not SYNONYMS.exists():
+        return 0
+    try:
+        table = json.loads(SYNONYMS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return 0
+    found = 0
+    for w in words:
+        got = table.get(w["w"].strip().lower())
+        if got:
+            w["syn"] = got
+            found += 1
+    return found
+
+
 def main():
     spreadsheet = find_spreadsheet()
     if not TEMPLATE.exists():
@@ -276,6 +302,13 @@ def main():
     marker = "const WORDS = [];"
     if marker not in shell:
         sys.exit("template.html doesn't look right -- the WORDS marker is missing.")
+
+    # Attached before the words are written out, so a word carries the
+    # other ways of saying it the same way it carries its meanings.
+    beside = attach_synonyms(words)
+    if beside:
+        print("\n%d of them carry the other words the book prints "
+              "beside them." % beside)
 
     final = shell.replace(
         marker,
