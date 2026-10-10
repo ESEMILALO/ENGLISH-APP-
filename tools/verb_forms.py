@@ -264,9 +264,37 @@ def _prefixed_irregular(low):
     return None
 
 
+# The little words that follow a phrasal verb. Only the verb in front of
+# them changes; they are carried along unaltered.
+TAIL_WORDS = {
+    "up", "down", "out", "in", "on", "off", "over", "away", "back",
+    "through", "around", "about", "along", "across", "by", "for", "into",
+    "to", "with", "after", "ahead", "apart", "aside", "forward",
+    "together", "under", "upon", "round", "past", "behind", "of", "at",
+    "from", "against", "toward", "towards", "between", "beyond", "onto",
+}
+
+
 def forms_for(base):
-    """Returns (third, past, participle, is_irregular) for a single verb."""
-    low = base.lower()
+    """Returns (third, past, participle, is_irregular) for a verb.
+
+    A phrasal verb is its first word conjugated and the rest carried
+    along: break up is breaks up, broke up, broken up -- never "break
+    uped", which is what came out of here before, in the notes of every
+    phrasal verb the app had been given.
+    """
+    low = base.lower().strip()
+    parts = low.split()
+    if len(parts) > 1 and all(p in TAIL_WORDS for p in parts[1:]):
+        third, past, part, irregular = forms_for(parts[0])
+        if not third:
+            return "", "", "", False
+        tail = " ".join(parts[1:])
+        def carry(forms):
+            return "/".join((f.strip() + " " + tail).strip()
+                            for f in forms.split("/"))
+        return carry(third), carry(past), carry(part), irregular
+
     if low in IRREGULAR:
         third, past, part = IRREGULAR[low]
         return third, past, part, True

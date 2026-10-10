@@ -509,6 +509,31 @@ What is deliberately **not** in the app: the reading passages, the
 exercises, the Spotlight On etymology notes, the Bonus Review, and
 Panorama of Words. Those are things to do, not words to learn.
 
+## The phrasal verb books
+
+*The Ultimate Phrasal Verb Book* is in the app as its own topic,
+**Phrasal verbs**. It arrived as two PDFs that are pure images -- 729
+pages with no text in them at all -- so it is read on this machine with
+RapidOCR, no key and no network:
+
+    python tools\ocr_book.py "<the pdf>" tools\ocr\clean.jsonl
+    python tools\parse_phrasal_book.py tools\ocr\clean.jsonl tools\ocr\photo.jsonl tools\ocr\book.json
+    python tools\make_phrasal_examples.py tools\ocr\book.json
+
+The reader keeps **where every line sat on the page**, because the book
+marks its examples with italics and italics do not survive being read --
+but it also indents them, and position is the only thing left to go on.
+
+The two PDFs complete each other: the clean scan is missing 84 printed
+pages and the photographs supply all of them. `parse_phrasal_book.py`
+takes both and prefers the clean one page by page.
+
+380 verbs, 844 senses, 1,836 sentences. The 213 verbs that were new went
+into the topic; the rest were already here, and their rows gained the
+book's extra senses in their empty Meaning slots through
+`tools\enrich_phrasal_rows.py`, which never replaces a meaning that is
+already there.
+
 ## Phrasal verb of the day
 
 Your lists hold **425 phrasal verbs**, and they are the part of English
