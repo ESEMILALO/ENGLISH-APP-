@@ -559,39 +559,37 @@ asks twice, and anything in the current ten you have not mastered comes
 across into the new set, so nothing is left half-learnt. The hour then
 starts from 0:00 for the new ten.
 
-## Phrasal verb of the day
+## Idiomatic phrase of the day
 
-Your lists hold **425 phrasal verbs**, and they are the part of English
-that does not come from Spanish at all: *take off*, *take up*, *take in*
-and *take over* share a verb and nothing else. Ten a day will not get
-through four hundred of them, so one sits on the home screen every day
-whether or not it is in today's set.
+**Idiomatic phrases** is a topic of 131 expressions whose meaning cannot
+be worked out from the words in them -- *under the weather* has nothing
+to do with weather, *a piece of cake* nothing to do with cake. They are
+what makes someone sound like a person rather than a textbook.
 
-It shows the verb, how to say it, the meaning, the example, and the forms
-with whether it separates -- *"Separable: load something up"* is the part
-that catches people out. The speaker button reads it with its example,
-and **Another one** gives you a different one if you want more than one
-in a sitting.
+This topic is deliberately **left out of the day's ten**. Ten idioms at
+a time is the wrong way to meet them; one a day, on the home screen, is
+the right way. `DAILY_CATEGORIES` in `tools	emplate.html` is the list
+the day's set is shared between, and it is `CATEGORIES` minus this one.
 
-Every phrasal verb in the app gets its own day before any of them gets
-a second one -- the band says how many are still to come. The list used
-to remember only the last sixty, which meant the same handful came
-round again while hundreds had never been shown at all.
+The block under the day's set shows one every day, with how many are
+still to come, and works through all 131 before any of them comes round
+a second time. **Another one** gives you a different one straight away.
 
-A word counts as a phrasal verb if its notes carry the forms line
-("Regular verb. Base: ...") or say it is separable, or if it sits in a
-topic that is nothing but phrasal verbs. Looking for the bare word
-"verb" in the notes was not enough: it matched *adverb*, and it matched
-*instead of*, whose note mentions a verb ending in -ing.
+The phrasal verbs are still in the app, as their own topic of 213 -- two
+of them turn up in the day's ten like any other list.
 
-The same verb stays all day, even across a reload: it is the verb of the
-*day*. The last sixty are remembered so it works through the list rather
-than circling the same few.
+### Before this: the phrasal verb of the day
 
-The app works out which words are phrasal verbs when it reads the
-spreadsheet -- two or three words ending in a particle, where the notes
-say it is a verb -- so anything you add later joins in with no work from
-you.
+This block used to show a phrasal verb each day, and the idiom block
+replaced it. The machinery is the same one, pointed at a different
+topic, so switching back is a matter of changing which pool it draws
+from.
+
+Your lists still hold **641 phrasal verbs**, and they are the part of
+English that does not come from Spanish at all: *take off*, *take up*,
+*take in* and *take over* share a verb and nothing else. They are no
+longer short of attention, because 213 of them are a topic of their own
+and two turn up in the day's ten.
 
 ## Pictures
 

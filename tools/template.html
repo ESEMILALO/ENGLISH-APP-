@@ -455,29 +455,29 @@
     .studybar-row{ flex-direction:column; }
   }
 
-  /* the phrasal verb of the day */
-  .pv-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
-  .pv-word{
+  /* the idiomatic phrase of the day */
+  .idiom-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .idiom-word{
     font-family:var(--cond); font-size:1.9rem; line-height:1.15; color:var(--text);
   }
-  .pv-pron{ font-family:var(--mono); font-size:.76rem; color:var(--text-soft); }
-  .pv-mean{ font-size:1rem; line-height:1.55; margin:9px 0 0; }
-  .pv-ex{
+  .idiom-pron{ font-family:var(--mono); font-size:.76rem; color:var(--text-soft); }
+  .idiom-mean{ font-size:1rem; line-height:1.55; margin:9px 0 0; }
+  .idiom-ex{
     font-style:italic; color:var(--text-soft); font-size:.92rem;
     margin:7px 0 0; padding-left:11px; border-left:2px solid var(--rule);
   }
-  .pv-note{
+  .idiom-note{
     color:var(--text-soft); font-size:.8rem; line-height:1.5; margin:10px 0 0;
   }
-  .pv-note b{ color:var(--text); font-weight:700; }
-  .pv-row{ display:flex; gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap; }
-  .pv-row .speak-btn{ margin:0; }
-  .pv-pic{ margin-top:12px; }
-  .pv-pic img{
+  .idiom-note b{ color:var(--text); font-weight:700; }
+  .idiom-row{ display:flex; gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap; }
+  .idiom-row .speak-btn{ margin:0; }
+  .idiom-pic{ margin-top:12px; }
+  .idiom-pic img{
     width:100%; max-width:260px; height:auto; border-radius:11px;
     border:1px solid var(--rule); display:block;
   }
-  .pv-seen{
+  .idiom-seen{
     font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
     text-transform:uppercase; color:var(--text-soft); margin-left:auto;
   }
@@ -1373,11 +1373,19 @@
   // each with no words in it and a progress figure of NaN, and the new
   // one was nowhere, so the day's ten were drawn from four lists while
   // the screen said five.
+  // The topic the day's ten never draws from. Idioms are not words to
+  // grind through ten at a time; they are met one at a time, on the home
+  // screen, which is what the block below the day's set is for.
+  const IDIOM_TOPIC = 'Idiomatic phrases';
+
   const CATEGORIES = (() => {
     const seen = [];
     for(const w of WORDS) if(seen.indexOf(w.cat) < 0) seen.push(w.cat);
     return seen;
   })();
+
+  // The lists the day's ten is shared out between.
+  const DAILY_CATEGORIES = CATEGORIES.filter(c => c !== IDIOM_TOPIC);
 
   // Short forms for the places where the full name will not fit. A topic
   // with no entry here keeps its own name, so a new sheet needs nothing
@@ -1728,13 +1736,13 @@
     picks.forEach(w=>{ taken[w.id] = true; });
 
     const inSet = {};
-    CATEGORIES.forEach(c=>{ inSet[c] = 0; });
+    DAILY_CATEGORIES.forEach(c=>{ inSet[c] = 0; });
     picks.forEach(w=>{ if(inSet[w.cat] !== undefined) inSet[w.cat]++; });
 
     // weakest-first within each list, so the top-up takes the words most
     // in need from whichever list is behind
     const pools = {};
-    CATEGORIES.forEach(c=>{
+    DAILY_CATEGORIES.forEach(c=>{
       pools[c] = sortByPriority(WORDS.filter(w=>
         w.cat === c && !taken[w.id] && statusOf(w.id) !== 'mastered'));
     });
@@ -1742,7 +1750,7 @@
     while(picks.length < LEARNSET_SIZE){
       // the list with the least representation so far that still has words
       let next = null;
-      CATEGORIES.forEach(c=>{
+      DAILY_CATEGORIES.forEach(c=>{
         if(!pools[c].length) return;
         if(next === null || inSet[c] < inSet[next]) next = c;
       });
@@ -2965,13 +2973,13 @@
     // Four hundred phrasal verbs is too many to meet ten at a time, and
     // they are the part of English that does not come from Spanish at
     // all. One a day, whether or not it is in today's set.
-    const pvHtml = phrasalVerbs().length
+    const idiomBlock = idiomPool().length
       ? '<div class="home-band">'
-        + '<div class="band-head"><span>Phrasal verb of the day</span>'
-          + '<span class="band-hint">' + phrasalVerbs().length + ' in your lists &middot; '
-          + Math.max(0, phrasalVerbs().length - (((meta && meta.pvSeen) || []).length))
+        + '<div class="band-head"><span>Idiomatic phrase of the day</span>'
+          + '<span class="band-hint">' + idiomPool().length + ' in your lists &middot; '
+          + Math.max(0, idiomPool().length - (((meta && meta.idiomSeen) || []).length))
           + ' still to come</span></div>'
-        + '<div id="pv-host">' + phrasalHtml() + '</div>'
+        + '<div id="idiom-host">' + idiomHtml() + '</div>'
         + '</div>'
       : '';
 
@@ -3011,7 +3019,7 @@
       // so the right-hand side used to run out halfway down the screen.
       // Your progress goes under it and the column reaches the floor.
       + '<div class="home-pair">' + todayHtml
-        + '<div class="home-col">' + pvHtml + statsHtml + '</div>'
+        + '<div class="home-col">' + idiomBlock + statsHtml + '</div>'
       + '</div>'
       + addWordBlockHtml()
       + '<div class="home-pair home-pair-half">' + calHtml + '</div>'
@@ -3060,7 +3068,7 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
-    wirePhrasal();
+    wireIdiom();
     wireStudyBar();
     wireKeyRow();
     wireVoiceRow();
@@ -3934,7 +3942,7 @@
               : 'These '+set.length+' are done. Keep practicing to finish the '
                 + goalWords()+' on them — that is what brings '
                 + LEARNSET_SIZE+' new words. The time adds up across days.')
-          : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+CATEGORIES.length+' lists. '
+          : 'Your '+LEARNSET_SIZE+' words for today, '+PER_TOPIC+' from each of the '+DAILY_CATEGORIES.length+' lists. '
             + 'The app picks the method for each one: '+stageList
             + '. A word is only mastered once you have said it out loud.')+'</p>'
       + '<div class="bar bar-session"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
@@ -4167,24 +4175,26 @@
   // word you are looking at proves little, and this is meant to be the
   // hard question -- if you cannot produce it from memory, you have not
   // really kept it.
-  // --- The phrasal verb of the day ---------------------------------
+  // --- The idiomatic phrase of the day ------------------------------
   //
-  // He has four hundred of them and they are the hardest part of English
-  // for a Spanish speaker: "take off", "take up", "take in" and "take
-  // over" share a verb and nothing else. One a day, in front of him,
-  // whether or not it is one of today's ten.
+  // An idiom is the part of English that cannot be worked out from the
+  // words in it: "under the weather" has nothing to do with weather.
+  // They are also what makes someone sound like a person rather than a
+  // textbook. Ten a day would be wrong for them -- they are met one at a
+  // time and recognised later -- so this topic stays out of the day's set
+  // and gets this block instead.
   // Every phrasal verb in the app gets its own day before any of them
   // gets a second one. Remembering only the last sixty meant the same
   // handful came round again while hundreds had never been shown at all.
 
-  function phrasalVerbs(){
-    return WORDS.filter(w=>w.pv);
+  function idiomPool(){
+    return WORDS.filter(w=>w.cat === IDIOM_TOPIC);
   }
 
-  function pickPhrasal(){
-    const all = phrasalVerbs();
+  function pickIdiom(){
+    const all = idiomPool();
     if(!all.length) return null;
-    const lately = (meta && meta.pvSeen) || [];
+    const lately = (meta && meta.idiomSeen) || [];
     const fresh = all.filter(w=>lately.indexOf(w.id) < 0);
     const pool = fresh.length ? fresh : all;
     return pool[Math.floor(Math.random() * pool.length)];
@@ -4192,91 +4202,91 @@
 
   // The same one all day: it is the verb of the *day*, and one that
   // changed every time the page was drawn would be nothing at all.
-  function phrasalOfTheDay(){
+  function idiomOfTheDay(){
     const today = todayStr();
-    const kept = (meta && meta.pvDay) || null;
+    const kept = (meta && meta.idiomDay) || null;
     if(kept && kept.day === today){
       const found = WORDS.find(w=>w.id === kept.id);
       if(found) return found;
     }
-    const pick = pickPhrasal();
+    const pick = pickIdiom();
     if(!pick) return null;
-    rememberPhrasal(pick, today);
+    rememberIdiom(pick, today);
     return pick;
   }
 
-  function rememberPhrasal(word, day){
+  function rememberIdiom(word, day){
     if(!meta) return;
-    meta.pvDay = { day: day || todayStr(), id: word.id };
-    const total = phrasalVerbs().length;
-    const before = (meta.pvSeen || []).filter(id=>id !== word.id);
+    meta.idiomDay = { day: day || todayStr(), id: word.id };
+    const total = idiomPool().length;
+    const before = (meta.idiomSeen || []).filter(id=>id !== word.id);
     let seen = [word.id].concat(before);
     // When every one has had its day, the round starts again rather than
     // the list growing for ever.
     if(total && seen.length >= total) seen = [word.id];
-    meta.pvSeen = seen.slice(0, Math.max(total, 1));
+    meta.idiomSeen = seen.slice(0, Math.max(total, 1));
     saveMeta();
   }
 
-  function anotherPhrasal(){
-    const pick = pickPhrasal();
+  function anotherIdiom(){
+    const pick = pickIdiom();
     if(!pick) return;
-    rememberPhrasal(pick);
-    paintPhrasal();
+    rememberIdiom(pick);
+    paintIdiom();
   }
 
-  function phrasalHtml(){
-    const w = phrasalOfTheDay();
+  function idiomHtml(){
+    const w = idiomOfTheDay();
     if(!w) return '';
     const m = (w.me || [])[0] || {};
     const pic = WORD_IMAGES[w.id];
     const status = statusOf(w.id);
-    return '<div class="pv-head">'
-        + '<span class="pv-word">' + esc(w.w) + '</span>'
-        + (w.p ? '<span class="pv-pron">/' + esc(w.p) + '/</span>' : '')
+    return '<div class="idiom-head">'
+        + '<span class="idiom-word">' + esc(w.w) + '</span>'
+        + (w.p ? '<span class="idiom-pron">/' + esc(w.p) + '/</span>' : '')
         + (status === 'mastered'
-            ? '<span class="pv-seen">yours already</span>'
-            : (status ? '<span class="pv-seen">' + esc(status) + '</span>'
-                      : '<span class="pv-seen">new to you</span>'))
+            ? '<span class="idiom-seen">yours already</span>'
+            : (status ? '<span class="idiom-seen">' + esc(status) + '</span>'
+                      : '<span class="idiom-seen">new to you</span>'))
       + '</div>'
-      + (m.m ? '<p class="pv-mean">' + esc(m.m) + '</p>' : '')
-      + (m.e ? '<p class="pv-ex">&ldquo;' + esc(m.e) + '&rdquo;</p>' : '')
+      + (m.m ? '<p class="idiom-mean">' + esc(m.m) + '</p>' : '')
+      + (m.e ? '<p class="idiom-ex">&ldquo;' + esc(m.e) + '&rdquo;</p>' : '')
       + ((w.me || []).length > 1 && w.me[1].m
-          ? '<p class="pv-mean">' + esc(w.me[1].m) + '</p>'
-            + (w.me[1].e ? '<p class="pv-ex">&ldquo;' + esc(w.me[1].e) + '&rdquo;</p>' : '')
+          ? '<p class="idiom-mean">' + esc(w.me[1].m) + '</p>'
+            + (w.me[1].e ? '<p class="idiom-ex">&ldquo;' + esc(w.me[1].e) + '&rdquo;</p>' : '')
           : '')
-      + (w.n ? '<p class="pv-note">' + esc(w.n) + '</p>' : '')
+      + (w.n ? '<p class="idiom-note">' + esc(w.n) + '</p>' : '')
       + (pic && pic.file
-          ? '<figure class="pv-pic"><img src="images/' + esc(pic.file) + '" '
+          ? '<figure class="idiom-pic"><img src="images/' + esc(pic.file) + '" '
             + 'alt="' + esc(w.w) + '" decoding="async"></figure>'
           : '')
-      + '<div class="pv-row">'
+      + '<div class="idiom-row">'
         + (canSpeak
-            ? '<button class="speak-btn" id="pv-say" aria-label="Listen to it">'
+            ? '<button class="speak-btn" id="idiom-say" aria-label="Listen to it">'
               + ICON_SPEAKER + '</button>'
             : '')
-        + '<button class="reset-link" id="pv-another" style="width:auto; margin:0;">'
+        + '<button class="reset-link" id="idiom-another" style="width:auto; margin:0;">'
           + 'Another one &rarr;</button>'
       + '</div>';
   }
 
-  function paintPhrasal(){
-    const host = document.getElementById('pv-host');
+  function paintIdiom(){
+    const host = document.getElementById('idiom-host');
     if(!host) return;
-    host.innerHTML = phrasalHtml();
-    wirePhrasal();
+    host.innerHTML = idiomHtml();
+    wireIdiom();
   }
 
-  function wirePhrasal(){
-    const say = document.getElementById('pv-say');
+  function wireIdiom(){
+    const say = document.getElementById('idiom-say');
     if(say) say.addEventListener('click', ()=>{
-      const w = phrasalOfTheDay();
+      const w = idiomOfTheDay();
       if(!w) return;
       const m = (w.me || [])[0] || {};
       speak(m.e ? w.w + '. ' + m.e : w.w);
     });
-    const another = document.getElementById('pv-another');
-    if(another) another.addEventListener('click', anotherPhrasal);
+    const another = document.getElementById('idiom-another');
+    if(another) another.addEventListener('click', anotherIdiom);
   }
 
   const RECALL_COUNT = 10;
