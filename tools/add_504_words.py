@@ -14,6 +14,10 @@ skipped and reported, so a chunk can be run twice without doubling up.
 
     python tools/add_504_words.py chunk1.json chunk2.json
     python tools/add_504_words.py --dry-run chunk1.json
+    python tools/add_504_words.py --sheet "Phrasal verbs" chunk1.json
+
+A sheet that does not exist yet is created, with the same nine columns
+as the others, so a new topic needs nothing doing to it by hand.
 """
 
 import argparse
@@ -32,8 +36,11 @@ import glossary  # noqa: E402
 from glossary import normalise  # noqa: E402
 from verb_forms import forms_for  # noqa: E402
 
-SHEET = "504 Essential words"
+DEFAULT_SHEET = "504 Essential words"
 DASH = "\u2014"
+HEADER = ["Word/expression", "Pronunciation",
+          "Meaning 1", "Example", "Meaning 2", "Example", "Meaning 3", "Example",
+          "Notes"]
 
 
 def verb_note(base):
@@ -48,8 +55,10 @@ def verb_note(base):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("chunks", nargs="+")
+    ap.add_argument("--sheet", default=DEFAULT_SHEET)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+    sheet = args.sheet
 
     entries = []
     for name in args.chunks:
@@ -61,8 +70,9 @@ def main():
 
     import openpyxl
     wb = openpyxl.load_workbook(glossary.WORKBOOK)
-    if SHEET not in wb.sheetnames:
-        sys.exit("No sheet called %r -- run tools/merge_504_sheets.py first." % SHEET)
+    fresh = sheet not in wb.sheetnames
+    if fresh:
+        print("%r does not exist yet; it will be created." % sheet)
     have = set()
     for name in wb.sheetnames:
         for row in wb[name].iter_rows(min_row=2, max_col=1, values_only=True):
@@ -116,11 +126,15 @@ def main():
     kept = glossary.BACKUPS / ("ENGLISH SCHOOL.pre-504-%s.xlsx" % stamp)
     shutil.copy(glossary.WORKBOOK, kept)
 
-    ws = wb[SHEET]
+    if fresh:
+        ws = wb.create_sheet(sheet)
+        ws.append(HEADER)
+    else:
+        ws = wb[sheet]
     for r in rows:
         ws.append(r)
     wb.save(glossary.WORKBOOK)
-    print("\nAdded %d rows to %r (now %d)." % (len(rows), SHEET, ws.max_row - 1))
+    print("\nAdded %d rows to %r (now %d)." % (len(rows), sheet, ws.max_row - 1))
     print("Copy of the workbook before this: backups/%s" % kept.name)
 
 

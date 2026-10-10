@@ -252,7 +252,9 @@ def load_pictures(known):
 
 
 SYNONYMS = TOOLS / "504_synonyms.json"
-EXAMPLES = TOOLS / "504_examples.json"
+# Each book brings its own sentences; a word is looked up in all of
+# them, so adding another book means adding a file here.
+EXAMPLES = [TOOLS / "504_examples.json", TOOLS / "phrasal_examples.json"]
 
 
 def _key(word):
@@ -277,13 +279,16 @@ def attach_examples(words):
     fill-in-the-blank card is built from, while these are how the book
     actually uses the word.
     """
-    if not EXAMPLES.exists():
+    table = {}
+    for path in EXAMPLES:
+        if not path.exists():
+            continue
+        try:
+            table.update(_by_key(json.loads(path.read_text(encoding="utf-8"))))
+        except (OSError, ValueError):
+            continue
+    if not table:
         return 0
-    try:
-        table = json.loads(EXAMPLES.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return 0
-    table = _by_key(table)
     found = 0
     for w in words:
         got = table.get(_key(w["w"]))
