@@ -561,7 +561,19 @@ starts from 0:00 for the new ten.
 
 ## Games
 
-Five of them, in a block of their own on the home screen. They exist
+Five of them, in a block of their own on the home screen. Opening them
+asks one question first: **which words?**
+
+- **Words I have mastered** -- revision. Only the ones you have already
+  finished, so nothing in the round is new and nothing you half-know is
+  quietly slipping past.
+- **All my words** -- everything in the app, learnt or not.
+
+The question is asked every time, because it is the point of the
+screen, and the answer changes what each game is worth playing. It also
+changes what is offered: with 18 mastered words, *Complete the idiom*
+is greyed out, because none of them is an idiom, and *Match the pairs*
+plays three rounds of five instead of ten. They exist
 because the conversation is the one part of this app that needs a key,
 and the free allowance behind that key runs out -- so when it does,
 there is still something to do.

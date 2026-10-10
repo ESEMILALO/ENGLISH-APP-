@@ -3122,7 +3122,10 @@
     const practiceBtn = el('#go-practice');
     if(practiceBtn) practiceBtn.addEventListener('click', startFreeTalk);
     const gamesBtn = el('#go-games');
-    if(gamesBtn) gamesBtn.addEventListener('click', renderGames);
+    // Always ask which words first. Coming back from a round of revision
+    // and being dropped straight into revision again is the wrong
+    // default: the question is the point of the screen.
+    if(gamesBtn) gamesBtn.addEventListener('click', () => { gameScope = null; renderGames(); });
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
     el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
@@ -4256,9 +4259,16 @@
   // time, because they are studying.
   const GAME_ROUNDS = 10;
   let game = null;
+  // Which words the games draw on: the ones he has finished, or all of
+  // them. Asked before the games are offered, because the answer
+  // changes what each game is worth playing -- a round of words he has
+  // mastered is revision, a round of all of them is a first meeting.
+  let gameScope = null;
 
   function gameWords(){
-    return WORDS.filter(w => w.me && w.me.length && w.me[0].m);
+    const usable = WORDS.filter(w => w.me && w.me.length && w.me[0].m);
+    if(gameScope !== 'mastered') return usable;
+    return usable.filter(w => statusOf(w.id) === 'mastered');
   }
 
   // Every sentence the app holds for a word, the book's and its own,
@@ -4281,9 +4291,9 @@
   }
 
   function gamePool(kind){
-    if(kind === 'idiom') return WORDS.filter(w => w.cat === IDIOM_TOPIC);
+    if(kind === 'idiom') return gameWords().filter(w => w.cat === IDIOM_TOPIC);
     if(kind === 'spell'){
-      const tricky = WORDS.filter(w => /easily misspelled/i.test(w.n || ''));
+      const tricky = gameWords().filter(w => /easily misspelled/i.test(w.n || ''));
       return tricky.length >= GAME_ROUNDS ? tricky : gameWords();
     }
     if(kind === 'listen') return gameWords().filter(w => sentencesFor(w).length);
@@ -4308,7 +4318,9 @@
           + 'the book says are most often spelled wrong.' }
   ];
 
+  // The first screen: whose words. The second: which game.
   function renderGames(){
+    if(!gameScope) return renderGameScope();
     const rows = GAMES.map(g => {
       const n = gamePool(g.kind).length;
       const enough = n >= (g.kind === 'match' ? 5 : 4);
@@ -4320,21 +4332,64 @@
         + '</button>';
     }).join('');
 
+    const mastered = gameScope === 'mastered';
     root.innerHTML = '<div class="view">'
       + '<div class="sess-top"><button class="sess-back" id="games-back">'
-        + ICON_BACK + 'Home</button><span>Games</span><span class="cat-tag">'
-        + GAMES.length + '</span></div>'
-      + '<h1 class="title" style="margin-top:14px;">Games</h1>'
-      + '<p class="subtitle">Ten rounds each. None of these needs a key, and '
-      + 'none of them changes what the app thinks you have learnt &mdash; they '
-      + 'are practice, and the time counts towards your hour.</p>'
+        + ICON_BACK + 'Back</button><span>Games</span><span class="cat-tag">'
+        + (mastered ? 'Mastered' : 'All words') + '</span></div>'
+      + '<h1 class="title" style="margin-top:14px;">'
+        + (mastered ? 'Words you have mastered' : 'All your words') + '</h1>'
+      + '<p class="subtitle">'
+      + (mastered
+          ? 'Revision: only the ' + gameWords().length + ' words you have '
+            + 'already finished. '
+          : 'Everything in the app, learnt or not. ')
+      + 'Ten rounds each. None of these needs a key, and none of them changes '
+      + 'what the app thinks you have learnt &mdash; they are practice, and the '
+      + 'time counts towards your hour.</p>'
       + '<div class="game-list">' + rows + '</div>'
       + '</div>';
 
-    el('#games-back').addEventListener('click', renderHome);
+    el('#games-back').addEventListener('click', () => { gameScope = null; renderGames(); });
     root.querySelectorAll('.game-pick').forEach(b => {
       if(b.disabled) return;
       b.addEventListener('click', () => startGame(b.dataset.game));
+    });
+  }
+
+  function renderGameScope(){
+    const all = WORDS.filter(w => w.me && w.me.length && w.me[0].m).length;
+    const done = WORDS.filter(w => w.me && w.me.length && w.me[0].m
+                                && statusOf(w.id) === 'mastered').length;
+
+    root.innerHTML = '<div class="view">'
+      + '<div class="sess-top"><button class="sess-back" id="scope-back">'
+        + ICON_BACK + 'Home</button><span>Games</span><span class="cat-tag">'
+        + GAMES.length + '</span></div>'
+      + '<h1 class="title" style="margin-top:14px;">Games</h1>'
+      + '<p class="subtitle">Which words should they use?</p>'
+      + '<div class="game-list">'
+        + '<button class="game-pick" data-scope="mastered"'
+          + (done >= 4 ? '' : ' disabled') + '>'
+          + '<b>Words I have mastered</b>'
+          + '<span>Revision. Only the words you have already finished, so '
+          + 'nothing in the round is new and nothing you half-know is '
+          + 'quietly slipping.</span>'
+          + '<em>' + (done >= 4 ? done + ' words'
+              : 'finish at least four words first') + '</em>'
+        + '</button>'
+        + '<button class="game-pick" data-scope="all">'
+          + '<b>All my words</b>'
+          + '<span>Everything in the app, learnt or not. Good for meeting '
+          + 'words you have not reached yet.</span>'
+          + '<em>' + all + ' words</em>'
+        + '</button>'
+      + '</div></div>';
+
+    el('#scope-back').addEventListener('click', renderHome);
+    root.querySelectorAll('.game-pick').forEach(b => {
+      if(b.disabled) return;
+      b.addEventListener('click', () => { gameScope = b.dataset.scope; renderGames(); });
     });
   }
 
@@ -4342,6 +4397,9 @@
     const pool = shuffled(gamePool(kind));
     if(kind === 'match'){
       const rounds = [];
+      // With a small pool -- eighteen mastered words, say -- there are
+      // not ten rounds of five to be had, so it plays as many as there
+      // are rather than refusing.
       for(let i = 0; i + 5 <= pool.length && rounds.length < GAME_ROUNDS; i += 5){
         rounds.push(pool.slice(i, i + 5));
       }
@@ -4356,7 +4414,7 @@
   function buildChoices(){
     const w = game.rounds[game.i];
     if(!w) return;
-    const sameTopic = WORDS.filter(x => x.cat === w.cat && x.id !== w.id
+    const sameTopic = gameWords().filter(x => x.cat === w.cat && x.id !== w.id
                                      && x.w.toLowerCase() !== w.w.toLowerCase());
     const others = shuffled(sameTopic.length >= 3 ? sameTopic : gameWords()).slice(0, 3);
     game.options = shuffled([w].concat(others));
