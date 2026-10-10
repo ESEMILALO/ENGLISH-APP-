@@ -13,7 +13,11 @@ off here rather than shown to anybody.
 Keyed by the headword in lower case, like the synonyms, so renaming or
 merging the sheet leaves it alone.
 
-    python tools/make_504_examples.py path/to/flat504.json
+Any number of sources can be given; the bonus lesson at the back of the
+book is laid out the same way, so it goes through here too. A source
+whose sentences are already clean passes through unharmed.
+
+    python tools/make_504_examples.py flat504.json tools/bonus125.json
 """
 
 import json
@@ -84,23 +88,25 @@ def clean(sentence):
 
 
 def main():
-    book = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-    table, kept, dropped = {}, 0, 0
-    for e in book:
-        good = []
-        for raw in e["ex"]:
-            s = clean(raw)
-            if s and s not in good:
-                good.append(s)
-            elif not s:
-                dropped += 1
-        if good:
-            table[e["word"].lower()] = good
+    table, kept, dropped, total = {}, 0, 0, 0
+    for name in sys.argv[1:]:
+        book = json.loads(Path(name).read_text(encoding="utf-8"))
+        total += len(book)
+        for e in book:
+            good = []
+            for raw in e.get("ex", []):
+                s = clean(raw)
+                if s and s not in good:
+                    good.append(s)
+                elif not s:
+                    dropped += 1
+            if good:
+                table.setdefault(e["word"].lower(), good)
             kept += len(good)
     OUT.write_text(json.dumps(table, indent=1, ensure_ascii=False, sort_keys=True),
                    encoding="utf-8")
     print("%d sentences kept for %d of the %d words (%d set aside as damaged)"
-          % (kept, len(table), len(book), dropped))
+          % (kept, len(table), total, dropped))
     print("written to tools/%s" % OUT.name)
 
 

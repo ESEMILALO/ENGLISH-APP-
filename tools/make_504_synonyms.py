@@ -10,7 +10,10 @@ The result is keyed by the headword in lower case rather than by the
 app's "<topic>::<word>" id, so renaming or merging the sheet leaves it
 alone.
 
-    python tools/make_504_synonyms.py path/to/flat504.json
+Any number of sources can be given; the bonus lesson at the back of the
+book is laid out the same way, so it goes through here too.
+
+    python tools/make_504_synonyms.py flat504.json tools/bonus125.json
 """
 
 import json
@@ -44,16 +47,18 @@ def synonyms(gloss, headword):
 
 
 def main():
-    src = Path(sys.argv[1])
-    book = json.loads(src.read_text(encoding="utf-8"))
     table = {}
-    for e in book:
-        syns = synonyms(e["gloss"], e["word"])
-        if syns:
-            table[e["word"].lower()] = syns
+    total = 0
+    for name in sys.argv[1:]:
+        book = json.loads(Path(name).read_text(encoding="utf-8"))
+        total += len(book)
+        for e in book:
+            syns = synonyms(e.get("gloss", ""), e["word"])
+            if syns:
+                table.setdefault(e["word"].lower(), syns)
     OUT.write_text(json.dumps(table, indent=1, ensure_ascii=False, sort_keys=True),
                    encoding="utf-8")
-    print("%d of %d headwords have words printed beside them" % (len(table), len(book)))
+    print("%d of %d headwords have words printed beside them" % (len(table), total))
     for w in ("abandon", "keen", "typical", "valiant"):
         print("   %-10s %s" % (w, ", ".join(table.get(w, []))))
     print("written to tools/%s" % OUT.name)

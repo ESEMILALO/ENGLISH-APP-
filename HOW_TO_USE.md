@@ -488,6 +488,27 @@ for you; `"v|and one more thing"` adds a sentence after them. A word
 already anywhere in the workbook is skipped and reported, so a file can
 be run twice without doubling up.
 
+### The rest of the book
+
+After lesson 42 the book has two more word lists, and both are in the
+same topic.
+
+**125 More Difficult (But Essential) Words** is a bonus lesson laid out
+exactly like the 504 -- headword, definition, three sentences -- so it
+goes through the same tools: `tools\read_bonus_125.py` reads it into
+`tools\bonus125.json`, and that file is then given to
+`make_504_examples.py` and `make_504_synonyms.py` alongside the 504's
+own. *abate, cajole, meticulous, procrastinate, taciturn.*
+
+**100 Frequently Misspelled Words** is a spelling list, not a
+vocabulary one: the book gives only the letters people get wrong.
+Those words are written out like any other, with the book's hint in
+the Notes -- *"Easily misspelled: double r, double s"* for embarrass.
+
+What is deliberately **not** in the app: the reading passages, the
+exercises, the Spotlight On etymology notes, the Bonus Review, and
+Panorama of Words. Those are things to do, not words to learn.
+
 ## Phrasal verb of the day
 
 Your lists hold **425 phrasal verbs**, and they are the part of English

@@ -21,6 +21,7 @@ HOW TO USE:
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 from collections import Counter
 
@@ -254,6 +255,20 @@ SYNONYMS = TOOLS / "504_synonyms.json"
 EXAMPLES = TOOLS / "504_examples.json"
 
 
+def _key(word):
+    """Look a word up without caring about its accents.
+
+    The book prints "cliche" and the sheet spells it "cliche" with the
+    accent, which is the right spelling and the wrong lookup.
+    """
+    plain = unicodedata.normalize("NFKD", str(word).strip().lower())
+    return "".join(c for c in plain if not unicodedata.combining(c))
+
+
+def _by_key(table):
+    return {_key(k): v for k, v in table.items()}
+
+
 def attach_examples(words):
     """Hang the book's own three sentences on each of the 504.
 
@@ -268,9 +283,10 @@ def attach_examples(words):
         table = json.loads(EXAMPLES.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return 0
+    table = _by_key(table)
     found = 0
     for w in words:
-        got = table.get(w["w"].strip().lower())
+        got = table.get(_key(w["w"]))
         if got:
             w["bk"] = got
             found += 1
@@ -291,9 +307,10 @@ def attach_synonyms(words):
         table = json.loads(SYNONYMS.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return 0
+    table = _by_key(table)
     found = 0
     for w in words:
-        got = table.get(w["w"].strip().lower())
+        got = table.get(_key(w["w"]))
         if got:
             w["syn"] = got
             found += 1

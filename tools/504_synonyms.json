@@ -29,11 +29,26 @@
   "scold very severely",
   "bad treatment"
  ],
+ "adage": [
+  "a proverb"
+ ],
  "adequate": [
   "fully sufficient"
  ],
  "adolescent": [
   "youthful"
+ ],
+ "aegis": [
+  "defense"
+ ],
+ "affluent": [
+  "rich",
+  "having material wealth"
+ ],
+ "alleviate": [
+  "relieve",
+  "lessen",
+  "make more bearable"
  ],
  "alter": [
   "make different",
@@ -50,6 +65,10 @@
  "anticipate": [
   "look forward to",
   "expect"
+ ],
+ "antithesis": [
+  "opposite",
+  "contrast"
  ],
  "appeal": [
   "attraction",
@@ -96,6 +115,19 @@
  "beckon": [
   "attract"
  ],
+ "belligerent": [
+  "a fighting attitude",
+  "warlike"
+ ],
+ "benevolent": [
+  "generous",
+  "charitable"
+ ],
+ "benign": [
+  "favorable",
+  "good-hearted",
+  "kind"
+ ],
  "betray": [
   "be unfaithful",
   "mislead",
@@ -104,6 +136,9 @@
  "bewildered": [
   "confused completely",
   "puzzled"
+ ],
+ "bizarre": [
+  "odd"
  ],
  "blend": [
   "mix together thoroughly",
@@ -126,6 +161,9 @@
   "what is carried",
   "a load"
  ],
+ "cajole": [
+  "to coax"
+ ],
  "calamity": [
   "a great misfortune",
   "serious trouble"
@@ -144,6 +182,10 @@
  "casual": [
   "happening by chance"
  ],
+ "caustic": [
+  "extremely sarcastic",
+  "corrosive"
+ ],
  "cautious": [
   "very careful",
   "never taking chances"
@@ -157,8 +199,17 @@
  "circulate": [
   "go around"
  ],
+ "clandestine": [
+  "secret",
+  "undercover"
+ ],
  "client": [
   "customer"
+ ],
+ "coherent": [
+  "logical",
+  "consistent",
+  "understandable"
  ],
  "coincide": [
   "correspond exactly",
@@ -208,6 +259,11 @@
   "finish",
   "decide"
  ],
+ "condone": [
+  "to excuse",
+  "pardon",
+  "overlook"
+ ],
  "confident": [
   "firmly believing",
   "certain",
@@ -224,15 +280,36 @@
   "direct opposition",
   "disagreement"
  ],
+ "connive": [
+  "to conspire"
+ ],
  "consent": [
   "agree"
+ ],
+ "corpulent": [
+  "obese",
+  "fat"
+ ],
+ "covert": [
+  "not openly shown",
+  "secret",
+  "clandestine"
  ],
  "crafty": [
   "sly",
   "tricky"
  ],
+ "criterion": [
+  "a measure"
+ ],
+ "culpable": [
+  "guilty"
+ ],
  "culprit": [
   "offender"
+ ],
+ "cursory": [
+  "hasty"
  ],
  "customary": [
   "usual"
@@ -301,6 +378,11 @@
  "detour": [
   "a roundabout way"
  ],
+ "devious": [
+  "cunning",
+  "deceptive",
+  "roundabout"
+ ],
  "devise": [
   "think out",
   "plan",
@@ -310,6 +392,9 @@
   "eat hungrily",
   "absorb completely",
   "take in greedily"
+ ],
+ "digress": [
+  "stray"
  ],
  "dilemma": [
   "a difficult choice"
@@ -338,6 +423,10 @@
  "distress": [
   "misfortune"
  ],
+ "dormant": [
+  "inactive",
+  "temporarily suspended"
+ ],
  "doubt": [
   "not believe",
   "feel uncertain about",
@@ -363,6 +452,9 @@
  "dwindle": [
   "shrink"
  ],
+ "egotist": [
+  "a conceited person"
+ ],
  "elevate": [
   "raise",
   "lift up"
@@ -371,6 +463,9 @@
   "get rid of",
   "remove",
   "omit"
+ ],
+ "elusive": [
+  "tending to evade"
  ],
  "embrace": [
   "hug one another",
@@ -444,6 +539,10 @@
   "enlarge",
   "swell"
  ],
+ "expedite": [
+  "to execute promptly",
+  "speed up"
+ ],
  "expensive": [
   "costly",
   "high-priced"
@@ -458,6 +557,9 @@
   "uncover",
   "leave unprotected",
   "show openly"
+ ],
+ "fallacious": [
+  "deceiving or misleading"
  ],
  "famine": [
   "starvation",
@@ -489,6 +591,10 @@
   "having good luck",
   "lucky"
  ],
+ "fracas": [
+  "a noisy quarrel",
+  "brawl"
+ ],
  "fragile": [
   "delicate"
  ],
@@ -502,8 +608,17 @@
  "fugitive": [
   "a runaway"
  ],
+ "furtive": [
+  "underhanded",
+  "secret",
+  "stealthy"
+ ],
  "gallant": [
   "brave"
+ ],
+ "garrulous": [
+  "talkative",
+  "wordy"
  ],
  "glance": [
   "a quick look"
@@ -543,6 +658,9 @@
  "hesitate": [
   "be undecided"
  ],
+ "heterogeneous": [
+  "mixed"
+ ],
  "hinder": [
   "hold back"
  ],
@@ -572,16 +690,60 @@
   "not lawful",
   "against the law"
  ],
+ "imbibe": [
+  "drink"
+ ],
+ "impasse": [
+  "no obvious escape",
+  "deadlock"
+ ],
+ "impeccable": [
+  "flawless"
+ ],
+ "incumbent": [
+  "occupant"
+ ],
+ "indigent": [
+  "poor",
+  "impoverished"
+ ],
+ "indolent": [
+  "disliking activity",
+  "habitually lazy"
+ ],
+ "inept": [
+  "incompetent"
+ ],
  "ingenious": [
   "clever"
  ],
  "inhabit": [
   "live in"
  ],
+ "innocuous": [
+  "harmless"
+ ],
  "innovative": [
   "fresh",
   "clever",
   "having new ideas"
+ ],
+ "insolent": [
+  "exhibiting boldness",
+  "impudent",
+  "arrogant"
+ ],
+ "intrepid": [
+  "fearless",
+  "brave",
+  "bold"
+ ],
+ "inundate": [
+  "overflow",
+  "overwhelm"
+ ],
+ "itinerary": [
+  "a travel plan"
  ],
  "jeopardize": [
   "risk",
@@ -597,6 +759,9 @@
  "jolly": [
   "merry",
   "full of fun"
+ ],
+ "judicious": [
+  "showing good judgment"
  ],
  "justice": [
   "just conduct",
@@ -616,6 +781,10 @@
  "lack": [
   "have not enough"
  ],
+ "lament": [
+  "to mourn",
+  "express grief"
+ ],
  "lecture": [
   "a scolding",
   "to scold"
@@ -624,6 +793,10 @@
   "easy to read",
   "plain and clear"
  ],
+ "lethargy": [
+  "forgetfulness",
+  "drowsy indifference"
+ ],
  "linger": [
   "stay on"
  ],
@@ -631,10 +804,26 @@
   "reasonable",
   "reasonably expected"
  ],
+ "lucid": [
+  "easily understood",
+  "clear",
+  "mentally sound"
+ ],
+ "lucrative": [
+  "profitable"
+ ],
+ "ludicrous": [
+  "silly",
+  "absurd"
+ ],
  "lunatic": [
   "crazy person",
   "insane",
   "extremely foolish"
+ ],
+ "magnanimous": [
+  "unselfish",
+  "generous"
  ],
  "maim": [
   "cripple",
@@ -658,6 +847,9 @@
   "greater part",
   "more than half"
  ],
+ "malevolent": [
+  "evil"
+ ],
  "masculine": [
   "of man",
   "male"
@@ -678,6 +870,9 @@
   "greatest amount",
   "greatest possible"
  ],
+ "mediate": [
+  "resolve differences"
+ ],
  "mediocre": [
   "average",
   "ordinary"
@@ -689,6 +884,10 @@
   "goodness",
   "worth",
   "value"
+ ],
+ "militant": [
+  "ready to fight",
+  "warlike"
  ],
  "minimum": [
   "the lowest amount"
@@ -712,6 +911,11 @@
  ],
  "morality": [
   "virtue"
+ ],
+ "morbid": [
+  "unhealthy",
+  "pertaining to disease",
+  "gruesome"
  ],
  "morsel": [
   "a small bite",
@@ -739,14 +943,30 @@
   "silent",
   "unable to speak"
  ],
+ "nefarious": [
+  "wicked",
+  "sinful",
+  "evil"
+ ],
  "negative": [
   "saying no",
   "minus"
+ ],
+ "nemesis": [
+  "an unbeatable rival"
  ],
  "nimble": [
   "active and sure-footed",
   "quick moving",
   "light and quick"
+ ],
+ "nomad": [
+  "wanderer"
+ ],
+ "nonchalant": [
+  "cool",
+  "indifferent",
+  "calmly unconcerned"
  ],
  "nourish": [
   "feed",
@@ -776,6 +996,9 @@
   "quick to notice",
   "watchful"
  ],
+ "obsolete": [
+  "worn out"
+ ],
  "obstacle": [
   "impedi ment",
   "obstruction"
@@ -787,6 +1010,17 @@
  "obvious": [
   "plain"
  ],
+ "odious": [
+  "hateful",
+  "disgusting"
+ ],
+ "omnipotent": [
+  "all-powerful"
+ ],
+ "onus": [
+  "burden",
+  "obligation"
+ ],
  "opt": [
   "choose or favor",
   "select"
@@ -795,6 +1029,11 @@
   "spoken",
   "using speech",
   "of the mouth"
+ ],
+ "ostensible": [
+  "apparent",
+  "on the surface",
+  "professed"
  ],
  "outlaw": [
   "an exile",
@@ -807,8 +1046,15 @@
   "quiet down",
   "bring peace to"
  ],
+ "panacea": [
+  "cure-all",
+  "remedy for everything"
+ ],
  "panic": [
   "unreasoning fear"
+ ],
+ "pariah": [
+  "outcast"
  ],
  "parole": [
   "word of honor",
@@ -821,8 +1067,16 @@
  "patriotic": [
   "loving one's country"
  ],
+ "paucity": [
+  "shortage",
+  "scarceness"
+ ],
  "pedestrian": [
   "walker"
+ ],
+ "pensive": [
+  "thoughtful",
+  "thinking seriously"
  ],
  "peril": [
   "danger"
@@ -831,11 +1085,21 @@
   "be destroyed",
   "die"
  ],
+ "perjury": [
+  "lying under oath"
+ ],
  "persist": [
   "continue firmly"
  ],
  "persuade": [
   "make willing"
+ ],
+ "peruse": [
+  "to read carefully"
+ ],
+ "phlegmatic": [
+  "slow to respond",
+  "not easily excited"
  ],
  "pierce": [
   "go into",
@@ -844,6 +1108,10 @@
  ],
  "placard": [
   "poster"
+ ],
+ "plausible": [
+  "seemingly true",
+  "apparently believable"
  ],
  "plea": [
   "request",
@@ -860,6 +1128,10 @@
  ],
  "postpone": [
   "delay"
+ ],
+ "potpourri": [
+  "mixture",
+  "medley"
  ],
  "precaution": [
   "measures taken beforehand",
@@ -887,6 +1159,16 @@
  ],
  "proceed": [
   "move forward"
+ ],
+ "procrastinate": [
+  "delay"
+ ],
+ "prognosticate": [
+  "predict"
+ ],
+ "prolific": [
+  "producing much",
+  "fertile"
  ],
  "prominent": [
   "well-known",
@@ -918,12 +1200,21 @@
  "qualify": [
   "become fit"
  ],
+ "quandary": [
+  "dilemma",
+  "condition of doubt"
+ ],
  "quantity": [
   "amount"
  ],
  "quarter": [
   "region",
   "section"
+ ],
+ "rabid": [
+  "fanatical",
+  "furious",
+  "infected with rabies"
  ],
  "radical": [
   "fundamental",
@@ -988,6 +1279,14 @@
  "reluctant": [
   "unwilling"
  ],
+ "rendezvous": [
+  "meeting place",
+  "meeting by arrangement"
+ ],
+ "rescind": [
+  "to cancel",
+  "to repeal"
+ ],
  "resign": [
   "give up",
   "yield",
@@ -1027,6 +1326,11 @@
  "sacred": [
   "worthy of respect",
   "holy"
+ ],
+ "sanguine": [
+  "confident",
+  "hopeful",
+  "optimistic"
  ],
  "scarce": [
   "hard to get",
@@ -1116,6 +1420,9 @@
   "highest point",
   "top"
  ],
+ "superficial": [
+  "not deep"
+ ],
  "surpass": [
   "do better than",
   "be greater than",
@@ -1127,6 +1434,11 @@
  ],
  "sympathetic": [
   "approving"
+ ],
+ "taciturn": [
+  "silent",
+  "reserved",
+  "uncommunicative"
  ],
  "talent": [
   "natural ability"
@@ -1144,6 +1456,10 @@
  "tendency": [
   "leaning"
  ],
+ "terse": [
+  "brief",
+  "to the point"
+ ],
  "thorough": [
   "complete"
  ],
@@ -1154,6 +1470,10 @@
  ],
  "thrust": [
   "push with force"
+ ],
+ "thwart": [
+  "to hinder",
+  "block"
  ],
  "toil": [
   "hard work",
@@ -1182,6 +1502,10 @@
  "trifle": [
   "a small amount",
   "little bit"
+ ],
+ "trite": [
+  "overused",
+  "commonplace"
  ],
  "tumult": [
   "noise",
@@ -1245,6 +1569,9 @@
  "utilize": [
   "make use of"
  ],
+ "utopia": [
+  "paradise"
+ ],
  "utter": [
   "speak",
   "make known",
@@ -1299,6 +1626,9 @@
   "a daring undertaking",
   "to dare"
  ],
+ "verbose": [
+  "wordy"
+ ],
  "verdict": [
   "judgment"
  ],
@@ -1320,6 +1650,11 @@
  "victorious": [
   "conquering"
  ],
+ "vindicate": [
+  "clear",
+  "acquit",
+  "exonerate"
+ ],
  "vision": [
   "power of seeing",
   "sense of sight"
@@ -1333,6 +1668,10 @@
   "business",
   "profession",
   "trade"
+ ],
+ "volatile": [
+  "explosive",
+  "changeable"
  ],
  "wager": [
   "bet"
