@@ -465,7 +465,7 @@ marked **Also** shows the other ways of saying it that the book prints
 beside that word -- *abandon: desert, quit*. It is on the back rather
 than the front, because on the front it would answer the question the
 card is asking. 354 of the 504 have one; `tools\make_504_synonyms.py`
-builds the list and `toolsń_synonyms.json` holds it, keyed by the
+builds the list and `tools\504_synonyms.json` holds it, keyed by the
 word itself so renaming the sheet cannot empty it.
 
 The words themselves were written by hand into
