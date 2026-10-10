@@ -453,8 +453,9 @@ goes into `backups\` before anything is added.
 ### The 504
 
 *504 Absolutely Essential Words* is in there whole, as one topic called
-**504 Essential words**: the 504 headwords and, beside them, the other
-ways of saying each one. They arrived as two separate lists, which meant
+**504 Essential words** -- 1,129 rows: the 504 headwords, every synonym
+the book prints beside them, and the vocabulary from the sentences and
+passages of the first six lessons. They arrived as two separate lists, which meant
 the app treated *abandon* and *desert* as different subjects;
 `tools\merge_504_sheets.py` joined them and carried the saved progress
 across.
@@ -472,7 +473,7 @@ be run twice without doubling up.
 
 ## Phrasal verb of the day
 
-Your lists hold **401 phrasal verbs**, and they are the part of English
+Your lists hold **425 phrasal verbs**, and they are the part of English
 that does not come from Spanish at all: *take off*, *take up*, *take in*
 and *take over* share a verb and nothing else. Ten a day will not get
 through four hundred of them, so one sits on the home screen every day

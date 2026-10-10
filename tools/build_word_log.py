@@ -91,6 +91,30 @@ def find_spreadsheet():
               f"Keep just your word-list spreadsheet here and try again.")
 
 
+def _ing_guesses(head):
+    """All the ways -ing might be spelled onto a verb. Loose on purpose."""
+    head = head.lower()
+    out = {head + "ing"}
+    if head.endswith("e") and not head.endswith("ee"):
+        out.add(head[:-1] + "ing")
+    if head.endswith("ie"):
+        out.add(head[:-2] + "ying")
+    if len(head) > 2 and head[-1] not in "aeiouwxy" and head[-2] in "aeiou"             and head[-3] not in "aeiou":
+        out.add(head + head[-1] + "ing")
+    return out
+
+
+def _plural_guesses(head):
+    """Plural and third-person spellings, equally loose and equally safe."""
+    head = head.lower()
+    out = {head + "s"}
+    if head.endswith("y") and len(head) > 1 and head[-2] not in "aeiou":
+        out.add(head[:-1] + "ies")
+    if head.endswith(("s", "x", "z", "ch", "sh")):
+        out.add(head + "es")
+    return out
+
+
 def alternate_forms(word, meanings, note):
     """Other ways the headword may be written inside its own examples.
 
@@ -113,6 +137,19 @@ def alternate_forms(word, meanings, note):
         for variant in (third, past, part):
             for piece in variant.split("/"):
                 candidates.append((piece.strip() + " " + tail).strip())
+        # The -ing form as well. "Grieve" is written "grieving" in its own
+        # sentence, and without this the word cannot be found there at all,
+        # so the sentence card is simply never built.
+        for piece in _ing_guesses(head):
+            candidates.append((piece + " " + tail).strip())
+
+    # Nouns say themselves in the plural: "authority" in the sentence about
+    # the authorities, "difficulty" in the one about difficulties. Guessing
+    # loosely is safe here, because a guess is only kept if it is actually
+    # written in one of the word's own examples.
+    head_word = (base[0] if (is_verb and base) else word).lower()
+    if head_word and " " not in head_word:
+        candidates.extend(_plural_guesses(head_word))
 
     examples = [m["e"] for m in meanings if m["e"]]
     keep = []
