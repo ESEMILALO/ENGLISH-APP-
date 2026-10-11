@@ -269,6 +269,11 @@
       display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
       gap:0 36px; align-items:start;
     }
+    /* A row whose two blocks are very different heights -- the day's ten
+       is tall, what is slipping away is not -- reads better when the
+       shorter one keeps its own height rather than being stretched, so
+       align-items stays at start. The gap under it is the row, not the
+       block. */
     /* A row with one thing in it is a row about that one thing, so it
        takes the width. Half a row with nothing beside it just looks
        like something failed to load. */
@@ -3075,19 +3080,20 @@
       + '<h1 class="title">Word Log</h1>'
       + '<p class="subtitle">Every word from your spreadsheet, tracked as you go.</p>'
       // Keep them fresh goes first and goes wide: the words already won
-      // are the ones quietly slipping, and they should be the thing he
-      // walks into. The day's ten and the phrasal verb sit together
-      // under it, and adding a word -- which he does occasionally rather
-      // than daily -- waits below them.
-      + '<div class="home-pair">' + freshHtml + '</div>'
-      // The phrasal verb is a few lines tall and the day's ten is not,
-      // so the right-hand side used to run out halfway down the screen.
-      // Your progress goes under it and the column reaches the floor.
-      + '<div class="home-pair">' + todayHtml
-        + '<div class="home-col">' + idiomBlock + statsHtml + '</div>'
+      // The two things the day is actually made of, side by side at the
+      // top: what is slipping away, and what is in front of him now.
+      // Everything else is a row of two under them.
+      + '<div class="home-pair">'
+        // What is slipping away is a few lines tall and the day's ten is
+        // not, so on its own it leaves a third of the screen empty. The
+        // phrase of the day goes under it and the column reaches the
+        // floor beside today's set.
+        + '<div class="home-col">' + freshHtml + idiomBlock + '</div>'
+        + todayHtml
       + '</div>'
       + addWordBlockHtml()
-      + '<div class="home-pair">' + gamesHtml + calHtml + '</div>'
+      + '<div class="home-pair">' + statsHtml + gamesHtml + '</div>'
+      + '<div class="home-pair home-pair-half">' + calHtml + '</div>'
       + moreHtml
       // At the foot, where he asked for it. It is worth saying and not
       // worth standing between him and the day's words.
