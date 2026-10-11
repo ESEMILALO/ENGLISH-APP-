@@ -564,10 +564,20 @@ starts from 0:00 for the new ten.
 Five of them, in a block of their own on the home screen. Opening them
 asks one question first: **which words?**
 
+- **Today's ten words** -- the set in front of you now. The time spent
+  here counts towards the hour that brings the next ten, which makes it
+  the quickest way to earn them.
 - **Words I have mastered** -- revision. Only the ones you have already
   finished, so nothing in the round is new and nothing you half-know is
   quietly slipping past.
 - **All my words** -- everything in the app, learnt or not.
+
+The hour moves while you play because each game draws its panel as a
+`.card`, and `studying()` counts any card on the screen. That is the
+same mechanism the ordinary practice cards use; nothing special was
+added for the games. The clock stops when the tab is not visible or
+when nothing has been pressed for a while, so leaving a game open does
+not earn anything.
 
 The question is asked every time, because it is the point of the
 screen, and the answer changes what each game is worth playing. It also

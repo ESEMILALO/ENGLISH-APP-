@@ -4266,6 +4266,9 @@
   let gameScope = null;
 
   function gameWords(){
+    if(gameScope === 'today'){
+      return (getDailySet() || []).filter(w => w.me && w.me.length && w.me[0].m);
+    }
     const usable = WORDS.filter(w => w.me && w.me.length && w.me[0].m);
     if(gameScope !== 'mastered') return usable;
     return usable.filter(w => statusOf(w.id) === 'mastered');
@@ -4332,18 +4335,23 @@
         + '</button>';
     }).join('');
 
-    const mastered = gameScope === 'mastered';
+    const NAMES = { mastered:'Mastered', today:"Today's ten", all:'All words' };
+    const TITLES = { mastered:'Words you have mastered',
+                     today:"Today's ten words", all:'All your words' };
+    const LEAD = {
+      mastered: 'Revision: only the ' + gameWords().length + ' words you have '
+              + 'already finished. ',
+      today: 'The ' + gameWords().length + ' words in front of you today, and '
+           + 'the time you spend here counts towards the hour that brings the '
+           + 'next ten. ',
+      all: 'Everything in the app, learnt or not. '
+    };
     root.innerHTML = '<div class="view">'
       + '<div class="sess-top"><button class="sess-back" id="games-back">'
         + ICON_BACK + 'Back</button><span>Games</span><span class="cat-tag">'
-        + (mastered ? 'Mastered' : 'All words') + '</span></div>'
-      + '<h1 class="title" style="margin-top:14px;">'
-        + (mastered ? 'Words you have mastered' : 'All your words') + '</h1>'
-      + '<p class="subtitle">'
-      + (mastered
-          ? 'Revision: only the ' + gameWords().length + ' words you have '
-            + 'already finished. '
-          : 'Everything in the app, learnt or not. ')
+        + NAMES[gameScope] + '</span></div>'
+      + '<h1 class="title" style="margin-top:14px;">' + TITLES[gameScope] + '</h1>'
+      + '<p class="subtitle">' + LEAD[gameScope]
       + 'Ten rounds each. None of these needs a key, and none of them changes '
       + 'what the app thinks you have learnt &mdash; they are practice, and the '
       + 'time counts towards your hour.</p>'
@@ -4361,6 +4369,8 @@
     const all = WORDS.filter(w => w.me && w.me.length && w.me[0].m).length;
     const done = WORDS.filter(w => w.me && w.me.length && w.me[0].m
                                 && statusOf(w.id) === 'mastered').length;
+    const today = (getDailySet() || []).filter(w => w.me && w.me.length && w.me[0].m);
+    const left = Math.max(0, Math.ceil((DAILY_GOAL_MIN * 60 - bankSeconds()) / 60));
 
     root.innerHTML = '<div class="view">'
       + '<div class="sess-top"><button class="sess-back" id="scope-back">'
@@ -4369,6 +4379,18 @@
       + '<h1 class="title" style="margin-top:14px;">Games</h1>'
       + '<p class="subtitle">Which words should they use?</p>'
       + '<div class="game-list">'
+        + '<button class="game-pick" data-scope="today"'
+          + (today.length >= 4 ? '' : ' disabled') + '>'
+          + '<b>Today&rsquo;s ten words</b>'
+          + '<span>The ones in front of you right now. Playing with them '
+          + 'counts towards the hour that brings the next ten, which is the '
+          + 'quickest way to get there.</span>'
+          + '<em>' + (today.length >= 4
+              ? today.length + ' words &middot; ' + (left > 0
+                  ? left + ' minute' + (left === 1 ? '' : 's') + ' still to go'
+                  : 'the hour is already paid')
+              : 'no set today yet') + '</em>'
+        + '</button>'
         + '<button class="game-pick" data-scope="mastered"'
           + (done >= 4 ? '' : ' disabled') + '>'
           + '<b>Words I have mastered</b>'
@@ -4414,9 +4436,14 @@
   function buildChoices(){
     const w = game.rounds[game.i];
     if(!w) return;
-    const sameTopic = gameWords().filter(x => x.cat === w.cat && x.id !== w.id
-                                     && x.w.toLowerCase() !== w.w.toLowerCase());
-    const others = shuffled(sameTopic.length >= 3 ? sameTopic : gameWords()).slice(0, 3);
+    const notThisOne = x => x.id !== w.id
+                          && x.w.toLowerCase() !== w.w.toLowerCase();
+    const sameTopic = gameWords().filter(x => x.cat === w.cat && notThisOne(x));
+    // The fallback has to leave the answer out as well. With a small pool
+    // -- today's ten -- it did not, and the right word turned up twice in
+    // the same four buttons.
+    const wider = gameWords().filter(notThisOne);
+    const others = shuffled(sameTopic.length >= 3 ? sameTopic : wider).slice(0, 3);
     game.options = shuffled([w].concat(others));
   }
 
