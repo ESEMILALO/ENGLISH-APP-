@@ -594,6 +594,7 @@ there is still something to do.
 | **Choose the word** | a meaning and four words it might belong to |
 | **Match the pairs** | five words, five meanings, out of order |
 | **Complete the idiom** | one word taken out of a fixed phrase |
+| **Say it out loud** | a word or a sentence, read aloud by you, and it marks what it did not hear |
 | **Spell it** | the word is read to you and you spell it |
 
 **A round is a meaning, not a word.** *Pick up* has five meanings in
@@ -607,6 +608,14 @@ sentences.
 *Match the pairs* is the exception: it never puts two senses of the
 same word in one five, because that would be a trick rather than a
 test.
+
+*Say it out loud* is the one that listens. Speech recognition is the
+browser's own, so it needs the microphone but no key, and the scoring
+is the practice card's -- a score here means what a score there means.
+Words and sentences are mixed together: a word on its own is where the
+sounds are, a sentence is where the rhythm is. 10,352 of them. Every
+round can be skipped, because a microphone that will not work should
+not trap you in a round.
 
 Every one is built from what the page already holds: the words, the
 3,300 sentences out of the two books, and the neural voice, which needs

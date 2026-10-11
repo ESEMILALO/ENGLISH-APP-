@@ -4312,6 +4312,16 @@
       const tricky = gameWords().filter(w => /easily misspelled/i.test(w.n || ''));
       return sensesOf(tricky.length >= 4 ? tricky : gameWords());
     }
+    if(kind === 'speak'){
+      // Words and sentences both, mixed together: a word on its own is
+      // where the sounds are, and a sentence is where the rhythm is.
+      const out = [];
+      gameWords().forEach(w => {
+        out.push({ w: w, text: w.w });
+        sentencesFor(w).forEach(t => out.push({ w: w, text: t }));
+      });
+      return out;
+    }
     if(kind === 'listen'){
       // One round per sentence, so a word with six of them is six
       // different things to hear rather than the same one six times.
@@ -4336,6 +4346,10 @@
     { kind:'idiom', name:'Complete the idiom',
       blurb:'One word taken out of an idiom. They are fixed phrases, so this '
           + 'is the honest way to test them.' },
+    { kind:'speak', name:'Say it out loud',
+      blurb:'A word or a sentence on the screen, read aloud by you. It '
+          + 'listens and marks the words it did not hear. Needs the '
+          + 'microphone, not a key.' },
     { kind:'spell', name:'Spell it',
       blurb:'The word is read to you and you spell it. Built from the words '
           + 'the book says are most often spelled wrong.' }
@@ -4518,6 +4532,7 @@
     if(game.kind === 'match') return renderMatch();
     if(game.kind === 'idiom') return renderIdiomGame();
     if(game.kind === 'spell') return renderSpell();
+    if(game.kind === 'speak') return renderSpeak();
   }
 
   function nextRound(){
@@ -4528,6 +4543,9 @@
     game.miss = null;
     game.text = null;        // the sentence this round was read from
     game.puzzle = null;      // the idiom with a word taken out
+    scStopListening();       // and nothing left listening for the last one
+    scResult = null;
+    scStatus = null;
     if(game.kind === 'choose' && game.i < game.rounds.length) buildChoices();
     renderGame();
   }
@@ -4558,11 +4576,18 @@
     });
   }
 
+  function leaveGames(){
+    scStopListening();
+    scResult = null;
+    scStatus = null;
+    renderGames();
+  }
+
   function wireNext(){
     const b = el('#game-next');
     if(b){ b.addEventListener('click', nextRound); b.focus(); }
     const q = el('#game-quit');
-    if(q) q.addEventListener('click', renderGames);
+    if(q) q.addEventListener('click', leaveGames);
     bindGameKeys();
   }
 
@@ -4753,6 +4778,129 @@
       game.answered = input.value.trim();
       if(normalizeAnswer(game.answered) === normalizeAnswer(game.puzzle.answer)) game.right++;
       renderIdiomGame();
+    });
+  }
+
+  // --- Say it out loud ----------------------------------------------
+  //
+  // The only part of the app that listens rather than reads, and it
+  // needs no key: speech recognition is the browser's own. The scoring
+  // is the practice card's, so a score here means what a score there
+  // means -- the words it heard, against the words on the screen.
+  function renderSpeak(){
+    const item = game.rounds[game.i];
+    const text = item.text;
+    const done = game.answered !== null;
+    const isWord = text === item.w.w;
+
+    let result = '';
+    if(scResult){
+      const colour = scResult.score >= 85 ? 'var(--good)'
+                   : (scResult.score >= 60 ? 'var(--amber-deep)' : 'var(--warn)');
+      const label = scResult.score >= 85 ? 'Clearly said'
+                  : (scResult.score >= 60 ? 'Close enough' : 'Try that one slower');
+      result = '<div class="sc-score-row"><span class="sc-score-value" style="color:'
+          + colour + ';">' + scResult.score + '%</span>'
+          + '<span class="sc-score-label">' + label + '</span></div>'
+        + '<div class="sc-diff">' + scResult.diffHtml + '</div>'
+        + '<p class="sc-transcript">Heard: &ldquo;' + esc(scResult.transcript) + '&rdquo;</p>';
+    }
+
+    const micLabel = scRecognizing ? 'Listening&hellip;'
+                   : (scResult ? 'Say it again' : 'Tap and say it');
+
+    root.innerHTML = '<div class="view">' + gameTop()
+      + '<div class="card"><div class="hole"></div>'
+        + '<p class="game-sub" style="margin-bottom:8px;">'
+          + (isWord ? 'Say this word' : 'Say this sentence') + '</p>'
+        + '<div class="' + (isWord ? 'card-word' : 'sc-phrase') + '">' + esc(text) + '</div>'
+        + (canSpeak ? '<button class="speak-btn" id="speak-hear" '
+            + 'aria-label="Hear it first" style="margin-top:12px;">' + ICON_SPEAKER
+            + '</button>' : '')
+        + (canListen
+            ? '<button class="listen-btn' + (scRecognizing ? ' is-listening' : '')
+              + '" id="speak-mic" style="margin-top:18px;">' + ICON_MIC + micLabel + '</button>'
+            : '<p class="listen-error">This browser cannot listen. Chrome can.</p>')
+        + (scStatus ? '<p class="listen-error">' + esc(scStatus) + '</p>' : '')
+        + result
+      + '</div>'
+      // Without a way past a round, a microphone that will not work
+      // traps him in it -- and the arrow at the top leaves the whole
+      // game, which is not the same thing.
+      + (done
+          ? gameNextBar()
+          : '<div class="rate-row" style="grid-template-columns:1fr;">'
+            + '<button class="tag-btn tag-warn" id="speak-skip">' + ICON_SKIP
+            + 'Skip this one</button></div>')
+      + '</div>';
+
+    const hear = el('#speak-hear');
+    if(hear) hear.addEventListener('click', () => speak(text));
+    const mic = el('#speak-mic');
+    if(mic) mic.addEventListener('click', () => speakRound(text));
+    const skip = el('#speak-skip');
+    if(skip) skip.addEventListener('click', nextRound);
+    el('#game-quit').addEventListener('click', leaveGames);
+    if(done) wireNext();
+  }
+
+  function speakRound(phrase){
+    if(!canListen) return;
+    scStopListening();
+    scResult = null;
+    scRecognizing = true;
+    const token = ++scToken;
+    scStatus = micGranted ? null
+             : 'Allow the microphone once and it will not ask again.';
+    renderSpeak();
+
+    ensureMic().then(ok => {
+      if(scToken !== token) return;
+      if(!ok){
+        scRecognizing = false;
+        scStatus = speechErrorMessage('not-allowed');
+        renderSpeak();
+        return;
+      }
+      if(scStatus){ scStatus = null; renderSpeak(); }
+
+      const recognition = scGetRecognizer();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onresult = e => {
+        if(scToken !== token) return;
+        scRecognizing = false;
+        scResult = scScorePhrase(phrase, e.results[0][0].transcript);
+        // The same bar the practice card uses, so a score here means
+        // what a score there means.
+        if(game.answered === null){
+          game.answered = scResult.transcript;
+          if(scResult.score >= 60) game.right++;
+        }
+        renderSpeak();
+      };
+      recognition.onerror = e => {
+        if(scToken !== token) return;
+        const code = e.error || 'error';
+        if(code === 'not-allowed' || code === 'service-not-allowed') setMicGranted(false);
+        scRecognizing = false;
+        scStatus = speechErrorMessage(code);
+        renderSpeak();
+      };
+      recognition.onend = () => {
+        if(scToken !== token) return;
+        if(scRecognizing){
+          scRecognizing = false;
+          scStatus = speechErrorMessage('no-speech');
+          renderSpeak();
+        }
+      };
+      try{ recognition.start(); }
+      catch(err){
+        scRecognizing = false;
+        scStatus = speechErrorMessage('error');
+        renderSpeak();
+      }
     });
   }
 
