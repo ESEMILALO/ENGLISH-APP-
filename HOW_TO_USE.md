@@ -121,6 +121,12 @@ Without a key nothing is lost: words wait in
 `progress/pending-words.json`, the app says how many are waiting, and
 once a key is in there is a button to fill them all in at once.
 
+Finding a word lives in the same block, under a rule: a field, a Search
+button, and the number of words already in the app. Typing and pressing
+Enter carries what you typed straight into the search screen. It used
+to be a link folded away at the foot of the home screen, which is the
+wrong place for the thing you reach for most.
+
 You choose which list it joins each time — every topic in the
 spreadsheet is offered, with the one you picked last at the top, since a
 run of new words usually belongs together.

@@ -860,6 +860,15 @@
     color:var(--text-soft); margin-bottom:10px;
   }
   .addword-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  /* The second line of the block: the rule between them says these are
+     two different things to do with a word, not one long form. */
+  .addword-split{
+    border-top:1px solid var(--rule); margin:14px 0 0; padding-top:13px;
+  }
+  .addword-row .find{
+    background:transparent; color:var(--text); border:1px solid var(--rule);
+  }
+  .addword-row .find:hover{ background:#28313a; }
   .addword-row input{
     flex:2; min-width:170px; background:var(--bg); border:1px solid var(--rule);
     color:var(--text); border-radius:8px; padding:11px 13px;
@@ -3054,7 +3063,7 @@
     const gamesHtml = '<div class="home-band">'
       + '<div class="band-head"><span>Games</span>'
         + '<span class="band-hint">practice without the conversation</span></div>'
-      + '<p class="hint" style="margin:0 0 12px;">Five ways to work on the words you '
+      + '<p class="hint" style="margin:0 0 12px;">' + GAMES.length + ' ways to work on the words you '
       + 'have. None of them needs a key or an allowance, and the time counts '
       + 'towards your hour.</p>'
       + '<button class="btn-secondary" id="go-games">Open the games &rarr;</button>'
@@ -3073,7 +3082,6 @@
       + '<div class="home-more-body">'
         + '<div class="section-label" style="margin-top:6px;">Work one topic</div>'
         + '<div class="cat-list">'+catRows+'</div>'
-        + '<button class="reset-link" id="search-words">Search a word or meaning &rarr;</button>'
         + '<button class="reset-link" id="my-list">Study my list &middot; '+myList.length+'/'+MYLIST_MAX+' &rarr;</button>'
         + '<button class="reset-link" id="view-history">View session history &rarr;</button>'
         + '<button class="reset-link" id="browse-topics">Browse words by topic &rarr;</button>'
@@ -3124,6 +3132,7 @@
       + '</div>';
 
     wireAddWord();
+    wireFindWord();
     const chatBtn = el('#go-chat');
     if(chatBtn) chatBtn.addEventListener('click', ()=>{ chatFree = false; renderChatPicker(); });
     const practiceBtn = el('#go-practice');
@@ -3134,7 +3143,6 @@
     // default: the question is the point of the screen.
     if(gamesBtn) gamesBtn.addEventListener('click', () => { gameScope = null; renderGames(); });
     el('#my-list').addEventListener('click', ()=>renderMyList(''));
-    el('#search-words').addEventListener('click', ()=>renderSearch(''));
     // Always through the topic picker, even with a set underway -- from
     // there you pick the topic, then keep practicing or start a new set.
     el('#learn-set').addEventListener('click', renderDailySet);
@@ -6050,6 +6058,18 @@
       + '</div>'
       + '<p class="hint" id="addword-note">Its pronunciation, meaning, example and notes are '
         + 'written for you, in the same style as the rest of the sheet.</p>'
+      // Looking a word up and adding one are the two things he comes to
+      // this block for, so they live in it together rather than the
+      // second being folded away at the foot of the screen.
+      + '<div class="addword-split">'
+        + '<div class="addword-head"><span>Find a word</span>'
+          + '<span class="band-hint">' + WORDS.length + ' already here</span></div>'
+        + '<div class="addword-row">'
+          + '<input type="text" id="findword-input" placeholder="A word or a meaning\u2026" '
+            + 'autocomplete="off" autocapitalize="off" spellcheck="false">'
+          + '<button class="find" id="findword-go">Search</button>'
+        + '</div>'
+      + '</div>'
       + '</div>';
   }
 
@@ -6102,6 +6122,19 @@
     go.disabled = false; go.textContent = 'Add';
     if(note) note.textContent = 'Its pronunciation, meaning, example and notes are written '
       + 'for you, in the same style as the rest of the sheet.';
+  }
+
+  function wireFindWord(){
+    const input = el('#findword-input');
+    const go = el('#findword-go');
+    if(!input || !go) return;
+    const search = () => renderSearch(input.value.trim());
+    go.addEventListener('click', search);
+    input.addEventListener('keydown', e => {
+      if(e.key !== 'Enter') return;
+      e.preventDefault();
+      search();
+    });
   }
 
   function wireAddWord(){
