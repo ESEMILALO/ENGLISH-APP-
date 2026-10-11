@@ -516,33 +516,6 @@
   .game-answer{ margin-top:14px; font-size:.95rem; line-height:1.5; color:#3a3a3a; }
   .game-answer b{ color:var(--amber-deep); }
 
-  /* the idiomatic phrase of the day */
-  .idiom-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
-  .idiom-word{
-    font-family:var(--cond); font-size:1.9rem; line-height:1.15; color:var(--text);
-  }
-  .idiom-pron{ font-family:var(--mono); font-size:.76rem; color:var(--text-soft); }
-  .idiom-mean{ font-size:1rem; line-height:1.55; margin:9px 0 0; }
-  .idiom-ex{
-    font-style:italic; color:var(--text-soft); font-size:.92rem;
-    margin:7px 0 0; padding-left:11px; border-left:2px solid var(--rule);
-  }
-  .idiom-note{
-    color:var(--text-soft); font-size:.8rem; line-height:1.5; margin:10px 0 0;
-  }
-  .idiom-note b{ color:var(--text); font-weight:700; }
-  .idiom-row{ display:flex; gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap; }
-  .idiom-row .speak-btn{ margin:0; }
-  .idiom-pic{ margin-top:12px; }
-  .idiom-pic img{
-    width:100%; max-width:260px; height:auto; border-radius:11px;
-    border:1px solid var(--rule); display:block;
-  }
-  .idiom-seen{
-    font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--text-soft); margin-left:auto;
-  }
-
   /* choosing the voice */
   .voice-row{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin:10px 2px 0; }
   .voice-row label{
@@ -1445,8 +1418,11 @@
     return seen;
   })();
 
-  // The lists the day's ten is shared out between.
-  const DAILY_CATEGORIES = CATEGORIES.filter(c => c !== IDIOM_TOPIC);
+  // Every topic shares the day's set now, idioms included. They used to
+  // be kept out and met one a day on the home screen instead; he would
+  // rather learn them like everything else, so the set grew by two to
+  // make room for them.
+  const DAILY_CATEGORIES = CATEGORIES;
 
   // Short forms for the places where the full name will not fit. A topic
   // with no entry here keeps its own name, so a new sheet needs nothing
@@ -1475,7 +1451,7 @@
   const SPEECH_KEY = 'wordlog_speech_scores';
   const LEARNSET_KEY = 'wordlog_learn_sets';
   const CHATS_KEY = 'wordlog_chats';
-  const LEARNSET_SIZE = 10;
+  const LEARNSET_SIZE = 12;   // two from each of the six topics
   // Two from each of the five lists, which is what makes 10. Kept as its
   // own number so the arithmetic is stated rather than implied.
   const PER_TOPIC = 2;
@@ -1874,7 +1850,48 @@
   // arriving on top of them.
   function todaysSet(){
     if(dailySetDay() !== todayStr() && newWordsUnlocked()) return buildDailySet();
-    return getDailySet() || buildDailySet();
+    return growDailySet(getDailySet()) || buildDailySet();
+  }
+
+  // The day's set used to be ten and is now twelve. A set saved under
+  // the old size would stay ten until it was finished, so the screen
+  // would promise twelve and show ten. It is topped up in place instead,
+  // from whichever lists have the fewest words in it -- which is how the
+  // set is filled in the first place, and is what puts the two idioms in.
+  function growDailySet(set){
+    if(!set || set.length >= LEARNSET_SIZE) return set;
+    const taken = {};
+    const inSet = {};
+    DAILY_CATEGORIES.forEach(c => { inSet[c] = 0; });
+    set.forEach(w => {
+      taken[w.id] = true;
+      if(inSet[w.cat] !== undefined) inSet[w.cat]++;
+    });
+
+    const pools = {};
+    DAILY_CATEGORIES.forEach(c => {
+      pools[c] = sortByPriority(WORDS.filter(w =>
+        w.cat === c && !taken[w.id] && statusOf(w.id) !== 'mastered'));
+    });
+
+    const grown = set.slice();
+    while(grown.length < LEARNSET_SIZE){
+      let next = null;
+      DAILY_CATEGORIES.forEach(c => {
+        if(!pools[c].length) return;
+        if(next === null || inSet[c] < inSet[next]) next = c;
+      });
+      if(next === null) break;
+      const w = pools[next].shift();
+      grown.push(w);
+      taken[w.id] = true;
+      inSet[next]++;
+    }
+    if(grown.length === set.length) return set;
+
+    learnSets.daily.wordIds = grown.map(w => w.id);
+    saveLearnSets();
+    return grown;
   }
 
   // Learn-a-set walks each word through the same stages: meet it in
@@ -3034,16 +3051,6 @@
     // Four hundred phrasal verbs is too many to meet ten at a time, and
     // they are the part of English that does not come from Spanish at
     // all. One a day, whether or not it is in today's set.
-    const idiomBlock = idiomPool().length
-      ? '<div class="home-band">'
-        + '<div class="band-head"><span>Idiomatic phrase of the day</span>'
-          + '<span class="band-hint">' + idiomPool().length + ' in your lists &middot; '
-          + Math.max(0, idiomPool().length - (((meta && meta.idiomSeen) || []).length))
-          + ' still to come</span></div>'
-        + '<div id="idiom-host">' + idiomHtml() + '</div>'
-        + '</div>'
-      : '';
-
     const gamesHtml = '<div class="home-band">'
       + '<div class="band-head"><span>Games</span>'
         + '<span class="band-hint">practice without the conversation</span></div>'
@@ -3083,14 +3090,8 @@
       // The two things the day is actually made of, side by side at the
       // top: what is slipping away, and what is in front of him now.
       // Everything else is a row of two under them.
-      + '<div class="home-pair">'
-        // What is slipping away is a few lines tall and the day's ten is
-        // not, so on its own it leaves a third of the screen empty. The
-        // phrase of the day goes under it and the column reaches the
-        // floor beside today's set.
-        + '<div class="home-col">' + freshHtml + idiomBlock + '</div>'
-        + todayHtml
-      + '</div>'
+      // What is slipping away, beside what is in front of him now.
+      + '<div class="home-pair">' + freshHtml + todayHtml + '</div>'
       + addWordBlockHtml()
       + '<div class="home-pair">' + statsHtml + gamesHtml + '</div>'
       + '<div class="home-pair home-pair-half">' + calHtml + '</div>'
@@ -3144,7 +3145,6 @@
     el('#view-history').addEventListener('click', renderHistory);
     el('#browse-topics').addEventListener('click', renderTopicPicker);
     wireBackupLine();
-    wireIdiom();
     wireStudyBar();
     wireKeyRow();
     wireVoiceRow();
@@ -4375,9 +4375,10 @@
         + '</button>';
     }).join('');
 
-    const NAMES = { mastered:'Mastered', today:"Today's ten", all:'All words' };
+    const NAMES = { mastered:'Mastered', today:'Today', all:'All words' };
     const TITLES = { mastered:'Words you have mastered',
-                     today:"Today's ten words", all:'All your words' };
+                     today:"Today's " + LEARNSET_SIZE + ' words',
+                     all:'All your words' };
     const LEAD = {
       mastered: 'Revision: only the ' + gameWords().length + ' words you have '
               + 'already finished. ',
@@ -4421,9 +4422,9 @@
       + '<div class="game-list">'
         + '<button class="game-pick" data-scope="today"'
           + (today.length >= 4 ? '' : ' disabled') + '>'
-          + '<b>Today&rsquo;s ten words</b>'
+          + '<b>Today&rsquo;s ' + LEARNSET_SIZE + ' words</b>'
           + '<span>The ones in front of you right now. Playing with them '
-          + 'counts towards the hour that brings the next ten, which is the '
+          + 'counts towards the hour that brings the next ' + LEARNSET_SIZE + ', which is the '
           + 'quickest way to get there.</span>'
           + '<em>' + (today.length >= 4
               ? today.length + ' words &middot; ' + (left > 0
@@ -4947,120 +4948,6 @@
       renderSpell();
     });
     speak(w.w);
-  }
-
-  // --- The idiomatic phrase of the day ------------------------------
-  //
-  // An idiom is the part of English that cannot be worked out from the
-  // words in it: "under the weather" has nothing to do with weather.
-  // They are also what makes someone sound like a person rather than a
-  // textbook. Ten a day would be wrong for them -- they are met one at a
-  // time and recognised later -- so this topic stays out of the day's set
-  // and gets this block instead.
-  // Every phrasal verb in the app gets its own day before any of them
-  // gets a second one. Remembering only the last sixty meant the same
-  // handful came round again while hundreds had never been shown at all.
-
-  function idiomPool(){
-    return WORDS.filter(w=>w.cat === IDIOM_TOPIC);
-  }
-
-  function pickIdiom(){
-    const all = idiomPool();
-    if(!all.length) return null;
-    const lately = (meta && meta.idiomSeen) || [];
-    const fresh = all.filter(w=>lately.indexOf(w.id) < 0);
-    const pool = fresh.length ? fresh : all;
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-
-  // The same one all day: it is the verb of the *day*, and one that
-  // changed every time the page was drawn would be nothing at all.
-  function idiomOfTheDay(){
-    const today = todayStr();
-    const kept = (meta && meta.idiomDay) || null;
-    if(kept && kept.day === today){
-      const found = WORDS.find(w=>w.id === kept.id);
-      if(found) return found;
-    }
-    const pick = pickIdiom();
-    if(!pick) return null;
-    rememberIdiom(pick, today);
-    return pick;
-  }
-
-  function rememberIdiom(word, day){
-    if(!meta) return;
-    meta.idiomDay = { day: day || todayStr(), id: word.id };
-    const total = idiomPool().length;
-    const before = (meta.idiomSeen || []).filter(id=>id !== word.id);
-    let seen = [word.id].concat(before);
-    // When every one has had its day, the round starts again rather than
-    // the list growing for ever.
-    if(total && seen.length >= total) seen = [word.id];
-    meta.idiomSeen = seen.slice(0, Math.max(total, 1));
-    saveMeta();
-  }
-
-  function anotherIdiom(){
-    const pick = pickIdiom();
-    if(!pick) return;
-    rememberIdiom(pick);
-    paintIdiom();
-  }
-
-  function idiomHtml(){
-    const w = idiomOfTheDay();
-    if(!w) return '';
-    const m = (w.me || [])[0] || {};
-    const pic = WORD_IMAGES[w.id];
-    const status = statusOf(w.id);
-    return '<div class="idiom-head">'
-        + '<span class="idiom-word">' + esc(w.w) + '</span>'
-        + (w.p ? '<span class="idiom-pron">/' + esc(w.p) + '/</span>' : '')
-        + (status === 'mastered'
-            ? '<span class="idiom-seen">yours already</span>'
-            : (status ? '<span class="idiom-seen">' + esc(status) + '</span>'
-                      : '<span class="idiom-seen">new to you</span>'))
-      + '</div>'
-      + (m.m ? '<p class="idiom-mean">' + esc(m.m) + '</p>' : '')
-      + (m.e ? '<p class="idiom-ex">&ldquo;' + esc(m.e) + '&rdquo;</p>' : '')
-      + ((w.me || []).length > 1 && w.me[1].m
-          ? '<p class="idiom-mean">' + esc(w.me[1].m) + '</p>'
-            + (w.me[1].e ? '<p class="idiom-ex">&ldquo;' + esc(w.me[1].e) + '&rdquo;</p>' : '')
-          : '')
-      + (w.n ? '<p class="idiom-note">' + esc(w.n) + '</p>' : '')
-      + (pic && pic.file
-          ? '<figure class="idiom-pic"><img src="images/' + esc(pic.file) + '" '
-            + 'alt="' + esc(w.w) + '" decoding="async"></figure>'
-          : '')
-      + '<div class="idiom-row">'
-        + (canSpeak
-            ? '<button class="speak-btn" id="idiom-say" aria-label="Listen to it">'
-              + ICON_SPEAKER + '</button>'
-            : '')
-        + '<button class="reset-link" id="idiom-another" style="width:auto; margin:0;">'
-          + 'Another one &rarr;</button>'
-      + '</div>';
-  }
-
-  function paintIdiom(){
-    const host = document.getElementById('idiom-host');
-    if(!host) return;
-    host.innerHTML = idiomHtml();
-    wireIdiom();
-  }
-
-  function wireIdiom(){
-    const say = document.getElementById('idiom-say');
-    if(say) say.addEventListener('click', ()=>{
-      const w = idiomOfTheDay();
-      if(!w) return;
-      const m = (w.me || [])[0] || {};
-      speak(m.e ? w.w + '. ' + m.e : w.w);
-    });
-    const another = document.getElementById('idiom-another');
-    if(another) another.addEventListener('click', anotherIdiom);
   }
 
   const RECALL_COUNT = 10;
@@ -6403,7 +6290,8 @@
           + '</div>'
           : (freshSetArmed
             ? '<div class="studybar-sure">'
-              + '<p>Swap these ten for ten new ones now, without finishing '
+              + '<p>Swap these ' + LEARNSET_SIZE + ' for ' + LEARNSET_SIZE
+              + ' new ones now, without finishing '
               + 'the hour?<br>Anything here you have not mastered comes with '
               + 'them, so nothing is left half-learnt, and the hour starts '
               + 'again from <b>0:00</b> for the new set.</p>'
@@ -6416,7 +6304,7 @@
               + '<button class="studybar-reset" id="studybar-reset">'
                 + 'Start this hour again &rarr;</button>'
               + '<button class="studybar-reset" id="studybar-fresh">'
-                + 'Ten new words now &rarr;</button>'
+                + LEARNSET_SIZE + ' new words now &rarr;</button>'
             + '</div>'))
       + '</div>';
   }

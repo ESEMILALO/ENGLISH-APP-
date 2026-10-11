@@ -628,24 +628,21 @@ evidence as recalling a word cold. They do count as study time, because
 they are studying -- each game draws its panel as a `.card`, which is
 what `studying()` looks for.
 
-## Idiomatic phrase of the day
+## Idioms in the day's set
 
 **Idiomatic phrases** is a topic of 131 expressions whose meaning cannot
 be worked out from the words in them -- *under the weather* has nothing
-to do with weather, *a piece of cake* nothing to do with cake. They are
-what makes someone sound like a person rather than a textbook.
+to do with weather, *a piece of cake* nothing to do with cake.
 
-This topic is deliberately **left out of the day's ten**. Ten idioms at
-a time is the wrong way to meet them; one a day, on the home screen, is
-the right way. `DAILY_CATEGORIES` in `tools	emplate.html` is the list
-the day's set is shared between, and it is `CATEGORIES` minus this one.
+They were met one a day in a block of their own on the home screen for
+a while. They are learnt like every other word now: the topic is in the
+day's set, which grew from ten words to **twelve** to make room for two
+of them, so the day is still two from each of the six lists.
 
-The block under the day's set shows one every day, with how many are
-still to come, and works through all 131 before any of them comes round
-a second time. **Another one** gives you a different one straight away.
-
-The phrasal verbs are still in the app, as their own topic of 213 -- two
-of them turn up in the day's ten like any other list.
+`LEARNSET_SIZE` in `tools	emplate.html` is the only place the number
+lives; everything that mentions it on screen reads it from there. A set
+saved under the old size is topped up in place rather than left short,
+so changing the number takes effect the same day.
 
 ### Before this: the phrasal verb of the day
 
