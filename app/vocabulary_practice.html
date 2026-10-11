@@ -4293,14 +4293,34 @@
     return out;
   }
 
+  // A round is a meaning, not a word. "Pick up" has five of them in this
+  // app and they are five different things to know; asking only ever
+  // about the first would teach one of them and call it the word.
+  function sensesOf(list){
+    const out = [];
+    list.forEach(w => (w.me || []).forEach((m, mi) => {
+      if(m && m.m) out.push({ w: w, m: m, mi: mi });
+    }));
+    return out;
+  }
+
   function gamePool(kind){
-    if(kind === 'idiom') return gameWords().filter(w => w.cat === IDIOM_TOPIC);
+    if(kind === 'idiom'){
+      return sensesOf(gameWords().filter(w => w.cat === IDIOM_TOPIC));
+    }
     if(kind === 'spell'){
       const tricky = gameWords().filter(w => /easily misspelled/i.test(w.n || ''));
-      return tricky.length >= GAME_ROUNDS ? tricky : gameWords();
+      return sensesOf(tricky.length >= 4 ? tricky : gameWords());
     }
-    if(kind === 'listen') return gameWords().filter(w => sentencesFor(w).length);
-    return gameWords();
+    if(kind === 'listen'){
+      // One round per sentence, so a word with six of them is six
+      // different things to hear rather than the same one six times.
+      const out = [];
+      gameWords().forEach(w => sentencesFor(w).forEach(t =>
+        out.push({ w: w, text: t })));
+      return out;
+    }
+    return sensesOf(gameWords());
   }
 
   const GAMES = [
@@ -4418,13 +4438,24 @@
   function startGame(kind){
     const pool = shuffled(gamePool(kind));
     if(kind === 'match'){
+      // Five at a time, and never the same word twice in one five --
+      // two senses of "pick up" side by side would be a trick, not a
+      // test. With a small pool there are fewer than ten rounds to be
+      // had, so it plays as many as there are rather than refusing.
       const rounds = [];
-      // With a small pool -- eighteen mastered words, say -- there are
-      // not ten rounds of five to be had, so it plays as many as there
-      // are rather than refusing.
-      for(let i = 0; i + 5 <= pool.length && rounds.length < GAME_ROUNDS; i += 5){
-        rounds.push(pool.slice(i, i + 5));
-      }
+      let bag = [];
+      const usedHere = {};
+      pool.forEach(it => {
+        if(rounds.length >= GAME_ROUNDS) return;
+        if(usedHere[it.w.id]) return;
+        usedHere[it.w.id] = true;
+        bag.push(it);
+        if(bag.length === 5){
+          rounds.push(bag);
+          bag = [];
+          for(const k in usedHere) delete usedHere[k];
+        }
+      });
       game = { kind, rounds, i:0, right:0, picked:null, solved:[], miss:null };
     } else {
       game = { kind, rounds: pool.slice(0, GAME_ROUNDS), i:0, right:0, answered:null };
@@ -4434,8 +4465,9 @@
   }
 
   function buildChoices(){
-    const w = game.rounds[game.i];
-    if(!w) return;
+    const item = game.rounds[game.i];
+    if(!item) return;
+    const w = item.w;
     const notThisOne = x => x.id !== w.id
                           && x.w.toLowerCase() !== w.w.toLowerCase();
     const sameTopic = gameWords().filter(x => x.cat === w.cat && notThisOne(x));
@@ -4536,10 +4568,8 @@
 
   // --- Listen and type ---------------------------------------------
   function renderListen(){
-    const w = game.rounds[game.i];
-    const sentences = sentencesFor(w);
-    if(!game.answered) game.text = game.text || sentences[Math.floor(Math.random() * sentences.length)];
-    const text = game.text;
+    const item = game.rounds[game.i];
+    const text = item.text;
     const done = game.answered !== null;
 
     root.innerHTML = '<div class="view">' + gameTop()
@@ -4576,7 +4606,8 @@
 
   // --- Choose the word ---------------------------------------------
   function renderChoose(){
-    const w = game.rounds[game.i];
+    const item = game.rounds[game.i];
+    const w = item.w;
     const opts = game.options || [w];
     const done = game.answered !== null;
 
@@ -4590,11 +4621,13 @@
 
     root.innerHTML = '<div class="view">' + gameTop()
       + '<div class="card"><div class="hole"></div>'
-        + '<p class="game-prompt">' + esc(w.me[0].m) + '</p>'
-        + '<p class="game-sub">Which word is it?</p>'
+        + '<p class="game-prompt">' + esc(item.m.m) + '</p>'
+        + '<p class="game-sub">Which word is it?'
+          + (w.me.length > 1 ? ' (sense ' + (item.mi + 1) + ' of ' + w.me.length + ')' : '')
+        + '</p>'
         + '<div class="game-opts">' + buttons + '</div>'
-        + (done && w.me[0].e
-            ? '<div class="game-answer">&ldquo;' + esc(w.me[0].e) + '&rdquo;</div>' : '')
+        + (done && item.m.e
+            ? '<div class="game-answer">&ldquo;' + esc(item.m.e) + '&rdquo;</div>' : '')
       + '</div>'
       + (done ? gameNextBar() : '')
       + '</div>';
@@ -4616,16 +4649,16 @@
     if(!game.meanings) game.meanings = shuffled(five.slice());
     const solved = game.solved || [];
 
-    const left = five.map(w =>
-      '<button class="game-pair' + (solved.indexOf(w.id) >= 0 ? ' done' : '')
-      + (game.picked === w.id ? ' picked' : '') + '" data-side="w" data-id="'
-      + esc(w.id) + '"' + (solved.indexOf(w.id) >= 0 ? ' disabled' : '')
-      + '>' + esc(w.w) + '</button>').join('');
-    const right = game.meanings.map(w =>
-      '<button class="game-pair' + (solved.indexOf(w.id) >= 0 ? ' done' : '')
-      + (game.miss === w.id ? ' miss' : '') + '" data-side="m" data-id="'
-      + esc(w.id) + '"' + (solved.indexOf(w.id) >= 0 ? ' disabled' : '')
-      + '>' + esc(w.me[0].m.split('\u2014')[0].trim()) + '</button>').join('');
+    const left = five.map(it =>
+      '<button class="game-pair' + (solved.indexOf(it.w.id) >= 0 ? ' done' : '')
+      + (game.picked === it.w.id ? ' picked' : '') + '" data-side="w" data-id="'
+      + esc(it.w.id) + '"' + (solved.indexOf(it.w.id) >= 0 ? ' disabled' : '')
+      + '>' + esc(it.w.w) + '</button>').join('');
+    const right = game.meanings.map(it =>
+      '<button class="game-pair' + (solved.indexOf(it.w.id) >= 0 ? ' done' : '')
+      + (game.miss === it.w.id ? ' miss' : '') + '" data-side="m" data-id="'
+      + esc(it.w.id) + '"' + (solved.indexOf(it.w.id) >= 0 ? ' disabled' : '')
+      + '>' + esc(it.m.m.split('\u2014')[0].trim()) + '</button>').join('');
 
     const allDone = solved.length === five.length;
     root.innerHTML = '<div class="view">' + gameTop()
@@ -4687,7 +4720,8 @@
   }
 
   function renderIdiomGame(){
-    const w = game.rounds[game.i];
+    const item = game.rounds[game.i];
+    const w = item.w;
     if(!game.puzzle) game.puzzle = blankOne(w.w);
     if(!game.puzzle){ game.rounds.splice(game.i, 1); return renderGame(); }
     const done = game.answered !== null;
@@ -4695,11 +4729,11 @@
     root.innerHTML = '<div class="view">' + gameTop()
       + '<div class="card"><div class="hole"></div>'
         + '<p class="game-prompt">' + esc(game.puzzle.blanked) + '</p>'
-        + '<p class="game-sub">' + esc(w.me[0].m) + '</p>'
+        + '<p class="game-sub">' + esc(item.m.m) + '</p>'
         + (done
             ? '<div class="game-answer">The word is <b>' + esc(game.puzzle.answer) + '</b>.'
-              + (w.me[0].e ? '<div style="margin-top:8px; color:#5d5d5d;">&ldquo;'
-                  + esc(w.me[0].e) + '&rdquo;</div>' : '')
+              + (item.m.e ? '<div style="margin-top:8px; color:#5d5d5d;">&ldquo;'
+                  + esc(item.m.e) + '&rdquo;</div>' : '')
               + '</div>'
             : '<input type="text" class="type-input" id="idiom-input" autocomplete="off" '
               + 'autocapitalize="off" autocorrect="off" spellcheck="false" '
@@ -4724,14 +4758,15 @@
 
   // --- Spell it -----------------------------------------------------
   function renderSpell(){
-    const w = game.rounds[game.i];
+    const item = game.rounds[game.i];
+    const w = item.w;
     const done = game.answered !== null;
     const hint = (w.n || '').match(/Easily misspelled:[^.]*\./);
 
     root.innerHTML = '<div class="view">' + gameTop()
       + '<div class="card"><div class="hole"></div>'
         + '<p class="game-prompt">Spell what you hear</p>'
-        + '<p class="game-sub">' + esc(w.me[0].m) + '</p>'
+        + '<p class="game-sub">' + esc(item.m.m) + '</p>'
         + '<button class="btn-oncard" id="spell-play">' + ICON_SPEAKER + ' Say it again</button>'
         + (done
             ? '<div class="game-answer">It is <b>' + esc(w.w) + '</b>.'

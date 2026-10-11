@@ -596,6 +596,18 @@ there is still something to do.
 | **Complete the idiom** | one word taken out of a fixed phrase |
 | **Spell it** | the word is read to you and you spell it |
 
+**A round is a meaning, not a word.** *Pick up* has five meanings in
+this app and they are five different things to know, so it comes round
+five times, once for each, and the card says which: *(sense 3 of 5)*.
+*Listen and type* goes further and makes a round of every sentence, so
+a word with six of them is six different things to hear. That takes the
+pools from 3,083 words to 5,159 senses, and from 2,987 to 7,299
+sentences.
+
+*Match the pairs* is the exception: it never puts two senses of the
+same word in one five, because that would be a trick rather than a
+test.
+
 Every one is built from what the page already holds: the words, the
 3,300 sentences out of the two books, and the neural voice, which needs
 no account. Ten rounds each.
